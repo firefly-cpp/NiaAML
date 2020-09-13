@@ -3,5 +3,6 @@ from niaaml.data.csv_data_reader import CSVDataReader
 
 __all__ = [
     'DataReader',
-    'CSVDataReader'
+    'CSVDataReader',
+    'BasicDataReader'
 ]

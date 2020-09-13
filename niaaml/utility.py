@@ -1,11 +1,19 @@
 from sklearn import preprocessing
 
 __all__ = [
-    'encodeLabels'
+    'get_label_encoder'
 ]
 
-def encodeLabels(labels):
+def get_label_encoder(labels):
+    r"""Get the label encoder instance.
+
+    Arguments:
+        labels (Iterable[string]): Array of labels.
+
+    Returns:
+        sklearn.preprocessing.LabelEncoder: Instance of a LabelEncoder fit to the given labels.
+    """
+
     le = preprocessing.LabelEncoder()
-    set_labels = list(set(labels))
     le.fit(labels)
-    return dict(zip(set_labels, le.transform(set_labels)))
+    return le
