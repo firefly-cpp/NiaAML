@@ -13,9 +13,6 @@ class PreprocessingAlgorithm:
 
 	License:
         MIT
-
-	Attributes:
-        
     """
 
     def __init__(self, **kwargs):
@@ -35,6 +32,6 @@ class PreprocessingAlgorithm:
             x (numpy.ndarray[float]): Data to process.
 
         Returns:
-            numpy.array[float]: Processed data.
+            numpy.ndarray[float]: Processed data.
         """
         return x

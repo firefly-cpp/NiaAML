@@ -1,10 +1,10 @@
-from sklearn.preprocessing import normalize
+from sklearn.preprocessing import StandardScaler as StdScaler
 from niaaml.preprocessing_algorithms.preprocessing_algorithm import PreprocessingAlgorithm
 
-__all__ = ['Normalizer']
+__all__ = ['StandardScaler']
 
-class Normalizer(PreprocessingAlgorithm):
-    r"""Implementation of feature normalization algorithm.
+class StandardScaler(PreprocessingAlgorithm):
+    r"""Implementation of feature standard scaling algorithm.
     
 	Date:
 		2020
@@ -31,5 +31,5 @@ class Normalizer(PreprocessingAlgorithm):
         See Also:
             * :func:`niaaml.preprocessing_algorithms.PreprocessingAlgorithm.process`
         """
-
-        return normalize(x, axis=0)
+        
+        return StdScaler().fit_transform(x)
