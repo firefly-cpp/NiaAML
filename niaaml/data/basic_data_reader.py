@@ -1,6 +1,6 @@
 import numpy as np
 from niaaml.data.data_reader import DataReader
-from niaaml.utility import get_label_encoder
+from niaaml.utilities import get_label_encoder
 
 __all__ = ['BasicDataReader']
 
