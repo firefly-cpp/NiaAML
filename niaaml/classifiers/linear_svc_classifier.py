@@ -1,13 +1,13 @@
 from niaaml.classifiers.classifier import Classifier
 from niaaml.utilities import MinMax
 from niaaml.utilities import ParameterDefinition
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.svm import LinearSVC
 import numpy as np
 
-__all__ = ['RandomForestClassifier']
+__all__ = ['LinearSVCClassifier']
 
-class RandomForestClassifier(Classifier):
-	r"""Implementation of random forest classifier.
+class LinearSVCClassifier(Classifier):
+	r"""Implementation of linear support vector classification.
 	
 	Date:
 		2020
@@ -21,9 +21,10 @@ class RandomForestClassifier(Classifier):
 	See Also:
 		* :class:`niaaml.classifiers.Classifier`
 	"""
-	__randomForestClassifier = RandomForestClassifier()
+	__linearSVC = LinearSVC()
 	_params = dict(
-			n_estimators = ParameterDefinition(MinMax(min=10, max=150), np.uint)
+			penalty = ParameterDefinition(['l1', 'l2'], None),
+			max_iter = ParameterDefinition(MinMax(min=300, max=2000), np.uint)
 		)
 
 	def _set_parameters(self, **kwargs):
@@ -32,10 +33,10 @@ class RandomForestClassifier(Classifier):
 		See Also:
 			* :func:`niaaml.classifiers.Classifier._set_parameters`
 		"""
-		self.__randomForestClassifier.set_params(**kwargs)
+		self.__linearSVC.set_params(**kwargs)
 
 	def fit(self, x, y, **kwargs):
-		r"""Fit RandomForestClassifier.
+		r"""Fit LinearSVC.
 
         Arguments:
             x (numpy.ndarray[float]): n samples to classify.
@@ -44,7 +45,7 @@ class RandomForestClassifier(Classifier):
         Returns:
             None
 		"""
-		self.__randomForestClassifier.fit(x, y)
+		self.__linearSVC.fit(x, y)
 
 	def predict(self, x, **kwargs):
 		r"""Predict class for each sample (row) in x.
@@ -55,4 +56,4 @@ class RandomForestClassifier(Classifier):
         Returns:
             numpy.array[int]: n predicted classes.
 		"""
-		self.__randomForestClassifier.predict(x)
+		self.__linearSVC.predict(x)

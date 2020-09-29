@@ -33,7 +33,6 @@ class CSVDataReader(DataReader):
 		See Also:
 			* :func:`niaaml.data.DataReader._set_parameters`
 		"""
-		DataReader._set_parameters(self, **kwargs)
 		self.__src = src
 		self._read_data()
 

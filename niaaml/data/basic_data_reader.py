@@ -30,8 +30,6 @@ class BasicDataReader(DataReader):
 		See Also:
 			* :func:`niaaml.data.DataReader._set_parameters`
 		"""
-		DataReader._set_parameters(self, **kwargs)
-
 		self._x = np.array(x).astype(np.float)
 
 		self._label_encoder = get_label_encoder(y)

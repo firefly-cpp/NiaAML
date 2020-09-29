@@ -3,6 +3,7 @@ import numpy
 
 __all__ = [
 	'MinMax',
+	'ParameterDefinition',
 	'get_label_encoder'
 ]
 
@@ -24,17 +25,18 @@ class MinMax:
 	min = 0
 	max = 0
 
-	def __init__(self, **kwargs):
+	def __init__(self, min, max):
 		r"""Initialize instance.
-		"""
-		self._set_parameters(**kwargs)
-	
-	def _set_parameters(self, min, max, **kwargs):
-		r"""Set the parameters of the algorithm.
-
-		Arguments:
-			min (numpy.double): Lower bound.
-			max (numpy.double): Upper bound.
 		"""
 		self.min = min
 		self.max = max
+
+class ParameterDefinition:
+	value = None
+	paramType = None
+
+	def __init__(self, value, paramType):
+		r"""Initialize instance.
+		"""
+		self.value = value
+		self.paramType = paramType

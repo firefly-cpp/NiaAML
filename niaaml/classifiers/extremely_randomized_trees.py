@@ -1,13 +1,13 @@
 from niaaml.classifiers.classifier import Classifier
 from niaaml.utilities import MinMax
 from niaaml.utilities import ParameterDefinition
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import ExtraTreesClassifier
 import numpy as np
 
-__all__ = ['RandomForestClassifier']
+__all__ = ['ExtremelyRandomizedTrees']
 
-class RandomForestClassifier(Classifier):
-	r"""Implementation of random forest classifier.
+class ExtremelyRandomizedTrees(Classifier):
+	r"""Implementation of extremely randomized trees classifier.
 	
 	Date:
 		2020
@@ -21,9 +21,11 @@ class RandomForestClassifier(Classifier):
 	See Also:
 		* :class:`niaaml.classifiers.Classifier`
 	"""
-	__randomForestClassifier = RandomForestClassifier()
+	__extraTreesClassifier = ExtraTreesClassifier()
 	_params = dict(
-			n_estimators = ParameterDefinition(MinMax(min=10, max=150), np.uint)
+			n_estimators = ParameterDefinition(MinMax(min=10, max=200), np.uint),
+			criterion = ParameterDefinition(['gini', 'entropy'], None),
+			min_samples_split = ParameterDefinition(MinMax(min=2, max=10), np.uint)
 		)
 
 	def _set_parameters(self, **kwargs):
@@ -32,10 +34,10 @@ class RandomForestClassifier(Classifier):
 		See Also:
 			* :func:`niaaml.classifiers.Classifier._set_parameters`
 		"""
-		self.__randomForestClassifier.set_params(**kwargs)
+		self.__extraTreesClassifier.set_params(**kwargs)
 
 	def fit(self, x, y, **kwargs):
-		r"""Fit RandomForestClassifier.
+		r"""Fit ExtraTreesClassifier.
 
         Arguments:
             x (numpy.ndarray[float]): n samples to classify.
@@ -44,7 +46,7 @@ class RandomForestClassifier(Classifier):
         Returns:
             None
 		"""
-		self.__randomForestClassifier.fit(x, y)
+		self.__extraTreesClassifier.fit(x, y)
 
 	def predict(self, x, **kwargs):
 		r"""Predict class for each sample (row) in x.
@@ -55,4 +57,4 @@ class RandomForestClassifier(Classifier):
         Returns:
             numpy.array[int]: n predicted classes.
 		"""
-		self.__randomForestClassifier.predict(x)
+		self.__extraTreesClassifier.predict(x)
