@@ -1,8 +1,12 @@
 [tool.poetry]
 name = "NiaAML"
 version = "0.1.0"
-description = ""
+description = "Automated machine learning in Python"
+license = "MIT"
+
 authors = ["Luka Pečnik <lukapecnik96@gmail.com>"]
+
+keywords = ['classification', 'NiaPy', 'scikit-learn', 'nature-inspired algorithms']
 
 [tool.poetry.dependencies]
 python = "^3.8"
