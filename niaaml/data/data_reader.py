@@ -15,8 +15,8 @@ class DataReader:
 		MIT
 
 	Attributes:
-		_x (numpy.ndarray[float]): Array of rows from dataset without expected classification results.
-		_y (numpy.array[int]): Array of encoded expected classification results.
+		_x (Iterable[any]): Array of rows from dataset without expected classification results.
+		_y (Iterable[int]): Array of encoded expected classification results.
 		_label_encoder (sklearn.preprocessing.LabelEncoder): LabelEncoder instance for encoding classification labels.
 	"""
 
@@ -38,7 +38,7 @@ class DataReader:
 		r"""Get value of _x.
 
 		Returns:
-			numpy.ndarray[float]: Array of rows from dataset without expected classification results.
+			Iterable[any]: Array of rows from dataset without expected classification results.
 		"""
 		return self._x
 	

@@ -29,9 +29,9 @@ class PreprocessingAlgorithm:
         r"""Processes the given x data.
 
         Arguments:
-            x (numpy.ndarray[float]): Data to process.
+            x (Iterable[any]): Data to process.
 
         Returns:
-            numpy.ndarray[float]: Processed data.
+            Iterable[any]: Processed data.
         """
         return x
