@@ -40,7 +40,7 @@ class Classifier:
 		r"""Fit implemented classifier.
 
         Arguments:
-            x (numpy.ndarray[float]): n samples to classify.
+            x (Iterable[any]): n samples to classify.
 			y (numpy.array[int]): n classes of the samples in the x array.
 
         Returns:
@@ -52,7 +52,7 @@ class Classifier:
 		r"""Predict class for each sample (row) in x.
 
         Arguments:
-            x (numpy.ndarray[float]): n samples to classify.
+            x (Iterable[any]): n samples to classify.
 
         Returns:
             numpy.array[int]: n predicted classes.

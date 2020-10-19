@@ -38,7 +38,7 @@ class RandomForestClassifier(Classifier):
 		r"""Fit RandomForestClassifier.
 
         Arguments:
-            x (numpy.ndarray[float]): n samples to classify.
+            x (Iterable[any]): n samples to classify.
 			y (numpy.array[int]): n classes of the samples in the x array.
 
         Returns:
@@ -50,7 +50,7 @@ class RandomForestClassifier(Classifier):
 		r"""Predict class for each sample (row) in x.
 
         Arguments:
-            x (numpy.ndarray[float]): n samples to classify.
+            x (Iterable[any]): n samples to classify.
 
         Returns:
             numpy.array[int]: n predicted classes.
