@@ -1,5 +1,4 @@
 import sys
-import random
 from NiaPy.algorithms.modified import SelfAdaptiveDifferentialEvolution
 from NiaPy.task import StoppingTask
 from NiaPy.benchmarks import Benchmark
@@ -61,7 +60,6 @@ class jDEFSTH(object):
 class FeatureSelectionThreshold(Benchmark):
     def __init__(self, X, y):
         Benchmark.__init__(self, 0.0, 1.0)
-        self.Threshold = random.uniform(0, 1)
         self.train_X, self.test_X, self.train_y, self.test_y = train_test_split(
             X, y, test_size=0.2)
 
