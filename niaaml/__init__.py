@@ -5,6 +5,8 @@ from niaaml import feature_selection_algorithms
 from niaaml.utilities import get_label_encoder
 from niaaml.utilities import MinMax
 from niaaml.utilities import ParameterDefinition
+from niaaml.utilities import Factory
+from niaaml.task import Task
 
 __all__ = [
     'data',
@@ -13,7 +15,9 @@ __all__ = [
     'get_label_encoder',
     'float_converter',
     'MinMax',
-    'ParameterDefinition'
+    'ParameterDefinition',
+    'Factory',
+    'Task'
 ]
 __project__ = 'niaaml'
 __version__ = '0.1.0'

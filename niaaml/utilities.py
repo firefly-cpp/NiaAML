@@ -4,6 +4,7 @@ import numpy
 __all__ = [
 	'MinMax',
 	'ParameterDefinition',
+	'Factory',
 	'get_label_encoder',
 	'float_converter'
 ]
@@ -41,11 +42,12 @@ def float_converter(array):
 	return converted_array
 
 class MinMax:
+	r"""TODO
+	"""
 	min = 0
 	max = 0
 
 	def __init__(self, min, max):
-
 		r"""Initialize instance.
 
 		Arguments:
@@ -56,6 +58,8 @@ class MinMax:
 		self.max = max
 
 class ParameterDefinition:
+	r"""TODO
+	"""
 	value = None
 	paramType = None
 
@@ -68,3 +72,35 @@ class ParameterDefinition:
 		"""
 		self.value = value
 		self.paramType = paramType
+
+class Factory:
+	r"""Base class with string mappings to entities.
+
+	Attributes:
+		__entities (Dict[str, any]): Dictionary to map from strings to an instance of anything.
+	"""
+	_entities = None
+
+	def __init__(self, **kwargs):
+		r"""Initialize the factory."""
+		self._set_parameters(**kwargs)
+	
+	def _set_parameters(self, **kwargs):
+		r"""Set the parameters/arguments of the factory.
+		"""
+		return
+	
+	def get_result(self, name):
+		r"""Get the resulting entity.
+
+		Arguments:
+			name (Dictionary[str, any]): String that represents the entity.
+
+		Returns:
+			any: Entity according to the given name.
+		"""
+
+		if name in self._entities:
+			return self._entities[name]()
+		else:
+			raise TypeError('Passed entity is not defined! --> %s' % name) 
