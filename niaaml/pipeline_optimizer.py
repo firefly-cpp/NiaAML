@@ -1,5 +1,5 @@
 import numpy as np
-from niaaml import Pipeline
+from niaaml.pipeline import Pipeline
 from niaaml.classifiers import ClassifierFactory
 from niaaml.feature_selection_algorithms import FeatureSelectionAlgorithmFactory
 from niaaml.preprocessing_algorithms import PreprocessingAlgorithmFactory
@@ -28,6 +28,10 @@ class PipelineOptimizer:
 		__pipelines_numeric (numpy.ndarray[float]): Numeric representation of pipelines.
 		__pipelines (Iterable[Pipeline]): Actual pipelines.
         __pop_size (int): Number of individuals in the pipeline optimizer's population.
+
+        __classifier_factory (ClassifierFactory): Factory for classifier instances.
+        __preprocessing_algorithm_factory (ClassifierFactory): Factory for preprocessing algorithm instances.
+        __feature_selection_algorithm_factory (ClassifierFactory): Factory for feature selection algorithm instances.
     """
     __data = None
     __feature_selection_algorithms = None
@@ -60,11 +64,14 @@ class PipelineOptimizer:
         """
         self.__data = data
 
-        self.__feature_selection_algorithms = feature_selection_algorithms
-        self.__feature_selection_algorithms.insert(0, None)
-
         self.__preprocessing_algorithms = preprocessing_algorithms
+        try:
+            self.__preprocessing_algorithms.index(None)
+        except:
+            self.__preprocessing_algorithms.insert(0, None)
+
         self.__classifiers = classifiers
+        self.__feature_selection_algorithms = feature_selection_algorithms
         self.__pop_size = pop_size
 
     def __initialize_population(self, pop_size):
@@ -73,13 +80,8 @@ class PipelineOptimizer:
         Arguments:
             pop_size (int): Number of individuals.
         """
-        dims = 1
-        if(self.__preprocessing_algorithms is not None and len(self.__preprocessing_algorithms) > 0 ):
-            dims += 1
-        if(self.__feature_selection_algorithms is not None and len(self.__feature_selection_algorithms) > 0 ):
-            dims += 1
 
-        self.__pipelines_numeric = np.random.uniform(size=(pop_size, dims))
+        self.__pipelines_numeric = np.random.uniform(size=(pop_size, 3))
         self.__pipelines = [
             Pipeline(
                 data=self.__data,
@@ -92,5 +94,5 @@ class PipelineOptimizer:
     def __float_to_instance(self, value, collection, factory):
         r"""TODO
         """
-        name = collection[np.int(np.floor(value / len(collection)))]
+        name = collection[np.int(np.round(value * (len(collection) - 1)))]
         return factory.get_result(name) if name is not None else None
