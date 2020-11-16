@@ -3,12 +3,16 @@ from niaaml.pipeline import Pipeline
 from niaaml.classifiers import ClassifierFactory
 from niaaml.feature_selection_algorithms import FeatureSelectionAlgorithmFactory
 from niaaml.preprocessing_algorithms import PreprocessingAlgorithmFactory
+from NiaPy.task import StoppingTask
+from NiaPy.benchmarks import Benchmark
+from NiaPy.algorithms.basic import ParticleSwarmOptimization
 
 __all__ = [
-    'PipelineOptimizer'
+    'PipelineOptimizer',
+    'PipelineOptimizerBenchmark'
 ]
 
-class PipelineOptimizer:
+class PipelineOptimizer():
     r"""Optimization task that finds the best classification pipeline according to the given input.
     
 	Date:
@@ -96,3 +100,19 @@ class PipelineOptimizer:
         """
         name = collection[np.int(np.round(value * (len(collection) - 1)))]
         return factory.get_result(name) if name is not None else None
+
+    def optimize_pipeline(self, n_p, n_fes):
+        algo = ParticleSwarmOptimization(NP=n_p)    # TODO define InitPopFunc
+        task = StoppingTask(D=3, nFES=n_fes, benchmark=PipelineOptimizerBenchmark())
+        best = algo.run(task)
+        return best
+
+class PipelineOptimizerBenchmark(Benchmark):
+    def __init__(self):
+        Benchmark.__init__(self, 0.0, 1.0)
+    
+    def function(self):
+        # TODO
+        def evaluate(D, sol):
+            return 0.0
+        return evaluate
