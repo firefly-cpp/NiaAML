@@ -3,7 +3,7 @@ from niaaml.feature_selection_algorithms.variance_threshold_feature_selection im
 from niaaml.feature_selection_algorithms.jDEFSTH import jDEFSTH
 from niaaml.feature_selection_algorithms.select_percentile_chi2 import SelectPercentileChi2
 from niaaml.feature_selection_algorithms.select_k_best_chi2 import SelectKBestChi2
-from niaaml.feature_selection_algorithms.utility import FeatureSelectionAlgorithmUtility
+from niaaml.feature_selection_algorithms.utility import FeatureSelectionAlgorithmFactory
 
 __all__ = [
     'FeatureSelectionAlgorithm',
@@ -11,5 +11,5 @@ __all__ = [
     'jDEFSTH',
     'SelectPercentileChi2',
     'SelectKBestChi2',
-    'FeatureSelectionAlgorithmUtility'
+    'FeatureSelectionAlgorithmFactory'
 ]

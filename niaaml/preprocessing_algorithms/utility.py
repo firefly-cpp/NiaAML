@@ -2,10 +2,10 @@ from niaaml.utilities import Factory
 from niaaml import preprocessing_algorithms
 
 __all__ = [
-	'PreprocessingAlgorithmUtility'
+	'PreprocessingAlgorithmFactory'
 ]
 
-class PreprocessingAlgorithmUtility(Factory):
+class PreprocessingAlgorithmFactory(Factory):
 	r"""Class with string mappings to preprocessing algorithms.
 
 	Attributes:

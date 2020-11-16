@@ -2,10 +2,10 @@ from niaaml.utilities import Factory
 from niaaml import feature_selection_algorithms
 
 __all__ = [
-	'FeatureSelectionAlgorithmUtility'
+	'FeatureSelectionAlgorithmFactory'
 ]
 
-class FeatureSelectionAlgorithmUtility(Factory):
+class FeatureSelectionAlgorithmFactory(Factory):
 	r"""Class with string mappings to feature selection algorithms.
 
 	Attributes:

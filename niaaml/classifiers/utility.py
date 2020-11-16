@@ -2,10 +2,10 @@ from niaaml.utilities import Factory
 from niaaml import classifiers
 
 __all__ = [
-	'ClassifierUtility'
+	'ClassifierFactory'
 ]
 
-class ClassifierUtility(Factory):
+class ClassifierFactory(Factory):
 	r"""Class with string mappings to classifiers.
 
 	Attributes:
