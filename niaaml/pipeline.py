@@ -1,3 +1,5 @@
+from sklearn.model_selection import train_test_split
+
 __all__ = [
     'Pipeline'
 ]
@@ -43,3 +45,17 @@ class Pipeline:
         self.__feature_selection_algorithm = feature_selection_algorithm
         self.__preprocessing_algorithm = preprocessing_algorithm
         self.__classifier = classifier
+    
+    def optimize(self, population_size, number_of_evaluations):
+        r"""TODO
+        """
+        X = self.__feature_selection_algorithm.select_features(self.__data.get_x(), self.__data.get_y())
+        
+        if self.__preprocessing_algorithm is not None:
+           X = self.__preprocessing_algorithm.process(X)
+        
+        train_X, test_X, train_y, test_y = train_test_split(
+            X, self.__data.get_y(), test_size=0.2)
+
+        self.__classifier.fit(train_X, train_y)
+        self.__classifier.predict(test_X)

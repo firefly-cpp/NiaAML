@@ -4,7 +4,6 @@ from NiaPy.task import StoppingTask
 from NiaPy.benchmarks import Benchmark
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
-from sklearn.datasets import load_wine
 
 __all__ = [
     'jDEFSTH'
@@ -39,7 +38,7 @@ class jDEFSTH(object):
         """
         return
 
-    def final_output(self, sol):
+    def __final_output(self, sol):
         selected = []
         threshold = sol[len(sol)-1]
         for i in range(len(sol)-1):
@@ -50,14 +49,16 @@ class jDEFSTH(object):
         return selected
     
     def select_features(self, x, y, **kwargs):
-        num_features = X.shape[1]
+        num_features = x.shape[1]
         algo = SelfAdaptiveDifferentialEvolution(NP=10, F=0.5, F_l=0.0, F_u=2.0, Tao1=0.9, CR=0.5, Tao2=0.45)
-        task = StoppingTask(D=num_features+1, nFES=1000, benchmark=FeatureSelectionThreshold(X, y))
+        task = StoppingTask(D=num_features+1, nFES=1000, benchmark=FeatureSelectionThreshold(x, y))
         best = algo.run(task)
-        return self.final_output(best[0])
-
+        return self.__final_output(best[0])
 
 class FeatureSelectionThreshold(Benchmark):
+    r"""TODO
+    """
+    
     def __init__(self, X, y):
         Benchmark.__init__(self, 0.0, 1.0)
         self.train_X, self.test_X, self.train_y, self.test_y = train_test_split(
@@ -93,8 +94,3 @@ class FeatureSelectionThreshold(Benchmark):
             return fitness
 
         return evaluate
-
-#test
-#X, y = load_wine(return_X_y=True)
-#a = jDEFSTH()
-#a.select_features(X,y)

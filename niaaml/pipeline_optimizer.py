@@ -101,9 +101,11 @@ class PipelineOptimizer():
         name = collection[np.int(np.round(value * (len(collection) - 1)))]
         return factory.get_result(name) if name is not None else None
 
-    def optimize_pipeline(self, n_p, n_fes):
-        algo = ParticleSwarmOptimization(NP=n_p)    # TODO define InitPopFunc
-        task = StoppingTask(D=3, nFES=n_fes, benchmark=PipelineOptimizerBenchmark())
+    def run(self, pipeline_population_size, pipeline_classifier_population_size, number_of_pipeline_evaluations, number_of_classifier_evaluations):
+        r"""TODO
+        """
+        algo = ParticleSwarmOptimization(NP=pipeline_population_size)    # TODO define InitPopFunc
+        task = StoppingTask(D=3, nFES=number_of_pipeline_evaluations, benchmark=PipelineOptimizerBenchmark())
         best = algo.run(task)
         return best
 
