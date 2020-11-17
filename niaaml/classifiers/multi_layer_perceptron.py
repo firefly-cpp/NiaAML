@@ -57,4 +57,4 @@ class MultiLayerPerceptron(Classifier):
         Returns:
             numpy.array[int]: n predicted classes.
 		"""
-		self.__multiLayerPerceptron.predict(x)
+		return self.__multiLayerPerceptron.predict(x)

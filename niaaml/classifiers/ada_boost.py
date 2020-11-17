@@ -56,4 +56,4 @@ class AdaBoost(Classifier):
         Returns:
             numpy.array[int]: n predicted classes.
 		"""
-		self.__adaBoost.predict(x)
+		return self.__adaBoost.predict(x)

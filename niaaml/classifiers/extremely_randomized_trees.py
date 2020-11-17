@@ -57,4 +57,4 @@ class ExtremelyRandomizedTrees(Classifier):
         Returns:
             numpy.array[int]: n predicted classes.
 		"""
-		self.__extraTreesClassifier.predict(x)
+		return self.__extraTreesClassifier.predict(x)

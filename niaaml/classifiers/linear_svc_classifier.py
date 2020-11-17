@@ -56,4 +56,4 @@ class LinearSVCClassifier(Classifier):
         Returns:
             numpy.array[int]: n predicted classes.
 		"""
-		self.__linearSVC.predict(x)
+		return self.__linearSVC.predict(x)

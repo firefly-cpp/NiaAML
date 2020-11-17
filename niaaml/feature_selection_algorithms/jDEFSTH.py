@@ -51,11 +51,11 @@ class jDEFSTH(object):
     def select_features(self, x, y, **kwargs):
         num_features = x.shape[1]
         algo = SelfAdaptiveDifferentialEvolution(NP=10, F=0.5, F_l=0.0, F_u=2.0, Tao1=0.9, CR=0.5, Tao2=0.45)
-        task = StoppingTask(D=num_features+1, nFES=1000, benchmark=FeatureSelectionThreshold(x, y))
+        task = StoppingTask(D=num_features+1, nFES=1000, benchmark=_FeatureSelectionThreshold(x, y))
         best = algo.run(task)
         return self.__final_output(best[0])
 
-class FeatureSelectionThreshold(Benchmark):
+class _FeatureSelectionThreshold(Benchmark):
     r"""TODO
     """
     

@@ -57,4 +57,4 @@ class Bagging(Classifier):
         Returns:
             numpy.array[int]: n predicted classes.
 		"""
-		self.__baggingClassifier.predict(x)
+		return self.__baggingClassifier.predict(x)
