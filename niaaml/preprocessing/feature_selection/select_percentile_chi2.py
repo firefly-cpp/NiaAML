@@ -1,12 +1,12 @@
-from niaaml.feature_selection_algorithms.feature_selection_algorithm import FeatureSelectionAlgorithm
-from sklearn.feature_selection import VarianceThreshold
+from niaaml.preprocessing.feature_selection.feature_selection_algorithm import FeatureSelectionAlgorithm
+from sklearn.feature_selection import SelectPercentile, chi2
 
 __all__ = [
-	'VarianceThresholdFeatureSelection'
+	'SelectPercentileChi2'
 ]
 
-class VarianceThresholdFeatureSelection(FeatureSelectionAlgorithm):
-	r"""Implementation of feature selection using variance threshold.
+class SelectPercentileChi2(FeatureSelectionAlgorithm):
+	r"""Implementation of feature selection using percentile selection of best features according to the chi2 resulting data.
 	
 	Date:
 		2020
@@ -19,7 +19,7 @@ class VarianceThresholdFeatureSelection(FeatureSelectionAlgorithm):
 	"""
 
 	def __init__(self, **kwargs):
-		r"""Initialize the VarianceThresholdFeatureSelection algorithm.
+		r"""Initialize the SelectPercentileChi2 algorithm.
 		"""
 		self._set_parameters(**kwargs)
 	
@@ -38,4 +38,4 @@ class VarianceThresholdFeatureSelection(FeatureSelectionAlgorithm):
 		Returns:
 			Iterable[any]: Array of selected features.
 		"""
-		return VarianceThreshold().fit_transform(x, )
+		return SelectPercentile(chi2).fit_transform(x, y)

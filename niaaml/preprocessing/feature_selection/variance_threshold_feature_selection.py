@@ -1,12 +1,12 @@
-from niaaml.feature_selection_algorithms.feature_selection_algorithm import FeatureSelectionAlgorithm
-from sklearn.feature_selection import SelectKBest, chi2
+from niaaml.preprocessing.feature_selection.feature_selection_algorithm import FeatureSelectionAlgorithm
+from sklearn.feature_selection import VarianceThreshold
 
 __all__ = [
-	'SelectKBestChi2'
+	'VarianceThresholdFeatureSelection'
 ]
 
-class SelectKBestChi2(FeatureSelectionAlgorithm):
-	r"""Implementation of feature selection using selection of k best features according to the chi2 resulting data.
+class VarianceThresholdFeatureSelection(FeatureSelectionAlgorithm):
+	r"""Implementation of feature selection using variance threshold.
 	
 	Date:
 		2020
@@ -19,7 +19,7 @@ class SelectKBestChi2(FeatureSelectionAlgorithm):
 	"""
 
 	def __init__(self, **kwargs):
-		r"""Initialize the SelectKBestChi2 algorithm.
+		r"""Initialize the VarianceThresholdFeatureSelection algorithm.
 		"""
 		self._set_parameters(**kwargs)
 	
@@ -38,8 +38,4 @@ class SelectKBestChi2(FeatureSelectionAlgorithm):
 		Returns:
 			Iterable[any]: Array of selected features.
 		"""
-		k = 10
-		if len(x[0]) < k:
-			k = len(x[0])
-		
-		return SelectKBest(chi2, k=k).fit_transform(x, y)
+		return VarianceThreshold().fit_transform(x, )

@@ -101,6 +101,6 @@ class Factory:
 		"""
 
 		if name in self._entities:
-			return self._entities[name]
+			return self._entities[name]().getRandomInstance()
 		else:
-			raise TypeError('Passed entity is not defined! --> %s' % name) 
+			raise TypeError('Passed entity is not defined! --> %s' % name)

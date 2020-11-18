@@ -1,8 +1,8 @@
 import numpy as np
 from niaaml.pipeline import Pipeline
 from niaaml.classifiers import ClassifierFactory
-from niaaml.feature_selection_algorithms import FeatureSelectionAlgorithmFactory
-from niaaml.preprocessing_algorithms import PreprocessingAlgorithmFactory
+from niaaml.preprocessing.feature_selection import FeatureSelectionAlgorithmFactory
+from niaaml.preprocessing.feature_transform import FeatureTransformAlgorithmFactory
 from NiaPy.task import StoppingTask, OptimizationType
 from NiaPy.benchmarks import Benchmark
 from NiaPy.algorithms.utility import AlgorithmUtility
@@ -32,22 +32,18 @@ class PipelineOptimizer:
 
 	Attributes:
 		__data (DataReader): Instance of any DataReader implementation.
-		__feature_selection_algorithms (Iterable[FeatureSelectionAlgorithm]): Array of possible feature selection algorithms.
-		__preprocessing_algorithms (Iterable[PreprocessingAlgorithm]): Array of possible preprocessing algorithms.
-        __classifiers (Iterable[Classifier]): Array of possible classifiers.
+		__feature_selection_algorithms (Iterable[str]): Array of names of possible feature selection algorithms.
+		__feature_transform_algorithms (Iterable[str]): Array of names of possible feature transform algorithms.
+        __classifiers (Iterable[Classifier]): Array of names of possible classifiers.
 		__pipelines_numeric (numpy.ndarray[float]): Numeric representation of pipelines.
 		__pipelines (Iterable[Pipeline]): Actual pipelines.
-
-        __classifier_factory (ClassifierFactory): Factory for classifier instances.
-        __preprocessing_algorithm_factory (ClassifierFactory): Factory for preprocessing algorithm instances.
-        __feature_selection_algorithm_factory (ClassifierFactory): Factory for feature selection algorithm instances.
 
         __optimization_algorithm (str): Name of the optimization algorithm to use.
         __niapy_algorithm_utility (AlgorithmUtility): Utility class used to get an optimization algorithm.
     """
     __data = None
     __feature_selection_algorithms = None
-    __preprocessing_algorithms = None
+    __feature_transform_algorithms = None
     __classifiers = None
 
     __pipelines_numeric = None
@@ -61,25 +57,25 @@ class PipelineOptimizer:
         """
         self._set_parameters(**kwargs)
     
-    def _set_parameters(self, data, feature_selection_algorithms, preprocessing_algorithms, classifiers, optimization_algorithm, **kwargs):
+    def _set_parameters(self, data, feature_selection_algorithms, feature_transform_algorithms, classifiers, optimization_algorithm, **kwargs):
         r"""Set the parameters/arguments of the task.
 
 		Arguments:
             data (DataReader): Instance of any DataReader implementation.
-            feature_selection_algorithms (Iterable[FeatureSelectionAlgorithm]): Array of possible feature selection algorithms.
-            preprocessing_algorithms (Iterable[PreprocessingAlgorithm]): Array of possible preprocessing algorithms.
-            classifiers (Iterable[Classificator]): Array of possible classifiers.
+            feature_selection_algorithms (Iterable[str]): Array of names of possible feature selection algorithms.
+            feature_transform_algorithms (Iterable[str]): Array of names of possible feature transform algorithms.
+            classifiers (Iterable[Classificator]): Array of names of possible classifiers.
             optimization_algorithm (str): Name of the optimization algorithm to use.
         """
         self.__data = data
         self.__optimization_algorithm = optimization_algorithm
 
-        self.__preprocessing_algorithms = preprocessing_algorithms
-        if self.__preprocessing_algorithms is not None:
+        self.__feature_transform_algorithms = feature_transform_algorithms
+        if self.__feature_transform_algorithms is not None:
             try:
-                self.__preprocessing_algorithms.index(None)
+                self.__feature_transform_algorithms.index(None)
             except:
-                self.__preprocessing_algorithms.insert(0, None)
+                self.__feature_transform_algorithms.insert(0, None)
 
         self.__classifiers = classifiers
         self.__feature_selection_algorithms = feature_selection_algorithms
@@ -94,7 +90,7 @@ class PipelineOptimizer:
         task = StoppingTask(
             D=3,
             nFES=number_of_pipeline_evaluations,
-            benchmark=_PipelineOptimizerBenchmark(self.__data, self.__feature_selection_algorithms, self.__preprocessing_algorithms, self.__classifiers, classifier_population_size, number_of_classifier_evaluations),
+            benchmark=_PipelineOptimizerBenchmark(self.__data, self.__feature_selection_algorithms, self.__feature_transform_algorithms, self.__classifiers, classifier_population_size, number_of_classifier_evaluations),
             optType=OptimizationType.MAXIMIZATION
             )
         best = algo.run(task)
@@ -105,19 +101,19 @@ class _PipelineOptimizerBenchmark(Benchmark):
     """
     __data = None
     __feature_selection_algorithms = None
-    __preprocessing_algorithms = None
+    __feature_transform_algorithms = None
     __classifiers = None
 
     __classifier_factory = ClassifierFactory()
-    __preprocessing_algorithm_factory = PreprocessingAlgorithmFactory()
+    __feature_transform_algorithm_factory = FeatureTransformAlgorithmFactory()
     __feature_selection_algorithm_factory = FeatureSelectionAlgorithmFactory()
 
-    def __init__(self, data, feature_selection_algorithms, preprocessing_algorithms, classifiers, classifier_population_size, number_of_classifier_evaluations):
+    def __init__(self, data, feature_selection_algorithms, feature_transform_algorithms, classifiers, classifier_population_size, number_of_classifier_evaluations):
         r"""TODO
         """
         self.__data = data
         self.__feature_selection_algorithms = feature_selection_algorithms
-        self.__preprocessing_algorithms = preprocessing_algorithms
+        self.__feature_transform_algorithms = feature_transform_algorithms
         self.__classifiers = classifiers
         self.__classifier_population_size = classifier_population_size
         self.__number_of_classifier_evaluations = number_of_classifier_evaluations
@@ -139,7 +135,7 @@ class _PipelineOptimizerBenchmark(Benchmark):
             pipeline = Pipeline(
                 data=self.__data,
                 feature_selection_algorithm=self.__float_to_instance(sol[0], self.__feature_selection_algorithms, self.__feature_selection_algorithm_factory) if self.__feature_selection_algorithms is not None and len(self.__feature_selection_algorithms) > 0 else None,
-                preprocessing_algorithm=self.__float_to_instance(sol[1], self.__preprocessing_algorithms, self.__preprocessing_algorithm_factory) if self.__preprocessing_algorithms is not None and len(self.__preprocessing_algorithms) > 0 else None,
+                feature_transform_algorithms=self.__float_to_instance(sol[1], self.__feature_transform_algorithms, self.__feature_transform_algorithm_factory) if self.__feature_transform_algorithms is not None and len(self.__feature_transform_algorithms) > 0 else None,
                 classifier=self.__float_to_instance(sol[2], self.__classifiers, self.__classifier_factory)
             )
             return pipeline.optimize(self.__classifier_population_size, self.__number_of_classifier_evaluations)

@@ -1,12 +1,12 @@
-from niaaml.feature_selection_algorithms.feature_selection_algorithm import FeatureSelectionAlgorithm
-from sklearn.feature_selection import SelectPercentile, chi2
+from niaaml.preprocessing.feature_selection.feature_selection_algorithm import FeatureSelectionAlgorithm
+from sklearn.feature_selection import SelectKBest, chi2
 
 __all__ = [
-	'SelectPercentileChi2'
+	'SelectKBestChi2'
 ]
 
-class SelectPercentileChi2(FeatureSelectionAlgorithm):
-	r"""Implementation of feature selection using percentile selection of best features according to the chi2 resulting data.
+class SelectKBestChi2(FeatureSelectionAlgorithm):
+	r"""Implementation of feature selection using selection of k best features according to the chi2 resulting data.
 	
 	Date:
 		2020
@@ -19,7 +19,7 @@ class SelectPercentileChi2(FeatureSelectionAlgorithm):
 	"""
 
 	def __init__(self, **kwargs):
-		r"""Initialize the SelectPercentileChi2 algorithm.
+		r"""Initialize the SelectKBestChi2 algorithm.
 		"""
 		self._set_parameters(**kwargs)
 	
@@ -38,4 +38,8 @@ class SelectPercentileChi2(FeatureSelectionAlgorithm):
 		Returns:
 			Iterable[any]: Array of selected features.
 		"""
-		return SelectPercentile(chi2).fit_transform(x, y)
+		k = 10
+		if len(x[0]) < k:
+			k = len(x[0])
+		
+		return SelectKBest(chi2, k=k).fit_transform(x, y)

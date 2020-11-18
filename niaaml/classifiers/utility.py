@@ -26,14 +26,3 @@ class ClassifierFactory(Factory):
 			'MultiLayerPerceptron': classifiers.MultiLayerPerceptron,
 			'RandomForestClassifier': classifiers.RandomForestClassifier
 		}
-	
-	def get_result(self, name):
-		r"""Get the resulting classifier.
-
-		Arguments:
-			name (str): String that represents the classifier.
-
-		Returns:
-			Classifier: Classifier according to the given name.
-		"""
-		return Factory.get_result(self, name).getRandomInstance()

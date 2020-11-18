@@ -1,8 +1,10 @@
+from niaaml.preprocessing.preprocessing_algorithm import PreprocessingAlgorithm
+
 __all__ = [
 	'FeatureSelectionAlgorithm'
 ]
 
-class FeatureSelectionAlgorithm:
+class FeatureSelectionAlgorithm(PreprocessingAlgorithm):
 	r"""Class for implementing feature selection algorithms.
 	
 	Date:
@@ -14,16 +16,6 @@ class FeatureSelectionAlgorithm:
 	License:
 		MIT
 	"""
-
-	def __init__(self, **kwargs):
-		r"""Initialize feature selection algorithm.
-		"""
-		self._set_parameters(**kwargs)
-	
-	def _set_parameters(self, **kwargs):
-		r"""Set the parameters/arguments of the algorithm.
-		"""
-		return
 	
 	def select_features(self, x, y, **kwargs):
 		r"""Perform the feature selection process.

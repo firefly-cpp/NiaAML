@@ -4,6 +4,7 @@ from NiaPy.task import StoppingTask
 from NiaPy.benchmarks import Benchmark
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
+from niaaml.preprocessing.feature_selection.feature_selection_algorithm import FeatureSelectionAlgorithm
 
 __all__ = [
     'jDEFSTH'
@@ -13,7 +14,7 @@ __all__ = [
 best_fitness = sys.maxsize
 best_solution = None
 
-class jDEFSTH(object):
+class jDEFSTH(FeatureSelectionAlgorithm):
     r"""Implementation of self-adaptive differential evolution for feature selection using threshold mechanism.
 
     Date:
