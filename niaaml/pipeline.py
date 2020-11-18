@@ -23,14 +23,14 @@ class Pipeline:
 		__feature_transform_algorithm (FeatureTransformAlgorithm): Feature transform algorithm implementation (optional).
         __classifier (Classifier): Classifier implementation.
     """
-    __data = None
-    __feature_selection_algorithm = None
-    __feature_transform_algorithms = None
-    __classifier = None
 
     def __init__(self, **kwargs):
         r"""Initialize task.
         """
+        self.__data = None
+        self.__feature_selection_algorithm = None
+        self.__feature_transform_algorithms = None
+        self.__classifier = None
         self._set_parameters(**kwargs)
     
     def _set_parameters(self, data, feature_selection_algorithm, feature_transform_algorithms, classifier, **kwargs):
