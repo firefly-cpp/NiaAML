@@ -24,7 +24,7 @@ class AdaBoost(Classifier):
 	__adaBoost = AdaBoostClassifier()
 	_params = dict(
 			n_estimators = ParameterDefinition(MinMax(min=10, max=150), np.uint),
-			algorithm = ParameterDefinition(['SAMME', 'SAMME.R'], None)
+			algorithm = ParameterDefinition(['SAMME', 'SAMME.R'])
 		)
 
 	def _set_parameters(self, **kwargs):
@@ -56,4 +56,4 @@ class AdaBoost(Classifier):
         Returns:
             numpy.array[int]: n predicted classes.
 		"""
-		self.__adaBoost.predict(x)
+		return self.__adaBoost.predict(x)

@@ -55,4 +55,4 @@ class RandomForestClassifier(Classifier):
         Returns:
             numpy.array[int]: n predicted classes.
 		"""
-		self.__randomForestClassifier.predict(x)
+		return self.__randomForestClassifier.predict(x)

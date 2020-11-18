@@ -24,7 +24,7 @@ class ExtremelyRandomizedTrees(Classifier):
 	__extraTreesClassifier = ExtraTreesClassifier()
 	_params = dict(
 			n_estimators = ParameterDefinition(MinMax(min=10, max=200), np.uint),
-			criterion = ParameterDefinition(['gini', 'entropy'], None),
+			criterion = ParameterDefinition(['gini', 'entropy']),
 			min_samples_split = ParameterDefinition(MinMax(min=2, max=10), np.uint)
 		)
 
@@ -57,4 +57,4 @@ class ExtremelyRandomizedTrees(Classifier):
         Returns:
             numpy.array[int]: n predicted classes.
 		"""
-		self.__extraTreesClassifier.predict(x)
+		return self.__extraTreesClassifier.predict(x)
