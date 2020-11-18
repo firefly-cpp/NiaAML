@@ -23,9 +23,10 @@ class MultiLayerPerceptron(Classifier):
 	"""
 	__multiLayerPerceptron = MLPClassifier()
 	_params = dict(
-			activation = ParameterDefinition(['identity', 'logistic', 'tanh', 'relu'], None),
-			solver = ParameterDefinition(['lbfgs', 'sgd', 'adam'], None),
-			max_iter = ParameterDefinition(MinMax(min=200, max=500), np.uint)
+			activation = ParameterDefinition(['identity', 'logistic', 'tanh', 'relu']),
+			solver = ParameterDefinition(['lbfgs', 'sgd', 'adam']),
+			max_iter = ParameterDefinition(MinMax(min=200, max=500), np.uint),
+			learning_rate = ParameterDefinition(['constant', 'invscaling', 'adaptive'])
 		)
 
 	def _set_parameters(self, **kwargs):

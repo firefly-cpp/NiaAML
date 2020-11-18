@@ -51,18 +51,23 @@ class Pipeline:
         r"""TODO
         """
         # TODO implement optimization process
-        X = self.__data.get_x()
+        try:
+            X = self.__data.get_x()
 
-        if self.__feature_selection_algorithm is not None:
-            X = self.__feature_selection_algorithm.select_features(self.__data.get_x(), self.__data.get_y())
-        
-        if self.__preprocessing_algorithm is not None:
-            X = self.__preprocessing_algorithm.process(X)
-        
-        train_X, test_X, train_y, test_y = train_test_split(
-            X, self.__data.get_y(), test_size=0.2)
+            if self.__feature_selection_algorithm is not None:
+                X = self.__feature_selection_algorithm.select_features(self.__data.get_x(), self.__data.get_y())
+            
+            if self.__preprocessing_algorithm is not None:
+                X = self.__preprocessing_algorithm.process(X)
+            
+            train_X, test_X, train_y, test_y = train_test_split(
+                X, self.__data.get_y(), test_size=0.2)
 
-        self.__classifier.fit(train_X, train_y)
-        predictions = self.__classifier.predict(test_X)
+            self.__classifier.fit(train_X, train_y)
+            predictions = self.__classifier.predict(test_X)
 
-        return accuracy_score(test_y, predictions)
+            return accuracy_score(test_y, predictions)
+        except:
+            # infeasible solution as it causes some kind of error
+            # return negative infinity as we are looking for maximum accuracy in the optimization process
+            return -float('inf')

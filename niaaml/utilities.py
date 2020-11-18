@@ -63,7 +63,7 @@ class ParameterDefinition:
 	value = None
 	paramType = None
 
-	def __init__(self, value, paramType):
+	def __init__(self, value, paramType = None):
 		r"""Initialize instance.
 
 		Arguments:

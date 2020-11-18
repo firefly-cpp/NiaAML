@@ -23,9 +23,9 @@ class Bagging(Classifier):
 	"""
 	__baggingClassifier = BaggingClassifier()
 	_params = dict(
-			n_estimators = ParameterDefinition(MinMax(min=5, max=30), np.uint),
-			bootstrap = ParameterDefinition([True, False], None),
-			bootstrap_features = ParameterDefinition([True, False], None)
+			n_estimators = ParameterDefinition(MinMax(min=10, max=150), np.uint),
+			bootstrap = ParameterDefinition([True, False]),
+			bootstrap_features = ParameterDefinition([True, False])
 		)
 
 	def _set_parameters(self, **kwargs):

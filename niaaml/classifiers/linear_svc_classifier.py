@@ -23,7 +23,7 @@ class LinearSVCClassifier(Classifier):
 	"""
 	__linearSVC = LinearSVC()
 	_params = dict(
-			penalty = ParameterDefinition(['l1', 'l2'], None),
+			penalty = ParameterDefinition(['l1', 'l2']),
 			max_iter = ParameterDefinition(MinMax(min=300, max=2000), np.uint)
 		)
 
