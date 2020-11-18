@@ -22,3 +22,14 @@ class PreprocessingAlgorithmFactory(Factory):
 			'Normalizer': preprocessing_algorithms.Normalizer,
 			'StandardScaler': preprocessing_algorithms.StandardScaler
 		}
+	
+	def get_result(self, name):
+		r"""Get the resulting preprocessing algorithm.
+
+		Arguments:
+			name (str): String that represents the preprocessing algorithm.
+
+		Returns:
+			PreprocessingAlgorithm: PreprocessingAlgorithm according to the given name.
+		"""
+		return Factory.get_result(self, name)()

@@ -24,3 +24,14 @@ class FeatureSelectionAlgorithmFactory(Factory):
 			'SelectPercentileChi2': feature_selection_algorithms.SelectPercentileChi2,
 			'VarianceThresholdFeatureSelection': feature_selection_algorithms.VarianceThresholdFeatureSelection
 		}
+	
+	def get_result(self, name):
+		r"""Get the resulting feature selection algorithm.
+
+		Arguments:
+			name (str): String that represents the feature selection algorithm.
+
+		Returns:
+			FeatureSelectionAlgorithm: FeatureSelectionAlgorithm according to the given name.
+		"""
+		return Factory.get_result(self, name)()

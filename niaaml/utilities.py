@@ -77,7 +77,7 @@ class Factory:
 	r"""Base class with string mappings to entities.
 
 	Attributes:
-		__entities (Dict[str, any]): Dictionary to map from strings to an instance of anything.
+		_entities (Dict[str, any]): Dictionary to map from strings to an instance of anything.
 	"""
 	_entities = None
 
@@ -94,13 +94,13 @@ class Factory:
 		r"""Get the resulting entity.
 
 		Arguments:
-			name (Dictionary[str, any]): String that represents the entity.
+			name (str): String that represents the entity.
 
 		Returns:
 			any: Entity according to the given name.
 		"""
 
 		if name in self._entities:
-			return self._entities[name]()
+			return self._entities[name]
 		else:
 			raise TypeError('Passed entity is not defined! --> %s' % name) 
