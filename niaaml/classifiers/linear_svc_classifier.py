@@ -21,11 +21,16 @@ class LinearSVCClassifier(Classifier):
 	See Also:
 		* :class:`niaaml.classifiers.Classifier`
 	"""
-	__linearSVC = LinearSVC()
+	
 	_params = dict(
 			penalty = ParameterDefinition(['l1', 'l2']),
 			max_iter = ParameterDefinition(MinMax(min=300, max=2000), np.uint)
 		)
+
+	def __init__(self, **kwargs):
+		r"""Initialize LinearSVCClassifier instance.
+		"""
+		self.__linear_SVC = LinearSVC()
 
 	def _set_parameters(self, **kwargs):
 		r"""Set the parameters/arguments of the algorithm.
@@ -33,10 +38,10 @@ class LinearSVCClassifier(Classifier):
 		See Also:
 			* :func:`niaaml.classifiers.Classifier._set_parameters`
 		"""
-		self.__linearSVC.set_params(**kwargs)
+		self.__linear_SVC.set_params(**kwargs)
 
 	def fit(self, x, y, **kwargs):
-		r"""Fit LinearSVC.
+		r"""Fit LinearSVCClassifier.
 
         Arguments:
             x (Iterable[any]): n samples to classify.
@@ -45,7 +50,7 @@ class LinearSVCClassifier(Classifier):
         Returns:
             None
 		"""
-		self.__linearSVC.fit(x, y)
+		self.__linear_SVC.fit(x, y)
 
 	def predict(self, x, **kwargs):
 		r"""Predict class for each sample (row) in x.
@@ -56,4 +61,4 @@ class LinearSVCClassifier(Classifier):
         Returns:
             numpy.array[int]: n predicted classes.
 		"""
-		return self.__linearSVC.predict(x)
+		return self.__linear_SVC.predict(x)

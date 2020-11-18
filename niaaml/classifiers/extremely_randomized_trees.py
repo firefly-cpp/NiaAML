@@ -21,12 +21,17 @@ class ExtremelyRandomizedTrees(Classifier):
 	See Also:
 		* :class:`niaaml.classifiers.Classifier`
 	"""
-	__extraTreesClassifier = ExtraTreesClassifier()
+	
 	_params = dict(
 			n_estimators = ParameterDefinition(MinMax(min=10, max=200), np.uint),
 			criterion = ParameterDefinition(['gini', 'entropy']),
 			min_samples_split = ParameterDefinition(MinMax(min=2, max=10), np.uint)
 		)
+
+	def __init__(self, **kwargs):
+		r"""Initialize ExtremelyRandomizedTrees instance.
+		"""
+		self.__extra_trees_classifier = ExtraTreesClassifier()
 
 	def _set_parameters(self, **kwargs):
 		r"""Set the parameters/arguments of the algorithm.
@@ -34,10 +39,10 @@ class ExtremelyRandomizedTrees(Classifier):
 		See Also:
 			* :func:`niaaml.classifiers.Classifier._set_parameters`
 		"""
-		self.__extraTreesClassifier.set_params(**kwargs)
+		self.__extra_trees_classifier.set_params(**kwargs)
 
 	def fit(self, x, y, **kwargs):
-		r"""Fit ExtraTreesClassifier.
+		r"""Fit ExtremelyRandomizedTrees.
 
         Arguments:
             x (Iterable[any]): n samples to classify.
@@ -46,7 +51,7 @@ class ExtremelyRandomizedTrees(Classifier):
         Returns:
             None
 		"""
-		self.__extraTreesClassifier.fit(x, y)
+		self.__extra_trees_classifier.fit(x, y)
 
 	def predict(self, x, **kwargs):
 		r"""Predict class for each sample (row) in x.
@@ -57,4 +62,4 @@ class ExtremelyRandomizedTrees(Classifier):
         Returns:
             numpy.array[int]: n predicted classes.
 		"""
-		return self.__extraTreesClassifier.predict(x)
+		return self.__extra_trees_classifier.predict(x)

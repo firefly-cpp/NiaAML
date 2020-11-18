@@ -18,26 +18,33 @@ class jDEFSTH(FeatureSelectionAlgorithm):
     r"""Implementation of self-adaptive differential evolution for feature selection using threshold mechanism.
 
     Date:
-            2020
+        2020
+    
     Author:
-            Iztok Fister Jr.
+        Iztok Fister Jr.
+    
     Reference:
-            D. Fister, I. Fister, T. Jagrič, I. Fister Jr., J. Brest. A novel self-adaptive differential evolution for feature selection using threshold mechanism . In: Proceedings of the 2018 IEEE Symposium on Computational Intelligence (SSCI 2018), pp. 17-24, 2018.
+        D. Fister, I. Fister, T. Jagrič, I. Fister Jr., J. Brest. A novel self-adaptive differential evolution for feature selection using threshold mechanism . In: Proceedings of the 2018 IEEE Symposium on Computational Intelligence (SSCI 2018), pp. 17-24, 2018.
+    
     Reference URL: 
-            http://iztok-jr-fister.eu/static/publications/236.pdf    
+        http://iztok-jr-fister.eu/static/publications/236.pdf    
+
     License:
-            MIT
+        MIT
+
+	See Also:
+		* :class:`niaaml.preprocessing.feature_selection.feature_selection_algorithm.FeatureSelectionAlgorithm`
     """
 
-    def __init__(self, **kwargs):
-        r"""Initialize the jDEFSTH.
-        """
-        self._set_parameters(**kwargs) #TODO
-
-    def _set_parameters(self, **kwargs):
-        r"""Set the parameters/arguments of the algorithm.
-        """
-        return
+    _params = None
+    """TODO define parameters range e.g.
+    	_params = dict(
+			activation = ParameterDefinition(['identity', 'logistic', 'tanh', 'relu']),
+			solver = ParameterDefinition(['lbfgs', 'sgd', 'adam']),
+			max_iter = ParameterDefinition(MinMax(min=200, max=500), np.uint),
+			learning_rate = ParameterDefinition(['constant', 'invscaling', 'adaptive'])
+		)
+    """
 
     def __final_output(self, sol):
         selected = []

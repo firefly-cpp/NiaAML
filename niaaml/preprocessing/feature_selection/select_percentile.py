@@ -1,14 +1,14 @@
 from niaaml.utilities import ParameterDefinition, MinMax
 from niaaml.preprocessing.feature_selection.feature_selection_algorithm import FeatureSelectionAlgorithm
-from sklearn.feature_selection import VarianceThreshold
+from sklearn.feature_selection import SelectPercentile, chi2
 import numpy as np
 
 __all__ = [
-	'VarianceThresholdFeatureSelection'
+	'SelectPercentileFeatureSelection'
 ]
 
-class VarianceThresholdFeatureSelection(FeatureSelectionAlgorithm):
-	r"""Implementation of feature selection using variance threshold.
+class SelectPercentileFeatureSelection(FeatureSelectionAlgorithm):
+	r"""Implementation of feature selection using percentile selection of best features according to used score function.
 	
 	Date:
 		2020
@@ -24,18 +24,19 @@ class VarianceThresholdFeatureSelection(FeatureSelectionAlgorithm):
 	"""
 
 	_params = dict(
-		threshold = ParameterDefinition(MinMax(0, 0.2), np.float)
+		score_func = ParameterDefinition([chi2]),
+		percentile = ParameterDefinition(MinMax(10, 100), np.uint)
 	)
 
 	def __init__(self, **kwargs):
-		r"""Initialize VarianceThreshold feature selection algorithm.
+		r"""Initialize SelectPercentile feature selection algorithm.
 		"""
-		self.__variance_threshold = VarianceThreshold()
+		self.__select_percentile = SelectPercentile()
 
 	def _set_parameters(self, **kwargs):
 		r"""Set the parameters/arguments of the algorithm.
 		"""
-		self.__variance_threshold.set_params(**kwargs)
+		self.__select_percentile.set_params(**kwargs)
 	
 	def select_features(self, x, y, **kwargs):
 		r"""Perform the feature selection process.
@@ -47,4 +48,4 @@ class VarianceThresholdFeatureSelection(FeatureSelectionAlgorithm):
 		Returns:
 			Iterable[any]: Array of selected features.
 		"""
-		return self.__variance_threshold.fit_transform(x, )
+		return self.__select_percentile.fit_transform(x, y)

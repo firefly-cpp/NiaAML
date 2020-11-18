@@ -8,6 +8,7 @@ from niaaml.utilities import ParameterDefinition
 from niaaml.utilities import Factory
 from niaaml.pipeline_optimizer import PipelineOptimizer
 from niaaml.pipeline import Pipeline
+from niaaml.pipeline_component import PipelineComponent
 
 __all__ = [
     'classifiers',
@@ -19,7 +20,8 @@ __all__ = [
     'ParameterDefinition',
     'Factory',
     'PipelineOptimizer',
-    'Pipeline'
+    'Pipeline',
+    'PipelineComponent'
 ]
 __project__ = 'niaaml'
 __version__ = '0.1.0'

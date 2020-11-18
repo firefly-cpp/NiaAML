@@ -20,7 +20,7 @@ class FeatureSelectionAlgorithmFactory(Factory):
 		"""
 		self._entities = {
 			'jDEFSTH': fs.jDEFSTH,
-			'SelectKBestChi2': fs.SelectKBestChi2,
-			'SelectPercentileChi2': fs.SelectPercentileChi2,
+			'SelectKBestFeatureSelection': fs.SelectKBestFeatureSelection,
+			'SelectPercentileFeatureSelection': fs.SelectPercentileFeatureSelection,
 			'VarianceThresholdFeatureSelection': fs.VarianceThresholdFeatureSelection
 		}

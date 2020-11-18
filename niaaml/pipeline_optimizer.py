@@ -36,25 +36,22 @@ class PipelineOptimizer:
 		__feature_transform_algorithms (Iterable[str]): Array of names of possible feature transform algorithms.
         __classifiers (Iterable[Classifier]): Array of names of possible classifiers.
 		__pipelines_numeric (numpy.ndarray[float]): Numeric representation of pipelines.
-		__pipelines (Iterable[Pipeline]): Actual pipelines.
 
         __optimization_algorithm (str): Name of the optimization algorithm to use.
         __niapy_algorithm_utility (AlgorithmUtility): Utility class used to get an optimization algorithm.
     """
-    __data = None
-    __feature_selection_algorithms = None
-    __feature_transform_algorithms = None
-    __classifiers = None
-
-    __pipelines_numeric = None
-    __pipelines = None
-
-    __optimization_algorithm = None
-    __niapy_algorithm_utility = AlgorithmUtility()
 
     def __init__(self, **kwargs):
         r"""Initialize task.
         """
+        self.__data = None
+        self.__feature_selection_algorithms = None
+        self.__feature_transform_algorithms = None
+        self.__classifiers = None
+        self.__pipelines_numeric = None
+        self.__optimization_algorithm = None
+        self.__niapy_algorithm_utility = AlgorithmUtility()
+
         self._set_parameters(**kwargs)
     
     def _set_parameters(self, data, feature_selection_algorithms, feature_transform_algorithms, classifiers, optimization_algorithm, **kwargs):
@@ -99,11 +96,6 @@ class PipelineOptimizer:
 class _PipelineOptimizerBenchmark(Benchmark):
     r"""TODO
     """
-    __data = None
-    __feature_selection_algorithms = None
-    __feature_transform_algorithms = None
-    __classifiers = None
-
     __classifier_factory = ClassifierFactory()
     __feature_transform_algorithm_factory = FeatureTransformAlgorithmFactory()
     __feature_selection_algorithm_factory = FeatureSelectionAlgorithmFactory()
@@ -128,7 +120,6 @@ class _PipelineOptimizerBenchmark(Benchmark):
     def function(self):
         r"""TODO
         """
-        # TODO
         def evaluate(D, sol):
             r"""TODO
             """

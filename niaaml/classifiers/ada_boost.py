@@ -21,11 +21,16 @@ class AdaBoost(Classifier):
 	See Also:
 		* :class:`niaaml.classifiers.Classifier`
 	"""
-	__adaBoost = AdaBoostClassifier()
+
 	_params = dict(
 			n_estimators = ParameterDefinition(MinMax(min=10, max=150), np.uint),
 			algorithm = ParameterDefinition(['SAMME', 'SAMME.R'])
 		)
+	
+	def __init__(self, **kwargs):
+		r"""Initialize AdaBoost instance.
+		"""
+		self.__ada_boost = AdaBoostClassifier()
 
 	def _set_parameters(self, **kwargs):
 		r"""Set the parameters/arguments of the algorithm.
@@ -33,10 +38,10 @@ class AdaBoost(Classifier):
 		See Also:
 			* :func:`niaaml.classifiers.Classifier._set_parameters`
 		"""
-		self.__adaBoost.set_params(**kwargs)
+		self.__ada_boost.set_params(**kwargs)
 
 	def fit(self, x, y, **kwargs):
-		r"""Fit AdaBoostClassifier.
+		r"""Fit AdaBoost.
 
         Arguments:
             x (Iterable[any]): n samples to classify.
@@ -45,7 +50,7 @@ class AdaBoost(Classifier):
         Returns:
             None
 		"""
-		self.__adaBoost.fit(x, y)
+		self.__ada_boost.fit(x, y)
 
 	def predict(self, x, **kwargs):
 		r"""Predict class for each sample (row) in x.
@@ -56,4 +61,4 @@ class AdaBoost(Classifier):
         Returns:
             numpy.array[int]: n predicted classes.
 		"""
-		return self.__adaBoost.predict(x)
+		return self.__ada_boost.predict(x)

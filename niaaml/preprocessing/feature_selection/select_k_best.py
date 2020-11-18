@@ -1,14 +1,14 @@
-from niaaml.utilities import ParameterDefinition, MinMax
+from niaaml.utilities import ParameterDefinition
 from niaaml.preprocessing.feature_selection.feature_selection_algorithm import FeatureSelectionAlgorithm
-from sklearn.feature_selection import VarianceThreshold
+from sklearn.feature_selection import SelectKBest, chi2
 import numpy as np
 
 __all__ = [
-	'VarianceThresholdFeatureSelection'
+	'SelectKBestFeatureSelection'
 ]
 
-class VarianceThresholdFeatureSelection(FeatureSelectionAlgorithm):
-	r"""Implementation of feature selection using variance threshold.
+class SelectKBestFeatureSelection(FeatureSelectionAlgorithm):
+	r"""Implementation of feature selection using selection of k best features according to used score function.
 	
 	Date:
 		2020
@@ -18,24 +18,26 @@ class VarianceThresholdFeatureSelection(FeatureSelectionAlgorithm):
 
 	License:
 		MIT
-
+	
 	See Also:
 		* :class:`niaaml.preprocessing.feature_selection.feature_selection_algorithm.FeatureSelectionAlgorithm`
 	"""
 
 	_params = dict(
-		threshold = ParameterDefinition(MinMax(0, 0.2), np.float)
+		score_func = ParameterDefinition([chi2]),
+		k = None
 	)
 
 	def __init__(self, **kwargs):
-		r"""Initialize VarianceThreshold feature selection algorithm.
+		r"""Initialize SelectKBest feature selection algorithm.
 		"""
-		self.__variance_threshold = VarianceThreshold()
-
+		self.__k = None
+		self.__select_k_best = SelectKBest()
+	
 	def _set_parameters(self, **kwargs):
 		r"""Set the parameters/arguments of the algorithm.
 		"""
-		self.__variance_threshold.set_params(**kwargs)
+		self.__select_k_best.set_params(**kwargs)
 	
 	def select_features(self, x, y, **kwargs):
 		r"""Perform the feature selection process.
@@ -47,4 +49,9 @@ class VarianceThresholdFeatureSelection(FeatureSelectionAlgorithm):
 		Returns:
 			Iterable[any]: Array of selected features.
 		"""
-		return self.__variance_threshold.fit_transform(x, )
+		if self.__k is None:
+			val = np.int(np.around(np.random.uniform(1, len(x[0]))))
+			self.__k = val
+			self.__select_k_best.set_params(k=self.__k)
+		
+		return self.__select_k_best.fit_transform(x, y)

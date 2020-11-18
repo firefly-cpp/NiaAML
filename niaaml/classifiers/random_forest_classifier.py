@@ -21,10 +21,15 @@ class RandomForestClassifier(Classifier):
 	See Also:
 		* :class:`niaaml.classifiers.Classifier`
 	"""
-	__randomForestClassifier = RandomForestClassifier()
+	
 	_params = dict(
 			n_estimators = ParameterDefinition(MinMax(min=10, max=150), np.uint)
 		)
+
+	def __init__(self, **kwargs):
+		r"""Initialize RandomForestClassifier instance.
+		"""
+		self.__random_forest_classifier = RandomForestClassifier()
 
 	def _set_parameters(self, **kwargs):
 		r"""Set the parameters/arguments of the algorithm.
@@ -32,7 +37,7 @@ class RandomForestClassifier(Classifier):
 		See Also:
 			* :func:`niaaml.classifiers.Classifier._set_parameters`
 		"""
-		self.__randomForestClassifier.set_params(**kwargs)
+		self.__random_forest_classifier.set_params(**kwargs)
 
 	def fit(self, x, y, **kwargs):
 		r"""Fit RandomForestClassifier.
@@ -44,7 +49,7 @@ class RandomForestClassifier(Classifier):
         Returns:
             None
 		"""
-		self.__randomForestClassifier.fit(x, y)
+		self.__random_forest_classifier.fit(x, y)
 
 	def predict(self, x, **kwargs):
 		r"""Predict class for each sample (row) in x.
@@ -55,4 +60,4 @@ class RandomForestClassifier(Classifier):
         Returns:
             numpy.array[int]: n predicted classes.
 		"""
-		return self.__randomForestClassifier.predict(x)
+		return self.__random_forest_classifier.predict(x)

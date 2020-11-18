@@ -70,4 +70,4 @@ class Pipeline:
         except:
             # infeasible solution as it causes some kind of error
             # return negative infinity as we are looking for maximum accuracy in the optimization process
-            return -float('inf')
+            return float('-inf')

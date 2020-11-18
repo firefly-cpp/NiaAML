@@ -21,12 +21,17 @@ class Bagging(Classifier):
 	See Also:
 		* :class:`niaaml.classifiers.Classifier`
 	"""
-	__baggingClassifier = BaggingClassifier()
+	
 	_params = dict(
 			n_estimators = ParameterDefinition(MinMax(min=10, max=150), np.uint),
 			bootstrap = ParameterDefinition([True, False]),
 			bootstrap_features = ParameterDefinition([True, False])
 		)
+
+	def __init__(self, **kwargs):
+		r"""Initialize Bagging instance.
+		"""
+		self.__bagging_classifier = BaggingClassifier()
 
 	def _set_parameters(self, **kwargs):
 		r"""Set the parameters/arguments of the algorithm.
@@ -34,10 +39,10 @@ class Bagging(Classifier):
 		See Also:
 			* :func:`niaaml.classifiers.Classifier._set_parameters`
 		"""
-		self.__baggingClassifier.set_params(**kwargs)
+		self.__bagging_classifier.set_params(**kwargs)
 
 	def fit(self, x, y, **kwargs):
-		r"""Fit BaggingClassifier.
+		r"""Fit Bagging.
 
         Arguments:
             x (Iterable[any]): n samples to classify.
@@ -46,7 +51,7 @@ class Bagging(Classifier):
         Returns:
             None
 		"""
-		self.__baggingClassifier.fit(x, y)
+		self.__bagging_classifier.fit(x, y)
 
 	def predict(self, x, **kwargs):
 		r"""Predict class for each sample (row) in x.
@@ -57,4 +62,4 @@ class Bagging(Classifier):
         Returns:
             numpy.array[int]: n predicted classes.
 		"""
-		return self.__baggingClassifier.predict(x)
+		return self.__bagging_classifier.predict(x)

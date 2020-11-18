@@ -15,6 +15,9 @@ class FeatureTransformAlgorithm(PreprocessingAlgorithm):
 
 	License:
         MIT
+
+	See Also:
+		* :class:`niaaml.preprocessing.preprocessing_algorithm.PreprocessingAlgorithm`
     """
     
     def transform(self, x, **kwargs):

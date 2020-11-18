@@ -69,6 +69,9 @@ class ParameterDefinition:
 		Arguments:
 			value (Any): Array of any type or instance of MinMax class.
 			paramType (type): Type of possible outcome according to an instance of MinMax class. Not used if the argument value is array.
+
+		See Also:
+			* :class:`niaaml.utilities.MinMax`
 		"""
 		self.value = value
 		self.paramType = paramType
