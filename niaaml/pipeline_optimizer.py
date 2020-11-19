@@ -12,7 +12,15 @@ __all__ = [
 ]
 
 def _initialize_population(task, NP, rnd=np.random, **kwargs):
-    r"""TODO
+    r"""NiaPy's InitPopFunc implementation.
+
+    Arguments:
+        task (NiaPy.task.Task): Implementation of NiaPy's Task class.
+        NP (uint): Population size.
+        rnd (any): Random number generator.
+    
+    Returns:
+        Tuple[numpy.ndarray, numpy.ndarray[float]]]
     """
     pop = np.random.uniform(size=(NP, 3))
     fpop = np.apply_along_axis(task.eval, 1, pop)
@@ -32,8 +40,8 @@ class PipelineOptimizer:
 
 	Attributes:
 		__data (DataReader): Instance of any DataReader implementation.
-		__feature_selection_algorithms (Iterable[str]): Array of names of possible feature selection algorithms.
-		__feature_transform_algorithms (Iterable[str]): Array of names of possible feature transform algorithms.
+		__feature_selection_algorithms (Optional[Iterable[str]]): Array of names of possible feature selection algorithms.
+		__feature_transform_algorithms (Optional[Iterable[str]]): Array of names of possible feature transform algorithms.
         __classifiers (Iterable[Classifier]): Array of names of possible classifiers.
 		__pipelines_numeric (numpy.ndarray[float]): Numeric representation of pipelines.
 
@@ -54,13 +62,13 @@ class PipelineOptimizer:
 
         self._set_parameters(**kwargs)
     
-    def _set_parameters(self, data, feature_selection_algorithms, feature_transform_algorithms, classifiers, optimization_algorithm, **kwargs):
+    def _set_parameters(self, data, feature_selection_algorithms = None, feature_transform_algorithms = None, classifiers, optimization_algorithm, **kwargs):
         r"""Set the parameters/arguments of the task.
 
 		Arguments:
             data (DataReader): Instance of any DataReader implementation.
-            feature_selection_algorithms (Iterable[str]): Array of names of possible feature selection algorithms.
-            feature_transform_algorithms (Iterable[str]): Array of names of possible feature transform algorithms.
+            feature_selection_algorithms (Optional[Iterable[str]]): Array of names of possible feature selection algorithms.
+            feature_transform_algorithms (Optional[Iterable[str]]): Array of names of possible feature transform algorithms.
             classifiers (Iterable[Classificator]): Array of names of possible classifiers.
             optimization_algorithm (str): Name of the optimization algorithm to use.
         """
@@ -77,8 +85,14 @@ class PipelineOptimizer:
         self.__classifiers = classifiers
         self.__feature_selection_algorithms = feature_selection_algorithms
 
-    def run(self, pipeline_population_size, classifier_population_size, number_of_pipeline_evaluations, number_of_classifier_evaluations):
-        r"""TODO
+    def run(self, pipeline_population_size, inner_population_size, number_of_pipeline_evaluations, number_of_inner_evaluations):
+        r"""Run classification pipeline optimization process.
+
+		Arguments:
+            pipeline_population_size (uint): Number of pipeline individuals in the optimization process.
+            inner_population_size (uint): Number of individuals in the hiperparameter optimization process.
+            number_of_pipeline_evaluations (uint): Number of maximum evaluations.
+            number_of_inner_evaluations (uint): Number of maximum inner evaluations.
         """
         algo = self.__niapy_algorithm_utility.get_algorithm(self.__optimization_algorithm)
         algo.NP = pipeline_population_size
@@ -87,41 +101,79 @@ class PipelineOptimizer:
         task = StoppingTask(
             D=3,
             nFES=number_of_pipeline_evaluations,
-            benchmark=_PipelineOptimizerBenchmark(self.__data, self.__feature_selection_algorithms, self.__feature_transform_algorithms, self.__classifiers, classifier_population_size, number_of_classifier_evaluations),
+            benchmark=_PipelineOptimizerBenchmark(self.__data, self.__feature_selection_algorithms, self.__feature_transform_algorithms, self.__classifiers, inner_population_size, number_of_inner_evaluations),
             optType=OptimizationType.MAXIMIZATION
             )
         best = algo.run(task)
         return best
 
 class _PipelineOptimizerBenchmark(Benchmark):
-    r"""TODO
+    r"""NiaPy Benchmark class implementation.
+
+	Attributes:
+		__data (DataReader): Instance of any DataReader implementation.
+		__feature_selection_algorithms (Optional[Iterable[str]]): Array of names of possible feature selection algorithms.
+		__feature_transform_algorithms (Optional[Iterable[str]]): Array of names of possible feature transform algorithms.
+        __classifiers (Iterable[Classifier]): Array of names of possible classifiers.
+        __inner_population_size (uint): Number of individuals in the hiperparameter optimization process.
+        __number_of_inner_evaluations (uint): Number of maximum inner evaluations.
+
+        __classifier_factory (ClassifierFactory): Factory for classifiers.
+        __feature_transform_algorithm_factory (FeatureTransformAlgorithmFactory): Factory for feature transform algorithms.
+        __feature_selection_algorithm_factory (FeatureSelectionAlgorithmFactory): Factory for feature selection algorithms.
     """
     __classifier_factory = ClassifierFactory()
     __feature_transform_algorithm_factory = FeatureTransformAlgorithmFactory()
     __feature_selection_algorithm_factory = FeatureSelectionAlgorithmFactory()
 
-    def __init__(self, data, feature_selection_algorithms, feature_transform_algorithms, classifiers, classifier_population_size, number_of_classifier_evaluations):
-        r"""TODO
+    def __init__(self, data, feature_selection_algorithms = None, feature_transform_algorithms = None, classifiers, inner_population_size, number_of_inner_evaluations):
+        r"""Initialize pipeline optimizer benchmark.
+
+		Arguments:
+            data (DataReader): Instance of any DataReader implementation.
+            feature_selection_algorithms (Optional[Iterable[str]]): Array of names of possible feature selection algorithms.
+            feature_transform_algorithms (Optional[Iterable[str]]): Array of names of possible feature transform algorithms.
+            classifiers (Iterable[Classifier]): Array of names of possible classifiers.
+            inner_population_size (uint): Number of individuals in the hiperparameter optimization process.
+            number_of_inner_evaluations (uint): Number of maximum inner evaluations.
         """
         self.__data = data
         self.__feature_selection_algorithms = feature_selection_algorithms
         self.__feature_transform_algorithms = feature_transform_algorithms
         self.__classifiers = classifiers
-        self.__classifier_population_size = classifier_population_size
-        self.__number_of_classifier_evaluations = number_of_classifier_evaluations
+        self.__inner_population_size = inner_population_size
+        self.__number_of_inner_evaluations = number_of_inner_evaluations
         Benchmark.__init__(self, 0.0, 1.0)
 
     def __float_to_instance(self, value, collection, factory):
-        r"""TODO
+        r"""Get instance of object from collection using factory.
+
+		Arguments:
+            value (float): Value to map.
+            collection (Iterable[str]): Array of names of possible feature selection algorithms.
+            factory (Factory): Implementation of the Factory class.
+        
+        Returns:
+            PipelineComponent: Randomly initialized PipelineComponent instance.
         """
         name = collection[np.int(np.round(value * (len(collection) - 1)))]
         return factory.get_result(name) if name is not None else None
     
     def function(self):
-        r"""TODO
+        r"""Override Benchmark function.
+
+        Returns:
+            Callable[[int, Iterable[float]], float]: Fitness evaluation function.
         """
         def evaluate(D, sol):
-            r"""TODO
+            r"""Evaluate pipeline.
+
+            Arguments:
+                D (uint): Number of dimensionas.
+                sol (Iterable[float]): Individual of population/ possible solution.
+            
+            Returns:
+                float: Fitness.
             """
             pipeline = Pipeline(
                 data=self.__data,
@@ -129,6 +181,6 @@ class _PipelineOptimizerBenchmark(Benchmark):
                 feature_transform_algorithms=self.__float_to_instance(sol[1], self.__feature_transform_algorithms, self.__feature_transform_algorithm_factory) if self.__feature_transform_algorithms is not None and len(self.__feature_transform_algorithms) > 0 else None,
                 classifier=self.__float_to_instance(sol[2], self.__classifiers, self.__classifier_factory)
             )
-            return pipeline.optimize(self.__classifier_population_size, self.__number_of_classifier_evaluations)
+            return pipeline.optimize(self.__inner_population_size, self.__number_of_inner_evaluations)
         
         return evaluate

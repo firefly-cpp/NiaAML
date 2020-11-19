@@ -20,13 +20,12 @@ class DataReader:
 		_label_encoder (sklearn.preprocessing.LabelEncoder): LabelEncoder instance for encoding classification labels.
 	"""
 
-	_x = None
-	_y = None
-	_label_encoder = None
-
 	def __init__(self, **kwargs):
 		r"""Initialize data reader.
 		"""
+		self._x = None
+		self._y = None
+		self._label_encoder = None
 		self._set_parameters(**kwargs)
 	
 	def _set_parameters(self, **kwargs):

@@ -37,16 +37,16 @@ class jDEFSTH(FeatureSelectionAlgorithm):
     """
 
     _params = None
-    """TODO define parameters range e.g.
-    	_params = dict(
-			activation = ParameterDefinition(['identity', 'logistic', 'tanh', 'relu']),
-			solver = ParameterDefinition(['lbfgs', 'sgd', 'adam']),
-			max_iter = ParameterDefinition(MinMax(min=200, max=500), np.uint),
-			learning_rate = ParameterDefinition(['constant', 'invscaling', 'adaptive'])
-		)
-    """
 
     def __final_output(self, sol):
+        r"""Calculate final array of features.
+
+		Arguments:
+			sol (Iterable[float]): Individual of population/ possible solution.
+
+		Returns:
+			Iterable[float]: Array of selected features.
+        """
         selected = []
         threshold = sol[len(sol)-1]
         for i in range(len(sol)-1):
@@ -57,6 +57,15 @@ class jDEFSTH(FeatureSelectionAlgorithm):
         return selected
     
     def select_features(self, x, y, **kwargs):
+        r"""Perform the feature selection process.
+
+		Arguments:
+			x (Iterable[any]): Array of original features.
+            y [numpy.array[int]] Expected classifier results.
+
+		Returns:
+			Iterable[any]: Array of selected features.
+        """
         num_features = x.shape[1]
         algo = SelfAdaptiveDifferentialEvolution(NP=10, F=0.5, F_l=0.0, F_u=2.0, Tao1=0.9, CR=0.5, Tao2=0.45)
         task = StoppingTask(D=num_features+1, nFES=1000, benchmark=_FeatureSelectionThreshold(x, y))
@@ -64,21 +73,39 @@ class jDEFSTH(FeatureSelectionAlgorithm):
         return self.__final_output(best[0])
 
 class _FeatureSelectionThreshold(Benchmark):
-    r"""TODO
+    r"""NiaPy Benchmark class implementation.
     """
     
     def __init__(self, X, y):
+        r"""Initialize feature selection benchmark.
+
+		Arguments:
+            X (Iterable[any]): Features.
+            y [numpy.array[int]] Expected classifier results.
+        """
         Benchmark.__init__(self, 0.0, 1.0)
         self.train_X, self.test_X, self.train_y, self.test_y = train_test_split(
             X, y, test_size=0.2)
 
-    def function(self):  # eval. func. for NiaPy
+    def function(self):
+        r"""Override Benchmark function.
+
+        Returns:
+            Callable[[int, Iterable[float]], float]: Fitness evaluation function.
+        """
+
         def evaluate(D, sol):
+            r"""Evaluate features.
+
+            Arguments:
+                D (uint): Number of dimensions.
+                sol (Iterable[float]): Individual of population/ possible solution.
+            
+            Returns:
+                float: Fitness.
+            """
             selected = []  #array for selected features
             self.Threshold = sol[D-1]  # current threshold
-            
-            global best_fitness
-            global best_solution
             
             # select features
             for i in range(len(sol)-1):

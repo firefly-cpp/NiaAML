@@ -42,7 +42,14 @@ def float_converter(array):
 	return converted_array
 
 class MinMax:
-	r"""TODO
+	r"""Class for ParameterDefinition's value property.
+
+	Attributes:
+		min (float): Minimum number.
+		max (float): Maximum number.
+
+	See Also:
+		* :class:`niaaml.utilities.ParameterDefinition`
 	"""
 	min = 0
 	max = 0
@@ -58,10 +65,17 @@ class MinMax:
 		self.max = max
 
 class ParameterDefinition:
-	r"""TODO
+	r"""Class for PipelineComponent parameters definition.
+
+	Attributes:
+		value (any): Array of possible parameter values or instance of MinMax class.
+		paramType (numpy.dtype): Selection output data type.
+
+
+	See Also:
+		* :class:`niaaml.pipeline_component.PipelineComponent`
+		* :class:`niaaml.utilities.MinMax`
 	"""
-	value = None
-	paramType = None
 
 	def __init__(self, value, paramType = None):
 		r"""Initialize instance.
@@ -69,9 +83,6 @@ class ParameterDefinition:
 		Arguments:
 			value (Any): Array of any type or instance of MinMax class.
 			paramType (type): Type of possible outcome according to an instance of MinMax class. Not used if the argument value is array.
-
-		See Also:
-			* :class:`niaaml.utilities.MinMax`
 		"""
 		self.value = value
 		self.paramType = paramType

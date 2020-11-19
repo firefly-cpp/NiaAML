@@ -19,8 +19,8 @@ class Pipeline:
 
 	Attributes:
 		__data (DataReader): Instance of any DataReader implementation.
-		__feature_selection_algorithm (FeatureSelectionAlgorithm): Feature selection algorithm implementation (optional).
-		__feature_transform_algorithm (FeatureTransformAlgorithm): Feature transform algorithm implementation (optional).
+		__feature_selection_algorithm (Optional[FeatureSelectionAlgorithm]): Feature selection algorithm implementation.
+		__feature_transform_algorithm (Optional[FeatureTransformAlgorithm]): Feature transform algorithm implementation.
         __classifier (Classifier): Classifier implementation.
     """
 
@@ -38,8 +38,8 @@ class Pipeline:
 
 		Arguments:
             data (DataReader): Instance of any DataReader implementation.
-            feature_selection_algorithm (FeatureSelectionAlgorithm): Feature selection algorithm implementation (optional).
-            feature_transform_algorithms (FeatureTransformAlgorithm): Feature transform algorithm implementation (optional).
+            feature_selection_algorithm (Optional[FeatureSelectionAlgorithm]): Feature selection algorithm implementation.
+            feature_transform_algorithms (Optional[FeatureTransformAlgorithm]): Feature transform algorithm implementation.
             classifier (Classifier): Classifier implementation.
         """
         self.__data = data
