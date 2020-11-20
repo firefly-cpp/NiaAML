@@ -24,16 +24,20 @@ class CSVDataReader(DataReader):
 		* :class:`niaaml.data.DataReader`
 	"""
 
-	def _set_parameters(self, src, **kwargs):
+	def _set_parameters(self, src, contains_classes = True, has_header = True, **kwargs):
 		r"""Set the parameters of the algorithm.
 
 		Arguments:
 			src (string): Path to a CSV dataset file.
+			contains_classes (bool): Tells if src contains expected classification results or only features.
+			has_header (bool): Tells if src contains header row.
 
 		See Also:
 			* :func:`niaaml.data.DataReader._set_parameters`
 		"""
 		self.__src = src
+		self.__contains_classes = contains_classes
+		self.__has_header = has_header
 		self._read_data()
 
 	def _read_data(self, **kwargs):
@@ -43,13 +47,24 @@ class CSVDataReader(DataReader):
 			* :func:`niaaml.data.DataReader._read_data`
 		"""
 		self._x = []
-		y = []
+
+		if self.__contains_classes:
+			self._y = []
+
 		with open(self.__src) as csvfile:
 			reader = csv.reader(csvfile)
-			next(reader, None)
-			for row in reader:
-				self._x.append(float_converter(row[1:]))
-				y.append(row[0])
 
-			self._label_encoder = get_label_encoder(y)
-			self._y = np.array(self._label_encoder.transform(y)).astype(np.uintc)
+			if self.__has_header:
+				next(reader, None)
+
+			y = []
+			for row in reader:
+				if self.__contains_classes:
+					self._x.append(float_converter(row[1:]))
+					y.append(row[0])
+				else:
+					self._x.append(float_converter(row))
+
+			if self.__contains_classes:
+				self._label_encoder = get_label_encoder(y)
+				self._y = np.array(self._label_encoder.transform(y)).astype(np.uintc)

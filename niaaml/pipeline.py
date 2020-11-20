@@ -29,22 +29,22 @@ class Pipeline:
         """
         self.__data = None
         self.__feature_selection_algorithm = None
-        self.__feature_transform_algorithms = None
+        self.__feature_transform_algorithm = None
         self.__classifier = None
         self._set_parameters(**kwargs)
     
-    def _set_parameters(self, data, feature_selection_algorithm, feature_transform_algorithms, classifier, **kwargs):
+    def _set_parameters(self, data, feature_selection_algorithm, feature_transform_algorithm, classifier, **kwargs):
         r"""Set the parameters/arguments of the task.
 
 		Arguments:
             data (DataReader): Instance of any DataReader implementation.
             feature_selection_algorithm (Optional[FeatureSelectionAlgorithm]): Feature selection algorithm implementation.
-            feature_transform_algorithms (Optional[FeatureTransformAlgorithm]): Feature transform algorithm implementation.
+            feature_transform_algorithm (Optional[FeatureTransformAlgorithm]): Feature transform algorithm implementation.
             classifier (Classifier): Classifier implementation.
         """
         self.__data = data
         self.__feature_selection_algorithm = feature_selection_algorithm
-        self.__feature_transform_algorithms = feature_transform_algorithms
+        self.__feature_transform_algorithm = feature_transform_algorithm
         self.__classifier = classifier
     
     def optimize(self, population_size, number_of_evaluations):
@@ -57,8 +57,8 @@ class Pipeline:
             if self.__feature_selection_algorithm is not None:
                 X = self.__feature_selection_algorithm.select_features(self.__data.get_x(), self.__data.get_y())
             
-            if self.__feature_transform_algorithms is not None:
-                X = self.__feature_transform_algorithms.transform(X)
+            if self.__feature_transform_algorithm is not None:
+                X = self.__feature_transform_algorithm.transform(X)
             
             train_X, test_X, train_y, test_y = train_test_split(
                 X, self.__data.get_y(), test_size=0.2)

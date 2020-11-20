@@ -16,7 +16,7 @@ class DataReader:
 
 	Attributes:
 		_x (Iterable[any]): Array of rows from dataset without expected classification results.
-		_y (Iterable[int]): Array of encoded expected classification results.
+		_y (Optional[Iterable[int]]): Array of encoded expected classification results.
 		_label_encoder (sklearn.preprocessing.LabelEncoder): LabelEncoder instance for encoding classification labels.
 	"""
 
