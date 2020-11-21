@@ -36,8 +36,6 @@ class jDEFSTH(FeatureSelectionAlgorithm):
 		* :class:`niaaml.preprocessing.feature_selection.feature_selection_algorithm.FeatureSelectionAlgorithm`
     """
 
-    _params = None
-
     def __final_output(self, sol):
         r"""Calculate final array of features.
 

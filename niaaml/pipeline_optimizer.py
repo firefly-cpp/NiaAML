@@ -11,21 +11,6 @@ __all__ = [
     'PipelineOptimizer'
 ]
 
-def _initialize_population(task, NP, rnd=np.random, **kwargs):
-    r"""NiaPy's InitPopFunc implementation.
-
-    Arguments:
-        task (NiaPy.task.Task): Implementation of NiaPy's Task class.
-        NP (uint): Population size.
-        rnd (any): Random number generator.
-    
-    Returns:
-        Tuple[numpy.ndarray, numpy.ndarray[float]]]
-    """
-    pop = np.random.uniform(size=(NP, 3))
-    fpop = np.apply_along_axis(task.eval, 1, pop)
-    return pop, fpop
-
 class PipelineOptimizer:
     r"""Optimization task that finds the best classification pipeline according to the given input.
     
@@ -106,6 +91,22 @@ class PipelineOptimizer:
             number_of_pipeline_evaluations (uint): Number of maximum evaluations.
             number_of_inner_evaluations (uint): Number of maximum inner evaluations.
         """
+
+        def _initialize_population(task, NP, rnd=np.random, **kwargs):
+            r"""NiaPy's InitPopFunc implementation.
+
+            Arguments:
+                task (NiaPy.task.Task): Implementation of NiaPy's Task class.
+                NP (uint): Population size.
+                rnd (any): Random number generator.
+            
+            Returns:
+                Tuple[numpy.ndarray, numpy.ndarray[float]]]
+            """
+            pop = np.random.uniform(size=(NP, 3))
+            fpop = np.apply_along_axis(task.eval, 1, pop)
+            return pop, fpop
+
         algo = self.__niapy_algorithm_utility.get_algorithm(self.__optimization_algorithm)
         algo.NP = pipeline_population_size
         algo.InitPopFunc = _initialize_population
@@ -158,7 +159,11 @@ class PipelineOptimizer:
             Returns:
                 PipelineComponent: Randomly initialized PipelineComponent instance.
             """
-            name = collection[np.int(np.round(value * (len(collection) - 1)))]
+            bin_index = np.int(np.floor(value / (1.0 / len(collection))))
+            if bin_index == len(collection):
+                bin_index -= 1
+
+            name = collection[bin_index]
             return factory.get_result(name) if name is not None else None
         
         def function(self):

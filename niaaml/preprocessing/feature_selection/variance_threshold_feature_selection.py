@@ -23,13 +23,12 @@ class VarianceThresholdFeatureSelection(FeatureSelectionAlgorithm):
 		* :class:`niaaml.preprocessing.feature_selection.feature_selection_algorithm.FeatureSelectionAlgorithm`
 	"""
 
-	_params = dict(
-		threshold = ParameterDefinition(MinMax(0, 0.2), np.float)
-	)
-
 	def __init__(self, **kwargs):
 		r"""Initialize VarianceThreshold feature selection algorithm.
 		"""
+		self._params = dict(
+			threshold = ParameterDefinition(MinMax(0, 0.2), np.float)
+		)
 		self.__variance_threshold = VarianceThreshold()
 
 	def _set_parameters(self, **kwargs):

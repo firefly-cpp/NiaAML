@@ -21,17 +21,16 @@ class MultiLayerPerceptron(Classifier):
 	See Also:
 		* :class:`niaaml.classifiers.Classifier`
 	"""
-	
-	_params = dict(
+
+	def __init__(self, **kwargs):
+		r"""Initialize MultiLayerPerceptron instance.
+		"""
+		self._params = dict(
 			activation = ParameterDefinition(['identity', 'logistic', 'tanh', 'relu']),
 			solver = ParameterDefinition(['lbfgs', 'sgd', 'adam']),
 			max_iter = ParameterDefinition(MinMax(min=200, max=500), np.uint),
 			learning_rate = ParameterDefinition(['constant', 'invscaling', 'adaptive'])
 		)
-
-	def __init__(self, **kwargs):
-		r"""Initialize MultiLayerPerceptron instance.
-		"""
 		self.__multi_layer_perceptron = MLPClassifier()
 
 	def _set_parameters(self, **kwargs):

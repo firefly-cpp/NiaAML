@@ -45,21 +45,19 @@ class MinMax:
 	r"""Class for ParameterDefinition's value property.
 
 	Attributes:
-		min (float): Minimum number.
-		max (float): Maximum number.
+		min (float): Minimum number (inclusive).
+		max (float): Maximum number (exclusive).
 
 	See Also:
 		* :class:`niaaml.utilities.ParameterDefinition`
 	"""
-	min = 0
-	max = 0
 
 	def __init__(self, min, max):
 		r"""Initialize instance.
 
 		Arguments:
-			min (float): Minimum number.
-			max (float): Maximum number.
+			min (float): Minimum number (inclusive).
+			max (float): Maximum number (exclusive).
 		"""
 		self.min = min
 		self.max = max
@@ -69,7 +67,7 @@ class ParameterDefinition:
 
 	Attributes:
 		value (any): Array of possible parameter values or instance of MinMax class.
-		paramType (numpy.dtype): Selection output data type.
+		param_type (numpy.dtype): Selection output data type.
 
 
 	See Also:
@@ -77,15 +75,15 @@ class ParameterDefinition:
 		* :class:`niaaml.utilities.MinMax`
 	"""
 
-	def __init__(self, value, paramType = None):
+	def __init__(self, value, param_type = None):
 		r"""Initialize instance.
 
 		Arguments:
 			value (Any): Array of any type or instance of MinMax class.
-			paramType (type): Type of possible outcome according to an instance of MinMax class. Not used if the argument value is array.
+			param_type (type): Type of possible outcome according to an instance of MinMax class. Not used if the argument value is array.
 		"""
 		self.value = value
-		self.paramType = paramType
+		self.param_type = param_type
 
 class Factory:
 	r"""Base class with string mappings to entities.

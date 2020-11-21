@@ -1,4 +1,4 @@
-from niaaml.utilities import ParameterDefinition
+from niaaml.utilities import ParameterDefinition, MinMax
 from niaaml.preprocessing.feature_selection.feature_selection_algorithm import FeatureSelectionAlgorithm
 from sklearn.feature_selection import SelectKBest, chi2
 import numpy as np
@@ -23,14 +23,12 @@ class SelectKBestFeatureSelection(FeatureSelectionAlgorithm):
 		* :class:`niaaml.preprocessing.feature_selection.feature_selection_algorithm.FeatureSelectionAlgorithm`
 	"""
 
-	_params = dict(
-		score_func = ParameterDefinition([chi2]),
-		k = None
-	)
-
 	def __init__(self, **kwargs):
 		r"""Initialize SelectKBest feature selection algorithm.
 		"""
+		self._params = dict(
+			score_func = ParameterDefinition([chi2])
+		)
 		self.__k = None
 		self.__select_k_best = SelectKBest()
 	
@@ -50,8 +48,9 @@ class SelectKBestFeatureSelection(FeatureSelectionAlgorithm):
 			Iterable[any]: Array of selected features.
 		"""
 		if self.__k is None:
-			val = np.int(np.around(np.random.uniform(1, len(x[0]))))
-			self.__k = val
-			self.__select_k_best.set_params(k=self.__k)
+			self.__k = len(x[0])
+			self._params['k'] = ParameterDefinition(MinMax(1, self.__k), np.int)
+			val = np.int(np.around(np.random.uniform(1, self.__k)))
+			self.__select_k_best.set_params(k=val)
 		
 		return self.__select_k_best.fit_transform(x, y)

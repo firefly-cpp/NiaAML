@@ -24,11 +24,11 @@ class PipelineComponent:
 		* :class:`niaaml.utilities.ParameterDefinition`
     """
 
-	_params = None
-
 	def __init__(self, **kwargs):
 		r"""Initialize pipeline component.
 		"""
+		# _params variable should not be static as in some cases it is instance specific
+		self._params = None
 		self._set_parameters(**kwargs)
 	
 	def _set_parameters(self, **kwargs):
@@ -49,14 +49,16 @@ class PipelineComponent:
 		instance = i()
 		params = dict()
 
-		if i._params:
-			for key, value in i._params.items():
-				# value should be somehow determined runtime in case its value is currently None
+		if instance._params:
+			for key, value in instance._params.items():
+				# value should be somehow determined runtime in case its value is currently None and added to the _params dictionary to include it into the optimization process
 				if value is not None:
 					if isinstance(value.value, MinMax):
 						val = np.random.uniform(value.value.min, value.value.max)
-						if value.paramType is np.intc or value.paramType is np.uintc or value.paramType is np.uint:
-							val = value.paramType(np.around(val))
+						if value.param_type is np.intc or value.param_type is np.int or value.param_type is np.uintc or value.param_type is np.uint:
+							val = value.param_type(np.around(val))
+							if val >= value.value.max:
+								val = value.value.max - 1
 						params[key] = val
 					else:
 						params[key] = value.value[np.random.randint(0, len(value.value))]

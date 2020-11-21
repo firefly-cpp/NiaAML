@@ -21,15 +21,14 @@ class LinearSVCClassifier(Classifier):
 	See Also:
 		* :class:`niaaml.classifiers.Classifier`
 	"""
-	
-	_params = dict(
-			penalty = ParameterDefinition(['l1', 'l2']),
-			max_iter = ParameterDefinition(MinMax(min=300, max=2000), np.uint)
-		)
 
 	def __init__(self, **kwargs):
 		r"""Initialize LinearSVCClassifier instance.
 		"""
+		self._params = dict(
+			penalty = ParameterDefinition(['l1', 'l2']),
+			max_iter = ParameterDefinition(MinMax(min=300, max=2000), np.uint)
+		)
 		self.__linear_SVC = LinearSVC()
 
 	def _set_parameters(self, **kwargs):

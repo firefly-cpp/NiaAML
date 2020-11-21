@@ -21,16 +21,15 @@ class ExtremelyRandomizedTrees(Classifier):
 	See Also:
 		* :class:`niaaml.classifiers.Classifier`
 	"""
-	
-	_params = dict(
-			n_estimators = ParameterDefinition(MinMax(min=10, max=200), np.uint),
-			criterion = ParameterDefinition(['gini', 'entropy']),
-			min_samples_split = ParameterDefinition(MinMax(min=2, max=10), np.uint)
-		)
 
 	def __init__(self, **kwargs):
 		r"""Initialize ExtremelyRandomizedTrees instance.
 		"""
+		self._params = dict(
+			n_estimators = ParameterDefinition(MinMax(min=10, max=200), np.uint),
+			criterion = ParameterDefinition(['gini', 'entropy']),
+			min_samples_split = ParameterDefinition(MinMax(min=2, max=10), np.uint)
+		)
 		self.__extra_trees_classifier = ExtraTreesClassifier()
 
 	def _set_parameters(self, **kwargs):

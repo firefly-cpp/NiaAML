@@ -21,16 +21,15 @@ class Bagging(Classifier):
 	See Also:
 		* :class:`niaaml.classifiers.Classifier`
 	"""
-	
-	_params = dict(
-			n_estimators = ParameterDefinition(MinMax(min=10, max=150), np.uint),
-			bootstrap = ParameterDefinition([True, False]),
-			bootstrap_features = ParameterDefinition([True, False])
-		)
 
 	def __init__(self, **kwargs):
 		r"""Initialize Bagging instance.
 		"""
+		self._params = dict(
+			n_estimators = ParameterDefinition(MinMax(min=10, max=150), np.uint),
+			bootstrap = ParameterDefinition([True, False]),
+			bootstrap_features = ParameterDefinition([True, False])
+		)
 		self.__bagging_classifier = BaggingClassifier()
 
 	def _set_parameters(self, **kwargs):

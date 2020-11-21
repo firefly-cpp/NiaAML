@@ -21,14 +21,13 @@ class RandomForestClassifier(Classifier):
 	See Also:
 		* :class:`niaaml.classifiers.Classifier`
 	"""
-	
-	_params = dict(
-			n_estimators = ParameterDefinition(MinMax(min=10, max=150), np.uint)
-		)
 
 	def __init__(self, **kwargs):
 		r"""Initialize RandomForestClassifier instance.
 		"""
+		self._params = dict(
+			n_estimators = ParameterDefinition(MinMax(min=10, max=150), np.uint)
+		)
 		self.__random_forest_classifier = RandomForestClassifier()
 
 	def _set_parameters(self, **kwargs):

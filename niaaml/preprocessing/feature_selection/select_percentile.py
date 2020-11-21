@@ -23,14 +23,13 @@ class SelectPercentileFeatureSelection(FeatureSelectionAlgorithm):
 		* :class:`niaaml.preprocessing.feature_selection.feature_selection_algorithm.FeatureSelectionAlgorithm`
 	"""
 
-	_params = dict(
-		score_func = ParameterDefinition([chi2]),
-		percentile = ParameterDefinition(MinMax(10, 100), np.uint)
-	)
-
 	def __init__(self, **kwargs):
 		r"""Initialize SelectPercentile feature selection algorithm.
 		"""
+		self._params = dict(
+			score_func = ParameterDefinition([chi2]),
+			percentile = ParameterDefinition(MinMax(10, 100), np.uint)
+		)
 		self.__select_percentile = SelectPercentile()
 
 	def _set_parameters(self, **kwargs):

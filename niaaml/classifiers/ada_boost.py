@@ -21,15 +21,14 @@ class AdaBoost(Classifier):
 	See Also:
 		* :class:`niaaml.classifiers.Classifier`
 	"""
-
-	_params = dict(
-			n_estimators = ParameterDefinition(MinMax(min=10, max=150), np.uint),
-			algorithm = ParameterDefinition(['SAMME', 'SAMME.R'])
-		)
 	
 	def __init__(self, **kwargs):
 		r"""Initialize AdaBoost instance.
 		"""
+		self._params = dict(
+			n_estimators = ParameterDefinition(MinMax(min=10, max=150), np.uint),
+			algorithm = ParameterDefinition(['SAMME', 'SAMME.R'])
+		)
 		self.__ada_boost = AdaBoostClassifier()
 
 	def _set_parameters(self, **kwargs):
