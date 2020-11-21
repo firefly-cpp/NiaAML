@@ -28,7 +28,7 @@ class Normalizer(FeatureTransformAlgorithm):
         )
         self.__params = None
 
-    def _set_parameters(self, **kwargs):
+    def set_parameters(self, **kwargs):
         r"""Set the parameters/arguments of the algorithm.
         """
         self.__params = kwargs

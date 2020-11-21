@@ -29,40 +29,14 @@ class PipelineComponent:
 		"""
 		# _params variable should not be static as in some cases it is instance specific
 		self._params = None
-		self._set_parameters(**kwargs)
+		self.set_parameters(**kwargs)
 	
-	def _set_parameters(self, **kwargs):
+	def set_parameters(self, **kwargs):
 		r"""Set the parameters/arguments of the pipeline component.
 		"""
 		return
-	 
-	@classmethod
-	def getRandomInstance(i):
-		r"""Randomly initialize instance of the implemented `niaaml.pipeline_component.PipelineComponent` class.
-
-        Arguments:
-            i (PipelineComponent): Any class that implements PipelineComponent class.
-
-        Returns:
-            PipelineComponent: Randomly initialized PipelineComponent instance.
+	
+	def get_params_dict_size(self):
+		r"""Return parameters definition dictionary.
 		"""
-		instance = i()
-		params = dict()
-
-		if instance._params:
-			for key, value in instance._params.items():
-				# value should be somehow determined runtime in case its value is currently None and added to the _params dictionary to include it into the optimization process
-				if value is not None:
-					if isinstance(value.value, MinMax):
-						val = np.random.uniform(value.value.min, value.value.max)
-						if value.param_type is np.intc or value.param_type is np.int or value.param_type is np.uintc or value.param_type is np.uint:
-							val = value.param_type(np.around(val))
-							if val >= value.value.max:
-								val = value.value.max - 1
-						params[key] = val
-					else:
-						params[key] = value.value[np.random.randint(0, len(value.value))]
-			
-			instance._set_parameters(**params)
-		
-		return instance
+		return self._params

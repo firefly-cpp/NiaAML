@@ -16,6 +16,7 @@ __all__ = [
     'preprocessing',
     'get_label_encoder',
     'float_converter',
+    'get_bin_index',
     'MinMax',
     'ParameterDefinition',
     'Factory',

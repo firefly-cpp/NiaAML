@@ -33,11 +33,8 @@ class MultiLayerPerceptron(Classifier):
 		)
 		self.__multi_layer_perceptron = MLPClassifier()
 
-	def _set_parameters(self, **kwargs):
+	def set_parameters(self, **kwargs):
 		r"""Set the parameters/arguments of the algorithm.
-
-		See Also:
-			* :func:`niaaml.classifiers.Classifier._set_parameters`
 		"""
 		self.__multi_layer_perceptron.set_params(**kwargs)
 

@@ -31,11 +31,8 @@ class LinearSVCClassifier(Classifier):
 		)
 		self.__linear_SVC = LinearSVC()
 
-	def _set_parameters(self, **kwargs):
+	def set_parameters(self, **kwargs):
 		r"""Set the parameters/arguments of the algorithm.
-
-		See Also:
-			* :func:`niaaml.classifiers.Classifier._set_parameters`
 		"""
 		self.__linear_SVC.set_params(**kwargs)
 

@@ -6,6 +6,7 @@ from niaaml.preprocessing.feature_transform import FeatureTransformAlgorithmFact
 from NiaPy.task import StoppingTask, OptimizationType
 from NiaPy.benchmarks import Benchmark
 from NiaPy.algorithms.utility import AlgorithmUtility
+from niaaml.utilities import get_bin_index
 
 __all__ = [
     'PipelineOptimizer'
@@ -90,6 +91,11 @@ class PipelineOptimizer:
             inner_population_size (uint): Number of individuals in the hiperparameter optimization process.
             number_of_pipeline_evaluations (uint): Number of maximum evaluations.
             number_of_inner_evaluations (uint): Number of maximum inner evaluations.
+        
+        Returns:
+			Tuple[numpy.ndarray, float]:
+				1. Best individuals components found in optimization process.
+				2. Best fitness value found in optimization process.
         """
 
         def _initialize_population(task, NP, rnd=np.random, **kwargs):
@@ -101,9 +107,11 @@ class PipelineOptimizer:
                 rnd (any): Random number generator.
             
             Returns:
-                Tuple[numpy.ndarray, numpy.ndarray[float]]]
+                Tuple[numpy.ndarray, numpy.ndarray[float]]]:
+                    1. New population with shape `{NP, task.D}`.
+                    2. New population's function/fitness values.
             """
-            pop = np.random.uniform(size=(NP, 3))
+            pop = np.random.uniform(size=(NP, task.D))
             fpop = np.apply_along_axis(task.eval, 1, pop)
             return pop, fpop
 
@@ -159,9 +167,7 @@ class PipelineOptimizer:
             Returns:
                 PipelineComponent: Randomly initialized PipelineComponent instance.
             """
-            bin_index = np.int(np.floor(value / (1.0 / len(collection))))
-            if bin_index == len(collection):
-                bin_index -= 1
+            bin_index = get_bin_index(value, len(collection))
 
             name = collection[bin_index]
             return factory.get_result(name) if name is not None else None
@@ -188,6 +194,6 @@ class PipelineOptimizer:
                     feature_transform_algorithm=self.__float_to_instance(sol[1], self.__parent.get_feature_transform_algorithms(), self.__feature_transform_algorithm_factory) if self.__parent.get_feature_transform_algorithms() is not None and len(self.__parent.get_feature_transform_algorithms()) > 0 else None,
                     classifier=self.__float_to_instance(sol[2], self.__parent.get_classifiers(), self.__classifier_factory)
                 )
-                return pipeline.optimize(self.__inner_population_size, self.__number_of_inner_evaluations)
+                return pipeline.optimize(self.__inner_population_size, self.__number_of_inner_evaluations)[1]
             
             return evaluate

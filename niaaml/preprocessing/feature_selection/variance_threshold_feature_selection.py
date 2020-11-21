@@ -31,7 +31,7 @@ class VarianceThresholdFeatureSelection(FeatureSelectionAlgorithm):
 		)
 		self.__variance_threshold = VarianceThreshold()
 
-	def _set_parameters(self, **kwargs):
+	def set_parameters(self, **kwargs):
 		r"""Set the parameters/arguments of the algorithm.
 		"""
 		self.__variance_threshold.set_params(**kwargs)

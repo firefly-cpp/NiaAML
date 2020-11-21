@@ -27,12 +27,13 @@ class SelectKBestFeatureSelection(FeatureSelectionAlgorithm):
 		r"""Initialize SelectKBest feature selection algorithm.
 		"""
 		self._params = dict(
-			score_func = ParameterDefinition([chi2])
+			score_func = ParameterDefinition([chi2]),
+			k = None
 		)
 		self.__k = None
 		self.__select_k_best = SelectKBest()
 	
-	def _set_parameters(self, **kwargs):
+	def set_parameters(self, **kwargs):
 		r"""Set the parameters/arguments of the algorithm.
 		"""
 		self.__select_k_best.set_params(**kwargs)

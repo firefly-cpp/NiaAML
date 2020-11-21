@@ -32,11 +32,8 @@ class Bagging(Classifier):
 		)
 		self.__bagging_classifier = BaggingClassifier()
 
-	def _set_parameters(self, **kwargs):
+	def set_parameters(self, **kwargs):
 		r"""Set the parameters/arguments of the algorithm.
-
-		See Also:
-			* :func:`niaaml.classifiers.Classifier._set_parameters`
 		"""
 		self.__bagging_classifier.set_params(**kwargs)
 

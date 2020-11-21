@@ -6,7 +6,8 @@ __all__ = [
 	'ParameterDefinition',
 	'Factory',
 	'get_label_encoder',
-	'float_converter'
+	'float_converter',
+	'get_bin_index'
 ]
 
 def get_label_encoder(labels):
@@ -40,6 +41,14 @@ def float_converter(array):
 		except ValueError:
 			converted_array.append(element)
 	return converted_array
+
+def get_bin_index(value, number_of_bins):
+	"""TODO
+	"""
+	bin_index = np.int(np.floor(value / (1.0 / number_of_bins)))
+	if bin_index >= number_of_bins:
+		bin_index -= 1
+	return bin_index
 
 class MinMax:
 	r"""Class for ParameterDefinition's value property.
@@ -113,6 +122,6 @@ class Factory:
 		"""
 
 		if name in self._entities:
-			return self._entities[name]().getRandomInstance()
+			return self._entities[name]()
 		else:
 			raise TypeError('Passed entity is not defined! --> %s' % name)

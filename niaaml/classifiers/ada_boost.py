@@ -31,11 +31,8 @@ class AdaBoost(Classifier):
 		)
 		self.__ada_boost = AdaBoostClassifier()
 
-	def _set_parameters(self, **kwargs):
+	def set_parameters(self, **kwargs):
 		r"""Set the parameters/arguments of the algorithm.
-
-		See Also:
-			* :func:`niaaml.classifiers.Classifier._set_parameters`
 		"""
 		self.__ada_boost.set_params(**kwargs)
 

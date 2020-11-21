@@ -32,7 +32,7 @@ class SelectPercentileFeatureSelection(FeatureSelectionAlgorithm):
 		)
 		self.__select_percentile = SelectPercentile()
 
-	def _set_parameters(self, **kwargs):
+	def set_parameters(self, **kwargs):
 		r"""Set the parameters/arguments of the algorithm.
 		"""
 		self.__select_percentile.set_params(**kwargs)
