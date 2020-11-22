@@ -1,8 +1,12 @@
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 from niaaml.utilities import MinMax, get_bin_index
+from NiaPy.benchmarks import Benchmark
+from NiaPy.algorithms.utility import AlgorithmUtility
 import numpy as np
 import copy
+import pickle
+import os
 
 __all__ = [
     'Pipeline'
@@ -34,11 +38,10 @@ class Pipeline:
         self.__feature_selection_algorithm = None
         self.__feature_transform_algorithm = None
         self.__classifier = None
-        self.__optimization_algorithm = None
         self.__niapy_algorithm_utility = AlgorithmUtility()
         self._set_parameters(**kwargs)
     
-    def _set_parameters(self, data, feature_selection_algorithm, feature_transform_algorithm, classifier, optimization_algorithm, **kwargs):
+    def _set_parameters(self, data, feature_selection_algorithm, feature_transform_algorithm, classifier, **kwargs):
         r"""Set the parameters/arguments of the task.
 
 		Arguments:
@@ -51,9 +54,8 @@ class Pipeline:
         self.__feature_selection_algorithm = feature_selection_algorithm
         self.__feature_transform_algorithm = feature_transform_algorithm
         self.__classifier = classifier
-        self.__optimization_algorithm = optimization_algorithm
     
-    def get_data():
+    def get_data(self):
         r"""Get deep copy of the data.
 
         Returns:
@@ -61,50 +63,56 @@ class Pipeline:
         """
         return copy.deepcopy(self.__data)
     
-    def get_feature_selection_algorithm():
-        r"""Get deep copy of the data.
+    def get_feature_selection_algorithm(self):
+        r"""Get deep copy of the feature selection algorithm.
 
         Returns:
             FeatureSelectionAlgorithm: Instance of the FeatureSelectionAlgorithm object.
         """
         return copy.deepcopy(self.__feature_selection_algorithm)
     
-    def get_feature_transform_algorithm():
-        r"""Get deep copy of the data.
+    def get_feature_transform_algorithm(self):
+        r"""Get deep copy of the feature transform algorithm.
 
         Returns:
             FeatureTransformAlgorithm: Instance of the FeatureTransformAlgorithm object.
         """
         return copy.deepcopy(self.__feature_transform_algorithm)
     
-    def get_classifier():
-        r"""Get deep copy of the data.
+    def get_classifier(self):
+        r"""Get deep copy of the classifier.
 
         Returns:
             Classifier: Instance of the Classifier object.
         """
         return copy.deepcopy(self.__classifier)
     
-    def optimize(self, population_size, number_of_evaluations):
+    def set_feature_selection_algorithm(self, value):
+        r"""Set feature selection algorithm.
+        """
+        self.__feature_selection_algorithm = value
+    
+    def set_feature_transform_algorithm(self, value):
+        r"""Set feature transform algorithm.
+        """
+        self.__feature_transform_algorithm = value
+    
+    def set_classifier(self, value):
+        r"""Set classifier.
+        """
+        self.__classifier = value
+    
+    def optimize(self, population_size, number_of_evaluations, optimization_algorithm):
         r"""Optimize pipeline's hyperparameters.
 
         Arguments:
             population_size (uint): Number of individuals in the optimization process.
             number_of_evaluations (uint): Number of maximum evaluations.
+            optimization_algorithm (str): Name of the optimization algorithm to use.
         
         Returns:
-			Tuple[numpy.ndarray, float]:
-				1. Best individuals components found in optimization process.
-				2. Best fitness value found in optimization process.
+            float: Best fitness value found in optimization process.
         """
-
-        D = 0
-        if self.__feature_selection_algorithm is not None and self.__feature_selection_algorithm.get_params_dict() is not None:
-            D += len(self.__feature_selection_algorithm.get_params_dict().keys())
-        if self.__feature_transform_algorithm is not None and self.__feature_transform_algorithm.get_params_dict() is not None:
-            D += len(self.__feature_transform_algorithm.get_params_dict().keys())
-        if self.__classifier.get_params_dict() is not None:
-            D += len(self.__classifier.get_params_dict().keys())
 
         def _initialize_population(task, NP, rnd=np.random, **kwargs):
             r"""NiaPy's InitPopFunc implementation.
@@ -124,7 +132,15 @@ class Pipeline:
             fpop = np.apply_along_axis(task.eval, 1, pop)
             return pop, fpop
 
-        algo = self.__niapy_algorithm_utility.get_algorithm(self.__optimization_algorithm)
+        D = 0
+        if self.__feature_selection_algorithm is not None and self.__feature_selection_algorithm.get_params_dict() is not None:
+            D += len(self.__feature_selection_algorithm.get_params_dict().keys())
+        if self.__feature_transform_algorithm is not None and self.__feature_transform_algorithm.get_params_dict() is not None:
+            D += len(self.__feature_transform_algorithm.get_params_dict().keys())
+        if self.__classifier.get_params_dict() is not None:
+            D += len(self.__classifier.get_params_dict().keys())
+
+        algo = self.__niapy_algorithm_utility.get_algorithm(optimization_algorithm)
         algo.NP = population_size
         algo.InitPopFunc = _initialize_population
 
@@ -135,14 +151,50 @@ class Pipeline:
             optType=OptimizationType.MAXIMIZATION
             )
         best = algo.run(task)
-        return best
+        return best[1]
+    
+    def run(self, x):
+        r"""TODO
+        """
+        # TODO filter features according to the feature selection algorithm
+        if self.__feature_transform_algorithm is not None:
+            x = self.__feature_transform_algorithm.transform(x)
+
+        return classifier.predict(x)
+    
+    def export(self, file_name):
+        r"""Exports Pipeline object to a file for later use.
+        """
+        pipeline = Pipeline(
+            data=None,
+            feature_selection_algorithm=self.__feature_selection_algorithm,
+            feature_transform_algorithm=self.__feature_transform_algorithm,
+            classifier=self.__classifier
+        )
+        if len(os.path.splitext(file_name)[1]) == 0 or os.path.splitext(file_name)[1] != '.ppln':
+            file_name = file_name + '.ppln'
+
+        with open(file_name, 'wb') as f:
+            pickle.dump(pipeline, f)
+    
+    @staticmethod
+    def load(file_name):
+        r"""Loads Pipeline object from a file.
+
+        Returns:
+            Pipeline: Loaded Pipeline instance.
+        """
+        with open(file_name, 'rb') as f:
+            return pickle.load(f)
 
     class _PipelineBenchmark(Benchmark):
         r"""NiaPy Benchmark class implementation.
 
         Attributes:
+            __parent (Pipeline): Parent Pipeline instance.
             __population_size (uint): Number of individuals in the hiperparameter optimization process.
             __number_of_evaluations (uint): Number of maximum evaluations.
+            __current_best_fitness (float): Current best fitness of the optimization process.
         """
 
         def __init__(self, parent, population_size, number_of_evaluations):
@@ -156,6 +208,7 @@ class Pipeline:
             self.__parent = parent
             self.__population_size = population_size
             self.__number_of_evaluations = number_of_evaluations
+            self.__current_best_fitness = float('-inf')
             Benchmark.__init__(self, 0.0, 1.0)
         
         def function(self):
@@ -220,7 +273,14 @@ class Pipeline:
                     classifier.fit(train_X, train_y)
                     predictions = classifier.predict(test_X)
 
-                    return accuracy_score(test_y, predictions)
+                    fitness = accuracy_score(test_y, predictions)
+                    if fitness > self.__current_best_fitness:
+                        self.__current_best_fitness = fitness
+                        self.__parent.set_feature_selection_algorithm(feature_selection_algorithm)
+                        self.__parent.set_feature_transform_algorithm(feature_transform_algorithm)
+                        self.__parent.set_classifier(classifier)
+
+                    return fitness
                 except:
                     # infeasible solution as it causes some kind of error
                     # return negative infinity as we are looking for maximum accuracy in the optimization process

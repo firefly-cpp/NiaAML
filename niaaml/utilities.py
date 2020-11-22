@@ -1,5 +1,5 @@
 from sklearn import preprocessing
-import numpy
+import numpy as np
 
 __all__ = [
 	'MinMax',
