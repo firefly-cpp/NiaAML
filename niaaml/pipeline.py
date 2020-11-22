@@ -3,6 +3,7 @@ from sklearn.metrics import accuracy_score
 from niaaml.utilities import MinMax, get_bin_index
 from NiaPy.benchmarks import Benchmark
 from NiaPy.algorithms.utility import AlgorithmUtility
+from NiaPy.task import StoppingTask, OptimizationType
 import numpy as np
 import copy
 import pickle
@@ -146,8 +147,8 @@ class Pipeline:
 
         task = StoppingTask(
             D=D,
-            nFES=number_of_pipeline_evaluations,
-            benchmark=self._PipelineBenchmark(self, population_size, number_of_evaluations),
+            nFES=number_of_evaluations,
+            benchmark=self._PipelineBenchmark(self, population_size),
             optType=OptimizationType.MAXIMIZATION
             )
         best = algo.run(task)
@@ -193,21 +194,18 @@ class Pipeline:
         Attributes:
             __parent (Pipeline): Parent Pipeline instance.
             __population_size (uint): Number of individuals in the hiperparameter optimization process.
-            __number_of_evaluations (uint): Number of maximum evaluations.
             __current_best_fitness (float): Current best fitness of the optimization process.
         """
 
-        def __init__(self, parent, population_size, number_of_evaluations):
+        def __init__(self, parent, population_size):
             r"""Initialize pipeline benchmark.
 
             Arguments:
                 parent (Pipeline): Parent instance of Pipeline.
                 population_size (uint): Number of individuals in the hiperparameter optimization process.
-                number_of_evaluations (uint): Number of maximum inner evaluations.
             """
             self.__parent = parent
             self.__population_size = population_size
-            self.__number_of_evaluations = number_of_evaluations
             self.__current_best_fitness = float('-inf')
             Benchmark.__init__(self, 0.0, 1.0)
         
@@ -245,7 +243,7 @@ class Pipeline:
                     solution_index = 0
                     for i in params_all:
                         args = dict()
-                        for key in i:
+                        for key in i[0]:
                             if i[0][key] is not None:
                                 if isinstance(i[0][key].value, MinMax):
                                     val = sol[solution_index] * i[0][key].value.max + i[0][key].value.min
@@ -257,7 +255,7 @@ class Pipeline:
                                 else:
                                     args[key] = i[0][key].value[get_bin_index(sol[solution_index], len(i[0][key].value))]
                             solution_index += 1
-                        i[1].set_parameters(args)
+                        i[1].set_parameters(**args)
 
                     X = data.get_x()
 

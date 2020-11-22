@@ -228,7 +228,7 @@ class PipelineOptimizer:
                     classifier=self.__float_to_instance(sol[2], self.__parent.get_classifiers(), self.__classifier_factory)
                 )
 
-                fitness = pipeline.optimize(self.__inner_population_size, self.__number_of_inner_evaluations, self.__optimization_algorithm)[1]
+                fitness = pipeline.optimize(self.__inner_population_size, self.__number_of_inner_evaluations, self.__optimization_algorithm)
                 if fitness > self.__current_best_fitness:
                     self.__current_best_fitness = fitness
                     self.__current_best_pipeline = pipeline

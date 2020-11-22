@@ -36,7 +36,7 @@ class PipelineComponent:
 		"""
 		return
 	
-	def get_params_dict_size(self):
+	def get_params_dict(self):
 		r"""Return parameters definition dictionary.
 		"""
 		return self._params
