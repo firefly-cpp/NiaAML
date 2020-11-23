@@ -1,9 +1,10 @@
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
+from sklearn.model_selection import StratifiedKFold
 from niaaml.utilities import MinMax, get_bin_index
 from NiaPy.benchmarks import Benchmark
 from NiaPy.algorithms.utility import AlgorithmUtility
-from NiaPy.task import StoppingTask, OptimizationType
+from NiaPy.task import StoppingTask
 import numpy as np
 import copy
 import pickle
@@ -148,8 +149,7 @@ class Pipeline:
         task = StoppingTask(
             D=D,
             nFES=number_of_evaluations,
-            benchmark=self._PipelineBenchmark(self, population_size),
-            optType=OptimizationType.MAXIMIZATION
+            benchmark=self._PipelineBenchmark(self, population_size)
             )
         best = algo.run(task)
         return best[1]
@@ -206,7 +206,7 @@ class Pipeline:
             """
             self.__parent = parent
             self.__population_size = population_size
-            self.__current_best_fitness = float('-inf')
+            self.__current_best_fitness = float('inf')
             Benchmark.__init__(self, 0.0, 1.0)
         
         def function(self):
@@ -257,22 +257,26 @@ class Pipeline:
                             solution_index += 1
                         i[1].set_parameters(**args)
 
-                    X = data.get_x()
+                    x = data.get_x()
+                    y = data.get_y()
 
                     if feature_selection_algorithm is not None:
-                        X = feature_selection_algorithm.select_features(X, data.get_y())
+                        x = feature_selection_algorithm.select_features(x, y)
                     
                     if feature_transform_algorithm is not None:
-                        X = feature_transform_algorithm.transform(X)
+                        x = feature_transform_algorithm.transform(x)
                     
-                    train_X, test_X, train_y, test_y = train_test_split(
-                        X, data.get_y(), test_size=0.2)
+                    accuracies = []
+                    kf = StratifiedKFold(n_splits=10, random_state=0, shuffle=True)
+                    for train_index, test_index in kf.split(x, y):
+                        x_train, x_test, y_train, y_test = x[train_index], x[test_index], y[train_index], y[test_index]
+                        classifier.fit(x_train, y_train)
+                        predictions = classifier.predict(x_test)
+                        accuracies.push(accuracy_score(y_test, predictions))
+                    
+                    fitness = 1 - np.mean(accuracies)
 
-                    classifier.fit(train_X, train_y)
-                    predictions = classifier.predict(test_X)
-
-                    fitness = accuracy_score(test_y, predictions)
-                    if fitness > self.__current_best_fitness:
+                    if fitness < self.__current_best_fitness:
                         self.__current_best_fitness = fitness
                         self.__parent.set_feature_selection_algorithm(feature_selection_algorithm)
                         self.__parent.set_feature_transform_algorithm(feature_transform_algorithm)
@@ -281,7 +285,7 @@ class Pipeline:
                     return fitness
                 except:
                     # infeasible solution as it causes some kind of error
-                    # return negative infinity as we are looking for maximum accuracy in the optimization process
-                    return float('-inf')
+                    # return infinity as we are looking for maximum accuracy in the optimization process (1 - accuracy since it is a minimization problem)
+                    return float('inf')
             
             return evaluate

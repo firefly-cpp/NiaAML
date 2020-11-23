@@ -3,7 +3,7 @@ from niaaml.pipeline import Pipeline
 from niaaml.classifiers import ClassifierFactory
 from niaaml.preprocessing.feature_selection import FeatureSelectionAlgorithmFactory
 from niaaml.preprocessing.feature_transform import FeatureTransformAlgorithmFactory
-from NiaPy.task import StoppingTask, OptimizationType
+from NiaPy.task import StoppingTask
 from NiaPy.benchmarks import Benchmark
 from NiaPy.algorithms.utility import AlgorithmUtility
 from niaaml.utilities import get_bin_index
@@ -139,8 +139,7 @@ class PipelineOptimizer:
         task = StoppingTask(
             D=3,
             nFES=number_of_pipeline_evaluations,
-            benchmark=benchmark,
-            optType=OptimizationType.MAXIMIZATION
+            benchmark=benchmark
             )
         algo.run(task)
         
@@ -177,7 +176,7 @@ class PipelineOptimizer:
             self.__inner_population_size = inner_population_size
             self.__number_of_inner_evaluations = number_of_inner_evaluations
             self.__optimization_algorithm = inner_optimization_algorithm
-            self.__current_best_fitness = float('-inf')
+            self.__current_best_fitness = float('inf')
             self.__current_best_pipeline = None
             Benchmark.__init__(self, 0.0, 1.0)
 
@@ -229,7 +228,7 @@ class PipelineOptimizer:
                 )
 
                 fitness = pipeline.optimize(self.__inner_population_size, self.__number_of_inner_evaluations, self.__optimization_algorithm)
-                if fitness > self.__current_best_fitness:
+                if fitness < self.__current_best_fitness:
                     self.__current_best_fitness = fitness
                     self.__current_best_pipeline = pipeline
 
