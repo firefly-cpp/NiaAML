@@ -26,7 +26,7 @@ class Classifier(PipelineComponent):
 
         Arguments:
             x (Iterable[any]): n samples to classify.
-			y (numpy.array[int]): n classes of the samples in the x array.
+			y (Iterable[any]): n classes of the samples in the x array.
 
         Returns:
             None
@@ -40,6 +40,6 @@ class Classifier(PipelineComponent):
             x (Iterable[any]): n samples to classify.
 
         Returns:
-            numpy.array[int]: n predicted classes.
+            Iterable[any]: n predicted classes.
 		"""
 		return

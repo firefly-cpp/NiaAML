@@ -28,6 +28,6 @@ class FeatureSelectionAlgorithm(PreprocessingAlgorithm):
             y (Iterable[int]): Array of expected classes.
 
 		Returns:
-			Iterable[any]: Array of selected features.
+			Iterable[bool]: Mask of selected features.
 		"""
 		return x

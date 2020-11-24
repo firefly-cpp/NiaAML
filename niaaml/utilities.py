@@ -5,24 +5,9 @@ __all__ = [
 	'MinMax',
 	'ParameterDefinition',
 	'Factory',
-	'get_label_encoder',
 	'float_converter',
 	'get_bin_index'
 ]
-
-def get_label_encoder(labels):
-	r"""Get the label encoder instance.
-
-	Arguments:
-		labels (Iterable[string]): Array of labels.
-
-	Returns:
-		sklearn.preprocessing.LabelEncoder: Instance of a LabelEncoder fit to the given labels.
-	"""
-
-	le = preprocessing.LabelEncoder()
-	le.fit(labels)
-	return le
 
 def float_converter(array):
 	r"""Convert values in the array to float if possible, leave element as is otherwise.
@@ -43,7 +28,14 @@ def float_converter(array):
 	return converted_array
 
 def get_bin_index(value, number_of_bins):
-	"""TODO
+	"""Gets index of value's bin. Value must be between 0.0 and 1.0.
+
+	Arguments:
+		value (float): Value to put into bin.
+		number_of_bins (uint): Number of bins on the interval [0.0, 1.0].
+	
+	Returns:
+		uint: Calculated index.
 	"""
 	bin_index = np.int(np.floor(value / (1.0 / number_of_bins)))
 	if bin_index >= number_of_bins:

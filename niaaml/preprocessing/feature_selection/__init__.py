@@ -1,8 +1,9 @@
 from niaaml.preprocessing.feature_selection.feature_selection_algorithm import FeatureSelectionAlgorithm
-from niaaml.preprocessing.feature_selection.variance_threshold_feature_selection import VarianceThresholdFeatureSelection
+from niaaml.preprocessing.feature_selection.variance_threshold import VarianceThresholdFeatureSelection
 from niaaml.preprocessing.feature_selection.jDEFSTH import jDEFSTH
 from niaaml.preprocessing.feature_selection.select_percentile import SelectPercentileFeatureSelection
 from niaaml.preprocessing.feature_selection.select_k_best import SelectKBestFeatureSelection
+from niaaml.preprocessing.feature_selection.particle_swarm_optimization import PSOFeatureSelection
 from niaaml.preprocessing.feature_selection.utility import FeatureSelectionAlgorithmFactory
 
 __all__ = [
@@ -10,6 +11,7 @@ __all__ = [
     'VarianceThresholdFeatureSelection',
     'jDEFSTH',
     'SelectPercentileFeatureSelection',
+    'PSOFeatureSelection',
     'SelectKBestFeatureSelection',
     'FeatureSelectionAlgorithmFactory'
 ]

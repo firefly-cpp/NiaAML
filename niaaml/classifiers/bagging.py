@@ -26,7 +26,7 @@ class Bagging(Classifier):
 		r"""Initialize Bagging instance.
 		"""
 		self._params = dict(
-			n_estimators = ParameterDefinition(MinMax(min=10, max=150), np.uint),
+			n_estimators = ParameterDefinition(MinMax(min=10, max=111), np.uint),
 			bootstrap = ParameterDefinition([True, False]),
 			bootstrap_features = ParameterDefinition([True, False])
 		)
@@ -42,7 +42,7 @@ class Bagging(Classifier):
 
         Arguments:
             x (Iterable[any]): n samples to classify.
-			y (numpy.array[int]): n classes of the samples in the x array.
+			y (Iterable[any]): n classes of the samples in the x array.
 
         Returns:
             None
@@ -56,6 +56,6 @@ class Bagging(Classifier):
             x (Iterable[any]): n samples to classify.
 
         Returns:
-            numpy.array[int]: n predicted classes.
+            Iterable[any]: n predicted classes.
 		"""
 		return self.__bagging_classifier.predict(x)

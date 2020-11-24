@@ -1,36 +1,46 @@
 import sys
-from NiaPy.algorithms.modified import SelfAdaptiveDifferentialEvolution
+from NiaPy.algorithms.basic import DifferentialEvolution
 from NiaPy.task import StoppingTask
 from NiaPy.benchmarks import Benchmark
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from niaaml.preprocessing.feature_selection.feature_selection_algorithm import FeatureSelectionAlgorithm
+from niaaml.utilities import ParameterDefinition, MinMax
 
 __all__ = [
-    'jDEFSTH'
+    'DEFeatureSelection'
 ]
 
-class jDEFSTH(FeatureSelectionAlgorithm):
-    r"""Implementation of self-adaptive differential evolution for feature selection using threshold mechanism.
+class DEFeatureSelection(FeatureSelectionAlgorithm):
+    r"""Implementation of feature selection using DE algorithm.
 
     Date:
         2020
     
     Author:
-        Iztok Fister Jr.
-    
-    Reference:
-        D. Fister, I. Fister, T. Jagrič, I. Fister Jr., J. Brest. A novel self-adaptive differential evolution for feature selection using threshold mechanism . In: Proceedings of the 2018 IEEE Symposium on Computational Intelligence (SSCI 2018), pp. 17-24, 2018.
-    
-    Reference URL: 
-        http://iztok-jr-fister.eu/static/publications/236.pdf    
+        Luka Pečnik  
 
     License:
         MIT
 
-	See Also:
-		* :class:`niaaml.preprocessing.feature_selection.feature_selection_algorithm.FeatureSelectionAlgorithm`
+    See Also:
+        * :class:`niaaml.preprocessing.feature_selection.feature_selection_algorithm.FeatureSelectionAlgorithm`
     """
+
+    def __init__(self, **kwargs):
+        r"""Initialize DE feature selection algorithm.
+        """
+        self._params = dict(
+            F = ParameterDefinition(MinMax(0.5, 0.9), param_type=float),
+            CR = ParameterDefinition(MinMax(0.0, 1.0), param_type=float)
+        )
+        self.__de = DifferentialEvolution(NP=10)
+
+    def set_parameters(self, **kwargs):
+        r"""Set the parameters/arguments of the algorithm.
+        """
+        kwargs['NP'] = self.__de.NP
+        self.__de.setParameters(**kwargs)
 
     def __final_output(self, sol):
         r"""Calculate final array of features.
@@ -51,18 +61,17 @@ class jDEFSTH(FeatureSelectionAlgorithm):
     def select_features(self, x, y, **kwargs):
         r"""Perform the feature selection process.
 
-		Arguments:
-			x (Iterable[any]): Array of original features.
+        Arguments:
+            x (Iterable[any]): Array of original features.
             y [numpy.array[int]] Expected classifier results.
 
-		Returns:
-			Iterable[bool]: Mask of selected features.
+        Returns:
+            Iterable[bool]: Mask of selected features.
         """
         num_features = x.shape[1]
-        algo = SelfAdaptiveDifferentialEvolution(NP=10, F=0.5, F_l=0.0, F_u=2.0, Tao1=0.9, CR=0.5, Tao2=0.45)
         benchmark = _FeatureSelectionThreshold(x, y)
         task = StoppingTask(D=num_features+1, nFES=1000, benchmark=benchmark)
-        best = algo.run(task)
+        best = self.__de.run(task)
         return self.__final_output(benchmark.get_best_solution())
 
 class _FeatureSelectionThreshold(Benchmark):
@@ -76,7 +85,7 @@ class _FeatureSelectionThreshold(Benchmark):
     def __init__(self, X, y):
         r"""Initialize feature selection benchmark.
 
-		Arguments:
+        Arguments:
             X (Iterable[any]): Features.
             y [numpy.array[int]] Expected classifier results.
         """

@@ -46,7 +46,7 @@ class SelectKBestFeatureSelection(FeatureSelectionAlgorithm):
             y (Iterable[int]): Array of expected classes (ignored, but available for compatibility with other feature selection algorithms).
 
 		Returns:
-			Iterable[any]: Array of selected features.
+			Iterable[bool]: Mask of selected features.
 		"""
 		if self.__k is None:
 			self.__k = len(x[0])
@@ -54,4 +54,5 @@ class SelectKBestFeatureSelection(FeatureSelectionAlgorithm):
 			val = np.int(np.around(np.random.uniform(1, self.__k)))
 			self.__select_k_best.set_params(k=val)
 		
-		return self.__select_k_best.fit_transform(x, y)
+		self.__select_k_best.fit(x, y)
+		return self.__select_k_best.get_support()

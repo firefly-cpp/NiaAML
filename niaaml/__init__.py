@@ -1,7 +1,6 @@
 from niaaml import classifiers
 from niaaml import data
 from niaaml import preprocessing
-from niaaml.utilities import get_label_encoder
 from niaaml.utilities import float_converter
 from niaaml.utilities import MinMax
 from niaaml.utilities import ParameterDefinition
@@ -14,7 +13,6 @@ __all__ = [
     'classifiers',
     'data',
     'preprocessing',
-    'get_label_encoder',
     'float_converter',
     'get_bin_index',
     'MinMax',

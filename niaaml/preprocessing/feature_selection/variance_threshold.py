@@ -27,7 +27,7 @@ class VarianceThresholdFeatureSelection(FeatureSelectionAlgorithm):
 		r"""Initialize VarianceThreshold feature selection algorithm.
 		"""
 		self._params = dict(
-			threshold = ParameterDefinition(MinMax(0, 0.2), np.float)
+			threshold = ParameterDefinition(MinMax(0, 0.1), np.float)
 		)
 		self.__variance_threshold = VarianceThreshold()
 
@@ -44,6 +44,7 @@ class VarianceThresholdFeatureSelection(FeatureSelectionAlgorithm):
             y (Iterable[int]): Array of expected classes (ignored, but available for compatibility with other feature selection algorithms).
 
 		Returns:
-			Iterable[any]: Array of selected features.
+			Iterable[bool]: Mask of selected features.
 		"""
-		return self.__variance_threshold.fit_transform(x, )
+		self.__variance_threshold.fit(x)
+		return self.__variance_threshold.get_support()

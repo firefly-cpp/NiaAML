@@ -28,7 +28,6 @@ class MultiLayerPerceptron(Classifier):
 		self._params = dict(
 			activation = ParameterDefinition(['identity', 'logistic', 'tanh', 'relu']),
 			solver = ParameterDefinition(['lbfgs', 'sgd', 'adam']),
-			max_iter = ParameterDefinition(MinMax(min=200, max=500), np.uint),
 			learning_rate = ParameterDefinition(['constant', 'invscaling', 'adaptive'])
 		)
 		self.__multi_layer_perceptron = MLPClassifier()
@@ -43,7 +42,7 @@ class MultiLayerPerceptron(Classifier):
 
         Arguments:
             x (Iterable[any]): n samples to classify.
-			y (numpy.array[int]): n classes of the samples in the x array.
+			y (Iterable[any]): n classes of the samples in the x array.
 
         Returns:
             None
@@ -57,6 +56,6 @@ class MultiLayerPerceptron(Classifier):
             x (Iterable[any]): n samples to classify.
 
         Returns:
-            numpy.array[int]: n predicted classes.
+            Iterable[any]: n predicted classes.
 		"""
 		return self.__multi_layer_perceptron.predict(x)

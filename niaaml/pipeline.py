@@ -31,6 +31,8 @@ class Pipeline:
 		__feature_selection_algorithm (Optional[FeatureSelectionAlgorithm]): Feature selection algorithm implementation.
 		__feature_transform_algorithm (Optional[FeatureTransformAlgorithm]): Feature transform algorithm implementation.
         __classifier (Classifier): Classifier implementation.
+        __selected_features_mask (Iterable[bool]): Mask of selected features during the feature selection process.
+        __niapy_algorithm_utility (AlgorithmUtility): Class used for getting an optimiziation algorithm using its name.
     """
 
     def __init__(self, **kwargs):
@@ -40,6 +42,7 @@ class Pipeline:
         self.__feature_selection_algorithm = None
         self.__feature_transform_algorithm = None
         self.__classifier = None
+        self.__selected_features_mask = None
         self.__niapy_algorithm_utility = AlgorithmUtility()
         self._set_parameters(**kwargs)
     
@@ -104,6 +107,11 @@ class Pipeline:
         """
         self.__classifier = value
     
+    def set_selected_features_mask(self, value):
+        r"""Set selected features mask.
+        """
+        self.__selected_features_mask = value
+    
     def optimize(self, population_size, number_of_evaluations, optimization_algorithm):
         r"""Optimize pipeline's hyperparameters.
 
@@ -155,9 +163,16 @@ class Pipeline:
         return best[1]
     
     def run(self, x):
-        r"""TODO
+        r"""Runs the pipeline.
+
+        Arguments:
+            x (Iterable[any]): n samples to classify.
+        
+        Returns:
+            Iterable[any]: n predicted classes of the samples in the x array.
         """
-        # TODO filter features according to the feature selection algorithm
+        x = x[self.__selected_features_mask] if self.__selected_features_mask is not None else: x
+        
         if self.__feature_transform_algorithm is not None:
             x = self.__feature_transform_algorithm.transform(x)
 
@@ -165,6 +180,9 @@ class Pipeline:
     
     def export(self, file_name):
         r"""Exports Pipeline object to a file for later use.
+
+        Arguments:
+            file_name (str): Output file name.
         """
         pipeline = Pipeline(
             data=None,
@@ -230,6 +248,7 @@ class Pipeline:
                     feature_selection_algorithm = self.__parent.get_feature_selection_algorithm()
                     feature_transform_algorithm = self.__parent.get_feature_transform_algorithm()
                     classifier = self.__parent.get_classifier()
+                    selected_features_mask = None
 
                     feature_selection_algorithm_params = feature_selection_algorithm.get_params_dict() if feature_selection_algorithm else dict()
                     feature_transform_algorithm_params = feature_transform_algorithm.get_params_dict() if feature_transform_algorithm else dict()
@@ -261,7 +280,8 @@ class Pipeline:
                     y = data.get_y()
 
                     if feature_selection_algorithm is not None:
-                        x = feature_selection_algorithm.select_features(x, y)
+                        selected_features_mask = feature_selection_algorithm.select_features(x, y)
+                        x = x[selected_features_mask]
                     
                     if feature_transform_algorithm is not None:
                         x = feature_transform_algorithm.transform(x)
@@ -272,15 +292,16 @@ class Pipeline:
                         x_train, x_test, y_train, y_test = x[train_index], x[test_index], y[train_index], y[test_index]
                         classifier.fit(x_train, y_train)
                         predictions = classifier.predict(x_test)
-                        accuracies.push(accuracy_score(y_test, predictions))
+                        accuracies.push(accuracy_score(y_test, predictions))    # should we use accuracy here or some other metric?
                     
-                    fitness = 1 - np.mean(accuracies)
+                    fitness = 1.0 - np.mean(accuracies)
 
                     if fitness < self.__current_best_fitness:
                         self.__current_best_fitness = fitness
                         self.__parent.set_feature_selection_algorithm(feature_selection_algorithm)
                         self.__parent.set_feature_transform_algorithm(feature_transform_algorithm)
                         self.__parent.set_classifier(classifier)
+                        self.__parent.set_selected_features_mask(selected_features_mask)
 
                     return fitness
                 except:

@@ -26,7 +26,7 @@ class AdaBoost(Classifier):
 		r"""Initialize AdaBoost instance.
 		"""
 		self._params = dict(
-			n_estimators = ParameterDefinition(MinMax(min=10, max=150), np.uint),
+			n_estimators = ParameterDefinition(MinMax(min=10, max=111), np.uint),
 			algorithm = ParameterDefinition(['SAMME', 'SAMME.R'])
 		)
 		self.__ada_boost = AdaBoostClassifier()
@@ -41,7 +41,7 @@ class AdaBoost(Classifier):
 
         Arguments:
             x (Iterable[any]): n samples to classify.
-			y (numpy.array[int]): n classes of the samples in the x array.
+			y (Iterable[any]): n classes of the samples in the x array.
 
         Returns:
             None
@@ -55,6 +55,6 @@ class AdaBoost(Classifier):
             x (Iterable[any]): n samples to classify.
 
         Returns:
-            numpy.array[int]: n predicted classes.
+            Iterable[any]: n predicted classes.
 		"""
 		return self.__ada_boost.predict(x)

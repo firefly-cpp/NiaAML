@@ -45,6 +45,7 @@ class SelectPercentileFeatureSelection(FeatureSelectionAlgorithm):
             y (Iterable[int]): Array of expected classes (ignored, but available for compatibility with other feature selection algorithms).
 
 		Returns:
-			Iterable[any]: Array of selected features.
+			Iterable[bool]: Mask of selected features.
 		"""
-		return self.__select_percentile.fit_transform(x, y)
+		self.__select_percentile.fit(x, y)
+		return self.__select_percentile.get_support()

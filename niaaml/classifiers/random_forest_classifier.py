@@ -26,7 +26,7 @@ class RandomForestClassifier(Classifier):
 		r"""Initialize RandomForestClassifier instance.
 		"""
 		self._params = dict(
-			n_estimators = ParameterDefinition(MinMax(min=10, max=150), np.uint)
+			n_estimators = ParameterDefinition(MinMax(min=10, max=111), np.uint)
 		)
 		self.__random_forest_classifier = RandomForestClassifier()
 
@@ -40,7 +40,7 @@ class RandomForestClassifier(Classifier):
 
         Arguments:
             x (Iterable[any]): n samples to classify.
-			y (numpy.array[int]): n classes of the samples in the x array.
+			y (Iterable[any]): n classes of the samples in the x array.
 
         Returns:
             None
@@ -54,6 +54,6 @@ class RandomForestClassifier(Classifier):
             x (Iterable[any]): n samples to classify.
 
         Returns:
-            numpy.array[int]: n predicted classes.
+            Iterable[any]: n predicted classes.
 		"""
 		return self.__random_forest_classifier.predict(x)
