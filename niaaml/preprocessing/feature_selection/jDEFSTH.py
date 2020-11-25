@@ -31,6 +31,12 @@ class jDEFSTH(FeatureSelectionAlgorithm):
 	See Also:
 		* :class:`niaaml.preprocessing.feature_selection.feature_selection_algorithm.FeatureSelectionAlgorithm`
     """
+    Name = 'Self-Adaptive Differential Evolution'
+
+    def __init__(self, **kwargs):
+        r"""Initialize GWO feature selection algorithm.
+        """
+        self.__jdefsth = SelfAdaptiveDifferentialEvolution(NP=10, F=0.5, F_l=0.0, F_u=2.0, Tao1=0.9, CR=0.5, Tao2=0.45)
 
     def __final_output(self, sol):
         r"""Calculate final array of features.
@@ -59,11 +65,18 @@ class jDEFSTH(FeatureSelectionAlgorithm):
 			Iterable[bool]: Mask of selected features.
         """
         num_features = x.shape[1]
-        algo = SelfAdaptiveDifferentialEvolution(NP=10, F=0.5, F_l=0.0, F_u=2.0, Tao1=0.9, CR=0.5, Tao2=0.45)
         benchmark = _FeatureSelectionThreshold(x, y)
         task = StoppingTask(D=num_features+1, nFES=1000, benchmark=benchmark)
-        best = algo.run(task)
+        best = self.__jdefsth.run(task)
         return self.__final_output(benchmark.get_best_solution())
+
+    def to_string(self):
+        r"""User friendly representation of the object.
+
+        Returns:
+            str: User friendly representation of the object.
+        """
+        return FeatureSelectionAlgorithm.to_string(self).format(name=self.Name, args=self._parameters_to_string(self.__jdefsth.getParameters()))
 
 class _FeatureSelectionThreshold(Benchmark):
     r"""NiaPy Benchmark class implementation.

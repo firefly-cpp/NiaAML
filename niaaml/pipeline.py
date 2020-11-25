@@ -161,7 +161,7 @@ class Pipeline:
         Returns:
             Iterable[any]: n predicted classes of the samples in the x array.
         """
-        x = x[self.__selected_features_mask] if self.__selected_features_mask is not None else: x
+        x = x[self.__selected_features_mask] if self.__selected_features_mask is not None else x
         
         if self.__feature_transform_algorithm is not None:
             x = self.__feature_transform_algorithm.transform(x)
@@ -196,6 +196,19 @@ class Pipeline:
         """
         with open(file_name, 'rb') as f:
             return pickle.load(f)
+    
+    def to_string(self):
+        r"""User friendly representation of the object.
+
+        Returns:
+            str: User friendly representation of the object.
+        """
+        classifier_string = '\t' + self.__classifier.to_string().replace('\n', '\n\t')
+        feature_selection_algorithm_string = '\t' + self.__feature_selection_algorithm.to_string().replace('\n', '\n\t') if self.__feature_selection_algorithm is not None else '\tNone'
+        feature_transform_algorithm_string = '\t' + self.__feature_transform_algorithm.to_string().replace('\n', '\n\t') if self.__feature_transform_algorithm is not None else '\tNone'
+        stats_string = '\t' + self.__best_stats.to_string().replace('\n', '\n\t') if self.__best_stats is not None else '\tStatistics is not available.'
+        features_string = '\t' + str(self.__selected_features_mask) if self.__selected_features_mask is not None else '\tFeature selection result is not available.'
+        return 'Classifier:\n{classifier}\n\nFeature selection algorithm:\n{fsa}\n\nFeature transform algorithm:\n{fta}\n\nMask of selected features (True if selected, False if not):\n{feat}\n\nStatistics:\n{stats}'.format(classifier=classifier_string, fsa=feature_selection_algorithm_string, fta=feature_transform_algorithm_string, feat=features_string, stats=stats_string)
 
     class _PipelineBenchmark(Benchmark):
         r"""NiaPy Benchmark class implementation.

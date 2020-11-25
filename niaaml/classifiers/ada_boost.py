@@ -7,54 +7,63 @@ import numpy as np
 __all__ = ['AdaBoost']
 
 class AdaBoost(Classifier):
-	r"""Implementation of AdaBoost classifier.
-	
-	Date:
-		2020
+    r"""Implementation of AdaBoost classifier.
+    
+    Date:
+        2020
 
-	Author
-		Luka Pečnik
+    Author
+        Luka Pečnik
 
-	License:
-		MIT
+    License:
+        MIT
 
-	See Also:
-		* :class:`niaaml.classifiers.Classifier`
-	"""
-	
-	def __init__(self, **kwargs):
-		r"""Initialize AdaBoost instance.
-		"""
-		self._params = dict(
-			n_estimators = ParameterDefinition(MinMax(min=10, max=111), np.uint),
-			algorithm = ParameterDefinition(['SAMME', 'SAMME.R'])
-		)
-		self.__ada_boost = AdaBoostClassifier()
+    See Also:
+        * :class:`niaaml.classifiers.Classifier`
+    """
+    Name = 'AdaBoost'
 
-	def set_parameters(self, **kwargs):
-		r"""Set the parameters/arguments of the algorithm.
-		"""
-		self.__ada_boost.set_params(**kwargs)
+    def __init__(self, **kwargs):
+        r"""Initialize AdaBoost instance.
+        """
+        self._params = dict(
+            n_estimators = ParameterDefinition(MinMax(min=10, max=111), np.uint),
+            algorithm = ParameterDefinition(['SAMME', 'SAMME.R'])
+        )
+        self.__ada_boost = AdaBoostClassifier()
 
-	def fit(self, x, y, **kwargs):
-		r"""Fit AdaBoost.
+    def set_parameters(self, **kwargs):
+        r"""Set the parameters/arguments of the algorithm.
+        """
+        self.__ada_boost.set_params(**kwargs)
+
+    def fit(self, x, y, **kwargs):
+        r"""Fit AdaBoost.
 
         Arguments:
             x (Iterable[any]): n samples to classify.
-			y (Iterable[any]): n classes of the samples in the x array.
+            y (Iterable[any]): n classes of the samples in the x array.
 
         Returns:
             None
-		"""
-		self.__ada_boost.fit(x, y)
+        """
+        self.__ada_boost.fit(x, y)
 
-	def predict(self, x, **kwargs):
-		r"""Predict class for each sample (row) in x.
+    def predict(self, x, **kwargs):
+        r"""Predict class for each sample (row) in x.
 
         Arguments:
             x (Iterable[any]): n samples to classify.
 
         Returns:
             Iterable[any]: n predicted classes.
-		"""
-		return self.__ada_boost.predict(x)
+        """
+        return self.__ada_boost.predict(x)
+
+    def to_string(self):
+        r"""User friendly representation of the object.
+
+        Returns:
+            str: User friendly representation of the object.
+        """
+        return Classifier.to_string(self).format(name=self.Name, args=self._parameters_to_string(self.__ada_boost.get_params()))

@@ -26,6 +26,7 @@ class GWOFeatureSelection(FeatureSelectionAlgorithm):
     See Also:
         * :class:`niaaml.preprocessing.feature_selection.feature_selection_algorithm.FeatureSelectionAlgorithm`
     """
+    Name = 'Grey Wolf Optimizer'
 
     def __init__(self, **kwargs):
         r"""Initialize GWO feature selection algorithm.
@@ -63,6 +64,14 @@ class GWOFeatureSelection(FeatureSelectionAlgorithm):
         task = StoppingTask(D=num_features+1, nFES=1000, benchmark=benchmark)
         best = self.__gwo.run(task)
         return self.__final_output(benchmark.get_best_solution())
+    
+    def to_string(self):
+        r"""User friendly representation of the object.
+
+        Returns:
+            str: User friendly representation of the object.
+        """
+        return FeatureSelectionAlgorithm.to_string(self).format(name=self.Name, args=self._parameters_to_string(self.__gwo.getParameters()))
 
 class _FeatureSelectionThreshold(Benchmark):
     r"""NiaPy Benchmark class implementation.

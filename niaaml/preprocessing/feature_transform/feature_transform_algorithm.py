@@ -7,26 +7,26 @@ __all__ = [
 class FeatureTransformAlgorithm(PreprocessingAlgorithm):
     r"""Class for implementing feature transform algorithms.
     
-	Date:
-		2020
+    Date:
+        2020
 
-	Author
-		Luka Pečnik
+    Author
+        Luka Pečnik
 
-	License:
+    License:
         MIT
 
-	See Also:
-		* :class:`niaaml.preprocessing.preprocessing_algorithm.PreprocessingAlgorithm`
+    See Also:
+        * :class:`niaaml.preprocessing.preprocessing_algorithm.PreprocessingAlgorithm`
     """
 
-	def fit(self, x, **kwargs):
-		r"""Fit implemented classifier.
+    def fit(self, x, **kwargs):
+        r"""Fit implemented classifier.
 
         Arguments:
             x (Iterable[any]): n samples to fit transformation algorithm.
-		"""
-		return
+        """
+        return
     
     def transform(self, x, **kwargs):
         r"""Transforms the given x data.

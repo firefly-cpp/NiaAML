@@ -27,6 +27,7 @@ class PSOFeatureSelection(FeatureSelectionAlgorithm):
     See Also:
         * :class:`niaaml.preprocessing.feature_selection.feature_selection_algorithm.FeatureSelectionAlgorithm`
     """
+    Name = 'Particle Swarm Optimization'
 
     def __init__(self, **kwargs):
         r"""Initialize PSO feature selection algorithm.
@@ -74,6 +75,14 @@ class PSOFeatureSelection(FeatureSelectionAlgorithm):
         task = StoppingTask(D=num_features+1, nFES=1000, benchmark=benchmark)
         best = self.__pso.run(task)
         return self.__final_output(benchmark.get_best_solution())
+
+    def to_string(self):
+        r"""User friendly representation of the object.
+
+        Returns:
+            str: User friendly representation of the object.
+        """
+        return FeatureSelectionAlgorithm.to_string(self).format(name=self.Name, args=self._parameters_to_string(self.__pso.getParameters()))
 
 class _FeatureSelectionThreshold(Benchmark):
     r"""NiaPy Benchmark class implementation.

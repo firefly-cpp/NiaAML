@@ -19,6 +19,7 @@ class Normalizer(FeatureTransformAlgorithm):
     See Also:
         * :class:`niaaml.preprocessing.feature_transform.FeatureTransformAlgorithm`
     """
+    Name = 'Normalizer'
 
     def __init__(self, **kwargs):
         r"""Initialize SelectPercentile feature selection algorithm.
@@ -35,13 +36,13 @@ class Normalizer(FeatureTransformAlgorithm):
         self.__params = kwargs
         self.__params['axis'] = 0
     
-	def fit(self, x, **kwargs):
-		r"""Fit implemented transformation algorithm.
+    def fit(self, x, **kwargs):
+        r"""Fit implemented transformation algorithm.
 
         Arguments:
             x (Iterable[any]): n samples to fit transformation algorithm.
-		"""
-		self.__normalizer.fit(x)
+        """
+        self.__normalizer.fit(x)
 
     def transform(self, x, **kwargs):
         r"""Transforms the given x data.
@@ -57,3 +58,11 @@ class Normalizer(FeatureTransformAlgorithm):
         """
 
         return self.__normalizer.transform(x)
+
+    def to_string(self):
+        r"""User friendly representation of the object.
+
+        Returns:
+            str: User friendly representation of the object.
+        """
+        return FeatureTransformAlgorithm.to_string(self).format(name=self.Name, args=self._parameters_to_string(self.__normalizer.get_params()))
