@@ -25,6 +25,9 @@ class SelectKBestFeatureSelection(FeatureSelectionAlgorithm):
 
 	def __init__(self, **kwargs):
 		r"""Initialize SelectKBest feature selection algorithm.
+
+		Notes:
+			_params['k'] is initialized to None as it is included in the optimization process later since we cannot determine a proper value range until length of the feature vector becomes known.
 		"""
 		self._params = dict(
 			score_func = ParameterDefinition([chi2]),
@@ -43,7 +46,7 @@ class SelectKBestFeatureSelection(FeatureSelectionAlgorithm):
 
 		Arguments:
 			x (Iterable[any]): Array of original features.
-            y (Iterable[int]): Array of expected classes (ignored, but available for compatibility with other feature selection algorithms).
+            y (Iterable[any]): Array of expected classes (ignored, but available for compatibility with other feature selection algorithms).
 
 		Returns:
 			Iterable[bool]: Mask of selected features.

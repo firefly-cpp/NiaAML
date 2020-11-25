@@ -1,7 +1,8 @@
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import StratifiedKFold
-from niaaml.utilities import MinMax, get_bin_index
+from niaaml.utilities import MinMax, get_bin_index, OptimizationStats
+from niaaml.fitness import FitnessFactory
 from NiaPy.benchmarks import Benchmark
 from NiaPy.algorithms.utility import AlgorithmUtility
 from NiaPy.task import StoppingTask
@@ -32,6 +33,7 @@ class Pipeline:
 		__feature_transform_algorithm (Optional[FeatureTransformAlgorithm]): Feature transform algorithm implementation.
         __classifier (Classifier): Classifier implementation.
         __selected_features_mask (Iterable[bool]): Mask of selected features during the feature selection process.
+        __best_stats (OptimizationStats): Statistics of the most successful setup of parameters.
         __niapy_algorithm_utility (AlgorithmUtility): Class used for getting an optimiziation algorithm using its name.
     """
 
@@ -43,6 +45,7 @@ class Pipeline:
         self.__feature_transform_algorithm = None
         self.__classifier = None
         self.__selected_features_mask = None
+        self.__best_stats = None
         self.__niapy_algorithm_utility = AlgorithmUtility()
         self._set_parameters(**kwargs)
     
@@ -112,35 +115,23 @@ class Pipeline:
         """
         self.__selected_features_mask = value
     
-    def optimize(self, population_size, number_of_evaluations, optimization_algorithm):
+    def set_stats(self, value):
+        r"""Set stats.
+        """
+        self.__best_stats = value
+    
+    def optimize(self, population_size, number_of_evaluations, optimization_algorithm, fitness_function):
         r"""Optimize pipeline's hyperparameters.
 
         Arguments:
             population_size (uint): Number of individuals in the optimization process.
             number_of_evaluations (uint): Number of maximum evaluations.
             optimization_algorithm (str): Name of the optimization algorithm to use.
+            fitness_function (str): Name of the fitness function to use.
         
         Returns:
             float: Best fitness value found in optimization process.
         """
-
-        def _initialize_population(task, NP, rnd=np.random, **kwargs):
-            r"""NiaPy's InitPopFunc implementation.
-
-            Arguments:
-                task (NiaPy.task.Task): Implementation of NiaPy's Task class.
-                NP (uint): Population size.
-                rnd (any): Random number generator.
-            
-            Returns:
-                Tuple[numpy.ndarray, numpy.ndarray[float]]]:
-                    1. New population with shape `{NP, task.D}`.
-                    2. New population's function/fitness values.
-            """
-
-            pop = np.random.uniform(size=(NP, task.D))
-            fpop = np.apply_along_axis(task.eval, 1, pop)
-            return pop, fpop
 
         D = 0
         if self.__feature_selection_algorithm is not None and self.__feature_selection_algorithm.get_params_dict() is not None:
@@ -152,12 +143,11 @@ class Pipeline:
 
         algo = self.__niapy_algorithm_utility.get_algorithm(optimization_algorithm)
         algo.NP = population_size
-        algo.InitPopFunc = _initialize_population
 
         task = StoppingTask(
             D=D,
             nFES=number_of_evaluations,
-            benchmark=self._PipelineBenchmark(self, population_size)
+            benchmark=self._PipelineBenchmark(self, population_size, fitness_function)
             )
         best = algo.run(task)
         return best[1]
@@ -190,6 +180,7 @@ class Pipeline:
             feature_transform_algorithm=self.__feature_transform_algorithm,
             classifier=self.__classifier
         )
+        pipeline.set_selected_features_mask(self.__selected_features_mask)
         if len(os.path.splitext(file_name)[1]) == 0 or os.path.splitext(file_name)[1] != '.ppln':
             file_name = file_name + '.ppln'
 
@@ -213,18 +204,21 @@ class Pipeline:
             __parent (Pipeline): Parent Pipeline instance.
             __population_size (uint): Number of individuals in the hiperparameter optimization process.
             __current_best_fitness (float): Current best fitness of the optimization process.
+            __fitness_function (FitnessFunction): Instance of a FitnessFunction object.
         """
 
-        def __init__(self, parent, population_size):
+        def __init__(self, parent, population_size, fitness_function):
             r"""Initialize pipeline benchmark.
 
             Arguments:
                 parent (Pipeline): Parent instance of Pipeline.
                 population_size (uint): Number of individuals in the hiperparameter optimization process.
+                fitness_function (str): Name of the fitness function to use.
             """
             self.__parent = parent
             self.__population_size = population_size
             self.__current_best_fitness = float('inf')
+            self.__fitness_function = FitnessFactory().get_result(fitness_function)
             Benchmark.__init__(self, 0.0, 1.0)
         
         def function(self):
@@ -278,23 +272,33 @@ class Pipeline:
 
                     x = data.get_x()
                     y = data.get_y()
-
-                    if feature_selection_algorithm is not None:
-                        selected_features_mask = feature_selection_algorithm.select_features(x, y)
-                        x = x[selected_features_mask]
                     
-                    if feature_transform_algorithm is not None:
-                        x = feature_transform_algorithm.transform(x)
-                    
-                    accuracies = []
-                    kf = StratifiedKFold(n_splits=10, random_state=0, shuffle=True)
+                    scores = []
+                    kf = StratifiedKFold(n_splits=11, random_state=0, shuffle=True)
+                    selected_features_mask = None
+                    fit_iteration = True
                     for train_index, test_index in kf.split(x, y):
                         x_train, x_test, y_train, y_test = x[train_index], x[test_index], y[train_index], y[test_index]
-                        classifier.fit(x_train, y_train)
-                        predictions = classifier.predict(x_test)
-                        accuracies.push(accuracy_score(y_test, predictions))    # should we use accuracy here or some other metric?
+
+                        if fit_iteration:
+                            if feature_selection_algorithm is None:
+                                selected_features_mask = np.ones(x.shape[1], dtype=bool)
+                            else:
+                                selected_features_mask = feature_selection_algorithm.select_features(x_train, y_train)
+                            x = x[selected_features_mask]
+
+                            if feature_transform_algorithm is not None:
+                                x_train = x_train[selected_features_mask]
+                                feature_transform_algorithm.fit(x_train)
+                                feature_transform_algorithm.transform(x)
+                            
+                            fit_iteration = False
+                        else:
+                            classifier.fit(x_train, y_train)
+                            predictions = classifier.predict(x_test)
+                            scores.push(self.__fitness_function.get_fitness(predictions, y_test))
                     
-                    fitness = 1.0 - np.mean(accuracies)
+                    fitness = np.mean(scores) * -1
 
                     if fitness < self.__current_best_fitness:
                         self.__current_best_fitness = fitness
@@ -302,6 +306,7 @@ class Pipeline:
                         self.__parent.set_feature_transform_algorithm(feature_transform_algorithm)
                         self.__parent.set_classifier(classifier)
                         self.__parent.set_selected_features_mask(selected_features_mask)
+                        self.__parent.set_stats(OptimizationStats(predictions, y_test))
 
                     return fitness
                 except:

@@ -42,7 +42,7 @@ class SelectPercentileFeatureSelection(FeatureSelectionAlgorithm):
 
 		Arguments:
 			x (Iterable[any]): Array of original features.
-            y (Iterable[int]): Array of expected classes (ignored, but available for compatibility with other feature selection algorithms).
+            y (Iterable[any]): Array of expected classes (ignored, but available for compatibility with other feature selection algorithms).
 
 		Returns:
 			Iterable[bool]: Mask of selected features.

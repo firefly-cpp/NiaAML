@@ -19,6 +19,14 @@ class FeatureTransformAlgorithm(PreprocessingAlgorithm):
 	See Also:
 		* :class:`niaaml.preprocessing.preprocessing_algorithm.PreprocessingAlgorithm`
     """
+
+	def fit(self, x, **kwargs):
+		r"""Fit implemented classifier.
+
+        Arguments:
+            x (Iterable[any]): n samples to fit transformation algorithm.
+		"""
+		return
     
     def transform(self, x, **kwargs):
         r"""Transforms the given x data.

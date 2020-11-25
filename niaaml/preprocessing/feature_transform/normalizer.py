@@ -1,4 +1,4 @@
-from sklearn.preprocessing import normalize
+from sklearn.preprocessing import Normalizer as Nrm
 from niaaml.preprocessing.feature_transform import FeatureTransformAlgorithm
 from niaaml.utilities import ParameterDefinition
 
@@ -27,12 +27,21 @@ class Normalizer(FeatureTransformAlgorithm):
             norm = ParameterDefinition(['l1', 'l2', 'max'])
         )
         self.__params = None
+        self.__normalizer = Nrm()
 
     def set_parameters(self, **kwargs):
         r"""Set the parameters/arguments of the algorithm.
         """
         self.__params = kwargs
         self.__params['axis'] = 0
+    
+	def fit(self, x, **kwargs):
+		r"""Fit implemented transformation algorithm.
+
+        Arguments:
+            x (Iterable[any]): n samples to fit transformation algorithm.
+		"""
+		self.__normalizer.fit(x)
 
     def transform(self, x, **kwargs):
         r"""Transforms the given x data.
@@ -47,4 +56,4 @@ class Normalizer(FeatureTransformAlgorithm):
             * :func:`niaaml.preprocessing.feature_transform.FeatureTransformAlgorithm.transform`
         """
 
-        return normalize(x, **self.__params)
+        return self.__normalizer.transform(x)

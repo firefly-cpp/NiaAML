@@ -63,7 +63,7 @@ class DEFeatureSelection(FeatureSelectionAlgorithm):
 
         Arguments:
             x (Iterable[any]): Array of original features.
-            y [numpy.array[int]] Expected classifier results.
+            y (Iterable[any]) Expected classifier results.
 
         Returns:
             Iterable[bool]: Mask of selected features.
@@ -87,7 +87,7 @@ class _FeatureSelectionThreshold(Benchmark):
 
         Arguments:
             X (Iterable[any]): Features.
-            y [numpy.array[int]] Expected classifier results.
+            y (Iterable[any]) Expected classifier results.
         """
         self.__best_fitness = float('inf')
         self.__best_solution = None

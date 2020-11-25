@@ -1,9 +1,11 @@
 from sklearn import preprocessing
+from sklearn.metrics import accuracy_score, precision_score, cohen_kappa_score, f1_score
 import numpy as np
 
 __all__ = [
 	'MinMax',
 	'ParameterDefinition',
+	'OptimizationStats',
 	'Factory',
 	'float_converter',
 	'get_bin_index'
@@ -117,3 +119,20 @@ class Factory:
 			return self._entities[name]()
 		else:
 			raise TypeError('Passed entity is not defined! --> %s' % name)
+
+class OptimizationStats:
+	r"""Class that holds pipeline optimization result's statistics. Includes accuracy, precision, Cohen's kappa and F1-score.
+
+	Attributes:
+		_accuracy (float): Calculated accuracy.
+		_precision (float): Calculated precision.
+		_cohen_kappa (float): Calculated Cohen's kappa.
+		_f1_score (float): Calculated F1-score.
+	"""
+
+	def __init__(self, predicted, expected, **kwargs):
+		r"""Initialize the factory."""
+		self._accuracy = accuracy_score(expected, predicted)
+		self._precision = precision_score(expected, predicted)
+		self._cohen_kappa = cohen_kappa_score(expected, predicted)
+		self._f1_score = f1_score(expected, predicted)

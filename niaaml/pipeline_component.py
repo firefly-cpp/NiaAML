@@ -26,8 +26,11 @@ class PipelineComponent:
 
 	def __init__(self, **kwargs):
 		r"""Initialize pipeline component.
+
+		Notes:
+			_params variable should not be static as in some cases it is instance specific. See * :class:`niaaml.preprocessing.feature_selection.select_k_best.SelectKBestFeatureSelection` for example.
 		"""
-		# _params variable should not be static as in some cases it is instance specific
+		# 
 		self._params = None
 		self.set_parameters(**kwargs)
 	
