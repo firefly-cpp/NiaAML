@@ -1,26 +1,26 @@
 from niaaml.preprocessing.preprocessing_algorithm import PreprocessingAlgorithm
 
 __all__ = [
-	'FeatureSelectionAlgorithm'
+    'FeatureSelectionAlgorithm'
 ]
 
 class FeatureSelectionAlgorithm(PreprocessingAlgorithm):
-	r"""Class for implementing feature selection algorithms.
-	
-	Date:
-		2020
+    r"""Class for implementing feature selection algorithms.
+    
+    Date:
+        2020
 
-	Author
-		Luka Pečnik
+    Author
+        Luka Pečnik
 
-	License:
-		MIT
+    License:
+        MIT
 
-	See Also:
-		* :class:`niaaml.preprocessing.preprocessing_algorithm.PreprocessingAlgorithm`
-	"""
-	
-	def select_features(self, x, y, **kwargs):
+    See Also:
+        * :class:`niaaml.preprocessing.preprocessing_algorithm.PreprocessingAlgorithm`
+    """
+    
+    def select_features(self, x, y, **kwargs):
         r"""Perform the feature selection process.
 
         Arguments:
@@ -30,4 +30,4 @@ class FeatureSelectionAlgorithm(PreprocessingAlgorithm):
         Returns:
             numpy.ndarray[bool]: Mask of selected features.
         """
-		return x
+        return x

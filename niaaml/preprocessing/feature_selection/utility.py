@@ -1,5 +1,6 @@
 from niaaml.utilities import Factory
 import niaaml.preprocessing.feature_selection as fs
+from NiaPy.benchmarks import Benchmark
 
 __all__ = [
     'FeatureSelectionAlgorithmFactory',

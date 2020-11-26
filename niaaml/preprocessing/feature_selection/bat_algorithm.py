@@ -1,7 +1,6 @@
 import sys
 from NiaPy.algorithms.basic import BatAlgorithm
 from NiaPy.task import StoppingTask
-from NiaPy.benchmarks import Benchmark
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from niaaml.preprocessing.feature_selection.feature_selection_algorithm import FeatureSelectionAlgorithm
