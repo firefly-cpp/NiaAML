@@ -46,11 +46,11 @@ class SelectKBestFeatureSelection(FeatureSelectionAlgorithm):
         r"""Perform the feature selection process.
 
         Arguments:
-            x (Iterable[any]): Array of original features.
-            y (Iterable[any]): Array of expected classes (ignored, but available for compatibility with other feature selection algorithms).
+            x (numpy.ndarray[float]): Array of original features.
+            y (Iterable[any]) Expected classifier results.
 
         Returns:
-            Iterable[bool]: Mask of selected features.
+            numpy.ndarray[bool]: Mask of selected features.
         """
         if self.__k is None:
             self.__k = len(x[0])

@@ -41,11 +41,8 @@ class AdaBoost(Classifier):
         r"""Fit AdaBoost.
 
         Arguments:
-            x (Iterable[any]): n samples to classify.
+            x (numpy.ndarray[float]): n samples to classify.
             y (Iterable[any]): n classes of the samples in the x array.
-
-        Returns:
-            None
         """
         self.__ada_boost.fit(x, y)
 
@@ -53,7 +50,7 @@ class AdaBoost(Classifier):
         r"""Predict class for each sample (row) in x.
 
         Arguments:
-            x (Iterable[any]): n samples to classify.
+            x (numpy.ndarray[float]): n samples to classify.
 
         Returns:
             Iterable[any]: n predicted classes.

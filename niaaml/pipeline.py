@@ -147,7 +147,7 @@ class Pipeline:
         task = StoppingTask(
             D=D,
             nFES=number_of_evaluations,
-            benchmark=self._PipelineBenchmark(self, population_size, fitness_function)
+            benchmark=_PipelineBenchmark(self, population_size, fitness_function)
             )
         best = algo.run(task)
         return best[1]
@@ -156,7 +156,7 @@ class Pipeline:
         r"""Runs the pipeline.
 
         Arguments:
-            x (Iterable[any]): n samples to classify.
+            x (numpy.ndarray[float]): n samples to classify.
         
         Returns:
             Iterable[any]: n predicted classes of the samples in the x array.
@@ -187,6 +187,26 @@ class Pipeline:
         with open(file_name, 'wb') as f:
             pickle.dump(pipeline, f)
     
+    def export_text(self, file_name):
+        r"""Exports Pipeline object to a user-friendly text file.
+
+        Arguments:
+            file_name (str): Output file name.
+        """
+        pipeline = Pipeline(
+            data=None,
+            feature_selection_algorithm=self.__feature_selection_algorithm,
+            feature_transform_algorithm=self.__feature_transform_algorithm,
+            classifier=self.__classifier
+        )
+        pipeline.set_selected_features_mask(self.__selected_features_mask)
+        pipeline.set_stats(self.__best_stats)
+        if len(os.path.splitext(file_name)[1]) == 0 or os.path.splitext(file_name)[1] != '.txt':
+            file_name = file_name + '.txt'
+
+        with open(file_name, 'w') as f:
+            f.write(pipeline.to_string())
+    
     @staticmethod
     def load(file_name):
         r"""Loads Pipeline object from a file.
@@ -210,121 +230,121 @@ class Pipeline:
         features_string = '\t' + str(self.__selected_features_mask) if self.__selected_features_mask is not None else '\tFeature selection result is not available.'
         return 'Classifier:\n{classifier}\n\nFeature selection algorithm:\n{fsa}\n\nFeature transform algorithm:\n{fta}\n\nMask of selected features (True if selected, False if not):\n{feat}\n\nStatistics:\n{stats}'.format(classifier=classifier_string, fsa=feature_selection_algorithm_string, fta=feature_transform_algorithm_string, feat=features_string, stats=stats_string)
 
-    class _PipelineBenchmark(Benchmark):
-        r"""NiaPy Benchmark class implementation.
+class _PipelineBenchmark(Benchmark):
+    r"""NiaPy Benchmark class implementation.
 
-        Attributes:
-            __parent (Pipeline): Parent Pipeline instance.
-            __population_size (uint): Number of individuals in the hiperparameter optimization process.
-            __current_best_fitness (float): Current best fitness of the optimization process.
-            __fitness_function (FitnessFunction): Instance of a FitnessFunction object.
+    Attributes:
+        __parent (Pipeline): Parent Pipeline instance.
+        __population_size (uint): Number of individuals in the hiperparameter optimization process.
+        __current_best_fitness (float): Current best fitness of the optimization process.
+        __fitness_function (FitnessFunction): Instance of a FitnessFunction object.
+    """
+
+    def __init__(self, parent, population_size, fitness_function):
+        r"""Initialize pipeline benchmark.
+
+        Arguments:
+            parent (Pipeline): Parent instance of Pipeline.
+            population_size (uint): Number of individuals in the hiperparameter optimization process.
+            fitness_function (str): Name of the fitness function to use.
         """
+        self.__parent = parent
+        self.__population_size = population_size
+        self.__current_best_fitness = float('inf')
+        self.__fitness_function = FitnessFactory().get_result(fitness_function)
+        Benchmark.__init__(self, 0.0, 1.0)
+    
+    def function(self):
+        r"""Override Benchmark function.
 
-        def __init__(self, parent, population_size, fitness_function):
-            r"""Initialize pipeline benchmark.
+        Returns:
+            Callable[[int, numpy.ndarray[float]], float]: Fitness evaluation function.
+        """
+        def evaluate(D, sol):
+            r"""Evaluate pipeline.
 
             Arguments:
-                parent (Pipeline): Parent instance of Pipeline.
-                population_size (uint): Number of individuals in the hiperparameter optimization process.
-                fitness_function (str): Name of the fitness function to use.
-            """
-            self.__parent = parent
-            self.__population_size = population_size
-            self.__current_best_fitness = float('inf')
-            self.__fitness_function = FitnessFactory().get_result(fitness_function)
-            Benchmark.__init__(self, 0.0, 1.0)
-        
-        def function(self):
-            r"""Override Benchmark function.
-
-            Returns:
-                Callable[[int, Iterable[float]], float]: Fitness evaluation function.
-            """
-            def evaluate(D, sol):
-                r"""Evaluate pipeline.
-
-                Arguments:
-                    D (uint): Number of dimensionas.
-                    sol (Iterable[float]): Individual of population/ possible solution.
-                
-                Returns:
-                    float: Fitness.
-                """
-                try:
-                    data = self.__parent.get_data()
-                    feature_selection_algorithm = self.__parent.get_feature_selection_algorithm()
-                    feature_transform_algorithm = self.__parent.get_feature_transform_algorithm()
-                    classifier = self.__parent.get_classifier()
-                    selected_features_mask = None
-
-                    feature_selection_algorithm_params = feature_selection_algorithm.get_params_dict() if feature_selection_algorithm else dict()
-                    feature_transform_algorithm_params = feature_transform_algorithm.get_params_dict() if feature_transform_algorithm else dict()
-                    classifier_params = classifier.get_params_dict()
-
-                    params_all = [
-                        (feature_selection_algorithm_params, feature_selection_algorithm),
-                        (feature_transform_algorithm_params, feature_transform_algorithm),
-                        (classifier_params, classifier)
-                    ]
-                    solution_index = 0
-                    for i in params_all:
-                        args = dict()
-                        for key in i[0]:
-                            if i[0][key] is not None:
-                                if isinstance(i[0][key].value, MinMax):
-                                    val = sol[solution_index] * i[0][key].value.max + i[0][key].value.min
-                                    if i[0][key].param_type is np.intc or i[0][key].param_type is np.int or i[0][key].param_type is np.uintc or i[0][key].param_type is np.uint:
-                                        val = i[0][key].param_type(np.floor(val))
-                                        if val >= i[0][key].value.max:
-                                            val = i[0][key].value.max - 1
-                                    args[key] = val
-                                else:
-                                    args[key] = i[0][key].value[get_bin_index(sol[solution_index], len(i[0][key].value))]
-                            solution_index += 1
-                        i[1].set_parameters(**args)
-
-                    x = data.get_x()
-                    y = data.get_y()
-                    
-                    scores = []
-                    kf = StratifiedKFold(n_splits=11, random_state=0, shuffle=True)
-                    selected_features_mask = None
-                    fit_iteration = True
-                    for train_index, test_index in kf.split(x, y):
-                        x_train, x_test, y_train, y_test = x[train_index], x[test_index], y[train_index], y[test_index]
-
-                        if fit_iteration:
-                            if feature_selection_algorithm is None:
-                                selected_features_mask = np.ones(x.shape[1], dtype=bool)
-                            else:
-                                selected_features_mask = feature_selection_algorithm.select_features(x_train, y_train)
-                            x = x[selected_features_mask]
-
-                            if feature_transform_algorithm is not None:
-                                x_train = x_train[selected_features_mask]
-                                feature_transform_algorithm.fit(x_train)
-                                feature_transform_algorithm.transform(x)
-                            
-                            fit_iteration = False
-                        else:
-                            classifier.fit(x_train, y_train)
-                            predictions = classifier.predict(x_test)
-                            scores.push(self.__fitness_function.get_fitness(predictions, y_test))
-                    
-                    fitness = np.mean(scores) * -1
-
-                    if fitness < self.__current_best_fitness:
-                        self.__current_best_fitness = fitness
-                        self.__parent.set_feature_selection_algorithm(feature_selection_algorithm)
-                        self.__parent.set_feature_transform_algorithm(feature_transform_algorithm)
-                        self.__parent.set_classifier(classifier)
-                        self.__parent.set_selected_features_mask(selected_features_mask)
-                        self.__parent.set_stats(OptimizationStats(predictions, y_test))
-
-                    return fitness
-                except:
-                    # infeasible solution as it causes some kind of error
-                    # return infinity as we are looking for maximum accuracy in the optimization process (1 - accuracy since it is a minimization problem)
-                    return float('inf')
+                D (uint): Number of dimensionas.
+                sol (numpy.ndarray[float]): Individual of population/ possible solution.
             
-            return evaluate
+            Returns:
+                float: Fitness.
+            """
+            try:
+                data = self.__parent.get_data()
+                feature_selection_algorithm = self.__parent.get_feature_selection_algorithm()
+                feature_transform_algorithm = self.__parent.get_feature_transform_algorithm()
+                classifier = self.__parent.get_classifier()
+                selected_features_mask = None
+
+                feature_selection_algorithm_params = feature_selection_algorithm.get_params_dict() if feature_selection_algorithm else dict()
+                feature_transform_algorithm_params = feature_transform_algorithm.get_params_dict() if feature_transform_algorithm else dict()
+                classifier_params = classifier.get_params_dict()
+
+                params_all = [
+                    (feature_selection_algorithm_params, feature_selection_algorithm),
+                    (feature_transform_algorithm_params, feature_transform_algorithm),
+                    (classifier_params, classifier)
+                ]
+                solution_index = 0
+                for i in params_all:
+                    args = dict()
+                    for key in i[0]:
+                        if i[0][key] is not None:
+                            if isinstance(i[0][key].value, MinMax):
+                                val = sol[solution_index] * i[0][key].value.max + i[0][key].value.min
+                                if i[0][key].param_type is np.intc or i[0][key].param_type is np.int or i[0][key].param_type is np.uintc or i[0][key].param_type is np.uint:
+                                    val = i[0][key].param_type(np.floor(val))
+                                    if val >= i[0][key].value.max:
+                                        val = i[0][key].value.max - 1
+                                args[key] = val
+                            else:
+                                args[key] = i[0][key].value[get_bin_index(sol[solution_index], len(i[0][key].value))]
+                        solution_index += 1
+                    i[1].set_parameters(**args)
+
+                x = data.get_x()
+                y = data.get_y()
+                
+                scores = []
+                kf = StratifiedKFold(n_splits=11, random_state=0, shuffle=True)
+                selected_features_mask = None
+                fit_iteration = True
+                for train_index, test_index in kf.split(x, y):
+                    x_train, x_test, y_train, y_test = x[train_index], x[test_index], y[train_index], y[test_index]
+
+                    if fit_iteration:
+                        if feature_selection_algorithm is None:
+                            selected_features_mask = np.ones(x.shape[1], dtype=bool)
+                        else:
+                            selected_features_mask = feature_selection_algorithm.select_features(x_train, y_train)
+                        x = x[selected_features_mask]
+
+                        if feature_transform_algorithm is not None:
+                            x_train = x_train[selected_features_mask]
+                            feature_transform_algorithm.fit(x_train)
+                            feature_transform_algorithm.transform(x)
+                        
+                        fit_iteration = False
+                    else:
+                        classifier.fit(x_train, y_train)
+                        predictions = classifier.predict(x_test)
+                        scores.push(self.__fitness_function.get_fitness(predictions, y_test))
+                
+                fitness = np.mean(scores) * -1
+
+                if fitness < self.__current_best_fitness:
+                    self.__current_best_fitness = fitness
+                    self.__parent.set_feature_selection_algorithm(feature_selection_algorithm)
+                    self.__parent.set_feature_transform_algorithm(feature_transform_algorithm)
+                    self.__parent.set_classifier(classifier)
+                    self.__parent.set_selected_features_mask(selected_features_mask)
+                    self.__parent.set_stats(OptimizationStats(predictions, y_test))
+
+                return fitness
+            except:
+                # infeasible solution as it causes some kind of error
+                # return infinity as we are looking for maximum accuracy in the optimization process (1 - accuracy since it is a minimization problem)
+                return float('inf')
+        
+        return evaluate

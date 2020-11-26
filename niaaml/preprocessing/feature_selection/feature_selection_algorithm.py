@@ -21,13 +21,13 @@ class FeatureSelectionAlgorithm(PreprocessingAlgorithm):
 	"""
 	
 	def select_features(self, x, y, **kwargs):
-		r"""Perform the feature selection process.
+        r"""Perform the feature selection process.
 
-		Arguments:
-			x (Iterable[any]): Array of original features.
-            y (Iterable[any]): Array of expected classes.
+        Arguments:
+            x (numpy.ndarray[float]): Array of original features.
+            y (Iterable[any]) Expected classifier results.
 
-		Returns:
-			Iterable[bool]: Mask of selected features.
-		"""
+        Returns:
+            numpy.ndarray[bool]: Mask of selected features.
+        """
 		return x

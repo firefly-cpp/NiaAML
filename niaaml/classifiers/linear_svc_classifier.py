@@ -41,7 +41,7 @@ class LinearSVCClassifier(Classifier):
         r"""Fit LinearSVCClassifier.
 
         Arguments:
-            x (Iterable[any]): n samples to classify.
+            x (numpy.ndarray[float]): n samples to classify.
             y (Iterable[any]): n classes of the samples in the x array.
 
         Returns:
@@ -53,7 +53,7 @@ class LinearSVCClassifier(Classifier):
         r"""Predict class for each sample (row) in x.
 
         Arguments:
-            x (Iterable[any]): n samples to classify.
+           x (numpy.ndarray[float]): n samples to classify.
 
         Returns:
             Iterable[any]: n predicted classes.

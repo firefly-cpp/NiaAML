@@ -24,7 +24,7 @@ class FeatureTransformAlgorithm(PreprocessingAlgorithm):
         r"""Fit implemented classifier.
 
         Arguments:
-            x (Iterable[any]): n samples to fit transformation algorithm.
+            x (numpy.ndarray[float]): n samples to fit transformation algorithm.
         """
         return
     
@@ -32,9 +32,9 @@ class FeatureTransformAlgorithm(PreprocessingAlgorithm):
         r"""Transforms the given x data.
 
         Arguments:
-            x (Iterable[any]): Data to transform.
+            x (numpy.ndarray[float]): Data to transform.
 
         Returns:
-            Iterable[any]: Transformed data.
+            numpy.ndarray[float]: Transformed data.
         """
         return x

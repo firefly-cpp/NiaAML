@@ -41,11 +41,11 @@ class VarianceThresholdFeatureSelection(FeatureSelectionAlgorithm):
         r"""Perform the feature selection process.
 
         Arguments:
-            x (Iterable[any]): Array of original features.
-            y (Iterable[any]): Array of expected classes (ignored, but available for compatibility with other feature selection algorithms).
+            x (numpy.ndarray[float]): Array of original features.
+            y (Iterable[any]) Expected classifier results.
 
         Returns:
-            Iterable[bool]: Mask of selected features.
+            numpy.ndarray[bool]: Mask of selected features.
         """
         self.__variance_threshold.fit(x)
         return self.__variance_threshold.get_support()

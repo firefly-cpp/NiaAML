@@ -7,27 +7,8 @@ __all__ = [
     'ParameterDefinition',
     'OptimizationStats',
     'Factory',
-    'float_converter',
     'get_bin_index'
 ]
-
-def float_converter(array):
-    r"""Convert values in the array to float if possible, leave element as is otherwise.
-
-    Arguments:
-        array (Iterable[string]): Array of strings.
-
-    Returns:
-        Iterable[any]: Array of mixed types (floats and strings).
-    """
-
-    converted_array = []
-    for element in array:
-        try:
-            converted_array.append(float(element))
-        except ValueError:
-            converted_array.append(element)
-    return converted_array
 
 def get_bin_index(value, number_of_bins):
     """Gets index of value's bin. Value must be between 0.0 and 1.0.

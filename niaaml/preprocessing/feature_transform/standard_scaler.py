@@ -29,7 +29,7 @@ class StandardScaler(FeatureTransformAlgorithm):
         r"""Fit implemented transformation algorithm.
 
         Arguments:
-            x (Iterable[any]): n samples to fit transformation algorithm.
+            x (numpy.ndarray[float]): n samples to fit transformation algorithm.
         """
         self.__std_scaler.fit(x)
 
@@ -37,13 +37,10 @@ class StandardScaler(FeatureTransformAlgorithm):
         r"""Transforms the given x data.
 
         Arguments:
-            x (Iterable[any]): Data to transform.
+            x (numpy.ndarray[float]): Data to transform.
 
         Returns:
-            Iterable[any]: Transformed data.
-        
-        See Also:
-            * :func:`niaaml.preprocessing.feature_transform.FeatureTransformAlgorithm.transform`
+            numpy.ndarray[float]: Transformed data.
         """
         
         return self.__std_scaler.transform(x)
