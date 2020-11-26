@@ -15,19 +15,19 @@ __all__ = [
 class PipelineOptimizer:
     r"""Optimization task that finds the best classification pipeline according to the given input.
     
-	Date:
-		2020
+    Date:
+        2020
 
-	Author
-		Luka Pečnik
+    Author
+        Luka Pečnik
 
-	License:
+    License:
         MIT
 
-	Attributes:
-		__data (DataReader): Instance of any DataReader implementation.
-		__feature_selection_algorithms (Optional[Iterable[str]]): Array of names of possible feature selection algorithms.
-		__feature_transform_algorithms (Optional[Iterable[str]]): Array of names of possible feature transform algorithms.
+    Attributes:
+        __data (DataReader): Instance of any DataReader implementation.
+        __feature_selection_algorithms (Optional[Iterable[str]]): Array of names of possible feature selection algorithms.
+        __feature_transform_algorithms (Optional[Iterable[str]]): Array of names of possible feature transform algorithms.
         __classifiers (Iterable[Classifier]): Array of names of possible classifiers.
 
         __niapy_algorithm_utility (AlgorithmUtility): Utility class used to get an optimization algorithm.
@@ -47,7 +47,7 @@ class PipelineOptimizer:
     def _set_parameters(self, data, classifiers, feature_selection_algorithms = None, feature_transform_algorithms = None, **kwargs):
         r"""Set the parameters/arguments of the task.
 
-		Arguments:
+        Arguments:
             data (DataReader): Instance of any DataReader implementation.
             feature_selection_algorithms (Optional[Iterable[str]]): Array of names of possible feature selection algorithms.
             feature_transform_algorithms (Optional[Iterable[str]]): Array of names of possible feature transform algorithms.
@@ -100,7 +100,7 @@ class PipelineOptimizer:
     def run(self, fitness_name, pipeline_population_size, inner_population_size, number_of_pipeline_evaluations, number_of_inner_evaluations, optimization_algorithm, inner_optimization_algorithm = None):
         r"""Run classification pipeline optimization process.
 
-		Arguments:
+        Arguments:
             fitness_name (str): Name of the fitness class to use as a function.
             pipeline_population_size (uint): Number of pipeline individuals in the optimization process.
             inner_population_size (uint): Number of individuals in the hiperparameter optimization process.
@@ -110,7 +110,7 @@ class PipelineOptimizer:
             inner_optimization_algorithm (Optional[str]): Name of the inner optimization algorithm to use. Defaults to the optimization_algorithm argument.
         
         Returns:
-			Pipeline: Best pipeline found in the optimization process.
+            Pipeline: Best pipeline found in the optimization process.
         """
 
         algo = self.__niapy_algorithm_utility.get_algorithm(optimization_algorithm)
@@ -128,6 +128,12 @@ class PipelineOptimizer:
 
 class _PipelineOptimizerBenchmark(Benchmark):
     r"""NiaPy Benchmark class implementation.
+    
+    Date:
+        2020
+
+    Author
+        Luka Pečnik
 
     Attributes:
         __parent (PipelineOptimizer): Parent instance of PipelineOptimizer.

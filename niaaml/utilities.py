@@ -27,6 +27,15 @@ def get_bin_index(value, number_of_bins):
 
 class MinMax:
     r"""Class for ParameterDefinition's value property.
+    
+    Date:
+        2020
+
+    Author
+        Luka Pečnik
+
+    License:
+        MIT
 
     Attributes:
         min (float): Minimum number (inclusive).
@@ -48,11 +57,19 @@ class MinMax:
 
 class ParameterDefinition:
     r"""Class for PipelineComponent parameters definition.
+    
+    Date:
+        2020
+
+    Author
+        Luka Pečnik
+
+    License:
+        MIT
 
     Attributes:
         value (any): Array of possible parameter values or instance of MinMax class.
         param_type (numpy.dtype): Selection output data type.
-
 
     See Also:
         * :class:`niaaml.pipeline_component.PipelineComponent`
@@ -64,13 +81,22 @@ class ParameterDefinition:
 
         Arguments:
             value (Any): Array of any type or instance of MinMax class.
-            param_type (type): Type of possible outcome according to an instance of MinMax class. Not used if the argument value is array.
+            param_type (Optional[type]): Type of possible outcome according to an instance of MinMax class. Not used if the argument value is array.
         """
         self.value = value
         self.param_type = param_type
 
 class Factory:
     r"""Base class with string mappings to entities.
+    
+    Date:
+        2020
+
+    Author
+        Luka Pečnik
+
+    License:
+        MIT
 
     Attributes:
         _entities (Dict[str, any]): Dictionary to map from strings to an instance of anything.
@@ -103,6 +129,15 @@ class Factory:
 
 class OptimizationStats:
     r"""Class that holds pipeline optimization result's statistics. Includes accuracy, precision, Cohen's kappa and F1-score.
+    
+    Date:
+        2020
+
+    Author
+        Luka Pečnik
+
+    License:
+        MIT
 
     Attributes:
         _accuracy (float): Calculated accuracy.

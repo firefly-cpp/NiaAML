@@ -1,21 +1,21 @@
 from niaaml.pipeline_component import PipelineComponent
 
 __all__ = [
-	'PreprocessingAlgorithm'
+    'PreprocessingAlgorithm'
 ]
 
 class PreprocessingAlgorithm(PipelineComponent):
-	r"""Class for implementing preprocessing algorithms.
-	
-	Date:
-		2020
+    r"""Class for implementing preprocessing algorithms.
+    
+    Date:
+        2020
 
-	Author
-		Luka Pečnik
+    Author
+        Luka Pečnik
 
-	License:
-		MIT
+    License:
+        MIT
 
-	See Also:
-		* :class:`niaaml.pipeline_component.PipelineComponent`
-	"""
+    See Also:
+        * :class:`niaaml.pipeline_component.PipelineComponent`
+    """

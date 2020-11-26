@@ -4,29 +4,29 @@ from niaaml.data.data_reader import DataReader
 __all__ = ['BasicDataReader']
 
 class BasicDataReader(DataReader):
-	r"""Implementation of basic data reader.
-	
-	Date:
-		2020
+    r"""Implementation of basic data reader.
+    
+    Date:
+        2020
 
-	Author
-		Luka Pečnik
+    Author
+        Luka Pečnik
 
-	License:
-		MIT
+    License:
+        MIT
 
-	See Also:
-		* :class:`niaaml.data.DataReader`
-	"""
+    See Also:
+        * :class:`niaaml.data.DataReader`
+    """
 
-	def _set_parameters(self, x, y=None, **kwargs):
-		r"""Set the parameters of the algorithm.
+    def _set_parameters(self, x, y=None, **kwargs):
+        r"""Set the parameters of the algorithm.
 
-		Arguments:
-			x (Iterable[float]): Array of rows from dataset without expected classification results.
-			y (Optional[Iterable[string]]): Array of expected classification results.
-		"""
-		self._x = np.array(x, dtype=np.float)
-		
-		if y is not None:
-			self._y = y
+        Arguments:
+            x (Iterable[float]): Array of rows from dataset without expected classification results.
+            y (Optional[Iterable[any]]): Array of expected classification results.
+        """
+        self._x = np.array(x, dtype=np.float)
+        
+        if y is not None:
+            self._y = y

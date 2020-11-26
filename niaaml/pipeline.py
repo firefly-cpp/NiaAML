@@ -18,19 +18,19 @@ __all__ = [
 class Pipeline:
     r"""Classification pipeline defined by optional preprocessing steps and classifier.
     
-	Date:
-		2020
+    Date:
+        2020
 
-	Author
-		Luka Pečnik
+    Author
+        Luka Pečnik
 
-	License:
+    License:
         MIT
 
-	Attributes:
-		__data (DataReader): Instance of any DataReader implementation.
-		__feature_selection_algorithm (Optional[FeatureSelectionAlgorithm]): Feature selection algorithm implementation.
-		__feature_transform_algorithm (Optional[FeatureTransformAlgorithm]): Feature transform algorithm implementation.
+    Attributes:
+        __data (DataReader): Instance of any DataReader implementation.
+        __feature_selection_algorithm (Optional[FeatureSelectionAlgorithm]): Feature selection algorithm implementation.
+        __feature_transform_algorithm (Optional[FeatureTransformAlgorithm]): Feature transform algorithm implementation.
         __classifier (Classifier): Classifier implementation.
         __selected_features_mask (Iterable[bool]): Mask of selected features during the feature selection process.
         __best_stats (OptimizationStats): Statistics of the most successful setup of parameters.
@@ -49,10 +49,10 @@ class Pipeline:
         self.__niapy_algorithm_utility = AlgorithmUtility()
         self._set_parameters(**kwargs)
     
-    def _set_parameters(self, data, feature_selection_algorithm, feature_transform_algorithm, classifier, **kwargs):
+    def _set_parameters(self, data, classifier, feature_selection_algorithm=None, feature_transform_algorithm=None, **kwargs):
         r"""Set the parameters/arguments of the task.
 
-		Arguments:
+        Arguments:
             data (DataReader): Instance of any DataReader implementation.
             feature_selection_algorithm (Optional[FeatureSelectionAlgorithm]): Feature selection algorithm implementation.
             feature_transform_algorithm (Optional[FeatureTransformAlgorithm]): Feature transform algorithm implementation.
@@ -232,6 +232,15 @@ class Pipeline:
 
 class _PipelineBenchmark(Benchmark):
     r"""NiaPy Benchmark class implementation.
+    
+    Date:
+        2020
+
+    Author
+        Luka Pečnik
+
+    License:
+        MIT
 
     Attributes:
         __parent (Pipeline): Parent Pipeline instance.

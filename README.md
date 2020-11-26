@@ -36,6 +36,8 @@ Below you can see a list of currently implemented components divided into three 
 
 ## Examples
 
+NiaAML framework currently supports only numeric features on the input. **However, we are planning to add support for categorical features too.**
+
 ### Example of Usage
 
 Load data and try to find the optimal pipeline for the given components.

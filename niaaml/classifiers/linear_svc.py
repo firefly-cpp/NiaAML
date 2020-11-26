@@ -1,12 +1,12 @@
 from niaaml.classifiers.classifier import Classifier
 from niaaml.utilities import MinMax
 from niaaml.utilities import ParameterDefinition
-from sklearn.svm import LinearSVC
+from sklearn.svm import LinearSVC as LSVC
 import numpy as np
 
-__all__ = ['LinearSVCClassifier']
+__all__ = ['LinearSVC']
 
-class LinearSVCClassifier(Classifier):
+class LinearSVC(Classifier):
     r"""Implementation of linear support vector classification.
     
     Date:
@@ -30,7 +30,7 @@ class LinearSVCClassifier(Classifier):
             penalty = ParameterDefinition(['l1', 'l2']),
             max_iter = ParameterDefinition(MinMax(min=300, max=2000), np.uint)
         )
-        self.__linear_SVC = LinearSVC()
+        self.__linear_SVC = LSVC()
 
     def set_parameters(self, **kwargs):
         r"""Set the parameters/arguments of the algorithm.

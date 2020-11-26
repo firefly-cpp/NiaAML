@@ -5,6 +5,8 @@ from niaaml import fitness
 from niaaml.utilities import MinMax
 from niaaml.utilities import ParameterDefinition
 from niaaml.utilities import Factory
+from niaaml.utilities import OptimizationStats
+from niaaml.utilities import get_bin_index
 from niaaml.pipeline_optimizer import PipelineOptimizer
 from niaaml.pipeline import Pipeline
 from niaaml.pipeline_component import PipelineComponent
@@ -23,5 +25,6 @@ __all__ = [
     'Pipeline',
     'PipelineComponent'
 ]
+
 __project__ = 'niaaml'
 __version__ = '0.1.0'

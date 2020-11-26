@@ -1,12 +1,12 @@
 from niaaml.classifiers.classifier import Classifier
 from niaaml.utilities import MinMax
 from niaaml.utilities import ParameterDefinition
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import RandomForestClassifier as RF
 import numpy as np
 
-__all__ = ['RandomForestClassifier']
+__all__ = ['RandomForest']
 
-class RandomForestClassifier(Classifier):
+class RandomForest(Classifier):
     r"""Implementation of random forest classifier.
     
     Date:
@@ -29,7 +29,7 @@ class RandomForestClassifier(Classifier):
         self._params = dict(
             n_estimators = ParameterDefinition(MinMax(min=10, max=111), np.uint)
         )
-        self.__random_forest_classifier = RandomForestClassifier()
+        self.__random_forest_classifier = RF()
 
     def set_parameters(self, **kwargs):
         r"""Set the parameters/arguments of the algorithm.
