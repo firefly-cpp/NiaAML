@@ -10,13 +10,13 @@ class ClassifierFactory(Factory):
 
 	Attributes:
 		_entities (Dict[str, Classifier]): Mapping from strings to classifiers.
+
+    See Also:
+        * :class:`niaaml.utilities.Factory`
 	"""
 
 	def _set_parameters(self, **kwargs):
 		r"""Set the parameters/arguments of the factory.
-
-		See Also:
-			* :func:`niaaml.utilities.Factory._set_parameters`
 		"""
 		self._entities = {
 			'AdaBoost': classifiers.AdaBoost,

@@ -1,7 +1,6 @@
 import csv
 import numpy as np
 from niaaml.data.data_reader import DataReader
-from niaaml.utilities import float_converter
 
 __all__ = ['CSVDataReader']
 
@@ -33,9 +32,6 @@ class CSVDataReader(DataReader):
 			src (string): Path to a CSV dataset file.
 			contains_classes (bool): Tells if src contains expected classification results or only features.
 			has_header (bool): Tells if src contains header row.
-
-		See Also:
-			* :func:`niaaml.data.DataReader._set_parameters`
 		"""
 		self.__src = src
 		self.__contains_classes = contains_classes
@@ -44,9 +40,6 @@ class CSVDataReader(DataReader):
 
 	def _read_data(self, **kwargs):
 		r"""Read data from expected source.
-
-		See Also:
-			* :func:`niaaml.data.DataReader._read_data`
 		"""
 		self._x = []
 
@@ -62,10 +55,10 @@ class CSVDataReader(DataReader):
 			y = []
 			for row in reader:
 				if self.__contains_classes:
-					self._x.append(float_converter(row[:-1]))
+					self._x.append(np.array(row[:-1], dtype=np.float))
 					y.append(row[-1])
 				else:
-					self._x.append(float_converter(row))
+					self._x.append(np.array(row, dtype=np.float))
 
 			if self.__contains_classes:
 				self._y = y

@@ -29,7 +29,6 @@ class PipelineOptimizer:
 		__feature_selection_algorithms (Optional[Iterable[str]]): Array of names of possible feature selection algorithms.
 		__feature_transform_algorithms (Optional[Iterable[str]]): Array of names of possible feature transform algorithms.
         __classifiers (Iterable[Classifier]): Array of names of possible classifiers.
-		__pipelines_numeric (numpy.ndarray[float]): Numeric representation of pipelines.
 
         __niapy_algorithm_utility (AlgorithmUtility): Utility class used to get an optimization algorithm.
     """
@@ -41,7 +40,6 @@ class PipelineOptimizer:
         self.__feature_selection_algorithms = None
         self.__feature_transform_algorithms = None
         self.__classifiers = None
-        self.__pipelines_numeric = None
         self.__niapy_algorithm_utility = AlgorithmUtility()
 
         self._set_parameters(**kwargs)
@@ -53,7 +51,7 @@ class PipelineOptimizer:
             data (DataReader): Instance of any DataReader implementation.
             feature_selection_algorithms (Optional[Iterable[str]]): Array of names of possible feature selection algorithms.
             feature_transform_algorithms (Optional[Iterable[str]]): Array of names of possible feature transform algorithms.
-            classifiers (Iterable[Classificator]): Array of names of possible classifiers.
+            classifiers (Iterable[Classifier]): Array of names of possible classifiers.
         """
         self.__data = data
 
@@ -99,10 +97,11 @@ class PipelineOptimizer:
         """
         return self.__classifiers
 
-    def run(self, pipeline_population_size, inner_population_size, number_of_pipeline_evaluations, number_of_inner_evaluations, optimization_algorithm, inner_optimization_algorithm = None):
+    def run(self, fitness_name, pipeline_population_size, inner_population_size, number_of_pipeline_evaluations, number_of_inner_evaluations, optimization_algorithm, inner_optimization_algorithm = None):
         r"""Run classification pipeline optimization process.
 
 		Arguments:
+            fitness_name (str): Name of the fitness class to use as a function.
             pipeline_population_size (uint): Number of pipeline individuals in the optimization process.
             inner_population_size (uint): Number of individuals in the hiperparameter optimization process.
             number_of_pipeline_evaluations (uint): Number of maximum evaluations.
@@ -114,28 +113,10 @@ class PipelineOptimizer:
 			Pipeline: Best pipeline found in the optimization process.
         """
 
-        def _initialize_population(task, NP, rnd=np.random, **kwargs):
-            r"""NiaPy's InitPopFunc implementation.
-
-            Arguments:
-                task (NiaPy.task.Task): Implementation of NiaPy's Task class.
-                NP (uint): Population size.
-                rnd (any): Random number generator.
-            
-            Returns:
-                Tuple[numpy.ndarray, numpy.ndarray[float]]]:
-                    1. New population with shape `{NP, task.D}`.
-                    2. New population's function/fitness values.
-            """
-            pop = np.random.uniform(size=(NP, task.D))
-            fpop = np.apply_along_axis(task.eval, 1, pop)
-            return pop, fpop
-
         algo = self.__niapy_algorithm_utility.get_algorithm(optimization_algorithm)
         algo.NP = pipeline_population_size
-        algo.InitPopFunc = _initialize_population
 
-        benchmark = self._PipelineOptimizerBenchmark(self, inner_population_size, number_of_inner_evaluations, inner_optimization_algorithm if inner_optimization_algorithm is not None else optimization_algorithm)
+        benchmark = _PipelineOptimizerBenchmark(self, fitness_name, inner_population_size, number_of_inner_evaluations, inner_optimization_algorithm if inner_optimization_algorithm is not None else optimization_algorithm)
         task = StoppingTask(
             D=3,
             nFES=number_of_pipeline_evaluations,
@@ -145,93 +126,97 @@ class PipelineOptimizer:
         
         return benchmark.get_pipeline()
 
-    class _PipelineOptimizerBenchmark(Benchmark):
-        r"""NiaPy Benchmark class implementation.
+class _PipelineOptimizerBenchmark(Benchmark):
+    r"""NiaPy Benchmark class implementation.
 
-        Attributes:
-            __inner_population_size (uint): Number of individuals in the hiperparameter optimization process.
-            __number_of_inner_evaluations (uint): Number of maximum inner evaluations.
-            __optimization_algorithm (str): Name of the optimization algorithm to use.
-            __current_best_fitness (float): Current best fitness of the optimization process.
-            __current_best_pipeline (Pipeline): Current best pipeline of the optimization process.
+    Attributes:
+        __parent (PipelineOptimizer): Parent instance of PipelineOptimizer.
+        __inner_population_size (uint): Number of individuals in the hiperparameter optimization process.
+        __number_of_inner_evaluations (uint): Number of maximum inner evaluations.
+        __optimization_algorithm (str): Name of the optimization algorithm to use.
+        __current_best_fitness (float): Current best fitness of the optimization process.
+        __current_best_pipeline (Pipeline): Current best pipeline of the optimization process.
+        __fitness_name (str): Name of the fitness class to use as a function.
 
-            __classifier_factory (ClassifierFactory): Factory for classifiers.
-            __feature_transform_algorithm_factory (FeatureTransformAlgorithmFactory): Factory for feature transform algorithms.
-            __feature_selection_algorithm_factory (FeatureSelectionAlgorithmFactory): Factory for feature selection algorithms.
+        __classifier_factory (ClassifierFactory): Factory for classifiers.
+        __feature_transform_algorithm_factory (FeatureTransformAlgorithmFactory): Factory for feature transform algorithms.
+        __feature_selection_algorithm_factory (FeatureSelectionAlgorithmFactory): Factory for feature selection algorithms.
+    """
+    __classifier_factory = ClassifierFactory()
+    __feature_transform_algorithm_factory = FeatureTransformAlgorithmFactory()
+    __feature_selection_algorithm_factory = FeatureSelectionAlgorithmFactory()
+
+    def __init__(self, parent, fitness_name, inner_population_size, number_of_inner_evaluations, inner_optimization_algorithm):
+        r"""Initialize pipeline optimizer benchmark.
+
+        Arguments:
+            parent (PipelineOptimizer): Parent instance of PipelineOptimizer.
+            fitness_name (str): Name of the fitness class to use as a function.
+            inner_population_size (uint): Number of individuals in the hiperparameter optimization process.
+            number_of_inner_evaluations (uint): Number of maximum inner evaluations.
+            inner_optimization_algorithm (str): Name of the optimization algorithm to use.
         """
-        __classifier_factory = ClassifierFactory()
-        __feature_transform_algorithm_factory = FeatureTransformAlgorithmFactory()
-        __feature_selection_algorithm_factory = FeatureSelectionAlgorithmFactory()
+        self.__parent = parent
+        self.__inner_population_size = inner_population_size
+        self.__number_of_inner_evaluations = number_of_inner_evaluations
+        self.__optimization_algorithm = inner_optimization_algorithm
+        self.__current_best_fitness = float('inf')
+        self.__current_best_pipeline = None
+        self.__fitness_name = fitness_name
+        Benchmark.__init__(self, 0.0, 1.0)
 
-        def __init__(self, parent, inner_population_size, number_of_inner_evaluations, inner_optimization_algorithm):
-            r"""Initialize pipeline optimizer benchmark.
+    def __float_to_instance(self, value, collection, factory):
+        r"""Get instance of object from collection using factory.
+
+        Arguments:
+            value (float): Value to map.
+            collection (Iterable[str]): Array of names of possible feature selection algorithms.
+            factory (Factory): Implementation of the Factory class.
+        
+        Returns:
+            PipelineComponent: New PipelineComponent instance.
+        """
+        bin_index = get_bin_index(value, len(collection))
+
+        name = collection[bin_index]
+        return factory.get_result(name) if name is not None else None
+    
+    def get_pipeline(self):
+        r"""Get best pipeline found.
+
+        Returns:
+            Pipeline: Best pipeline found.
+        """
+        return self.__current_best_pipeline
+    
+    def function(self):
+        r"""Override Benchmark function.
+
+        Returns:
+            Callable[[int, numpy.ndarray[float]], float]: Fitness evaluation function.
+        """
+        def evaluate(D, sol):
+            r"""Evaluate pipeline.
 
             Arguments:
-                parent (PipelineOptimizer): Parent instance of PipelineOptimizer.
-                inner_population_size (uint): Number of individuals in the hiperparameter optimization process.
-                number_of_inner_evaluations (uint): Number of maximum inner evaluations.
-                inner_optimization_algorithm (str): Name of the optimization algorithm to use.
-            """
-            self.__parent = parent
-            self.__inner_population_size = inner_population_size
-            self.__number_of_inner_evaluations = number_of_inner_evaluations
-            self.__optimization_algorithm = inner_optimization_algorithm
-            self.__current_best_fitness = float('inf')
-            self.__current_best_pipeline = None
-            Benchmark.__init__(self, 0.0, 1.0)
-
-        def __float_to_instance(self, value, collection, factory):
-            r"""Get instance of object from collection using factory.
-
-            Arguments:
-                value (float): Value to map.
-                collection (Iterable[str]): Array of names of possible feature selection algorithms.
-                factory (Factory): Implementation of the Factory class.
+                D (uint): Number of dimensionas.
+                sol (numpy.ndarray[float]): Individual of population/ possible solution.
             
             Returns:
-                PipelineComponent: New PipelineComponent instance.
+                float: Fitness.
             """
-            bin_index = get_bin_index(value, len(collection))
+            pipeline = Pipeline(
+                data=self.__parent.get_data(),
+                feature_selection_algorithm=self.__float_to_instance(sol[0], self.__parent.get_feature_selection_algorithms(), self.__feature_selection_algorithm_factory) if self.__parent.get_feature_selection_algorithms() is not None and len(self.__parent.get_feature_selection_algorithms()) > 0 else None,
+                feature_transform_algorithm=self.__float_to_instance(sol[1], self.__parent.get_feature_transform_algorithms(), self.__feature_transform_algorithm_factory) if self.__parent.get_feature_transform_algorithms() is not None and len(self.__parent.get_feature_transform_algorithms()) > 0 else None,
+                classifier=self.__float_to_instance(sol[2], self.__parent.get_classifiers(), self.__classifier_factory)
+            )
 
-            name = collection[bin_index]
-            return factory.get_result(name) if name is not None else None
+            fitness = pipeline.optimize(self.__inner_population_size, self.__number_of_inner_evaluations, self.__optimization_algorithm, self.__fitness_name)
+            if fitness < self.__current_best_fitness:
+                self.__current_best_fitness = fitness
+                self.__current_best_pipeline = pipeline
+
+            return fitness
         
-        def get_pipeline(self):
-            r"""Get best pipeline found.
-
-            Returns:
-                Pipeline: Best pipeline found.
-            """
-            return self.__current_best_pipeline
-        
-        def function(self):
-            r"""Override Benchmark function.
-
-            Returns:
-                Callable[[int, Iterable[float]], float]: Fitness evaluation function.
-            """
-            def evaluate(D, sol):
-                r"""Evaluate pipeline.
-
-                Arguments:
-                    D (uint): Number of dimensionas.
-                    sol (Iterable[float]): Individual of population/ possible solution.
-                
-                Returns:
-                    float: Fitness.
-                """
-                pipeline = Pipeline(
-                    data=self.__parent.get_data(),
-                    feature_selection_algorithm=self.__float_to_instance(sol[0], self.__parent.get_feature_selection_algorithms(), self.__feature_selection_algorithm_factory) if self.__parent.get_feature_selection_algorithms() is not None and len(self.__parent.get_feature_selection_algorithms()) > 0 else None,
-                    feature_transform_algorithm=self.__float_to_instance(sol[1], self.__parent.get_feature_transform_algorithms(), self.__feature_transform_algorithm_factory) if self.__parent.get_feature_transform_algorithms() is not None and len(self.__parent.get_feature_transform_algorithms()) > 0 else None,
-                    classifier=self.__float_to_instance(sol[2], self.__parent.get_classifiers(), self.__classifier_factory)
-                )
-
-                fitness = pipeline.optimize(self.__inner_population_size, self.__number_of_inner_evaluations, self.__optimization_algorithm)
-                if fitness < self.__current_best_fitness:
-                    self.__current_best_fitness = fitness
-                    self.__current_best_pipeline = pipeline
-
-                return fitness
-            
-            return evaluate
+        return evaluate

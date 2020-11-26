@@ -1,10 +1,10 @@
 import sys
 from NiaPy.algorithms.modified import SelfAdaptiveDifferentialEvolution
 from NiaPy.task import StoppingTask
-from NiaPy.benchmarks import Benchmark
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from niaaml.preprocessing.feature_selection.feature_selection_algorithm import FeatureSelectionAlgorithm
+from niaaml.preprocessing.feature_selection.utility import _FeatureSelectionThresholdBenchmark
 
 __all__ = [
     'jDEFSTH'
@@ -31,19 +31,25 @@ class jDEFSTH(FeatureSelectionAlgorithm):
 	See Also:
 		* :class:`niaaml.preprocessing.feature_selection.feature_selection_algorithm.FeatureSelectionAlgorithm`
     """
+    Name = 'Self-Adaptive Differential Evolution'
+
+    def __init__(self, **kwargs):
+        r"""Initialize GWO feature selection algorithm.
+        """
+        self.__jdefsth = SelfAdaptiveDifferentialEvolution(NP=10, F=0.5, F_l=0.0, F_u=2.0, Tao1=0.9, CR=0.5, Tao2=0.45)
 
     def __final_output(self, sol):
         r"""Calculate final array of features.
 
         Arguments:
-            sol (Iterable[float]): Individual of population/ possible solution.
+            sol (numpy.ndarray[float]): Individual of population/ possible solution.
 
         Returns:
-            Iterable[bool]: Mask of selected features.
+            numpy.ndarray[bool]: Mask of selected features.
         """
-        selected = numpy.ones(len(sol) - 1, dtype=bool)
-        threshold = sol[len(sol)-1]
-        for i in range(len(sol)-1):
+        selected = numpy.ones(sol.shape[0] - 1, dtype=bool)
+        threshold = sol[sol.shape[0] - 1]
+        for i in range(sol.shape[0] - 1):
             if sol[i] < threshold:
                 selected[i] = False
         return selected
@@ -51,87 +57,23 @@ class jDEFSTH(FeatureSelectionAlgorithm):
     def select_features(self, x, y, **kwargs):
         r"""Perform the feature selection process.
 
-		Arguments:
-			x (Iterable[any]): Array of original features.
-            y [numpy.array[int]] Expected classifier results.
+        Arguments:
+            x (numpy.ndarray[float]): Array of original features.
+            y (Iterable[any]) Expected classifier results.
 
-		Returns:
-			Iterable[bool]: Mask of selected features.
+        Returns:
+            numpy.ndarray[bool]: Mask of selected features.
         """
         num_features = x.shape[1]
-        algo = SelfAdaptiveDifferentialEvolution(NP=10, F=0.5, F_l=0.0, F_u=2.0, Tao1=0.9, CR=0.5, Tao2=0.45)
-        benchmark = _FeatureSelectionThreshold(x, y)
+        benchmark = _FeatureSelectionThresholdBenchmark(x, y)
         task = StoppingTask(D=num_features+1, nFES=1000, benchmark=benchmark)
-        best = algo.run(task)
+        best = self.__jdefsth.run(task)
         return self.__final_output(benchmark.get_best_solution())
 
-class _FeatureSelectionThreshold(Benchmark):
-    r"""NiaPy Benchmark class implementation.
-
-    Attributes:
-        __best_fitness (float): Current best fitness of the optimization process.
-        __best_solution (Iterable[float]): Current best solution of the optimization process.
-    """
-    
-    def __init__(self, X, y):
-        r"""Initialize feature selection benchmark.
-
-		Arguments:
-            X (Iterable[any]): Features.
-            y [numpy.array[int]] Expected classifier results.
-        """
-        self.__best_fitness = float('inf')
-        self.__best_solution = None
-        Benchmark.__init__(self, 0.0, 1.0)
-        self.train_X, self.test_X, self.train_y, self.test_y = train_test_split(X, y, test_size=0.2)
-
-    def get_best_solution(self):
-        r"""Get best solution found.
+    def to_string(self):
+        r"""User friendly representation of the object.
 
         Returns:
-            Iterable[float]: Best solution found.
+            str: User friendly representation of the object.
         """
-        return self.__best_solution
-
-    def function(self):
-        r"""Override Benchmark function.
-
-        Returns:
-            Callable[[int, Iterable[float]], float]: Fitness evaluation function.
-        """
-
-        def evaluate(D, sol):
-            r"""Evaluate features.
-
-            Arguments:
-                D (uint): Number of dimensions.
-                sol (Iterable[float]): Individual of population/ possible solution.
-            
-            Returns:
-                float: Fitness.
-            """
-            selected = []  #array for selected features
-            self.Threshold = sol[D-1]  # current threshold
-            
-            # select features
-            for i in range(len(sol)-1):
-                if sol[i] < self.Threshold:
-                    pass
-                else:
-                    selected.append(i)
-
-            # in the case if threshold is too low (no features selected)
-            if len(selected) == 0:
-                return 1
-            
-            lr = LogisticRegression(solver='lbfgs', max_iter=10000).fit(
-                self.train_X[:, selected], self.train_y)
-            accuracy = lr.score(self.test_X[:, selected], self.test_y)
-            fitness = 1.0 - accuracy
-            
-            if fitness < self.__best_fitness:
-                self.__best_fitness = fitness
-                self.__best_solution = sol
-            return fitness
-
-        return evaluate
+        return FeatureSelectionAlgorithm.to_string(self).format(name=self.Name, args=self._parameters_to_string(self.__jdefsth.getParameters()))

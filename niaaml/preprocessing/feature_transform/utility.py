@@ -14,9 +14,6 @@ class FeatureTransformAlgorithmFactory(Factory):
 
 	def _set_parameters(self, **kwargs):
 		r"""Set the parameters/arguments of the factory.
-
-		See Also:
-			* :func:`niaaml.utilities.Factory._set_parameters`
 		"""
 		self._entities = {
 			'Normalizer': ft.Normalizer,

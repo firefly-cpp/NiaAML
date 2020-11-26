@@ -15,8 +15,8 @@ class DataReader:
 		MIT
 
 	Attributes:
-		_x (Iterable[any]): Array of rows from dataset without expected classification results.
-		_y (Optional[Iterable[int]]): Array of encoded expected classification results.
+		_x (numpy.ndarray[float]): Array of rows from dataset without expected classification results.
+		_y (Optional[Iterable[any]]): Array of encoded expected classification results.
 	"""
 
 	def __init__(self, **kwargs):
@@ -35,7 +35,7 @@ class DataReader:
 		r"""Get value of _x.
 
 		Returns:
-			Iterable[any]: Array of rows from dataset without expected classification results.
+			numpy.ndarray[float]: Array of rows from dataset without expected classification results.
 		"""
 		return self._x
 	
@@ -43,7 +43,7 @@ class DataReader:
 		r"""Get value of _y.
 
 		Returns:
-			numpy.array[int]: Array of encoded expected classification results.
+			Iterable[any]: Array of encoded expected classification results.
 		"""
 		return self._y
 
