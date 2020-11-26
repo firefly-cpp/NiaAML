@@ -1,5 +1,5 @@
 import sys
-from NiaPy.algorithms.basic import GreyWolfOptimizer
+from NiaPy.algorithms.basic import GreyWolfOptimizer as GWO
 from NiaPy.task import StoppingTask
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
@@ -8,10 +8,10 @@ from niaaml.utilities import ParameterDefinition, MinMax
 from niaaml.preprocessing.feature_selection.utility import _FeatureSelectionThresholdBenchmark
 
 __all__ = [
-    'GWOFeatureSelection'
+    'GreyWolfOptimizer'
 ]
 
-class GWOFeatureSelection(FeatureSelectionAlgorithm):
+class GreyWolfOptimizer(FeatureSelectionAlgorithm):
     r"""Implementation of feature selection using GWO algorithm.
 
     Date:
@@ -31,7 +31,7 @@ class GWOFeatureSelection(FeatureSelectionAlgorithm):
     def __init__(self, **kwargs):
         r"""Initialize GWO feature selection algorithm.
         """
-        self.__gwo = GreyWolfOptimizer(NP=10)
+        self.__gwo = GWO(NP=10)
 
     def __final_output(self, sol):
         r"""Calculate final array of features.

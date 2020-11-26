@@ -1,5 +1,5 @@
 import sys
-from NiaPy.algorithms.basic import BatAlgorithm
+from NiaPy.algorithms.basic import BatAlgorithm as BA
 from NiaPy.task import StoppingTask
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
@@ -8,10 +8,10 @@ from niaaml.utilities import ParameterDefinition, MinMax
 from niaaml.preprocessing.feature_selection.utility import _FeatureSelectionThresholdBenchmark
 
 __all__ = [
-    'BAFeatureSelection'
+    'BatAlgorithm'
 ]
 
-class BAFeatureSelection(FeatureSelectionAlgorithm):
+class BatAlgorithm(FeatureSelectionAlgorithm):
     r"""Implementation of feature selection using BA algorithm.
 
     Date:
@@ -37,7 +37,7 @@ class BAFeatureSelection(FeatureSelectionAlgorithm):
             Qmin = ParameterDefinition(MinMax(0.0, 1.0), param_type=float),
             Qmax = ParameterDefinition(MinMax(1.0, 2.0), param_type=float)
         )
-        self.__ba = BatAlgorithm(NP=10)
+        self.__ba = BA(NP=10)
 
     def set_parameters(self, **kwargs):
         r"""Set the parameters/arguments of the algorithm.

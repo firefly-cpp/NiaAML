@@ -1,13 +1,13 @@
 from niaaml.utilities import ParameterDefinition, MinMax
 from niaaml.preprocessing.feature_selection.feature_selection_algorithm import FeatureSelectionAlgorithm
-from sklearn.feature_selection import SelectPercentile, chi2
+from sklearn.feature_selection import SelectPercentile as SelectPerc, chi2
 import numpy as np
 
 __all__ = [
-    'SelectPercentileFeatureSelection'
+    'SelectPercentile'
 ]
 
-class SelectPercentileFeatureSelection(FeatureSelectionAlgorithm):
+class SelectPercentile(FeatureSelectionAlgorithm):
     r"""Implementation of feature selection using percentile selection of best features according to used score function.
     
     Date:
@@ -31,7 +31,7 @@ class SelectPercentileFeatureSelection(FeatureSelectionAlgorithm):
             score_func = ParameterDefinition([chi2]),
             percentile = ParameterDefinition(MinMax(10, 100), np.uint)
         )
-        self.__select_percentile = SelectPercentile()
+        self.__select_percentile = SelectPerc()
 
     def set_parameters(self, **kwargs):
         r"""Set the parameters/arguments of the algorithm.

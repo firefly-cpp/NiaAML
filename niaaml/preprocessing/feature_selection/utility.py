@@ -22,9 +22,13 @@ class FeatureSelectionAlgorithmFactory(Factory):
         """
         self._entities = {
             'jDEFSTH': fs.jDEFSTH,
-            'SelectKBestFeatureSelection': fs.SelectKBestFeatureSelection,
-            'SelectPercentileFeatureSelection': fs.SelectPercentileFeatureSelection,
-            'VarianceThresholdFeatureSelection': fs.VarianceThresholdFeatureSelection
+            'SelectKBest': fs.SelectKBestFeatureSelection,
+            'SelectPercentile': fs.SelectPercentileFeatureSelection,
+            'VarianceThreshold': fs.VarianceThresholdFeatureSelection,
+            'BatAlgorithm': fs.BatAlgorithm,
+            'DifferentialEvolution': fs.DifferentialEvolution,
+            'GreyWolfOptimizer': fs.GreyWolfOptimizer,
+            'ParticleSwarmOptimization': fs.ParticleSwarmOptimization
         }
 
 class _FeatureSelectionThresholdBenchmark(Benchmark):

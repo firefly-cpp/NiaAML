@@ -1,13 +1,13 @@
 from niaaml.utilities import ParameterDefinition, MinMax
 from niaaml.preprocessing.feature_selection.feature_selection_algorithm import FeatureSelectionAlgorithm
-from sklearn.feature_selection import SelectKBest, chi2
+from sklearn.feature_selection import SelectKBest as SelectKB, chi2
 import numpy as np
 
 __all__ = [
-    'SelectKBestFeatureSelection'
+    'SelectKBest'
 ]
 
-class SelectKBestFeatureSelection(FeatureSelectionAlgorithm):
+class SelectKBest(FeatureSelectionAlgorithm):
     r"""Implementation of feature selection using selection of k best features according to used score function.
     
     Date:
@@ -35,7 +35,7 @@ class SelectKBestFeatureSelection(FeatureSelectionAlgorithm):
             k = None
         )
         self.__k = None
-        self.__select_k_best = SelectKBest()
+        self.__select_k_best = SelectKB()
     
     def set_parameters(self, **kwargs):
         r"""Set the parameters/arguments of the algorithm.

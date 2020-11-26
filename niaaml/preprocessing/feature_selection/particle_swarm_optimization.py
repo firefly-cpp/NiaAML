@@ -1,5 +1,5 @@
 import sys
-from NiaPy.algorithms.basic import ParticleSwarmOptimization
+from NiaPy.algorithms.basic import ParticleSwarmOptimization as PSO
 from NiaPy.task import StoppingTask
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
@@ -9,10 +9,10 @@ import numpy as np
 from niaaml.preprocessing.feature_selection.utility import _FeatureSelectionThresholdBenchmark
 
 __all__ = [
-    'PSOFeatureSelection'
+    'ParticleSwarmOptimization'
 ]
 
-class PSOFeatureSelection(FeatureSelectionAlgorithm):
+class ParticleSwarmOptimization(FeatureSelectionAlgorithm):
     r"""Implementation of feature selection using PSO algorithm.
 
     Date:
@@ -36,7 +36,7 @@ class PSOFeatureSelection(FeatureSelectionAlgorithm):
             C1 = ParameterDefinition(MinMax(1.5, 2.5), param_type=float),
             C2 = ParameterDefinition(MinMax(1.5, 2.5), param_type=float)
         )
-        self.__pso = ParticleSwarmOptimization(NP=10)
+        self.__pso = PSO(NP=10)
 
     def set_parameters(self, **kwargs):
         r"""Set the parameters/arguments of the algorithm.

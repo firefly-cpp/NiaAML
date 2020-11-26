@@ -1,5 +1,5 @@
 import sys
-from NiaPy.algorithms.basic import DifferentialEvolution
+from NiaPy.algorithms.basic import DifferentialEvolution as DE
 from NiaPy.task import StoppingTask
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
@@ -8,10 +8,10 @@ from niaaml.utilities import ParameterDefinition, MinMax
 from niaaml.preprocessing.feature_selection.utility import _FeatureSelectionThresholdBenchmark
 
 __all__ = [
-    'DEFeatureSelection'
+    'DifferentialEvolution'
 ]
 
-class DEFeatureSelection(FeatureSelectionAlgorithm):
+class DifferentialEvolution(FeatureSelectionAlgorithm):
     r"""Implementation of feature selection using DE algorithm.
 
     Date:
@@ -35,7 +35,7 @@ class DEFeatureSelection(FeatureSelectionAlgorithm):
             F = ParameterDefinition(MinMax(0.5, 0.9), param_type=float),
             CR = ParameterDefinition(MinMax(0.0, 1.0), param_type=float)
         )
-        self.__de = DifferentialEvolution(NP=10)
+        self.__de = DE(NP=10)
 
     def set_parameters(self, **kwargs):
         r"""Set the parameters/arguments of the algorithm.

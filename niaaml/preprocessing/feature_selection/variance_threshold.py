@@ -1,13 +1,13 @@
 from niaaml.utilities import ParameterDefinition, MinMax
 from niaaml.preprocessing.feature_selection.feature_selection_algorithm import FeatureSelectionAlgorithm
-from sklearn.feature_selection import VarianceThreshold
+from sklearn.feature_selection import VarianceThreshold as VarThr
 import numpy as np
 
 __all__ = [
-    'VarianceThresholdFeatureSelection'
+    'VarianceThreshold'
 ]
 
-class VarianceThresholdFeatureSelection(FeatureSelectionAlgorithm):
+class VarianceThreshold(FeatureSelectionAlgorithm):
     r"""Implementation of feature selection using variance threshold.
     
     Date:
@@ -30,7 +30,7 @@ class VarianceThresholdFeatureSelection(FeatureSelectionAlgorithm):
         self._params = dict(
             threshold = ParameterDefinition(MinMax(0, 0.1), np.float)
         )
-        self.__variance_threshold = VarianceThreshold()
+        self.__variance_threshold = VarThr()
 
     def set_parameters(self, **kwargs):
         r"""Set the parameters/arguments of the algorithm.
