@@ -1,12 +1,15 @@
 [tool.poetry]
 name = "NiaAML"
 version = "0.1.0"
-description = "Automated machine learning in Python"
+description = "Automated machine learning framework written in Python."
 license = "MIT"
-
-authors = ["Luka Pečnik <lukapecnik96@gmail.com>"]
-
-keywords = ['classification', 'NiaPy', 'scikit-learn', 'nature-inspired algorithms']
+authors = ["Luka Pečnik <lukapecnik96@gmail.com>", "Iztok Fister Jr. <iztok.fister1@um.si>"]
+keywords = ['classification', 'NiaPy', 'scikit-learn', 'nature-inspired algorithms', 'feature selection', 'preprocessing']
+homepage = "https://github.com/lukapecnik/NiaAML"
+repository = "https://github.com/lukapecnik/NiaAML"
+include = [
+    "LICENSE"
+]
 
 [tool.poetry.dependencies]
 python = "^3.8"
