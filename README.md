@@ -125,6 +125,10 @@ NiaAML framework also allows you to implement your own fitness function. All you
 
 For more information take a look at the [Accuracy](niaaml/fitness/accuracy.py) implementation.
 
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![All Contributors](https://img.shields.io/badge/all_contributors-13-orange.svg?style=flat-square)](#contributors)
+<!-- ALL-CONTRIBUTORS-BADGE:END --> 
+
 ## Licence
 
 This package is distributed under the MIT License. This license can be found online at <http://www.opensource.org/licenses/MIT>.
