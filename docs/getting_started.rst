@@ -32,6 +32,7 @@ Create a new file, with name, for example *my_first_pipeline.py* and paste in th
     )
     final_pipeline = t.run('Accuracy', 20, 20, 400, 400, 'ParticleSwarmAlgorithm', 'ParticleSwarmAlgorithm')
 
+**As you can see, pipeline components, fitness function and optimization algorithms are always passed into pipeline optimization using their class names.** The example below uses the Particle Swarm Algorithm as the optimization algorithm. You can find a list of all available algorithms in the `NiaPy's documentation <https://niapy.readthedocs.io/en/stable/>`_.
 Now you can run it using the command ``python my_first_pipeline.py``. The code currently does not do much as we want to save our pipeline to a file so we can use it later or at least save a user-friendly representation of it to a text file. You can choose one or both scenarios by adding the code below.
 
 .. code:: python
@@ -53,3 +54,53 @@ If you want to load and use the saved pipeline later, you can use the following 
     y = loaded_pipeline.run(x)
 
 This is a very simple example with dummy data. It is only intended to give you a basic idea on how to use the framework. **NiaAML currently supports only numeric features. However, we are planning to add support for categorical features too.**
+
+Components
+----------
+
+In the following sections you can see a list of currently implemented components divided into groups: classifiers, feature selection algorithms and feature transformation algorithms. At the end you can also see a list of currently implemented fitness functions for the optimization process. Values in parentheses are associated names.
+
+Classifiers
+^^^^^^^^^^^
+
+* Adaptive Boosting (AdaBoost),
+* Bagging (Bagging),
+* Extremely Randomized Trees (ExtremelyRandomizedTrees),
+* Linear SVC (LinearSVC),
+* Multi Layer Perceptron (MultiLayerPerceptron),
+* Random Forest Classifier (RandomForestClassifier).
+
+Feature Selection Algorithms
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+* Select K Best (SelectKBest),
+* Select Percentile (SelectPercentile),
+* Variance Threshold (VarianceThreshold).
+
+Nature-Inspired
+"""""""""""""""
+
+* Bat Algorithm (BatAlgorithm),
+* Differential Evolution (DifferentialEvolution),
+* Self-Adaptive Differential Evolution (jDEFSTH),
+* Grey Wolf Optimizer (GreyWolfOptimizer),
+* Particle Swarm Optimization (ParticleSwarmOptimization).
+
+Feature Transformation Algorithms
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+* Normalizer (Normalizer),
+* Standard Scaler (StandardScaler).
+
+Fitness Functions
+^^^^^^^^^^^^^^^^^
+
+* Accuracy (Accuracy),
+* Cohen's kappa (CohenKappa),
+* F1-Score (F1),
+* Precision (Precision).
+
+Optimization Algorithms
+^^^^^^^^^^^^^^^^^^^^^^^
+
+For the list of available optimization algorithms please see the `NiaPy's documentation <https://niapy.readthedocs.io/en/stable/>`_.

@@ -36,6 +36,7 @@ class jDEFSTH(FeatureSelectionAlgorithm):
     def __init__(self, **kwargs):
         r"""Initialize GWO feature selection algorithm.
         """
+        super(jDEFSTH, self).__init__()
         self.__jdefsth = SelfAdaptiveDifferentialEvolution(NP=10, F=0.5, F_l=0.0, F_u=2.0, Tao1=0.9, CR=0.5, Tao2=0.45)
 
     def __final_output(self, sol):

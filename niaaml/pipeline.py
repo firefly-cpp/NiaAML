@@ -161,7 +161,7 @@ class Pipeline:
         Returns:
             Iterable[any]: n predicted classes of the samples in the x array.
         """
-        x = x[self.__selected_features_mask] if self.__selected_features_mask is not None else x
+        x = x[:, self.__selected_features_mask] if self.__selected_features_mask is not None else x
         
         if self.__feature_transform_algorithm is not None:
             x = self.__feature_transform_algorithm.transform(x)
@@ -315,7 +315,7 @@ class _PipelineBenchmark(Benchmark):
                 x = data.get_x()
                 y = data.get_y()
                 
-                scores = []
+                scores = np.array([], dtype=float)
                 kf = StratifiedKFold(n_splits=11, random_state=0, shuffle=True)
                 selected_features_mask = None
                 fit_iteration = True
@@ -327,10 +327,10 @@ class _PipelineBenchmark(Benchmark):
                             selected_features_mask = np.ones(x.shape[1], dtype=bool)
                         else:
                             selected_features_mask = feature_selection_algorithm.select_features(x_train, y_train)
-                        x = x[selected_features_mask]
+                        x = x[:, selected_features_mask]
 
                         if feature_transform_algorithm is not None:
-                            x_train = x_train[selected_features_mask]
+                            x_train = x_train[:, selected_features_mask]
                             feature_transform_algorithm.fit(x_train)
                             feature_transform_algorithm.transform(x)
                         
@@ -338,7 +338,7 @@ class _PipelineBenchmark(Benchmark):
                     else:
                         classifier.fit(x_train, y_train)
                         predictions = classifier.predict(x_test)
-                        scores.push(self.__fitness_function.get_fitness(predictions, y_test))
+                        scores = np.append(scores, self.__fitness_function.get_fitness(predictions, y_test))
                 
                 fitness = np.mean(scores) * -1
 

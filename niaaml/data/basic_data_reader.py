@@ -29,4 +29,4 @@ class BasicDataReader(DataReader):
         self._x = np.array(x, dtype=np.float)
         
         if y is not None:
-            self._y = y
+            self._y = np.array(y)

@@ -61,4 +61,6 @@ class CSVDataReader(DataReader):
                     self._x.append(np.array(row, dtype=np.float))
 
             if self.__contains_classes:
-                self._y = y
+                self._y = np.array(y)
+        
+        self._x = np.array(self._x)

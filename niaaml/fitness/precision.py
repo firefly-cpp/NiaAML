@@ -27,4 +27,4 @@ class Precision:
         Returns:
             float: Calculated fitness value.
         """
-        return precision_score(expected, predicted)
+        return precision_score(expected, predicted, average='weighted')

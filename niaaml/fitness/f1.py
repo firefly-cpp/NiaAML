@@ -27,4 +27,4 @@ class F1:
         Returns:
             float: Calculated fitness value.
         """
-        return f1_score(expected, predicted)
+        return f1_score(expected, predicted, average='weighted')

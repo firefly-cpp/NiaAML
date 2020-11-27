@@ -17,7 +17,7 @@ The main documentation is organized into a couple of sections:
 .. _user-docs:
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
    :caption: User Documentation
 
    getting_started

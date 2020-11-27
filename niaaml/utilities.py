@@ -149,9 +149,9 @@ class OptimizationStats:
     def __init__(self, predicted, expected, **kwargs):
         r"""Initialize the factory."""
         self._accuracy = accuracy_score(expected, predicted)
-        self._precision = precision_score(expected, predicted)
+        self._precision = precision_score(expected, predicted, average='weighted')
         self._cohen_kappa = cohen_kappa_score(expected, predicted)
-        self._f1_score = f1_score(expected, predicted)
+        self._f1_score = f1_score(expected, predicted, average='weighted')
 
     def to_string(self):
         r"""User friendly representation of the object.

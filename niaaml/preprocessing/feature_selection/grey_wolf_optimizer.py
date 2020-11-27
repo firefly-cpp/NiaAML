@@ -31,6 +31,7 @@ class GreyWolfOptimizer(FeatureSelectionAlgorithm):
     def __init__(self, **kwargs):
         r"""Initialize GWO feature selection algorithm.
         """
+        super(GreyWolfOptimizer, self).__init__()
         self.__gwo = GWO(NP=10)
 
     def __final_output(self, sol):

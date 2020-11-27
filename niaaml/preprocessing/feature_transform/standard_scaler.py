@@ -23,6 +23,7 @@ class StandardScaler(FeatureTransformAlgorithm):
     def __init__(self, **kwargs):
         r"""Initialize SelectPercentile feature selection algorithm.
         """
+        super(StandardScaler, self).__init__()
         self.__std_scaler = StdScaler()
 
     def fit(self, x, **kwargs):
