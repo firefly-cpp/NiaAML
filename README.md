@@ -124,7 +124,7 @@ y = loaded_pipeline.run(x)
 You can also save a user-friendly representation of a pipeline to a text file.
 
 ```python
-final_pipeline.export_text('pipeline.txt')
+pipeline.export_text('pipeline.txt')
 ```
 
 This is a very simple example with dummy data. It is only intended to give you a basic idea on how to use the framework.
