@@ -6,7 +6,7 @@ license = "MIT"
 authors = ["Luka Pečnik <lukapecnik96@gmail.com>", "Iztok Fister Jr. <iztok.fister1@um.si>"]
 keywords = ['classification', 'NiaPy', 'scikit-learn', 'nature-inspired algorithms', 'feature selection', 'preprocessing']
 homepage = "https://github.com/lukapecnik/NiaAML"
-repository = "https://github.com/lukapecnik/NiaAML",
+repository = "https://github.com/lukapecnik/NiaAML"
 readme = "README.md",
 include = [
     "LICENSE"
