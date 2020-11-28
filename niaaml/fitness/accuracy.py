@@ -1,10 +1,11 @@
 from sklearn.metrics import accuracy_score
+from niaaml.fitness.fitness_function import FitnessFunction
 
 __all__ = [
     'Accuracy'
 ]
 
-class Accuracy:
+class Accuracy(FitnessFunction):
     r"""Class representing the accuracy as a fitness function.
     
     Date:
@@ -15,6 +16,9 @@ class Accuracy:
 
     License:
         MIT
+
+    See Also:
+        * :class:`niaaml.fitness.FitnessFunction`
     """
     
     def get_fitness(self, predicted, expected):

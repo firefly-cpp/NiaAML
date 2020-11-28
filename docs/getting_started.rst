@@ -15,13 +15,14 @@ Create a new file, with name, for example *my_first_pipeline.py* and paste in th
 
 .. code:: python
 
-    from niaaml import PipelineOptimizer
+    from niaaml import PipelineOptimizer, Pipeline
     from niaaml.data import BasicDataReader
     import numpy
 
+    # dummy random data
     data_reader = BasicDataReader(
-        numpy.ndarray([[1.23, 3.32, 43.4], [2.23, 3.33, 33.3]]),
-        ['A', 'B']
+        x=numpy.random.uniform(low=0.0, high=15.0, size=(50, 3)),
+        y=numpy.random.choice(['Class 1', 'Class 2'], size=50)
     )
 
     pipeline_optimizer = PipelineOptimizer(
@@ -30,15 +31,15 @@ Create a new file, with name, for example *my_first_pipeline.py* and paste in th
         feature_selection_algorithms=['SelectKBest', 'SelectPercentile', 'ParticleSwarmOptimization', 'VarianceThreshold'],
         feature_transform_algorithms=['Normalizer', 'StandardScaler']
     )
-    final_pipeline = t.run('Accuracy', 20, 20, 400, 400, 'ParticleSwarmAlgorithm', 'ParticleSwarmAlgorithm')
+    pipeline = pipeline_optimizer.run('Accuracy', 20, 20, 400, 400, 'ParticleSwarmAlgorithm', 'ParticleSwarmAlgorithm')
 
 **As you can see, pipeline components, fitness function and optimization algorithms are always passed into pipeline optimization using their class names.** The example below uses the Particle Swarm Algorithm as the optimization algorithm. You can find a list of all available algorithms in the `NiaPy's documentation <https://niapy.readthedocs.io/en/stable/>`_.
 Now you can run it using the command ``python my_first_pipeline.py``. The code currently does not do much as we want to save our pipeline to a file so we can use it later or at least save a user-friendly representation of it to a text file. You can choose one or both scenarios by adding the code below.
 
 .. code:: python
 
-    final_pipeline.export('pipeline.ppln')
-    final_pipeline.export_text('pipeline.txt')
+    pipeline.export('pipeline.ppln')
+    pipeline.export_text('pipeline.txt')
 
 If you want to load and use the saved pipeline later, you can use the following code.
 
@@ -50,7 +51,7 @@ If you want to load and use the saved pipeline later, you can use the following 
     loaded_pipeline = Pipeline.load('pipeline.ppln')
 
     # some features (can be loaded using DataReader object instances)
-    x = numpy.ndarray([[0.35, 0.46, 5.32], [0.16, 0.55, 12.5]], dtype=float)
+    x = numpy.array([[0.35, 0.46, 5.32], [0.16, 0.55, 12.5]], dtype=float)
     y = loaded_pipeline.run(x)
 
 This is a very simple example with dummy data. It is only intended to give you a basic idea on how to use the framework. **NiaAML currently supports only numeric features. However, we are planning to add support for categorical features too.**
@@ -104,3 +105,21 @@ Optimization Algorithms
 ^^^^^^^^^^^^^^^^^^^^^^^
 
 For the list of available optimization algorithms please see the `NiaPy's documentation <https://niapy.readthedocs.io/en/stable/>`_.
+
+Optimization Process And Parameter Tuning
+-----------------------------------------
+
+In NiaAML there are two types of optimization. Goal of the first type is to find an optimal set of components (feature selection algorithm, feature transformation algorithm and classifier). The next step is to find optimal parameters for the selected set of components and that is a goal of the second type of optimization. Each component has an attribute **_params**, which is a dictionary of parameters and their possible values.
+
+.. code:: python
+
+    self._params = dict(
+        n_estimators = ParameterDefinition(MinMax(min=10, max=111), np.uint),
+        algorithm = ParameterDefinition(['SAMME', 'SAMME.R'])
+    )
+
+An individual in the second type of optimization is a real-valued vector that has a size equal to the sum of number of keys in all three dictionaries (classifier's _params, feature transformation algorithm's _params and feature selection algorithm's _params) and a value of each dimension is in range [0.0, 1.0]. The second type of optimization maps real values from the individual's vector to those parameter definitions in the dictionaries. Each parameter's value can be defined as a range or array of values. In the first case, a value from vector is mapped from one iterval to another and in the second case, a value from vector falls into one of the bins that represent an index of the array that holds possible parameter's values.
+
+Let's say we have a classifier with 3 parameters, feature selection algorithm with 2 parameters and feature transformation algorithm with 4 parameters. Size of an individual in the second type of optimization is 9. Size of an individual in the first type of optimization is always 3 (1 classifier, 1 feature selection algorithm and 1 feature transform algorithm).
+
+In some cases we may want to tune a parameter that needs additional information for setting its range of values, so we cannot set the range in the initialization method. In that case we should set its value in the dictionary to None and define it later in the process. The parameter will be a part of parameter tuning process as soon as we define its possible values. For example, see the implementation of :class:`niaaml.preprocessing.feature_selection.SelectKBest` and its parameter **k**.

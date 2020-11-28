@@ -32,7 +32,7 @@ class PipelineComponent:
         Notes:
             _params variable should not be static as in some cases it is instance specific. See * :class:`niaaml.preprocessing.feature_selection.select_k_best.SelectKBest` for example.
         """
-        self._params = None
+        self._params = dict()
         self.set_parameters(**kwargs)
     
     def set_parameters(self, **kwargs):

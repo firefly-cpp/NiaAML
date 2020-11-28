@@ -134,12 +134,12 @@ class Pipeline:
         """
 
         D = 0
-        if self.__feature_selection_algorithm is not None and self.__feature_selection_algorithm.get_params_dict() is not None:
+        if self.__feature_selection_algorithm is not None:
             D += len(self.__feature_selection_algorithm.get_params_dict().keys())
-        if self.__feature_transform_algorithm is not None and self.__feature_transform_algorithm.get_params_dict() is not None:
+        if self.__feature_transform_algorithm is not None:
             D += len(self.__feature_transform_algorithm.get_params_dict().keys())
-        if self.__classifier.get_params_dict() is not None:
-            D += len(self.__classifier.get_params_dict().keys())
+
+        D += len(self.__classifier.get_params_dict().keys())
 
         algo = self.__niapy_algorithm_utility.get_algorithm(optimization_algorithm)
         algo.NP = population_size
@@ -166,10 +166,10 @@ class Pipeline:
         if self.__feature_transform_algorithm is not None:
             x = self.__feature_transform_algorithm.transform(x)
 
-        return classifier.predict(x)
+        return self.__classifier.predict(x)
     
     def export(self, file_name):
-        r"""Exports Pipeline object to a file for later use.
+        r"""Exports Pipeline object to a file for later use. Extension is added if not present.
 
         Arguments:
             file_name (str): Output file name.
@@ -181,6 +181,7 @@ class Pipeline:
             classifier=self.__classifier
         )
         pipeline.set_selected_features_mask(self.__selected_features_mask)
+        pipeline.set_stats(self.__best_stats)
         if len(os.path.splitext(file_name)[1]) == 0 or os.path.splitext(file_name)[1] != '.ppln':
             file_name = file_name + '.ppln'
 
@@ -188,7 +189,7 @@ class Pipeline:
             pickle.dump(pipeline, f)
     
     def export_text(self, file_name):
-        r"""Exports Pipeline object to a user-friendly text file.
+        r"""Exports Pipeline object to a user-friendly text file. Extension is added if not present.
 
         Arguments:
             file_name (str): Output file name.
@@ -296,6 +297,7 @@ class _PipelineBenchmark(Benchmark):
                     (classifier_params, classifier)
                 ]
                 solution_index = 0
+                
                 for i in params_all:
                     args = dict()
                     for key in i[0]:
@@ -310,7 +312,8 @@ class _PipelineBenchmark(Benchmark):
                             else:
                                 args[key] = i[0][key].value[get_bin_index(sol[solution_index], len(i[0][key].value))]
                         solution_index += 1
-                    i[1].set_parameters(**args)
+                    if i[1] is not None:
+                        i[1].set_parameters(**args)
 
                 x = data.get_x()
                 y = data.get_y()

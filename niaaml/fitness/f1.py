@@ -1,10 +1,11 @@
 from sklearn.metrics import f1_score
+from niaaml.fitness.fitness_function import FitnessFunction
 
 __all__ = [
     'F1'
 ]
 
-class F1:
+class F1(FitnessFunction):
     r"""Class representing the F1-score as a fitness function.
     
     Date:
@@ -15,6 +16,9 @@ class F1:
 
     License:
         MIT
+
+    See Also:
+        * :class:`niaaml.fitness.FitnessFunction`
     """
     
     def get_fitness(self, predicted, expected):

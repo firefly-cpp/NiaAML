@@ -1,10 +1,11 @@
 from sklearn.metrics import cohen_kappa_score
+from niaaml.fitness.fitness_function import FitnessFunction
 
 __all__ = [
     'CohenKappa'
 ]
 
-class CohenKappa:
+class CohenKappa(FitnessFunction):
     r"""Class representing the cohen's kappa as a fitness function.
     
     Date:
@@ -15,6 +16,9 @@ class CohenKappa:
 
     License:
         MIT
+
+    See Also:
+        * :class:`niaaml.fitness.FitnessFunction`
     """
     
     def get_fitness(self, predicted, expected):

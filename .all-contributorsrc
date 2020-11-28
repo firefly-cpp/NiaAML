@@ -13,7 +13,9 @@
       "contributions": [
         "code",
         "doc",
-        "review"
+        "review",
+        "bug",
+        "example"
       ]
     },
     {
@@ -22,7 +24,8 @@
       "avatar_url": "https://avatars2.githubusercontent.com/u/1633361?v=4",
       "profile": "https://github.com/firefly-cpp",
       "contributions": [
-        "code"
+        "code",
+        "bug"
       ]
     }
   ],
