@@ -83,6 +83,14 @@ class Pipeline:
         """
         return copy.deepcopy(self.__classifier)
     
+    def get_stats(self):
+        r"""Get optimization statistics.
+
+        Returns:
+            OptimizationStats: Instance of the OptimizationStats object.
+        """
+        return self.__best_stats
+    
     def set_feature_selection_algorithm(self, value):
         r"""Set feature selection algorithm.
         """

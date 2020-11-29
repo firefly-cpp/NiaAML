@@ -1,8 +1,8 @@
 from unittest import TestCase
-from niaaml import Pipeline
-from niaaml.classifiers import Bagging
-from niaaml.preprocessing.feature_selection import SelectKBest
-from niaaml.preprocessing.feature_transform import StandardScaler
+from niaaml import Pipeline, OptimizationStats
+from niaaml.classifiers import Bagging, AdaBoost
+from niaaml.preprocessing.feature_selection import SelectKBest, SelectPercentile
+from niaaml.preprocessing.feature_transform import StandardScaler, Normalizer
 from niaaml.data import CSVDataReader
 import os
 import numpy
@@ -63,3 +63,27 @@ class PipelineTestCase(TestCase):
             self.__pipeline.export_text(os.path.join(tmp, 'pipeline.txt'))
             self.assertTrue(os.path.exists(os.path.join(tmp, 'pipeline.txt')))
             self.assertEqual(1, len([name for name in os.listdir(tmp)]))
+        
+        self.assertIsNotNone(self.__pipeline.to_string())
+        self.assertGreater(len(self.__pipeline.to_string()), 0)
+
+    def test_pipeline_setters_work_fine(self):
+        self.__pipeline.set_classifier(AdaBoost())
+        self.__pipeline.set_feature_selection_algorithm(SelectPercentile())
+        self.__pipeline.set_feature_transform_algorithm(Normalizer())
+        self.__pipeline.set_selected_features_mask(numpy.ones([1, 1, 0, 0], dtype=bool))
+
+        self.__y = numpy.array(['Class 1', 'Class 1', 'Class 1', 'Class 2', 'Class 1', 'Class 2',
+       'Class 2', 'Class 2', 'Class 2', 'Class 1', 'Class 1', 'Class 2',
+       'Class 1', 'Class 2', 'Class 1', 'Class 1', 'Class 1', 'Class 1',
+       'Class 2', 'Class 1'])
+        self.__predicted = numpy.array(['Class 1', 'Class 1', 'Class 1', 'Class 2', 'Class 2', 'Class 2',
+       'Class 1', 'Class 1', 'Class 1', 'Class 2', 'Class 1', 'Class 1',
+       'Class 2', 'Class 2', 'Class 1', 'Class 2', 'Class 1', 'Class 2',
+       'Class 2', 'Class 2'])
+        self.__pipeline.set_stats(OptimizationStats(self.__predicted, self.__y))
+
+        self.assertIsInstance(self.__pipeline.get_classifier(), AdaBoost)
+        self.assertIsInstance(self.__pipeline.get_feature_selection_algorithm(), SelectPercentile)
+        self.assertIsInstance(self.__pipeline.get_feature_transform_algorithm(), Normalizer)
+        self.assertIsInstance(self.__pipeline.get_stats(), OptimizationStats)

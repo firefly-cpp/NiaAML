@@ -19,7 +19,14 @@ class ParticleSwarmOptimization(FeatureSelectionAlgorithm):
         2020
     
     Author:
-        Luka Pečnik  
+        Luka Pečnik 
+
+    Reference:
+        The implementation is adapted according to the following article:
+        D. Fister, I. Fister, T. Jagrič, I. Fister Jr., J. Brest. A novel self-adaptive differential evolution for feature selection using threshold mechanism . In: Proceedings of the 2018 IEEE Symposium on Computational Intelligence (SSCI 2018), pp. 17-24, 2018.
+    
+    Reference URL: 
+        http://iztok-jr-fister.eu/static/publications/236.pdf    
 
     License:
         MIT
