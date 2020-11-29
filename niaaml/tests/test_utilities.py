@@ -21,7 +21,7 @@ class ParameterDefinitionTestCase(TestCase):
         self.assertEqual(parameter_definition.param_type, float)
 
 class OptimizationStatsTestCase(TestCase):
-    def setUp(self):
+    def test_works_fine(self):
         self.__y = np.array(['Class 1', 'Class 1', 'Class 1', 'Class 2', 'Class 1', 'Class 2',
        'Class 2', 'Class 2', 'Class 2', 'Class 1', 'Class 1', 'Class 2',
        'Class 1', 'Class 2', 'Class 1', 'Class 1', 'Class 1', 'Class 1',
@@ -30,8 +30,7 @@ class OptimizationStatsTestCase(TestCase):
        'Class 1', 'Class 1', 'Class 1', 'Class 2', 'Class 1', 'Class 1',
        'Class 2', 'Class 2', 'Class 1', 'Class 2', 'Class 1', 'Class 2',
        'Class 2', 'Class 2'])
-    
-    def test_works_fine(self):
+
         stats = OptimizationStats(self.__predicted, self.__y)
         self.assertEqual(stats._accuracy, 0.5)
         self.assertEqual(stats._precision, 0.5199999999999999)

@@ -5,7 +5,7 @@ import numpy
 import csv
 
 class CSVDataReaderTestCase(TestCase):
-    def read_csv(self, src):
+    def __read_csv(self, src):
         arr = []
         with open(src) as f:
             reader = csv.reader(f)
@@ -26,7 +26,7 @@ class CSVDataReaderTestCase(TestCase):
         self.assertEqual(x.shape, (100, 6))
         self.assertEqual(y.shape, (100, ))
 
-        csv_content = self.read_csv(os.path.dirname(os.path.abspath(__file__)) + '/tests_files/dataset_header_classes.csv')
+        csv_content = self.__read_csv(os.path.dirname(os.path.abspath(__file__)) + '/tests_files/dataset_header_classes.csv')
         data_reader_content = numpy.concatenate((numpy.array(x, dtype=object), numpy.array(y.reshape((100,1)), dtype=object)), axis=1)
         self.assertTrue(numpy.all(csv_content[1:] == data_reader_content))
 
@@ -37,7 +37,7 @@ class CSVDataReaderTestCase(TestCase):
         self.assertEqual(x.shape, (100, 6))
         self.assertEqual(y.shape, (100, ))
 
-        csv_content = self.read_csv(os.path.dirname(os.path.abspath(__file__)) + '/tests_files/dataset_no_header_classes.csv')
+        csv_content = self.__read_csv(os.path.dirname(os.path.abspath(__file__)) + '/tests_files/dataset_no_header_classes.csv')
         data_reader_content = numpy.concatenate((numpy.array(x, dtype=object), numpy.array(y.reshape((100,1)), dtype=object)), axis=1)
         self.assertTrue(numpy.all(csv_content == data_reader_content))
 
@@ -48,7 +48,7 @@ class CSVDataReaderTestCase(TestCase):
         self.assertEqual(x.shape, (100, 6))
         self.assertIsNone(y)
 
-        csv_content = self.read_csv(os.path.dirname(os.path.abspath(__file__)) + '/tests_files/dataset_no_header_no_classes.csv')
+        csv_content = self.__read_csv(os.path.dirname(os.path.abspath(__file__)) + '/tests_files/dataset_no_header_no_classes.csv')
         self.assertTrue(numpy.all(csv_content == numpy.array(x, dtype=object)))
 
     def test_header_no_classes_works_fine(self):
@@ -58,5 +58,5 @@ class CSVDataReaderTestCase(TestCase):
         self.assertEqual(x.shape, (100, 6))
         self.assertIsNone(y)
 
-        csv_content = self.read_csv(os.path.dirname(os.path.abspath(__file__)) + '/tests_files/dataset_header_no_classes.csv')
+        csv_content = self.__read_csv(os.path.dirname(os.path.abspath(__file__)) + '/tests_files/dataset_header_no_classes.csv')
         self.assertTrue(numpy.all(csv_content[1:] == numpy.array(x, dtype=object)))
