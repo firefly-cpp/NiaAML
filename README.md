@@ -83,7 +83,7 @@ In some cases we may want to tune a parameter that needs additional information 
 
 ### Example of Usage
 
-Load data and try to find the optimal pipeline for the given components. The example below uses the Particle Swarm Algorithm as the optimization algorithm. You can find a list of all available algorithms in the <a href="https://niapy.readthedocs.io/en/stable/">NiaPy's documentation</a>.
+Load data and try to find the optimal pipeline for the given components. The example below uses the Particle Swarm Algorithm as the optimization algorithm. You can find a list of all available algorithms in the <a href="https://github.com/NiaOrg/NiaPy">NiaPy's repository</a>.
 
 ```python
 from niaaml import PipelineOptimizer, Pipeline
