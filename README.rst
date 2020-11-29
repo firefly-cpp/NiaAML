@@ -10,7 +10,7 @@ divided into three groups: feature seletion algorithms, feature
 transformation algorithms and classifiers. The framework uses
 nature-inspired algorithms for optimization to choose the best set of
 components for the classification pipeline on the output and optimize
-their parameters. We use `NiaPy framework <https://github.com/NiaOrg/NiaPy`_ for the optimization process
+their parameters. We use `NiaPy framework <https://github.com/NiaOrg/NiaPy>`_ for the optimization process
 which is a popular Python collection of nature-inspired algorithms. The
 NiaAML framework is easy to use and customize or expand to suit your
 needs.
