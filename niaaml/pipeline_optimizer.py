@@ -211,14 +211,14 @@ class _PipelineOptimizerBenchmark(Benchmark):
             Returns:
                 float: Fitness.
             """
+            data = self.__parent.get_data()
             pipeline = Pipeline(
-                data=self.__parent.get_data(),
                 feature_selection_algorithm=self.__float_to_instance(sol[0], self.__parent.get_feature_selection_algorithms(), self.__feature_selection_algorithm_factory) if self.__parent.get_feature_selection_algorithms() is not None and len(self.__parent.get_feature_selection_algorithms()) > 0 else None,
                 feature_transform_algorithm=self.__float_to_instance(sol[1], self.__parent.get_feature_transform_algorithms(), self.__feature_transform_algorithm_factory) if self.__parent.get_feature_transform_algorithms() is not None and len(self.__parent.get_feature_transform_algorithms()) > 0 else None,
                 classifier=self.__float_to_instance(sol[2], self.__parent.get_classifiers(), self.__classifier_factory)
             )
 
-            fitness = pipeline.optimize(self.__inner_population_size, self.__number_of_inner_evaluations, self.__optimization_algorithm, self.__fitness_name)
+            fitness = pipeline.optimize(data.get_x(), data.get_y(), self.__inner_population_size, self.__number_of_inner_evaluations, self.__optimization_algorithm, self.__fitness_name)
             if fitness < self.__current_best_fitness:
                 self.__current_best_fitness = fitness
                 self.__current_best_pipeline = pipeline

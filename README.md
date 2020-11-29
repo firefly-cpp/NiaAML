@@ -2,6 +2,8 @@
 
 NiaAML is an automated machine learning Python framework based on nature-inspired algorithms for optimization. The name comes from the automated machine learning method of the same name [[1]](#1). Its goal is to efficiently compose the best possible classification pipeline for the given task using components on the input. The components are divided into three groups: feature seletion algorithms, feature transformation algorithms and classifiers. The framework uses nature-inspired algorithms for optimization to choose the best set of components for the classification pipeline on the output and optimize their parameters. We use <a href="https://github.com/NiaOrg/NiaPy">NiaPy framework</a> for the optimization process which is a popular Python collection of nature-inspired algorithms. The NiaAML framework is easy to use and customize or expand to suit your needs.
 
+The NiaAML framework allows you not only to run full pipeline optimization, but also separate implemented components such as classifiers, feature selection algorithms, etc. It currently supports only numeric features on the input. **However, we are planning to add support for categorical features too.** See the [examples](examples) for more information.
+
 ## Installation
 
 Install NiaAML with pip:
@@ -78,8 +80,6 @@ Let's say we have a classifier with 3 parameters, feature selection algorithm wi
 In some cases we may want to tune a parameter that needs additional information for setting its range of values, so we cannot set the range in the initialization method. In that case we should set its value in the dictionary to None and define it later in the process. The parameter will be a part of parameter tuning process as soon as we define its possible values. For example, see [Select K Best Feature Selection](niaaml/preprocessing/feature_selection/select_k_best.py) and its parameter `k`.
 
 ## Examples
-
-NiaAML framework currently supports only numeric features on the input. **However, we are planning to add support for categorical features too.**
 
 ### Example of Usage
 

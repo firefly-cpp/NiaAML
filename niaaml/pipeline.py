@@ -28,7 +28,6 @@ class Pipeline:
         MIT
 
     Attributes:
-        __data (DataReader): Instance of any DataReader implementation.
         __feature_selection_algorithm (Optional[FeatureSelectionAlgorithm]): Feature selection algorithm implementation.
         __feature_transform_algorithm (Optional[FeatureTransformAlgorithm]): Feature transform algorithm implementation.
         __classifier (Classifier): Classifier implementation.
@@ -40,7 +39,6 @@ class Pipeline:
     def __init__(self, **kwargs):
         r"""Initialize task.
         """
-        self.__data = None
         self.__feature_selection_algorithm = None
         self.__feature_transform_algorithm = None
         self.__classifier = None
@@ -49,27 +47,17 @@ class Pipeline:
         self.__niapy_algorithm_utility = AlgorithmUtility()
         self._set_parameters(**kwargs)
     
-    def _set_parameters(self, data, classifier, feature_selection_algorithm=None, feature_transform_algorithm=None, **kwargs):
+    def _set_parameters(self, classifier, feature_selection_algorithm=None, feature_transform_algorithm=None, **kwargs):
         r"""Set the parameters/arguments of the task.
 
         Arguments:
-            data (DataReader): Instance of any DataReader implementation.
             feature_selection_algorithm (Optional[FeatureSelectionAlgorithm]): Feature selection algorithm implementation.
             feature_transform_algorithm (Optional[FeatureTransformAlgorithm]): Feature transform algorithm implementation.
             classifier (Classifier): Classifier implementation.
         """
-        self.__data = data
         self.__feature_selection_algorithm = feature_selection_algorithm
         self.__feature_transform_algorithm = feature_transform_algorithm
         self.__classifier = classifier
-    
-    def get_data(self):
-        r"""Get deep copy of the data.
-
-        Returns:
-            DataReader: Instance of the DataReader object.
-        """
-        return copy.deepcopy(self.__data)
     
     def get_feature_selection_algorithm(self):
         r"""Get deep copy of the feature selection algorithm.
@@ -120,10 +108,12 @@ class Pipeline:
         """
         self.__best_stats = value
     
-    def optimize(self, population_size, number_of_evaluations, optimization_algorithm, fitness_function):
+    def optimize(self, x, y, population_size, number_of_evaluations, optimization_algorithm, fitness_function):
         r"""Optimize pipeline's hyperparameters.
 
         Arguments:
+            x (numpy.ndarray[float]): n samples to classify.
+            y (Iterable[any]): n classes of the samples in the x array.
             population_size (uint): Number of individuals in the optimization process.
             number_of_evaluations (uint): Number of maximum evaluations.
             optimization_algorithm (str): Name of the optimization algorithm to use.
@@ -147,7 +137,7 @@ class Pipeline:
         task = StoppingTask(
             D=D,
             nFES=number_of_evaluations,
-            benchmark=_PipelineBenchmark(self, population_size, fitness_function)
+            benchmark=_PipelineBenchmark(x, y, self, population_size, fitness_function)
             )
         best = algo.run(task)
         return best[1]
@@ -175,7 +165,6 @@ class Pipeline:
             file_name (str): Output file name.
         """
         pipeline = Pipeline(
-            data=None,
             feature_selection_algorithm=self.__feature_selection_algorithm,
             feature_transform_algorithm=self.__feature_transform_algorithm,
             classifier=self.__classifier
@@ -195,7 +184,6 @@ class Pipeline:
             file_name (str): Output file name.
         """
         pipeline = Pipeline(
-            data=None,
             feature_selection_algorithm=self.__feature_selection_algorithm,
             feature_transform_algorithm=self.__feature_transform_algorithm,
             classifier=self.__classifier
@@ -245,12 +233,14 @@ class _PipelineBenchmark(Benchmark):
 
     Attributes:
         __parent (Pipeline): Parent Pipeline instance.
+        __x (numpy.ndarray[float]): n samples to classify.
+        __y (Iterable[any]): n classes of the samples in the __x array.
         __population_size (uint): Number of individuals in the hiperparameter optimization process.
         __current_best_fitness (float): Current best fitness of the optimization process.
         __fitness_function (FitnessFunction): Instance of a FitnessFunction object.
     """
 
-    def __init__(self, parent, population_size, fitness_function):
+    def __init__(self, x, y, parent, population_size, fitness_function):
         r"""Initialize pipeline benchmark.
 
         Arguments:
@@ -259,6 +249,8 @@ class _PipelineBenchmark(Benchmark):
             fitness_function (str): Name of the fitness function to use.
         """
         self.__parent = parent
+        self.__x = x
+        self.__y = y
         self.__population_size = population_size
         self.__current_best_fitness = float('inf')
         self.__fitness_function = FitnessFactory().get_result(fitness_function)
@@ -281,7 +273,6 @@ class _PipelineBenchmark(Benchmark):
                 float: Fitness.
             """
             try:
-                data = self.__parent.get_data()
                 feature_selection_algorithm = self.__parent.get_feature_selection_algorithm()
                 feature_transform_algorithm = self.__parent.get_feature_transform_algorithm()
                 classifier = self.__parent.get_classifier()
@@ -314,9 +305,9 @@ class _PipelineBenchmark(Benchmark):
                         solution_index += 1
                     if i[1] is not None:
                         i[1].set_parameters(**args)
-
-                x = data.get_x()
-                y = data.get_y()
+                
+                x = copy.deepcopy(self.__x)
+                y = copy.deepcopy(self.__y)
                 
                 scores = np.array([], dtype=float)
                 kf = StratifiedKFold(n_splits=11, random_state=0, shuffle=True)
