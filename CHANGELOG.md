@@ -2,12 +2,29 @@
 
 ## [Unreleased](https://github.com/lukapecnik/NiaAML/tree/HEAD)
 
-[Full Changelog](https://github.com/lukapecnik/NiaAML/compare/0.1.1...HEAD)
+[Full Changelog](https://github.com/lukapecnik/NiaAML/compare/0.1.2a1...HEAD)
+
+**Implemented enhancements:**
+
+- On the use of unittest [\#2](https://github.com/lukapecnik/NiaAML/issues/2)
+
+**Closed issues:**
+
+- Description of examples [\#16](https://github.com/lukapecnik/NiaAML/issues/16)
+
+## [0.1.2a1](https://github.com/lukapecnik/NiaAML/tree/0.1.2a1) (2020-11-29)
+
+[Full Changelog](https://github.com/lukapecnik/NiaAML/compare/0.1.1...0.1.2a1)
 
 **Closed issues:**
 
 - Information about hyperparameter tuning [\#15](https://github.com/lukapecnik/NiaAML/issues/15)
+- CHANGELOG [\#14](https://github.com/lukapecnik/NiaAML/issues/14)
 - Examples [\#13](https://github.com/lukapecnik/NiaAML/issues/13)
+
+**Merged pull requests:**
+
+- Unittests, examples' description, references added to docs [\#17](https://github.com/lukapecnik/NiaAML/pull/17) ([lukapecnik](https://github.com/lukapecnik))
 
 ## [0.1.1](https://github.com/lukapecnik/NiaAML/tree/0.1.1) (2020-11-28)
 
