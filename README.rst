@@ -7,6 +7,9 @@ NiaAML
 .. image:: https://coveralls.io/repos/github/lukapecnik/NiaAML/badge.svg?branch=travisCI_integration
     :target: https://coveralls.io/github/lukapecnik/NiaAML?branch=travisCI_integration
 
+.. image:: https://img.shields.io/pypi/v/niaaml.svg
+    :target: https://pypi.python.org/pypi/niaaml
+
 .. image:: https://img.shields.io/pypi/pyversions/niaaml.svg
     :target: https://pypi.org/project/NiaPy/
 

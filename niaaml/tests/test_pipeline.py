@@ -1,6 +1,6 @@
 from unittest import TestCase
 from niaaml import Pipeline, OptimizationStats
-from niaaml.classifiers import Bagging, AdaBoost
+from niaaml.classifiers import RandomForest, AdaBoost
 from niaaml.preprocessing.feature_selection import SelectKBest, SelectPercentile
 from niaaml.preprocessing.feature_transform import StandardScaler, Normalizer
 from niaaml.data import CSVDataReader
@@ -13,13 +13,13 @@ class PipelineTestCase(TestCase):
         self.__pipeline = Pipeline(
             feature_selection_algorithm=SelectKBest(),
             feature_transform_algorithm=Normalizer(),
-            classifier=Bagging()
+            classifier=RandomForest()
         )
 
     def test_pipeline_optimize_works_fine(self):
         data_reader = CSVDataReader(src=os.path.dirname(os.path.abspath(__file__)) + '/tests_files/dataset_header_classes.csv', has_header=True, contains_classes=True)
         
-        self.assertIsInstance(self.__pipeline.get_classifier(), Bagging)
+        self.assertIsInstance(self.__pipeline.get_classifier(), RandomForest)
         self.assertIsInstance(self.__pipeline.get_feature_selection_algorithm(), SelectKBest)
         self.assertIsInstance(self.__pipeline.get_feature_transform_algorithm(), Normalizer)
 
@@ -28,12 +28,14 @@ class PipelineTestCase(TestCase):
         self.assertGreaterEqual(accuracy, -1.0)
         self.assertLessEqual(accuracy, 0.0)
 
-        self.assertIsInstance(self.__pipeline.get_classifier(), Bagging)
+        self.assertIsInstance(self.__pipeline.get_classifier(), RandomForest)
         self.assertIsInstance(self.__pipeline.get_feature_selection_algorithm(), SelectKBest)
         self.assertIsInstance(self.__pipeline.get_feature_transform_algorithm(), Normalizer)
 
     def test_pipeline_run_works_fine(self):
         data_reader = CSVDataReader(src=os.path.dirname(os.path.abspath(__file__)) + '/tests_files/dataset_header_classes.csv', has_header=True, contains_classes=True)
+        print(data_reader.get_x())
+        print(data_reader.get_y())
         self.__pipeline.optimize(data_reader.get_x(), data_reader.get_y(), 20, 40, 'ParticleSwarmAlgorithm', 'Accuracy')
         predicted = self.__pipeline.run(numpy.random.uniform(low=0.0, high=15.0, size=(30, data_reader.get_x().shape[1])))
 
