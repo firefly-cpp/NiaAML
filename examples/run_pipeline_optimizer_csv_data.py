@@ -2,6 +2,11 @@ import os
 from niaaml import PipelineOptimizer, Pipeline
 from niaaml.data import CSVDataReader
 
+"""
+In this example, we show how to use the PipelineOptimizer class. This example is using an instance of CSVDataReader.
+The instantiated PipelineOptimizer will try and assemble the best pipeline with the components that are specified in its constructor.
+"""
+
 # prepare data reader using csv file
 data_reader = CSVDataReader(src=os.path.dirname(os.path.abspath(__file__)) + '/example_files/dataset.csv', has_header=False, contains_classes=True)
 

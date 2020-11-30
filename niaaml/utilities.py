@@ -1,6 +1,8 @@
 from sklearn import preprocessing
 from sklearn.metrics import accuracy_score, precision_score, cohen_kappa_score, f1_score
 import numpy as np
+import seaborn as sns
+import os
 
 __all__ = [
     'MinMax',
@@ -146,12 +148,31 @@ class OptimizationStats:
         _f1_score (float): Calculated F1-score.
     """
 
-    def __init__(self, predicted, expected, **kwargs):
-        r"""Initialize the factory."""
+    def __init__(self, predicted, expected, fitness_function_values, **kwargs):
+        r"""Initialize the factory.
+
+        Arguments:
+            predicted (Iterable[any]): Array of predicted classes.
+            expected (Iterable[any]): Array of expected classes.
+            fitness_function_values (numpy.array[float]): Array of fitness function's values in the evaluation process.
+        """
         self._accuracy = accuracy_score(expected, predicted)
         self._precision = precision_score(expected, predicted, average='weighted')
         self._cohen_kappa = cohen_kappa_score(expected, predicted)
         self._f1_score = f1_score(expected, predicted, average='weighted')
+        self._fitness_function_values = fitness_function_values
+    
+    def export_boxplot(self, file_name):
+        r"""Export boxplot of fitness function's values.
+
+        Arguments:
+            file_name (str): Output file name.
+        """
+        if len(os.path.splitext(file_name)[1]) == 0 or os.path.splitext(file_name)[1] != '.png':
+            file_name = file_name + '.png'
+
+        boxplot = sns.boxplot(data=[self._fitness_function_values])
+        boxplot.figure.savefig(file_name)
 
     def to_string(self):
         r"""User friendly representation of the object.

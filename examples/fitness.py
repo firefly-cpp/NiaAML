@@ -3,6 +3,11 @@ from niaaml.data import CSVDataReader
 import os
 import numpy
 
+"""
+In this example, we show how to individually use an implemented fitness function and its method. In this case we use Precision for demonstration, but
+you can use any of the implemented fitness functions in the same way.
+"""
+
 # prepare data reader using csv file
 data_reader = CSVDataReader(src=os.path.dirname(os.path.abspath(__file__)) + '/example_files/dataset.csv', has_header=False, contains_classes=True)
 

@@ -81,7 +81,7 @@ class PipelineTestCase(TestCase):
        'Class 1', 'Class 1', 'Class 1', 'Class 2', 'Class 1', 'Class 1',
        'Class 2', 'Class 2', 'Class 1', 'Class 2', 'Class 1', 'Class 2',
        'Class 2', 'Class 2'])
-        self.__pipeline.set_stats(OptimizationStats(self.__predicted, self.__y))
+        self.__pipeline.set_stats(OptimizationStats(self.__predicted, self.__y, numpy.array([0.88, 0.9, 0.91, 0.87, 0.7, 0.98, 0.95, 0.86, 0.88, 0.76])))
 
         self.assertIsInstance(self.__pipeline.get_classifier(), AdaBoost)
         self.assertIsInstance(self.__pipeline.get_feature_selection_algorithm(), SelectPercentile)

@@ -2,6 +2,11 @@ from niaaml import PipelineOptimizer
 from niaaml.data import BasicDataReader
 import numpy
 
+"""
+In this example, we show how to use the PipelineOptimizer class. This example is using an instance of BasicDataReader.
+The instantiated PipelineOptimizer will try and assemble the best pipeline with the components that are specified in its constructor.
+"""
+
 # prepare data reader using features and classes from arrays
 # in this case random dummy arrays are generated
 data_reader = BasicDataReader(

@@ -127,6 +127,12 @@ class Pipeline:
             optimization_algorithm (str): Name of the optimization algorithm to use.
             fitness_function (str): Name of the fitness function to use.
         
+        Notes:
+            Stratified K-Fold Cross Validation in our optimization process splits a dataset on the input 11 times, 
+            but we are actually running a stratified 10 fold cross validation since the first iteration is only used to fit 
+            feature selection and feature transform algorithms. This way the evaluation is faster with no difference in 
+            quality.
+        
         Returns:
             float: Best fitness value found in optimization process.
         """
@@ -277,6 +283,12 @@ class _PipelineBenchmark(Benchmark):
                 D (uint): Number of dimensionas.
                 sol (numpy.ndarray[float]): Individual of population/ possible solution.
             
+            Notes:
+                Stratified K-Fold Cross Validation in our optimization process splits a dataset on the input 11 times, 
+                but we are actually running a stratified 10 fold cross validation since the first iteration is only used to fit 
+                feature selection and feature transform algorithms. This way the evaluation is faster with no difference in 
+                quality.
+
             Returns:
                 float: Fitness.
             """
@@ -350,7 +362,7 @@ class _PipelineBenchmark(Benchmark):
                     self.__parent.set_feature_transform_algorithm(feature_transform_algorithm)
                     self.__parent.set_classifier(classifier)
                     self.__parent.set_selected_features_mask(selected_features_mask)
-                    self.__parent.set_stats(OptimizationStats(predictions, y_test))
+                    self.__parent.set_stats(OptimizationStats(predictions, y_test, scores))
 
                 return fitness
             except:
