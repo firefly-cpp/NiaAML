@@ -23,7 +23,7 @@ class PipelineTestCase(TestCase):
         self.assertIsInstance(self.__pipeline.get_feature_selection_algorithm(), SelectKBest)
         self.assertIsInstance(self.__pipeline.get_feature_transform_algorithm(), Normalizer)
 
-        accuracy = self.__pipeline.optimize(data_reader.get_x(), data_reader.get_y(), 10, 30, 'ParticleSwarmAlgorithm', 'Accuracy')
+        accuracy = self.__pipeline.optimize(data_reader.get_x(), data_reader.get_y(), 20, 40, 'ParticleSwarmAlgorithm', 'Accuracy')
 
         self.assertGreaterEqual(accuracy, -1.0)
         self.assertLessEqual(accuracy, 0.0)
@@ -34,7 +34,7 @@ class PipelineTestCase(TestCase):
 
     def test_pipeline_run_works_fine(self):
         data_reader = CSVDataReader(src=os.path.dirname(os.path.abspath(__file__)) + '/tests_files/dataset_header_classes.csv', has_header=True, contains_classes=True)
-        self.__pipeline.optimize(data_reader.get_x(), data_reader.get_y(), 10, 30, 'ParticleSwarmAlgorithm', 'Accuracy')
+        self.__pipeline.optimize(data_reader.get_x(), data_reader.get_y(), 20, 40, 'ParticleSwarmAlgorithm', 'Accuracy')
         predicted = self.__pipeline.run(numpy.random.uniform(low=0.0, high=15.0, size=(30, data_reader.get_x().shape[1])))
 
         self.assertEqual(predicted.shape, (30, ))

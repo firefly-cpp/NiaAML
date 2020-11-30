@@ -2,16 +2,16 @@ NiaAML
 ======
 
 .. image:: https://travis-ci.com/lukapecnik/NiaAML.svg?branch=master
-:target: https://travis-ci.com/lukapecnik/NiaAML
+    :target: https://travis-ci.com/lukapecnik/NiaAML
 
 .. image:: https://coveralls.io/repos/github/lukapecnik/NiaAML/badge.svg?branch=travisCI_integration
-:target: https://coveralls.io/github/lukapecnik/NiaAML?branch=travisCI_integration
+    :target: https://coveralls.io/github/lukapecnik/NiaAML?branch=travisCI_integration
 
 .. image:: https://img.shields.io/pypi/pyversions/niaaml.svg
-:target: https://pypi.org/project/NiaPy/
+    :target: https://pypi.org/project/NiaPy/
 
 .. image:: https://img.shields.io/github/license/lukapecnik/niaaml.svg
-:target: https://github.com/lukapecnik/niaaml/blob/master/LICENSE
+    :target: https://github.com/lukapecnik/niaaml/blob/master/LICENSE
 
 NiaAML is an automated machine learning Python framework based on
 nature-inspired algorithms for optimization. The name comes from the
