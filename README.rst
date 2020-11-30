@@ -26,6 +26,12 @@ Install NiaAML with pip:
 
     pip install niaaml
 
+In case you would like to try out the latest pre-release version of the framework, install it using:
+
+.. code:: sh
+
+    pip install niaaml --pre
+
 Usage
 -----
 
