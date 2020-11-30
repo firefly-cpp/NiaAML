@@ -1,8 +1,8 @@
 # Changelog
 
-## [Unreleased](https://github.com/lukapecnik/NiaAML/tree/HEAD)
+## [0.1.2](https://github.com/lukapecnik/niaaml/tree/0.1.2) (2020-11-30)
 
-[Full Changelog](https://github.com/lukapecnik/NiaAML/compare/0.1.2a1...HEAD)
+[Full Changelog](https://github.com/lukapecnik/niaaml/compare/0.1.2a1...0.1.2)
 
 **Implemented enhancements:**
 
@@ -12,9 +12,15 @@
 
 - Description of examples [\#16](https://github.com/lukapecnik/NiaAML/issues/16)
 
-## [0.1.2a1](https://github.com/lukapecnik/NiaAML/tree/0.1.2a1) (2020-11-29)
+**Merged pull requests:**
 
-[Full Changelog](https://github.com/lukapecnik/NiaAML/compare/0.1.1...0.1.2a1)
+- readme.rst fix, pipeline fix [\#21](https://github.com/lukapecnik/NiaAML/pull/21) ([lukapecnik](https://github.com/lukapecnik))
+- Travis ci integration [\#20](https://github.com/lukapecnik/NiaAML/pull/20) ([lukapecnik](https://github.com/lukapecnik))
+- badges and readme update [\#19](https://github.com/lukapecnik/NiaAML/pull/19) ([lukapecnik](https://github.com/lukapecnik))
+
+## [0.1.2a1](https://github.com/lukapecnik/niaaml/tree/0.1.2a1) (2020-11-29)
+
+[Full Changelog](https://github.com/lukapecnik/niaaml/compare/0.1.1...0.1.2a1)
 
 **Closed issues:**
 
@@ -26,9 +32,9 @@
 
 - Unittests, examples' description, references added to docs [\#17](https://github.com/lukapecnik/NiaAML/pull/17) ([lukapecnik](https://github.com/lukapecnik))
 
-## [0.1.1](https://github.com/lukapecnik/NiaAML/tree/0.1.1) (2020-11-28)
+## [0.1.1](https://github.com/lukapecnik/niaaml/tree/0.1.1) (2020-11-28)
 
-[Full Changelog](https://github.com/lukapecnik/NiaAML/compare/0.1.0...0.1.1)
+[Full Changelog](https://github.com/lukapecnik/niaaml/compare/0.1.0...0.1.1)
 
 **Closed issues:**
 
@@ -37,10 +43,11 @@
 **Merged pull requests:**
 
 - Contributors table added [\#12](https://github.com/lukapecnik/NiaAML/pull/12) ([lukapecnik](https://github.com/lukapecnik))
+- Implementation of jDEFSTH algorithm for feature selection [\#7](https://github.com/lukapecnik/NiaAML/pull/7) ([firefly-cpp](https://github.com/firefly-cpp))
 
-## [0.1.0](https://github.com/lukapecnik/NiaAML/tree/0.1.0) (2020-11-27)
+## [0.1.0](https://github.com/lukapecnik/niaaml/tree/0.1.0) (2020-11-27)
 
-[Full Changelog](https://github.com/lukapecnik/NiaAML/compare/fbf47d71adb6ba72aa9210e4ead316b318253862...0.1.0)
+[Full Changelog](https://github.com/lukapecnik/niaaml/compare/fbf47d71adb6ba72aa9210e4ead316b318253862...0.1.0)
 
 **Implemented enhancements:**
 
@@ -55,7 +62,6 @@
 - Framework improvements, docs initialization and readme [\#10](https://github.com/lukapecnik/NiaAML/pull/10) ([lukapecnik](https://github.com/lukapecnik))
 - Pipeline methods implementation [\#9](https://github.com/lukapecnik/NiaAML/pull/9) ([lukapecnik](https://github.com/lukapecnik))
 - Pipeline optimizer progress [\#8](https://github.com/lukapecnik/NiaAML/pull/8) ([lukapecnik](https://github.com/lukapecnik))
-- Implementation of jDEFSTH algorithm for feature selection [\#7](https://github.com/lukapecnik/NiaAML/pull/7) ([firefly-cpp](https://github.com/firefly-cpp))
 - refactoring and variance threshold feature selection implementation [\#6](https://github.com/lukapecnik/NiaAML/pull/6) ([lukapecnik](https://github.com/lukapecnik))
 - NiaPy dependency added [\#5](https://github.com/lukapecnik/NiaAML/pull/5) ([firefly-cpp](https://github.com/firefly-cpp))
 
