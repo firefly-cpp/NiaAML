@@ -15,7 +15,8 @@
         "doc",
         "review",
         "bug",
-        "example"
+        "example",
+        "test"
       ]
     },
     {
@@ -25,7 +26,19 @@
       "profile": "https://github.com/firefly-cpp",
       "contributions": [
         "code",
-        "bug"
+        "bug",
+        "mentoring",
+        "research",
+        "ideas"
+      ]
+    },
+    {
+      "login": "sisco0",
+      "name": "sisco0",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/25695302?v=4",
+      "profile": "https://github.com/sisco0",
+      "contributions": [
+        "ideas"
       ]
     }
   ],

@@ -12,7 +12,7 @@ class PipelineTestCase(TestCase):
     def setUp(self):
         self.__pipeline = Pipeline(
             feature_selection_algorithm=SelectKBest(),
-            feature_transform_algorithm=StandardScaler(),
+            feature_transform_algorithm=Normalizer(),
             classifier=Bagging()
         )
 
@@ -21,7 +21,7 @@ class PipelineTestCase(TestCase):
         
         self.assertIsInstance(self.__pipeline.get_classifier(), Bagging)
         self.assertIsInstance(self.__pipeline.get_feature_selection_algorithm(), SelectKBest)
-        self.assertIsInstance(self.__pipeline.get_feature_transform_algorithm(), StandardScaler)
+        self.assertIsInstance(self.__pipeline.get_feature_transform_algorithm(), Normalizer)
 
         accuracy = self.__pipeline.optimize(data_reader.get_x(), data_reader.get_y(), 10, 30, 'ParticleSwarmAlgorithm', 'Accuracy')
 
@@ -30,7 +30,7 @@ class PipelineTestCase(TestCase):
 
         self.assertIsInstance(self.__pipeline.get_classifier(), Bagging)
         self.assertIsInstance(self.__pipeline.get_feature_selection_algorithm(), SelectKBest)
-        self.assertIsInstance(self.__pipeline.get_feature_transform_algorithm(), StandardScaler)
+        self.assertIsInstance(self.__pipeline.get_feature_transform_algorithm(), Normalizer)
 
     def test_pipeline_run_works_fine(self):
         data_reader = CSVDataReader(src=os.path.dirname(os.path.abspath(__file__)) + '/tests_files/dataset_header_classes.csv', has_header=True, contains_classes=True)
@@ -70,7 +70,7 @@ class PipelineTestCase(TestCase):
     def test_pipeline_setters_work_fine(self):
         self.__pipeline.set_classifier(AdaBoost())
         self.__pipeline.set_feature_selection_algorithm(SelectPercentile())
-        self.__pipeline.set_feature_transform_algorithm(Normalizer())
+        self.__pipeline.set_feature_transform_algorithm(StandardScaler())
         self.__pipeline.set_selected_features_mask(numpy.ones([1, 1, 0, 0], dtype=bool))
 
         self.__y = numpy.array(['Class 1', 'Class 1', 'Class 1', 'Class 2', 'Class 1', 'Class 2',
@@ -85,5 +85,5 @@ class PipelineTestCase(TestCase):
 
         self.assertIsInstance(self.__pipeline.get_classifier(), AdaBoost)
         self.assertIsInstance(self.__pipeline.get_feature_selection_algorithm(), SelectPercentile)
-        self.assertIsInstance(self.__pipeline.get_feature_transform_algorithm(), Normalizer)
+        self.assertIsInstance(self.__pipeline.get_feature_transform_algorithm(), StandardScaler)
         self.assertIsInstance(self.__pipeline.get_stats(), OptimizationStats)
