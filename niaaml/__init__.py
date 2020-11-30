@@ -27,4 +27,4 @@ __all__ = [
 ]
 
 __project__ = 'niaaml'
-__version__ = '0.1.2a1'
+__version__ = '0.1.2'
