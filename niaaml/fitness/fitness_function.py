@@ -13,7 +13,11 @@ class FitnessFunction:
 
     License:
         MIT
+
+    Attributes:
+        Name (str): Name of the fitness function.
     """
+    Name = None
 
     def __init__(self, **kwargs):
         r"""Initialize fitness function.

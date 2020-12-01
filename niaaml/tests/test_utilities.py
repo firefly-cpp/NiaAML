@@ -33,7 +33,7 @@ class OptimizationStatsTestCase(TestCase):
        'Class 2', 'Class 2', 'Class 1', 'Class 2', 'Class 1', 'Class 2',
        'Class 2', 'Class 2'])
 
-        self.__stats = OptimizationStats(predicted, y, np.array([0.88, 0.9, 0.91, 0.87, 0.7, 0.98, 0.95, 0.86, 0.88, 0.76]))
+        self.__stats = OptimizationStats(predicted, y, np.array([0.88, 0.9, 0.91, 0.87, 0.7, 0.98, 0.95, 0.86, 0.88, 0.76]), 'Accuracy')
 
     def test_works_fine(self):
         self.assertEqual(self.__stats._accuracy, 0.5)
@@ -41,6 +41,7 @@ class OptimizationStatsTestCase(TestCase):
         self.assertEqual(self.__stats._cohen_kappa, 0.0)
         self.assertEqual(self.__stats._f1_score, 0.505050505050505)
         self.assertTrue((np.array([0.88, 0.9, 0.91, 0.87, 0.7, 0.98, 0.95, 0.86, 0.88, 0.76]) == self.__stats._fitness_function_values).all())
+        self.assertEqual(self.__stats._fitness_function_name, 'Accuracy')
 
     def test_export_works_fine(self):
         with tempfile.TemporaryDirectory() as tmp:
