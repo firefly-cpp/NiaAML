@@ -32,6 +32,8 @@ needs.
 
 The NiaAML framework allows you not only to run full pipeline optimization, but also separate implemented components such as classifiers, feature selection algorithms, etc. It currently supports only numeric features on the input. **However, we are planning to add support for categorical features too.**
 
+- **Documentation:** https://niaaml.readthedocs.io/en/latest/
+
 Installation
 ------------
 

@@ -34,12 +34,13 @@ Create a new file, with name, for example *my_first_pipeline.py* and paste in th
     pipeline = pipeline_optimizer.run('Accuracy', 20, 20, 400, 400, 'ParticleSwarmAlgorithm', 'ParticleSwarmAlgorithm')
 
 **As you can see, pipeline components, fitness function and optimization algorithms are always passed into pipeline optimization using their class names.** The example below uses the Particle Swarm Algorithm as the optimization algorithm. You can find a list of all available algorithms in the `NiaPy's documentation <https://niapy.readthedocs.io/en/stable/>`_.
-Now you can run it using the command ``python my_first_pipeline.py``. The code currently does not do much as we want to save our pipeline to a file so we can use it later or at least save a user-friendly representation of it to a text file. You can choose one or both scenarios by adding the code below.
+Now you can run it using the command ``python my_first_pipeline.py``. The code currently does not do much as we want to save our pipeline to a file so we can use it later, save a user-friendly representation of it to a text file or even export a pipeline's 10-fold cross validation results into an image file in a form of box plot. You can choose one or all of the scenarios by adding the code below.
 
 .. code:: python
 
     pipeline.export('pipeline.ppln')
     pipeline.export_text('pipeline.txt')
+    pipeline.export_boxplot('boxplot.png')
 
 If you want to load and use the saved pipeline later, you can use the following code.
 
@@ -55,6 +56,8 @@ If you want to load and use the saved pipeline later, you can use the following 
     y = loaded_pipeline.run(x)
 
 This is a very simple example with dummy data. It is only intended to give you a basic idea on how to use the framework. **NiaAML currently supports only numeric features. However, we are planning to add support for categorical features too.**
+
+Find more examples `here <https://github.com/lukapecnik/NiaAML/tree/master/examples>`_
 
 Components
 ----------
