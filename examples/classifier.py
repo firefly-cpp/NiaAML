@@ -3,6 +3,11 @@ import os
 from niaaml.data import CSVDataReader
 import numpy
 
+"""
+In this example, we show how to individually use an implemented classifier and its methods. In this case we use AdaBoost for demonstration, but
+you can use any of the implemented classifiers in the same way.
+"""
+
 # prepare data reader using csv file
 data_reader = CSVDataReader(src=os.path.dirname(os.path.abspath(__file__)) + '/example_files/dataset.csv', has_header=False, contains_classes=True)
 

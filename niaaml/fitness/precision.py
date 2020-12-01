@@ -20,6 +20,7 @@ class Precision(FitnessFunction):
     See Also:
         * :class:`niaaml.fitness.FitnessFunction`
     """
+    Name = 'Precision'
     
     def get_fitness(self, predicted, expected):
         r"""Return fitness value. The larger return value should represent a better fitness for the framework to work properly.

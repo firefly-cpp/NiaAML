@@ -3,6 +3,11 @@ from niaaml.preprocessing.feature_selection import FeatureSelectionAlgorithmFact
 from niaaml.preprocessing.feature_transform import FeatureTransformAlgorithmFactory
 from niaaml.fitness import FitnessFactory
 
+"""
+In this example, we show how to use all of the implemented factories to create new object instances using their class names. You may also
+import and instantiate objects directly, but it more convenient to use factories in some cases.
+"""
+
 # instantiate all possible factories
 classifier_factory = ClassifierFactory()
 fsa_factory = FeatureSelectionAlgorithmFactory()

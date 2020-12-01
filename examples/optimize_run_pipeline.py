@@ -6,6 +6,10 @@ from niaaml.data import CSVDataReader
 import os
 import numpy
 
+"""
+In this example, we show how to individually use the Pipeline class. You may use this if you want to test out a specific classification pipeline.
+"""
+
 # prepare data reader using csv file
 data_reader = CSVDataReader(src=os.path.dirname(os.path.abspath(__file__)) + '/example_files/dataset.csv', has_header=False, contains_classes=True)
 

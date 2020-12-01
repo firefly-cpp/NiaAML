@@ -6,6 +6,7 @@
 [![GitHub license](https://img.shields.io/github/license/lukapecnik/niaaml.svg)](https://github.com/lukapecnik/niaaml/blob/master/LICENSE)
 [![Build Status](https://travis-ci.com/lukapecnik/NiaAML.svg?branch=master)](https://travis-ci.com/lukapecnik/NiaAML)
 [![Coverage Status](https://coveralls.io/repos/github/lukapecnik/NiaAML/badge.svg?branch=master)](https://coveralls.io/github/lukapecnik/NiaAML?branch=master)
+[![Documentation Status](https://readthedocs.org/projects/niaaml/badge/?version=latest)](https://niaaml.readthedocs.io/en/latest/?badge=latest)
 
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/w/lukapecnik/niaaml.svg)
 [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/lukapecnik/niaaml.svg)](http://isitmaintained.com/project/lukapecnik/niaaml "Average time to resolve an issue")

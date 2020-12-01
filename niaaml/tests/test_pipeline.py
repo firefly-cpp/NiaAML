@@ -43,6 +43,19 @@ class PipelineTestCase(TestCase):
         s2 = set(predicted)
         self.assertTrue(s2.issubset(s1))
         self.assertTrue(len(s2) > 0 and len(s2) <= 2)
+
+    def test_pipeline_export_boxplot_works_fine(self):
+        data_reader = CSVDataReader(src=os.path.dirname(os.path.abspath(__file__)) + '/tests_files/dataset_header_classes.csv', has_header=True, contains_classes=True)
+        self.__pipeline.optimize(data_reader.get_x(), data_reader.get_y(), 20, 40, 'ParticleSwarmAlgorithm', 'Accuracy')
+        
+        with tempfile.TemporaryDirectory() as tmp:
+            self.__pipeline.export_boxplot(os.path.join(tmp, 'boxplot'))
+            self.assertTrue(os.path.exists(os.path.join(tmp, 'boxplot.png')))
+            self.assertEqual(1, len([name for name in os.listdir(tmp)]))
+
+            self.__pipeline.export_boxplot(os.path.join(tmp, 'boxplot.png'))
+            self.assertTrue(os.path.exists(os.path.join(tmp, 'boxplot.png')))
+            self.assertEqual(1, len([name for name in os.listdir(tmp)]))
     
     def test_pipeline_export_works_fine(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -81,7 +94,7 @@ class PipelineTestCase(TestCase):
        'Class 1', 'Class 1', 'Class 1', 'Class 2', 'Class 1', 'Class 1',
        'Class 2', 'Class 2', 'Class 1', 'Class 2', 'Class 1', 'Class 2',
        'Class 2', 'Class 2'])
-        self.__pipeline.set_stats(OptimizationStats(self.__predicted, self.__y))
+        self.__pipeline.set_stats(OptimizationStats(self.__predicted, self.__y, numpy.array([0.88, 0.9, 0.91, 0.87, 0.7, 0.98, 0.95, 0.86, 0.88, 0.76]), 'Accuracy'))
 
         self.assertIsInstance(self.__pipeline.get_classifier(), AdaBoost)
         self.assertIsInstance(self.__pipeline.get_feature_selection_algorithm(), SelectPercentile)
