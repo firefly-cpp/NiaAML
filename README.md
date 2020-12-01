@@ -164,11 +164,15 @@ NiaAML framework is easily expandable as you can implement components by overrid
 
 Take a look at the [Classifier](niaaml/classifiers/classifier.py) class and the implementation of the [AdaBoost](niaaml/classifiers/ada_boost.py) classifier that inherits from it.
 
-### Fitness Functions
+### Example of a Fitness Function Implementation
 
 NiaAML framework also allows you to implement your own fitness function. All you need to do is implement the [FitnessFunction](niaaml/fitness/fitness_function.py) class.
 
 Take a look at the [Accuracy](niaaml/fitness/accuracy.py) implementation.
+
+### More
+
+You can find more examples [here](examples).
 
 ## Contributors ✨
 
