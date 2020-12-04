@@ -128,6 +128,17 @@ class Factory:
             return self._entities[name]()
         else:
             raise TypeError('Passed entity is not defined! --> %s' % name)
+    
+    def get_name_to_classname_mapping(self):
+        r"""Get dictionary of user-friendly name to class name mapping.
+
+        Returns:
+            dict: Dictionary of user-friendly name to class name mapping.
+        """
+        d = {}
+        for k in self._entities:
+            d[self._entities[k].Name] = k
+        return d
 
 class OptimizationStats:
     r"""Class that holds pipeline optimization result's statistics. Includes accuracy, precision, Cohen's kappa and F1-score.
