@@ -313,12 +313,9 @@ class _PipelineBenchmark(Benchmark):
                     if i[1] is not None:
                         i[1].set_parameters(**args)
                 
-                x = copy.deepcopy(self.__x)
-                y = copy.deepcopy(self.__y)
-                
                 selected_features_mask = None
 
-                x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2)
+                x_train, x_test, y_train, y_test = train_test_split(self.__x, self.__y, test_size=0.2)
 
                 if feature_selection_algorithm is None:
                     selected_features_mask = np.ones(x.shape[1], dtype=bool)
