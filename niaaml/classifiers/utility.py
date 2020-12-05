@@ -31,7 +31,7 @@ class ClassifierFactory(Factory):
             'AdaBoost': classifiers.AdaBoost,
             'Bagging': classifiers.Bagging,
             'ExtremelyRandomizedTrees': classifiers.ExtremelyRandomizedTrees,
-            'LinearSVCClassifier': classifiers.LinearSVC,
+            'LinearSVC': classifiers.LinearSVC,
             'MultiLayerPerceptron': classifiers.MultiLayerPerceptron,
             'RandomForest': classifiers.RandomForest
         }
