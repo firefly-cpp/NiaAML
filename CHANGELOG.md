@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.1.4](https://github.com/lukapecnik/niaaml/tree/0.1.4) (2020-12-05)
+
+[Full Changelog](https://github.com/lukapecnik/niaaml/compare/0.1.3...0.1.4)
+
+**Merged pull requests:**
+
+- remove 10-fold cross validation from benchmark, critical bug fix [\#25](https://github.com/lukapecnik/NiaAML/pull/25) ([lukapecnik](https://github.com/lukapecnik))
+- run all experiments at once [\#24](https://github.com/lukapecnik/NiaAML/pull/24) ([firefly-cpp](https://github.com/firefly-cpp))
+
 ## [0.1.3](https://github.com/lukapecnik/niaaml/tree/0.1.3) (2020-12-04)
 
 [Full Changelog](https://github.com/lukapecnik/niaaml/compare/0.1.3a1...0.1.3)
@@ -29,6 +38,7 @@
 
 - readme.rst fix, pipeline fix [\#21](https://github.com/lukapecnik/NiaAML/pull/21) ([lukapecnik](https://github.com/lukapecnik))
 - Travis ci integration [\#20](https://github.com/lukapecnik/NiaAML/pull/20) ([lukapecnik](https://github.com/lukapecnik))
+- badges and readme update [\#19](https://github.com/lukapecnik/NiaAML/pull/19) ([lukapecnik](https://github.com/lukapecnik))
 
 ## [0.1.2a1](https://github.com/lukapecnik/niaaml/tree/0.1.2a1) (2020-11-29)
 
@@ -70,7 +80,6 @@
 
 **Merged pull requests:**
 
-- badges and readme update [\#19](https://github.com/lukapecnik/NiaAML/pull/19) ([lukapecnik](https://github.com/lukapecnik))
 - Framework improvements, docs initialization and readme [\#10](https://github.com/lukapecnik/NiaAML/pull/10) ([lukapecnik](https://github.com/lukapecnik))
 - Pipeline methods implementation [\#9](https://github.com/lukapecnik/NiaAML/pull/9) ([lukapecnik](https://github.com/lukapecnik))
 - Pipeline optimizer progress [\#8](https://github.com/lukapecnik/NiaAML/pull/8) ([lukapecnik](https://github.com/lukapecnik))
