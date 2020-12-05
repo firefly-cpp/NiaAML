@@ -1,6 +1,8 @@
 from niaaml.utilities import Factory
 import niaaml.preprocessing.feature_selection as fs
 from NiaPy.benchmarks import Benchmark
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
 
 __all__ = [
     'FeatureSelectionAlgorithmFactory',

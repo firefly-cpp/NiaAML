@@ -5,6 +5,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from niaaml.preprocessing.feature_selection.feature_selection_algorithm import FeatureSelectionAlgorithm
 from niaaml.preprocessing.feature_selection.utility import _FeatureSelectionThresholdBenchmark
+import numpy
 
 __all__ = [
     'jDEFSTH'

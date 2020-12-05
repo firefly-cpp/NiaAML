@@ -1,11 +1,10 @@
 import sys
 from NiaPy.algorithms.basic import ParticleSwarmOptimization as PSO
 from NiaPy.task import StoppingTask
-from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from niaaml.preprocessing.feature_selection.feature_selection_algorithm import FeatureSelectionAlgorithm
 from niaaml.utilities import ParameterDefinition, MinMax
-import numpy as np
+import numpy
 from niaaml.preprocessing.feature_selection.utility import _FeatureSelectionThresholdBenchmark
 
 __all__ = [
