@@ -150,12 +150,6 @@ You can also save a user-friendly representation of a pipeline to a text file.
 pipeline.export_text('pipeline.txt')
 ```
 
-Or even export results of the fitness function after a 10-fold cross validation during the pipeline optimization process as a box plot.
-
-```python
-pipeline.export_boxplot('boxplot.png')
-```
-
 This is a very simple example with dummy data. It is only intended to give you a basic idea on how to use the framework.
 
 ### Example of a Pipeline Component Implementation

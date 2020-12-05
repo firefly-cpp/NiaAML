@@ -1,6 +1,5 @@
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
-from sklearn.model_selection import StratifiedKFold
 from niaaml.utilities import MinMax, get_bin_index, OptimizationStats
 from niaaml.fitness import FitnessFactory
 from NiaPy.benchmarks import Benchmark
@@ -127,12 +126,6 @@ class Pipeline:
             optimization_algorithm (str): Name of the optimization algorithm to use.
             fitness_function (str): Name of the fitness function to use.
         
-        Notes:
-            Stratified K-Fold Cross Validation in our optimization process splits a dataset on the input 11 times, 
-            but we are actually running a stratified 10 fold cross validation since the first iteration is only used to fit 
-            feature selection and feature transform algorithms. This way the evaluation is faster with no difference in 
-            quality.
-        
         Returns:
             float: Best fitness value found in optimization process.
         """
@@ -210,18 +203,6 @@ class Pipeline:
         with open(file_name, 'w') as f:
             f.write(pipeline.to_string())
     
-    def export_boxplot(self, file_name):
-        r"""Export boxplot of fitness function's values in the 10-fold cross validation's process.
-        Uses OptimizationStats' export_boxplot method.
-
-        Arguments:
-            file_name (str): Output file name.
-        
-        See also:
-            * :func:`niaaml.utilities.OptimizationStats.export_boxplot`
-        """
-        self.__best_stats.export_boxplot(file_name)
-    
     @staticmethod
     def load(file_name):
         r"""Loads Pipeline object from a file.
@@ -294,12 +275,6 @@ class _PipelineBenchmark(Benchmark):
             Arguments:
                 D (uint): Number of dimensionas.
                 sol (numpy.ndarray[float]): Individual of population/ possible solution.
-            
-            Notes:
-                Stratified K-Fold Cross Validation in our optimization process splits a dataset on the input 11 times, 
-                but we are actually running a stratified 10 fold cross validation since the first iteration is only used to fit 
-                feature selection and feature transform algorithms. This way the evaluation is faster with no difference in 
-                quality.
 
             Returns:
                 float: Fitness.
@@ -338,35 +313,26 @@ class _PipelineBenchmark(Benchmark):
                     if i[1] is not None:
                         i[1].set_parameters(**args)
                 
-                x = copy.deepcopy(self.__x)
-                y = copy.deepcopy(self.__y)
-                
-                scores = np.array([], dtype=float)
-                kf = StratifiedKFold(n_splits=11, random_state=0, shuffle=True)
                 selected_features_mask = None
-                fit_iteration = True
-                for train_index, test_index in kf.split(x, y):
-                    x_train, x_test, y_train, y_test = x[train_index], x[test_index], y[train_index], y[test_index]
 
-                    if fit_iteration:
-                        if feature_selection_algorithm is None:
-                            selected_features_mask = np.ones(x.shape[1], dtype=bool)
-                        else:
-                            selected_features_mask = feature_selection_algorithm.select_features(x_train, y_train)
-                        x = x[:, selected_features_mask]
+                x_train, x_test, y_train, y_test = train_test_split(self.__x, self.__y, test_size=0.2)
 
-                        if feature_transform_algorithm is not None:
-                            x_train = x_train[:, selected_features_mask]
-                            feature_transform_algorithm.fit(x_train)
-                            feature_transform_algorithm.transform(x)
-                        
-                        fit_iteration = False
-                    else:
-                        classifier.fit(x_train, y_train)
-                        predictions = classifier.predict(x_test)
-                        scores = np.append(scores, self.__fitness_function.get_fitness(predictions, y_test))
+                if feature_selection_algorithm is None:
+                    selected_features_mask = np.ones(x.shape[1], dtype=bool)
+                else:
+                    selected_features_mask = feature_selection_algorithm.select_features(x_train, y_train)
+
+                x_train = x_train[:, selected_features_mask]
+                x_test = x_test[:, selected_features_mask]
+
+                if feature_transform_algorithm is not None:
+                    feature_transform_algorithm.fit(x_train)
+                    x_train = feature_transform_algorithm.transform(x_train)
+                    x_test = feature_transform_algorithm.transform(x_test)
                 
-                fitness = np.mean(scores) * -1
+                classifier.fit(x_train, y_train)
+                predictions = classifier.predict(x_test)
+                fitness = self.__fitness_function.get_fitness(predictions, y_test) * -1
 
                 if fitness < self.__current_best_fitness:
                     self.__current_best_fitness = fitness
@@ -374,7 +340,7 @@ class _PipelineBenchmark(Benchmark):
                     self.__parent.set_feature_transform_algorithm(feature_transform_algorithm)
                     self.__parent.set_classifier(classifier)
                     self.__parent.set_selected_features_mask(selected_features_mask)
-                    self.__parent.set_stats(OptimizationStats(predictions, y_test, scores, self.__fitness_function.Name))
+                    self.__parent.set_stats(OptimizationStats(predictions, y_test))
 
                 return fitness
             except:

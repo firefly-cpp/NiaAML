@@ -1,8 +1,5 @@
-from sklearn import preprocessing
 from sklearn.metrics import accuracy_score, precision_score, cohen_kappa_score, f1_score
 import numpy as np
-import os
-import matplotlib.pyplot as plt
 
 __all__ = [
     'MinMax',
@@ -157,40 +154,19 @@ class OptimizationStats:
         _precision (float): Calculated precision.
         _cohen_kappa (float): Calculated Cohen's kappa.
         _f1_score (float): Calculated F1-score.
-        _fitness_function_values (numpy.array[float]): Array of fitness function's values in the evaluation process (10-fold cross validation's results).
-        _fitness_function_name (str): Name of the used fitness function.
     """
 
-    def __init__(self, predicted, expected, fitness_function_values, fitness_function_name, **kwargs):
+    def __init__(self, predicted, expected, **kwargs):
         r"""Initialize the factory.
 
         Arguments:
             predicted (Iterable[any]): Array of predicted classes.
             expected (Iterable[any]): Array of expected classes.
-            fitness_function_values (numpy.array[float]): Array of fitness function's values in the evaluation process (10-fold cross validation's results).
-            fitness_function_name (str): Name of the used fitness function.
         """
         self._accuracy = accuracy_score(expected, predicted)
         self._precision = precision_score(expected, predicted, average='weighted')
         self._cohen_kappa = cohen_kappa_score(expected, predicted)
         self._f1_score = f1_score(expected, predicted, average='weighted')
-        self._fitness_function_values = fitness_function_values
-        self._fitness_function_name = fitness_function_name
-    
-    def export_boxplot(self, file_name):
-        r"""Export boxplot of fitness function's values.
-
-        Arguments:
-            file_name (str): Output file name.
-        """
-        if len(os.path.splitext(file_name)[1]) == 0 or os.path.splitext(file_name)[1] != '.png':
-            file_name = file_name + '.png'
-
-        fig, ax = plt.subplots()
-        ax.set_title(self._fitness_function_name)
-        ax.boxplot(self._fitness_function_values)
-        ax.tick_params(axis='x', which='both', bottom=False, top=False, labelbottom=False)
-        plt.savefig(file_name)
 
     def to_string(self):
         r"""User friendly representation of the object.
@@ -198,4 +174,4 @@ class OptimizationStats:
         Returns:
             str: User friendly representation of the object.
         """
-        return 'Accuracy: {acc},\nPrecision: {prc},\nCohen\'s kappa: {ck},\nF1-score: {f1},\n\nFitness function\'s ({fn}) 10-fold cross validation results: {arr}'.format(acc=self._accuracy, prc=self._precision, ck=self._cohen_kappa, f1=self._f1_score, fn=self._fitness_function_name, arr=np.array2string(self._fitness_function_values, separator=', '))
+        return 'Accuracy: {acc},\nPrecision: {prc},\nCohen\'s kappa: {ck},\nF1-score: {f1}'.format(acc=self._accuracy, prc=self._precision, ck=self._cohen_kappa, f1=self._f1_score)

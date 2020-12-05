@@ -19,7 +19,7 @@ class PipelineOptimizerTestCase(TestCase):
         )
 
     def test_pipeline_optimizeer_run_works_fine(self):
-        pipeline = self.__pipeline_optimizer.run('Accuracy', 10, 10, 10, 10, 'ParticleSwarmAlgorithm')
+        pipeline = self.__pipeline_optimizer.run('Accuracy', 10, 10, 20, 20, 'ParticleSwarmAlgorithm')
         self.assertIsInstance(pipeline, Pipeline)
         self.assertTrue(isinstance(pipeline.get_classifier(), AdaBoost) or isinstance(pipeline.get_classifier(), Bagging))
         self.assertTrue(isinstance(pipeline.get_feature_selection_algorithm(), SelectKBest) or isinstance(pipeline.get_feature_selection_algorithm(), SelectPercentile))

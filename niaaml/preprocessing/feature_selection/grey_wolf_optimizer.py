@@ -6,6 +6,7 @@ from sklearn.linear_model import LogisticRegression
 from niaaml.preprocessing.feature_selection.feature_selection_algorithm import FeatureSelectionAlgorithm
 from niaaml.utilities import ParameterDefinition, MinMax
 from niaaml.preprocessing.feature_selection.utility import _FeatureSelectionThresholdBenchmark
+import numpy
 
 __all__ = [
     'GreyWolfOptimizer'
