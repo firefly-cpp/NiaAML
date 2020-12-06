@@ -30,7 +30,7 @@ which is a popular Python collection of nature-inspired algorithms. The
 NiaAML framework is easy to use and customize or expand to suit your
 needs.
 
-The NiaAML framework allows you not only to run full pipeline optimization, but also separate implemented components such as classifiers, feature selection algorithms, etc. It currently supports only numeric features on the input. **However, we are planning to add support for categorical features too.**
+The NiaAML framework allows you not only to run full pipeline optimization, but also separate implemented components such as classifiers, feature selection algorithms, etc. **It supports numerical and categorical features.**
 
 - **Documentation:** https://niaaml.readthedocs.io/en/latest/
 

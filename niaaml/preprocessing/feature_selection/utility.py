@@ -45,8 +45,8 @@ class _FeatureSelectionThresholdBenchmark(Benchmark):
         r"""Initialize feature selection benchmark.
 
         Arguments:
-            X (numpy.ndarray[float]): Features.
-            y (Iterable[any]) Expected classifier results.
+            X (pandas.core.frame.DataFrame): Features.
+            y (pandas.core.series.Series) Expected classifier results.
         """
         self.__best_fitness = float('inf')
         self.__best_solution = None
@@ -93,8 +93,8 @@ class _FeatureSelectionThresholdBenchmark(Benchmark):
                 return 1
             
             lr = LogisticRegression(solver='lbfgs', max_iter=10000).fit(
-                self.train_X[:, selected], self.train_y)
-            accuracy = lr.score(self.test_X[:, selected], self.test_y)
+                self.train_X.iloc[:, selected], self.train_y)
+            accuracy = lr.score(self.test_X.iloc[:, selected], self.test_y)
             fitness = 1.0 - accuracy
             
             if fitness < self.__best_fitness:

@@ -11,7 +11,7 @@ class ClassifierFactory(Factory):
     Date:
         2020
 
-    Author
+    Author:
         Luka Pečnik
 
     License:

@@ -11,7 +11,7 @@ class Classifier(PipelineComponent):
     Date:
         2020
 
-    Author
+    Author:
         Luka Pečnik
 
     License:
@@ -25,8 +25,8 @@ class Classifier(PipelineComponent):
         r"""Fit implemented classifier.
 
         Arguments:
-            x (numpy.ndarray[float]): n samples to classify.
-            y (Iterable[any]): n classes of the samples in the x array.
+            x (pandas.core.frame.DataFrame): n samples to classify.
+            y (pandas.core.series.Series): n classes of the samples in the x array.
         """
         return
 
@@ -34,9 +34,9 @@ class Classifier(PipelineComponent):
         r"""Predict class for each sample (row) in x.
 
         Arguments:
-            x (numpy.ndarray[float]): n samples to classify.
+            x (pandas.core.frame.DataFrame): n samples to classify.
 
         Returns:
-            Iterable[any]: n predicted classes.
+            pandas.core.series.Series: n predicted classes.
         """
         return

@@ -30,7 +30,7 @@ class MinMax:
     Date:
         2020
 
-    Author
+    Author:
         Luka Pečnik
 
     License:
@@ -60,7 +60,7 @@ class ParameterDefinition:
     Date:
         2020
 
-    Author
+    Author:
         Luka Pečnik
 
     License:
@@ -91,7 +91,7 @@ class Factory:
     Date:
         2020
 
-    Author
+    Author:
         Luka Pečnik
 
     License:
@@ -143,7 +143,7 @@ class OptimizationStats:
     Date:
         2020
 
-    Author
+    Author:
         Luka Pečnik
 
     License:

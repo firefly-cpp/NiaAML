@@ -10,7 +10,7 @@ class FeatureTransformAlgorithm(PreprocessingAlgorithm):
     Date:
         2020
 
-    Author
+    Author:
         Luka Pečnik
 
     License:
@@ -21,10 +21,10 @@ class FeatureTransformAlgorithm(PreprocessingAlgorithm):
     """
 
     def fit(self, x, **kwargs):
-        r"""Fit implemented classifier.
+        r"""Fit implemented feature transform algorithm.
 
         Arguments:
-            x (numpy.ndarray[float]): n samples to fit transformation algorithm.
+            x (pandas.core.frame.DataFrame): n samples to fit transformation algorithm.
         """
         return
     
@@ -32,9 +32,9 @@ class FeatureTransformAlgorithm(PreprocessingAlgorithm):
         r"""Transforms the given x data.
 
         Arguments:
-            x (numpy.ndarray[float]): Data to transform.
+            x (pandas.core.frame.DataFrame): Data to transform.
 
         Returns:
-            numpy.ndarray[float]: Transformed data.
+            pandas.core.frame.DataFrame: Transformed data.
         """
         return x

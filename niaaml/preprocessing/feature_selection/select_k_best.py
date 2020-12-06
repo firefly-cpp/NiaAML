@@ -13,7 +13,7 @@ class SelectKBest(FeatureSelectionAlgorithm):
     Date:
         2020
 
-    Author
+    Author:
         Luka Pečnik
 
     License:
@@ -46,14 +46,14 @@ class SelectKBest(FeatureSelectionAlgorithm):
         r"""Perform the feature selection process.
 
         Arguments:
-            x (numpy.ndarray[float]): Array of original features.
-            y (Iterable[any]) Expected classifier results.
+            x (pandas.core.frame.DataFrame): Array of original features.
+            y (pandas.core.series.Series) Expected classifier results.
 
         Returns:
             numpy.ndarray[bool]: Mask of selected features.
         """
         if self.__k is None:
-            self.__k = len(x[0])
+            self.__k = x.shape[1]
             self._params['k'] = ParameterDefinition(MinMax(1, self.__k), np.int)
             val = np.int(np.around(np.random.uniform(1, self.__k)))
             self.__select_k_best.set_params(k=val)

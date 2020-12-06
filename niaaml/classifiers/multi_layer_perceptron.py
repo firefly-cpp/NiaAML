@@ -12,7 +12,7 @@ class MultiLayerPerceptron(Classifier):
     Date:
         2020
 
-    Author
+    Author:
         Luka Pečnik
 
     License:
@@ -42,8 +42,8 @@ class MultiLayerPerceptron(Classifier):
         r"""Fit MultiLayerPerceptron.
 
         Arguments:
-            x (numpy.ndarray[float]): n samples to classify.
-            y (Iterable[any]): n classes of the samples in the x array.
+            x (pandas.core.frame.DataFrame): n samples to classify.
+            y (pandas.core.series.Series): n classes of the samples in the x array.
 
         Returns:
             None
@@ -54,10 +54,10 @@ class MultiLayerPerceptron(Classifier):
         r"""Predict class for each sample (row) in x.
 
         Arguments:
-            x (numpy.ndarray[float]): n samples to classify.
+            x (pandas.core.frame.DataFrame): n samples to classify.
 
         Returns:
-            Iterable[any]: n predicted classes.
+            pandas.core.series.Series: n predicted classes.
         """
         return self.__multi_layer_perceptron.predict(x)
 

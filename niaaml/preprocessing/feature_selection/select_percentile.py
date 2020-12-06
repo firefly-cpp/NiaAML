@@ -13,7 +13,7 @@ class SelectPercentile(FeatureSelectionAlgorithm):
     Date:
         2020
 
-    Author
+    Author:
         Luka Pečnik
 
     License:
@@ -42,8 +42,8 @@ class SelectPercentile(FeatureSelectionAlgorithm):
         r"""Perform the feature selection process.
 
         Arguments:
-            x (numpy.ndarray[float]): Array of original features.
-            y (Iterable[any]) Expected classifier results.
+            x (pandas.core.frame.DataFrame): Array of original features.
+            y (pandas.core.series.Series) Expected classifier results.
 
         Returns:
             numpy.ndarray[bool]: Mask of selected features.

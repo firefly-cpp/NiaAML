@@ -1,10 +1,12 @@
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 from niaaml.utilities import MinMax, get_bin_index, OptimizationStats
+from niaaml.preprocessing.encoding.utility import encode_categorical_features
 from niaaml.fitness import FitnessFactory
 from NiaPy.benchmarks import Benchmark
 from NiaPy.algorithms.utility import AlgorithmUtility
 from NiaPy.task import StoppingTask
+import pandas as pd
 import numpy as np
 import copy
 import pickle
@@ -20,7 +22,7 @@ class Pipeline:
     Date:
         2020
 
-    Author
+    Author:
         Luka Pečnik
 
     License:
@@ -32,6 +34,7 @@ class Pipeline:
         __classifier (Classifier): Classifier implementation.
         __selected_features_mask (Iterable[bool]): Mask of selected features during the feature selection process.
         __best_stats (OptimizationStats): Statistics of the most successful setup of parameters.
+        __categorical_features_encoders (Iterable[FeatureEncoder]): Actual instances of FeatureEncoder for all categorical features.
         __niapy_algorithm_utility (AlgorithmUtility): Class used for getting an optimiziation algorithm using its name.
     """
 
@@ -43,20 +46,23 @@ class Pipeline:
         self.__classifier = None
         self.__selected_features_mask = None
         self.__best_stats = None
+        self.__categorical_features_encoders = None
         self.__niapy_algorithm_utility = AlgorithmUtility()
         self._set_parameters(**kwargs)
     
-    def _set_parameters(self, classifier, feature_selection_algorithm=None, feature_transform_algorithm=None, **kwargs):
+    def _set_parameters(self, classifier, feature_selection_algorithm=None, feature_transform_algorithm=None, categorical_features_encoders = None, **kwargs):
         r"""Set the parameters/arguments of the task.
 
         Arguments:
             feature_selection_algorithm (Optional[FeatureSelectionAlgorithm]): Feature selection algorithm implementation.
             feature_transform_algorithm (Optional[FeatureTransformAlgorithm]): Feature transform algorithm implementation.
             classifier (Classifier): Classifier implementation.
+            categorical_features_encoders (Iterable[FeatureEncoders]): Actual instances of FeatureEncoder for all categorical features.
         """
         self.__feature_selection_algorithm = feature_selection_algorithm
         self.__feature_transform_algorithm = feature_transform_algorithm
         self.__classifier = classifier
+        self.__categorical_features_encoders = categorical_features_encoders
     
     def get_feature_selection_algorithm(self):
         r"""Get deep copy of the feature selection algorithm.
@@ -115,12 +121,17 @@ class Pipeline:
         """
         self.__best_stats = value
     
+    def set_categorical_features_encoders(self, value):
+        r"""Set selected features mask.
+        """
+        self.__categorical_features_encoders = value
+    
     def optimize(self, x, y, population_size, number_of_evaluations, optimization_algorithm, fitness_function):
         r"""Optimize pipeline's hyperparameters.
 
         Arguments:
-            x (numpy.ndarray[float]): n samples to classify.
-            y (Iterable[any]): n classes of the samples in the x array.
+            x (pandas.core.frame.DataFrame): n samples to classify.
+            y (pandas.core.series.Series): n classes of the samples in the x array.
             population_size (uint): Number of individuals in the optimization process.
             number_of_evaluations (uint): Number of maximum evaluations.
             optimization_algorithm (str): Name of the optimization algorithm to use.
@@ -129,6 +140,20 @@ class Pipeline:
         Returns:
             float: Best fitness value found in optimization process.
         """
+
+        if self.__categorical_features_encoders is not None:
+            types = x.dtypes
+            to_drop = []
+            enc_features = pd.DataFrame()
+            ind = 0
+            for i in range(len(types)):
+                if types[i] != np.dtype('float64'):
+                    tr = self.__categorical_features_encoders[ind].transform(x[[i]])
+                    to_drop.append(i)
+                    enc_features = pd.concat([enc_features, tr], axis=1)
+                    ind += 1
+            x = x.drop(to_drop, axis=1)
+            x = pd.concat([x, enc_features], axis=1)
 
         D = 0
         if self.__feature_selection_algorithm is not None:
@@ -153,12 +178,26 @@ class Pipeline:
         r"""Runs the pipeline.
 
         Arguments:
-            x (numpy.ndarray[float]): n samples to classify.
+            x (pandas.core.frame.DataFrame): n samples to classify.
         
         Returns:
-            Iterable[any]: n predicted classes of the samples in the x array.
+            pandas.core.series.Series: n predicted classes of the samples in the x array.
         """
-        x = x[:, self.__selected_features_mask] if self.__selected_features_mask is not None else x
+        if self.__categorical_features_encoders is not None:
+            types = x.dtypes
+            to_drop = []
+            enc_features = pd.DataFrame()
+            ind = 0
+            for i in range(len(types)):
+                if types[i] != np.dtype('float64'):
+                    tr = self.__categorical_features_encoders[ind].transform(x[[i]])
+                    to_drop.append(i)
+                    enc_features = pd.concat([enc_features, tr], axis=1)
+                    ind += 1
+            x = x.drop(to_drop, axis=1)
+            x = pd.concat([x, enc_features], axis=1)
+
+        x = x.loc[:, self.__selected_features_mask] if self.__selected_features_mask is not None else x
         
         if self.__feature_transform_algorithm is not None:
             x = self.__feature_transform_algorithm.transform(x)
@@ -174,7 +213,8 @@ class Pipeline:
         pipeline = Pipeline(
             feature_selection_algorithm=self.__feature_selection_algorithm,
             feature_transform_algorithm=self.__feature_transform_algorithm,
-            classifier=self.__classifier
+            classifier=self.__classifier,
+            categorical_features_encoders=self.__categorical_features_encoders
         )
         pipeline.set_selected_features_mask(self.__selected_features_mask)
         pipeline.set_stats(self.__best_stats)
@@ -193,7 +233,8 @@ class Pipeline:
         pipeline = Pipeline(
             feature_selection_algorithm=self.__feature_selection_algorithm,
             feature_transform_algorithm=self.__feature_transform_algorithm,
-            classifier=self.__classifier
+            classifier=self.__classifier,
+            categorical_features_encoders=self.__categorical_features_encoders
         )
         pipeline.set_selected_features_mask(self.__selected_features_mask)
         pipeline.set_stats(self.__best_stats)
@@ -232,7 +273,7 @@ class _PipelineBenchmark(Benchmark):
     Date:
         2020
 
-    Author
+    Author:
         Luka Pečnik
 
     License:
@@ -240,8 +281,8 @@ class _PipelineBenchmark(Benchmark):
 
     Attributes:
         __parent (Pipeline): Parent Pipeline instance.
-        __x (numpy.ndarray[float]): n samples to classify.
-        __y (Iterable[any]): n classes of the samples in the __x array.
+        __x (pandas.core.frame.DataFrame): n samples to classify.
+        __y (pandas.core.series.Series): n classes of the samples in the __x array.
         __population_size (uint): Number of individuals in the hiperparameter optimization process.
         __current_best_fitness (float): Current best fitness of the optimization process.
         __fitness_function (FitnessFunction): Instance of a FitnessFunction object.
@@ -322,8 +363,8 @@ class _PipelineBenchmark(Benchmark):
                 else:
                     selected_features_mask = feature_selection_algorithm.select_features(x_train, y_train)
 
-                x_train = x_train[:, selected_features_mask]
-                x_test = x_test[:, selected_features_mask]
+                x_train = x_train.loc[:, selected_features_mask]
+                x_test = x_test.loc[:, selected_features_mask]
 
                 if feature_transform_algorithm is not None:
                     feature_transform_algorithm.fit(x_train)
