@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.0rc1](https://github.com/lukapecnik/niaaml/tree/1.0.0rc1) (2020-12-06)
+
+[Full Changelog](https://github.com/lukapecnik/niaaml/compare/0.1.4...1.0.0rc1)
+
+**Merged pull requests:**
+
+- Added support for categorical features [\#26](https://github.com/lukapecnik/NiaAML/pull/26) ([lukapecnik](https://github.com/lukapecnik))
+
 ## [0.1.4](https://github.com/lukapecnik/niaaml/tree/0.1.4) (2020-12-05)
 
 [Full Changelog](https://github.com/lukapecnik/niaaml/compare/0.1.3...0.1.4)
