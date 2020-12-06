@@ -9,7 +9,7 @@ class StandardScaler(FeatureTransformAlgorithm):
     Date:
         2020
 
-    Author
+    Author:
         Luka Pečnik
 
     License:
@@ -30,7 +30,7 @@ class StandardScaler(FeatureTransformAlgorithm):
         r"""Fit implemented transformation algorithm.
 
         Arguments:
-            x (numpy.ndarray[float]): n samples to fit transformation algorithm.
+            x (pandas.core.frame.DataFrame): n samples to fit transformation algorithm.
         """
         self.__std_scaler.fit(x)
 
@@ -38,10 +38,10 @@ class StandardScaler(FeatureTransformAlgorithm):
         r"""Transforms the given x data.
 
         Arguments:
-            x (numpy.ndarray[float]): Data to transform.
+            x (pandas.core.frame.DataFrame): Data to transform.
 
         Returns:
-            numpy.ndarray[float]: Transformed data.
+            pandas.core.frame.DataFrame: Transformed data.
         """
         
         return self.__std_scaler.transform(x)

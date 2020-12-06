@@ -1,4 +1,4 @@
-import numpy as np
+import pandas as pd
 from niaaml.data.data_reader import DataReader
 
 __all__ = ['BasicDataReader']
@@ -9,7 +9,7 @@ class BasicDataReader(DataReader):
     Date:
         2020
 
-    Author
+    Author:
         Luka Pečnik
 
     License:
@@ -26,7 +26,7 @@ class BasicDataReader(DataReader):
             x (Iterable[float]): Array of rows from dataset without expected classification results.
             y (Optional[Iterable[any]]): Array of expected classification results.
         """
-        self._x = np.array(x, dtype=np.float)
+        self._x = pd.DataFrame(x)
         
         if y is not None:
-            self._y = np.array(y)
+            self._y = pd.Series(y)

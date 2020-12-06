@@ -15,7 +15,7 @@
 
 NiaAML is an automated machine learning Python framework based on nature-inspired algorithms for optimization. The name comes from the automated machine learning method of the same name [[1]](#1). Its goal is to efficiently compose the best possible classification pipeline for the given task using components on the input. The components are divided into three groups: feature seletion algorithms, feature transformation algorithms and classifiers. The framework uses nature-inspired algorithms for optimization to choose the best set of components for the classification pipeline on the output and optimize their parameters. We use <a href="https://github.com/NiaOrg/NiaPy">NiaPy framework</a> for the optimization process which is a popular Python collection of nature-inspired algorithms. The NiaAML framework is easy to use and customize or expand to suit your needs.
 
-The NiaAML framework allows you not only to run full pipeline optimization, but also separate implemented components such as classifiers, feature selection algorithms, etc. It currently supports only numeric features on the input. **However, we are planning to add support for categorical features too.**
+The NiaAML framework allows you not only to run full pipeline optimization, but also separate implemented components such as classifiers, feature selection algorithms, etc. **It supports numerical and categorical features.**
 
 * **Free software:** MIT license
 * **Documentation:** https://niaaml.readthedocs.io/en/latest/
@@ -37,7 +37,7 @@ pip install niaaml --pre
 
 ## Components
 
-In the following sections you can see a list of currently implemented components divided into groups: classifiers, feature selection algorithms and feature transformation algorithms. At the end you can also see a list of currently implemented fitness functions for the optimization process. All of the components are passed into the optimization process using their class names. Let's say we want to choose between Adaptive Boosting, Bagging and Multi Layer Perceptron classifiers, Select K Best and Select Percentile feature selection algorithms and Normalizer as the feature transformation algorithm (may not be selected during the optimization process).
+In the following sections you can see a list of currently implemented components divided into groups: classifiers, feature selection algorithms and feature transformation algorithms. At the end you can also see a list of currently implemented fitness functions for the optimization process and categorical features' encoders. All of the components are passed into the optimization process using their class names. Let's say we want to choose between Adaptive Boosting, Bagging and Multi Layer Perceptron classifiers, Select K Best and Select Percentile feature selection algorithms and Normalizer as the feature transformation algorithm (may not be selected during the optimization process).
 
 ```python
 PipelineOptimizer(
@@ -48,7 +48,19 @@ PipelineOptimizer(
 )
 ```
 
-For a full example see the [Examples section](#examples).
+Argument of the PipelineOptimizer `categorical_features_encoder` is `None` by default. If you your dataset contains any categorical features, you need to specify an encoder to use.
+
+```python
+PipelineOptimizer(
+    data=...,
+    classifiers=['AdaBoost', 'Bagging', 'MultiLayerPerceptron'],
+    feature_selection_algorithms=['SelectKBest', 'SelectPercentile'],
+    feature_transform_algorithms=['Normalizer'],
+    categorical_features_encoder='OneHotEncoder'
+)
+```
+
+For a full example see the [Examples section](#examples) or the list of implemented examples [here](examples).
 
 ### Classifiers
 
@@ -85,6 +97,10 @@ For a full example see the [Examples section](#examples).
 * F1-Score (F1),
 * Precision (Precision).
 
+### Categorical Feature Encoders
+
+* One-Hot Encoder (OneHotEncoder).
+
 ## Optimization Process And Parameter Tuning
 
 In NiaAML there are two types of optimization. Goal of the first type is to find an optimal set of components (feature selection algorithm, feature transformation algorithm and classifier). The next step is to find optimal parameters for the selected set of components and that is the goal of the second type of optimization. Each component has an attribute `_params`, which is a dictionary of parameters and their possible values.
@@ -112,6 +128,7 @@ Load data and try to find the optimal pipeline for the given components. The exa
 from niaaml import PipelineOptimizer, Pipeline
 from niaaml.data import BasicDataReader
 import numpy
+import pandas
 
 # dummy random data
 data_reader = BasicDataReader(
@@ -140,7 +157,7 @@ And also load it from a file and use the pipeline.
 loaded_pipeline = Pipeline.load('pipeline.ppln')
 
 # some features (can be loaded using DataReader object instances)
-x = numpy.array([[0.35, 0.46, 5.32], [0.16, 0.55, 12.5]], dtype=float)
+x = pandas.DataFrame([[0.35, 0.46, 5.32], [0.16, 0.55, 12.5]])
 y = loaded_pipeline.run(x)
 ```
 
@@ -152,17 +169,23 @@ pipeline.export_text('pipeline.txt')
 
 This is a very simple example with dummy data. It is only intended to give you a basic idea on how to use the framework.
 
-### Example of a Pipeline Component Implementation
+### Example of a Pipeline Component's Implementation
 
 NiaAML framework is easily expandable as you can implement components by overriding the base classes' methods. To implement a classifier you should inherit from the [Classifier](niaaml/classifiers/classifier.py) class and you can do the same with [FeatureSelectionAlgorithm](niaaml/preprocessing/feature_selection/feature_selection_algorithm.py) and [FeatureTransformAlgorithm](niaaml/preprocessing/feature_transform/feature_transform_algorithm.py) classes. All of the mentioned classes inherit from the [PipelineComponent](niaaml/pipeline_component.py) class.
 
 Take a look at the [Classifier](niaaml/classifiers/classifier.py) class and the implementation of the [AdaBoost](niaaml/classifiers/ada_boost.py) classifier that inherits from it.
 
-### Example of a Fitness Function Implementation
+### Example of a Fitness Function's Implementation
 
 NiaAML framework also allows you to implement your own fitness function. All you need to do is implement the [FitnessFunction](niaaml/fitness/fitness_function.py) class.
 
 Take a look at the [Accuracy](niaaml/fitness/accuracy.py) implementation.
+
+### Example of a Feature Encoder's Implementation
+
+NiaAML framework also allows you to implement your own feature encoder. All you need to do is implement the [FeatureEncoder](niaaml/preprocessing/encoding/feature_encoder.py) class.
+
+Take a look at the [OneHotEncoder](niaaml/preprocessing/encoding/one_hot_encoder.py) implementation.
 
 ### More
 

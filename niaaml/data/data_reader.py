@@ -8,15 +8,15 @@ class DataReader:
     Date:
         2020
 
-    Author
+    Author:
         Luka Pečnik
 
     License:
         MIT
 
     Attributes:
-        _x (numpy.ndarray[float]): Array of rows from dataset without expected classification results.
-        _y (Optional[Iterable[any]]): Array of encoded expected classification results.
+        _x (pandas.core.frame.DataFrame): Array of rows from dataset without expected classification results.
+        _y (Optional[pandas.core.series.Series]): Array of encoded expected classification results.
     """
 
     def __init__(self, **kwargs):
@@ -31,23 +31,33 @@ class DataReader:
         """
         return
     
-    def get_x(self, **kwargs):
+    def get_x(self):
         r"""Get value of _x.
 
         Returns:
-            numpy.ndarray[float]: Array of rows from dataset without expected classification results.
+            pandas.core.frame.DataFrame: Array of rows from dataset without expected classification results.
         """
         return self._x
     
-    def get_y(self, **kwargs):
+    def get_y(self):
         r"""Get value of _y.
 
         Returns:
-            Iterable[any]: Array of encoded expected classification results.
+            pandas.core.series.Series: Array of encoded expected classification results.
         """
         return self._y
+    
+    def set_x(self, value):
+        r"""Set the value of _x.
+        """
+        self._x = value
 
-    def _read_data(self, **kwargs):
+    def set_y(self, value):
+        r"""Set the value of _y.
+        """
+        self._y = value
+
+    def _read_data(self):
         r"""Read data from expected source.
         """
         return

@@ -1,5 +1,5 @@
 import csv
-import numpy as np
+import pandas as pd
 from niaaml.data.data_reader import DataReader
 
 __all__ = ['CSVDataReader']
@@ -10,7 +10,7 @@ class CSVDataReader(DataReader):
     Date:
         2020
 
-    Author
+    Author:
         Luka Pečnik
 
     License:
@@ -30,8 +30,8 @@ class CSVDataReader(DataReader):
 
         Arguments:
             src (string): Path to a CSV dataset file.
-            contains_classes (bool): Tells if src contains expected classification results or only features.
-            has_header (bool): Tells if src contains header row.
+            contains_classes (Optional[bool]): Tells if src contains expected classification results or only features.
+            has_header (Optional[bool]): Tells if src contains header row.
         """
         self.__src = src
         self.__contains_classes = contains_classes
@@ -41,26 +41,10 @@ class CSVDataReader(DataReader):
     def _read_data(self, **kwargs):
         r"""Read data from expected source.
         """
-        self._x = []
+        data = pd.read_csv(self.__src, header=None if self.__has_header is False else 'infer')
+        header = data.columns
 
         if self.__contains_classes:
-            self._y = []
+            self._y = data.pop(header[len(header) - 1])
 
-        with open(self.__src) as csvfile:
-            reader = csv.reader(csvfile)
-
-            if self.__has_header:
-                next(reader, None)
-
-            y = []
-            for row in reader:
-                if self.__contains_classes:
-                    self._x.append(np.array(row[:-1], dtype=np.float))
-                    y.append(row[-1])
-                else:
-                    self._x.append(np.array(row, dtype=np.float))
-
-            if self.__contains_classes:
-                self._y = np.array(y)
-        
-        self._x = np.array(self._x)
+        self._x = data

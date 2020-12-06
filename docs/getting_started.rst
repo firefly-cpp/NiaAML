@@ -54,7 +54,7 @@ If you want to load and use the saved pipeline later, you can use the following 
     x = numpy.array([[0.35, 0.46, 5.32], [0.16, 0.55, 12.5]], dtype=float)
     y = loaded_pipeline.run(x)
 
-This is a very simple example with dummy data. It is only intended to give you a basic idea on how to use the framework. **NiaAML currently supports only numeric features. However, we are planning to add support for categorical features too.**
+This is a very simple example with dummy data. It is only intended to give you a basic idea on how to use the framework. **NiaAML supports numerical and categorical features.**
 
 Find more examples `here <https://github.com/lukapecnik/NiaAML/tree/master/examples>`_
 

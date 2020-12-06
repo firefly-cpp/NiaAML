@@ -1,0 +1,29 @@
+Classifier:
+	Name: AdaBoost
+	Arguments:
+		algorithm = SAMME.R
+		base_estimator = None
+		learning_rate = 1.0
+		n_estimators = 50
+		random_state = None
+	
+
+Feature selection algorithm:
+	Name: Select K Best
+	Arguments:
+		k = 10
+		score_func = <function f_classif at 0x000001FAEA8F1F70>
+	
+
+Feature transform algorithm:
+	Name: Normalizer
+	Arguments:
+		copy = True
+		norm = l2
+	
+
+Mask of selected features (True if selected, False if not):
+	Feature selection result is not available.
+
+Statistics:
+	Statistics is not available.

@@ -11,7 +11,7 @@ class PipelineComponent:
     Date:
         2020
 
-    Author
+    Author:
         Luka Pečnik
 
     License:

@@ -73,11 +73,11 @@ class BatAlgorithm(FeatureSelectionAlgorithm):
         r"""Perform the feature selection process.
 
         Arguments:
-            x (numpy.ndarray[float]): Array of original features.
-            y (Iterable[any]) Expected classifier results.
+            x (pandas.core.frame.DataFrame): Array of original features.
+            y (pandas.core.series.Series) Expected classifier results.
 
         Returns:
-            numpy.ndarray[bool]: Mask of selected features.
+            pandas.core.frame.DataFrame: Mask of selected features.
         """
         num_features = x.shape[1]
         benchmark = _FeatureSelectionThresholdBenchmark(x, y)

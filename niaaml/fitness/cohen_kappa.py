@@ -11,7 +11,7 @@ class CohenKappa(FitnessFunction):
     Date:
         2020
 
-    Author
+    Author:
         Luka Pečnik
 
     License:
@@ -26,8 +26,8 @@ class CohenKappa(FitnessFunction):
         r"""Return fitness value. The larger return value should represent a better fitness for the framework to work properly.
 
         Arguments:
-            predicted (Iterable[any]): Predicted values.
-            expected (Iterable[any]): Expected values.
+            predicted (pandas.core.series.Series): Predicted values.
+            expected (pandas.core.series.Series): Expected values.
         
         Returns:
             float: Calculated fitness value.
