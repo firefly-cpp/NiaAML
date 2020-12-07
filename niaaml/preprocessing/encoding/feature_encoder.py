@@ -42,3 +42,11 @@ class FeatureEncoder():
             pandas.core.frame.DataFrame: A transformed column.
         """
         return None
+
+    def to_string(self):
+        r"""User friendly representation of the object.
+
+        Returns:
+            str: User friendly representation of the object.
+        """
+        return '{name}'

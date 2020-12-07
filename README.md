@@ -36,6 +36,10 @@ In case you would like to try out the latest pre-release version of the framewor
 pip install niaaml --pre
 ```
 
+## Graphical User Interface
+
+There is a simple graphical user inteface for NiaAML package available [here](https://github.com/lukapecnik/NiaAML-GUI).
+
 ## Components
 
 [Click here](COMPONENTS.md) for a list of currently implemented components divided into groups: classifiers, feature selection algorithms and feature transformation algorithms. At the end you can also see a list of currently implemented fitness functions for the optimization process and categorical features' encoders. All of the components are passed into the optimization process using their class names. Let's say we want to choose between Adaptive Boosting, Bagging and Multi Layer Perceptron classifiers, Select K Best and Select Percentile feature selection algorithms and Normalizer as the feature transformation algorithm (may not be selected during the optimization process).

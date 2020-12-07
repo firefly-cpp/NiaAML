@@ -46,3 +46,11 @@ class OneHotEncoder(FeatureEncoder):
             pandas.core.frame.DataFrame: A transformed column.
         """
         return pd.DataFrame(self.__one_hot_encoder.transform(feature).toarray())
+    
+    def to_string(self):
+        r"""User friendly representation of the object.
+
+        Returns:
+            str: User friendly representation of the object.
+        """
+        return FeatureEncoder.to_string(self).format(name=self.Name)
