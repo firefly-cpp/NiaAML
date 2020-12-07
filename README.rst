@@ -49,6 +49,11 @@ In case you would like to try out the latest pre-release version of the framewor
 
     pip install niaaml --pre
 
+Graphical User Interface
+------------------------
+
+You can find a simple graphical user interface for NiaAML package `here <https://github.com/lukapecnik/NiaAML-GUI>`_.
+
 Usage
 -----
 
