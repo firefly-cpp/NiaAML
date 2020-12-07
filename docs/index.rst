@@ -13,6 +13,7 @@ The main documentation is organized into a couple of sections:
 
 * :ref:`user-docs`
 * :ref:`dev-docs`
+* :ref:`about-docs`
 
 .. _user-docs:
 
@@ -33,6 +34,14 @@ The main documentation is organized into a couple of sections:
    testing
    documentation
    api/index
+
+.. _about-docs:
+
+.. toctree::
+   :maxdepth: 3
+   :caption: About
+
+   about
 
 References
 ----------
