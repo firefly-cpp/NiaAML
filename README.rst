@@ -57,11 +57,11 @@ See the project's `repository <https://github.com/lukapecnik/NiaAML>`_ for usage
 Components
 ----------
 
-In the following sections you can see a list of currently implemented
-components divided into groups: classifiers, feature selection
-algorithms and feature transformation algorithms. At the end you can
-also see a list of currently implemented fitness functions for the
-optimization process.
+In the following sections you can see a list of currently implemented 
+components divided into groups: classifiers, feature selection 
+algorithms and feature transformation algorithms. At the end you can 
+also see a list of currently implemented fitness functions for the optimization process 
+and categorical features' encoders.
 
 Classifiers
 ~~~~~~~~~~~
@@ -102,6 +102,11 @@ Fitness Functions
 -  Cohen's kappa (CohenKappa),
 -  F1-Score (F1),
 -  Precision (Precision).
+
+Categorical Feature Encoders
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- One-Hot Encoder (OneHotEncoder).
 
 Licence
 -------
