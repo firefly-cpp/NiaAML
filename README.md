@@ -20,6 +20,7 @@ The NiaAML framework allows you not only to run full pipeline optimization, but 
 * **Free software:** MIT license
 * **Documentation:** https://niaaml.readthedocs.io/en/latest/
 * **Python versions:** 3.7.x, 3.8.x
+* **Dependencies:** [click](CONTRIBUTING.md#development-dependencies)
 
 ## Installation
 
@@ -37,7 +38,7 @@ pip install niaaml --pre
 
 ## Components
 
-In the following sections you can see a list of currently implemented components divided into groups: classifiers, feature selection algorithms and feature transformation algorithms. At the end you can also see a list of currently implemented fitness functions for the optimization process and categorical features' encoders. All of the components are passed into the optimization process using their class names. Let's say we want to choose between Adaptive Boosting, Bagging and Multi Layer Perceptron classifiers, Select K Best and Select Percentile feature selection algorithms and Normalizer as the feature transformation algorithm (may not be selected during the optimization process).
+[Click here](COMPONENTS.md) for a list of currently implemented components divided into groups: classifiers, feature selection algorithms and feature transformation algorithms. At the end you can also see a list of currently implemented fitness functions for the optimization process and categorical features' encoders. All of the components are passed into the optimization process using their class names. Let's say we want to choose between Adaptive Boosting, Bagging and Multi Layer Perceptron classifiers, Select K Best and Select Percentile feature selection algorithms and Normalizer as the feature transformation algorithm (may not be selected during the optimization process).
 
 ```python
 PipelineOptimizer(
@@ -61,45 +62,6 @@ PipelineOptimizer(
 ```
 
 For a full example see the [Examples section](#examples) or the list of implemented examples [here](examples).
-
-### Classifiers
-
-* Adaptive Boosting (AdaBoost),
-* Bagging (Bagging),
-* Extremely Randomized Trees (ExtremelyRandomizedTrees),
-* Linear SVC (LinearSVC),
-* Multi Layer Perceptron (MultiLayerPerceptron),
-* Random Forest Classifier (RandomForestClassifier).
-
-### Feature Selection Algorithms
-
-* Select K Best (SelectKBest),
-* Select Percentile (SelectPercentile),
-* Variance Threshold (VarianceThreshold).
-
-#### Nature-Inspired
-
-* Bat Algorithm (BatAlgorithm),
-* Differential Evolution (DifferentialEvolution),
-* Self-Adaptive Differential Evolution (jDEFSTH),
-* Grey Wolf Optimizer (GreyWolfOptimizer),
-* Particle Swarm Optimization (ParticleSwarmOptimization).
-
-### Feature Transformation Algorithms
-
-* Normalizer (Normalizer),
-* Standard Scaler (StandardScaler).
-
-### Fitness Functions
-
-* Accuracy (Accuracy),
-* Cohen's kappa (CohenKappa),
-* F1-Score (F1),
-* Precision (Precision).
-
-### Categorical Feature Encoders
-
-* One-Hot Encoder (OneHotEncoder).
 
 ## Optimization Process And Parameter Tuning
 
@@ -212,6 +174,12 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind are welcome!
+
+## Contributing
+
+We encourage you to contribute to NiaAML! Please check out the [Contributing to NiaAML guide](CONTRIBUTING.md) for guidelines about how to proceed.
+
+Everyone interacting in NiaAML's codebases, issue trackers, chat rooms and mailing lists is expected to follow the NiaAML [code of conduct](CODE_OF_CONDUCT.md).
 
 ## Licence
 
