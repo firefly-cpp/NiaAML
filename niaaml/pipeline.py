@@ -265,7 +265,15 @@ class Pipeline:
         feature_transform_algorithm_string = '\t' + self.__feature_transform_algorithm.to_string().replace('\n', '\n\t') if self.__feature_transform_algorithm is not None else '\tNone'
         stats_string = '\t' + self.__best_stats.to_string().replace('\n', '\n\t') if self.__best_stats is not None else '\tStatistics is not available.'
         features_string = '\t' + str(self.__selected_features_mask) if self.__selected_features_mask is not None else '\tFeature selection result is not available.'
-        return 'Classifier:\n{classifier}\n\nFeature selection algorithm:\n{fsa}\n\nFeature transform algorithm:\n{fta}\n\nMask of selected features (True if selected, False if not):\n{feat}\n\nStatistics:\n{stats}'.format(classifier=classifier_string, fsa=feature_selection_algorithm_string, fta=feature_transform_algorithm_string, feat=features_string, stats=stats_string)
+
+        encoders_string = ''
+        if self.__categorical_features_encoders is not None:
+            encoders_string += 'Categorical features encoders (in order):\n'
+            for i in range(len(self.__categorical_features_encoders)):
+                encoders_string += '\t* ' + self.__categorical_features_encoders[i].to_string() + '\n'
+            encoders_string += '\n'
+
+        return 'Classifier:\n{classifier}\n\nFeature selection algorithm:\n{fsa}\n\nFeature transform algorithm:\n{fta}\n\nMask of selected features (True if selected, False if not):\n{feat}\n\n{enc}Statistics:\n{stats}'.format(classifier=classifier_string, fsa=feature_selection_algorithm_string, fta=feature_transform_algorithm_string, enc=encoders_string, feat=features_string, stats=stats_string)
 
 class _PipelineBenchmark(Benchmark):
     r"""NiaPy Benchmark class implementation.
