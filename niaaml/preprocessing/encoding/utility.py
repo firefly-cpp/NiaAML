@@ -36,7 +36,7 @@ def encode_categorical_features(features, encoder):
             encoders.append(enc)
     features = features.drop(to_drop, axis=1)
     features = pd.concat([features, enc_features], axis=1)
-    return features, encoders
+    return features, encoders if len(encoders) > 0 else None
 
 class EncoderFactory(Factory):
     r"""Class with string mappings to encoders.
