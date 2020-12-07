@@ -42,6 +42,8 @@ The main documentation is organized into a couple of sections:
    :caption: About
 
    about
+   contributing
+   code_of_conduct
 
 References
 ----------
