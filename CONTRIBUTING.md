@@ -11,7 +11,7 @@ Before creating bug reports, please check existing issues list as you might find
 
 ### Suggesting Enhancements
 
-Open new issue using the [feature request template](FEATURE_REQUEST.md)
+Open new issue using the [feature request template](FEATURE_REQUEST.md).
 
 ### Pull requests
 
