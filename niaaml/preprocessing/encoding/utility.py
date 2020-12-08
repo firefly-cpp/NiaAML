@@ -13,27 +13,25 @@ def encode_categorical_features(features, encoder):
 
     Arguments:
         features (pandas.core.frame.DataFrame): DataFrame of features.
-        encoder (str): Number of bins on the interval [0.0, 1.0].
+        encoder (str): Name of the encoder to use.
     
     Returns:
-		Iterable[FeatureEncoder]: Encoder for each categorical feature encoded.
 		Tuple[pandas.core.frame.DataFrame, Iterable[FeatureEncoder]]:
 			1. Converted dataframe.
-			2. List of encoders for all categorical features.
+			2. Dictionary of encoders for all categorical features.
     """
     enc = EncoderFactory().get_result(encoder)
 
-    encoders = []
-    types = features.dtypes
+    encoders = {}
     to_drop = []
     enc_features = pd.DataFrame()
-    for i in range(len(types)):
-        if types[i] != np.dtype('float64') and types[i] != np.dtype('int64'):
-            enc.fit(features[[i]])
-            tr = enc.transform(features[[i]])
-            to_drop.append(i)
-            enc_features = pd.concat([enc_features, tr], axis=1)
-            encoders.append(enc)
+    cols = [col for col in features.columns if features[col].dtype != np.dtype('float64') and features[col].dtype != np.dtype('int64')]
+    for c in cols:
+        enc.fit(features[[c]])
+        tr = enc.transform(features[[c]])
+        to_drop.append(c)
+        enc_features = pd.concat([enc_features, tr], axis=1)
+        encoders[c] = enc
     features = features.drop(to_drop, axis=1)
     features = pd.concat([features, enc_features], axis=1)
     return features, encoders if len(encoders) > 0 else None

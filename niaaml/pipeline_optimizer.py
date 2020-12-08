@@ -8,6 +8,7 @@ from NiaPy.benchmarks import Benchmark
 from NiaPy.algorithms.utility import AlgorithmUtility
 from niaaml.utilities import get_bin_index
 from niaaml.preprocessing.encoding.utility import encode_categorical_features
+from niaaml.preprocessing.imputation.utility import impute_features
 import pandas as pd
 
 __all__ = [
@@ -32,7 +33,9 @@ class PipelineOptimizer:
         __feature_transform_algorithms (Optional[Iterable[str]]): Array of names of possible feature transform algorithms.
         __classifiers (Iterable[Classifier]): Array of names of possible classifiers.
         __categorical_features_encoder (str): Name of the encoder used for categorical features.
-        __categorical_features_encoders (Iterable[FeatureEncoder]): Actual instances of FeatureEncoder for all categorical features.
+        __categorical_features_encoders (Dict[FeatureEncoder]): Actual instances of FeatureEncoder for all categorical features.
+        __imputer (str): Name of the imputer used for features that contain missing values.
+        __imputers (Dict[Imputer]): Actual instances of Imputer for all features that contain missing values.
 
         __niapy_algorithm_utility (AlgorithmUtility): Utility class used to get an optimization algorithm.
     """
@@ -46,11 +49,13 @@ class PipelineOptimizer:
         self.__classifiers = None
         self.__categorical_features_encoder = None
         self.__categorical_features_encoders = None
+        self.__imputer = None
+        self.__imputers = None
         self.__niapy_algorithm_utility = AlgorithmUtility()
 
         self._set_parameters(**kwargs)
     
-    def _set_parameters(self, data, classifiers, feature_selection_algorithms = None, feature_transform_algorithms = None, categorical_features_encoder = None, **kwargs):
+    def _set_parameters(self, data, classifiers, feature_selection_algorithms = None, feature_transform_algorithms = None, categorical_features_encoder = None, imputer = None, **kwargs):
         r"""Set the parameters/arguments of the task.
 
         Arguments:
@@ -59,6 +64,7 @@ class PipelineOptimizer:
             feature_transform_algorithms (Optional[Iterable[str]]): Array of names of possible feature transform algorithms.
             classifiers (Iterable[Classifier]): Array of names of possible classifiers.
             categorical_features_encoder (Optional[str]): Name of the encoder used for categorical features.
+            imputer (Optional[str]): Name of the imputer used for features that contain missing values.
         """
         self.__data = data
 
@@ -72,6 +78,7 @@ class PipelineOptimizer:
         self.__classifiers = classifiers
         self.__feature_selection_algorithms = feature_selection_algorithms
         self.__categorical_features_encoder = categorical_features_encoder
+        self.__imputer = imputer
     
     def get_data(self):
         r"""Get data.
@@ -124,10 +131,15 @@ class PipelineOptimizer:
         algo = self.__niapy_algorithm_utility.get_algorithm(optimization_algorithm)
         algo.NP = pipeline_population_size
 
+        features = self.__data.get_x()
+
+        if self.__imputer is not None:
+            features, self.__imputers = impute_features(features, self.__imputer)
+
         if self.__categorical_features_encoder is not None:
-            features = self.__data.get_x()
             features, self.__categorical_features_encoders = encode_categorical_features(features, self.__categorical_features_encoder)
-            self.__data.set_x(features)
+
+        self.__data.set_x(features)
 
         benchmark = _PipelineOptimizerBenchmark(self, fitness_name, inner_population_size, number_of_inner_evaluations, inner_optimization_algorithm if inner_optimization_algorithm is not None else optimization_algorithm)
         task = StoppingTask(
@@ -140,6 +152,7 @@ class PipelineOptimizer:
         pipeline = benchmark.get_pipeline()
         if pipeline is not None:
             pipeline.set_categorical_features_encoders(self.__categorical_features_encoders)
+            pipeline.set_imputers(self.__imputers)
 
         return pipeline
 

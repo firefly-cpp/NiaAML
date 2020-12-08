@@ -3,6 +3,7 @@ from niaaml.preprocessing.feature_selection import FeatureSelectionAlgorithmFact
 from niaaml.preprocessing.feature_transform import FeatureTransformAlgorithmFactory
 from niaaml.fitness import FitnessFactory
 from niaaml.preprocessing.encoding import EncoderFactory
+from niaaml.preprocessing.imputation import ImputerFactory
 
 """
 In this example, we show how to use all of the implemented factories to create new object instances using their class names. You may also
@@ -15,6 +16,7 @@ fsa_factory = FeatureSelectionAlgorithmFactory()
 fta_factory = FeatureTransformAlgorithmFactory()
 f_factory = FitnessFactory()
 e_factory = EncoderFactory()
+i_factory = ImputerFactory()
 
 # get an instance of the MultiLayerPerceptron class
 mlp = classifier_factory.get_result('MultiLayerPerceptron')
@@ -31,4 +33,7 @@ precision = f_factory.get_result('Precision')
 #get an instance of the OneHotEncoder class
 ohe = e_factory.get_result('OneHotEncoder')
 
-# variables mlp, pso, normalizer, precision and ohe contain instances of the classes with the passed names
+#get an instance of the SimpleImputer class
+imp = i_factory.get_result('SimpleImputer')
+
+# variables mlp, pso, normalizer, precision, ohe and imp contain instances of the classes with the passed names

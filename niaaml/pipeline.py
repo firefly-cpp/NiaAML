@@ -34,7 +34,8 @@ class Pipeline:
         __classifier (Classifier): Classifier implementation.
         __selected_features_mask (Iterable[bool]): Mask of selected features during the feature selection process.
         __best_stats (OptimizationStats): Statistics of the most successful setup of parameters.
-        __categorical_features_encoders (Iterable[FeatureEncoder]): Actual instances of FeatureEncoder for all categorical features.
+        __categorical_features_encoders (Dict[FeatureEncoder]): Instances of FeatureEncoder for all categorical features.
+        __imputers (Dict[Imputer]): Dictionary of instances of Imputer for all columns that contained missing values during optimization process.
         __niapy_algorithm_utility (AlgorithmUtility): Class used for getting an optimiziation algorithm using its name.
     """
 
@@ -47,22 +48,25 @@ class Pipeline:
         self.__selected_features_mask = None
         self.__best_stats = None
         self.__categorical_features_encoders = None
+        self.__imputers = None
         self.__niapy_algorithm_utility = AlgorithmUtility()
         self._set_parameters(**kwargs)
     
-    def _set_parameters(self, classifier, feature_selection_algorithm=None, feature_transform_algorithm=None, categorical_features_encoders = None, **kwargs):
+    def _set_parameters(self, classifier, feature_selection_algorithm=None, feature_transform_algorithm=None, categorical_features_encoders = None, imputers = None, **kwargs):
         r"""Set the parameters/arguments of the task.
 
         Arguments:
             feature_selection_algorithm (Optional[FeatureSelectionAlgorithm]): Feature selection algorithm implementation.
             feature_transform_algorithm (Optional[FeatureTransformAlgorithm]): Feature transform algorithm implementation.
             classifier (Classifier): Classifier implementation.
-            categorical_features_encoders (Iterable[FeatureEncoders]): Actual instances of FeatureEncoder for all categorical features.
+            categorical_features_encoders (Dict[FeatureEncoders]): Actual instances of FeatureEncoder for all categorical features.
+            imputers (Dict[Imputer]): Instances of Imputer for all features that contained missing values during optimization process.
         """
         self.__feature_selection_algorithm = feature_selection_algorithm
         self.__feature_transform_algorithm = feature_transform_algorithm
         self.__classifier = classifier
         self.__categorical_features_encoders = categorical_features_encoders
+        self.__imputers = imputers
     
     def get_feature_selection_algorithm(self):
         r"""Get deep copy of the feature selection algorithm.
@@ -122,9 +126,14 @@ class Pipeline:
         self.__best_stats = value
     
     def set_categorical_features_encoders(self, value):
-        r"""Set selected features mask.
+        r"""Set categorical features' encoders.
         """
         self.__categorical_features_encoders = value
+
+    def set_imputers(self, value):
+        r"""Set imputers.
+        """
+        self.__imputers = value
     
     def optimize(self, x, y, population_size, number_of_evaluations, optimization_algorithm, fitness_function):
         r"""Optimize pipeline's hyperparameters.
@@ -141,17 +150,19 @@ class Pipeline:
             float: Best fitness value found in optimization process.
         """
 
+        if self.__imputers is not None:
+            for key in self.__imputers:
+                x.loc[:, key] = self.__imputers[key].transform(x[[key]])
+
         if self.__categorical_features_encoders is not None:
-            types = x.dtypes
             to_drop = []
             enc_features = pd.DataFrame()
-            ind = 0
-            for i in range(len(types)):
-                if types[i] != np.dtype('float64'):
-                    tr = self.__categorical_features_encoders[ind].transform(x[[i]])
-                    to_drop.append(i)
-                    enc_features = pd.concat([enc_features, tr], axis=1)
-                    ind += 1
+            cols = [col for col in x.columns if x[col].dtype != np.dtype('float64') and x[col].dtype != np.dtype('int64')]
+            for c in cols:
+                self.__categorical_features_encoders[c].fit(x[[c]])
+                tr = self.__categorical_features_encoders[c].transform(x[[c]])
+                to_drop.append(c)
+                enc_features = pd.concat([enc_features, tr], axis=1)
             x = x.drop(to_drop, axis=1)
             x = pd.concat([x, enc_features], axis=1)
 
@@ -183,17 +194,18 @@ class Pipeline:
         Returns:
             pandas.core.series.Series: n predicted classes of the samples in the x array.
         """
+        if self.__imputers is not None:
+            for key in self.__imputers:
+                x.loc[:, key] = self.__imputers[key].transform(x[[key]])
+
         if self.__categorical_features_encoders is not None:
-            types = x.dtypes
             to_drop = []
             enc_features = pd.DataFrame()
-            ind = 0
-            for i in range(len(types)):
-                if types[i] != np.dtype('float64'):
-                    tr = self.__categorical_features_encoders[ind].transform(x[[i]])
-                    to_drop.append(i)
-                    enc_features = pd.concat([enc_features, tr], axis=1)
-                    ind += 1
+            cols = [col for col in x.columns if x[col].dtype != np.dtype('float64') and x[col].dtype != np.dtype('int64')]
+            for c in cols:
+                tr = self.__categorical_features_encoders[c].transform(x[[c]])
+                to_drop.append(c)
+                enc_features = pd.concat([enc_features, tr], axis=1)
             x = x.drop(to_drop, axis=1)
             x = pd.concat([x, enc_features], axis=1)
 
@@ -266,14 +278,21 @@ class Pipeline:
         stats_string = '\t' + self.__best_stats.to_string().replace('\n', '\n\t') if self.__best_stats is not None else '\tStatistics is not available.'
         features_string = '\t' + str(self.__selected_features_mask) if self.__selected_features_mask is not None else '\tFeature selection result is not available.'
 
+        imputers_string = ''
+        if self.__imputers is not None:
+            imputers_string += 'Missing features\' imputers (feature\'s name or index: imputer\'s name):\n'
+            for key in self.__imputers:
+                imputers_string += '\t* ' + str(key) + ': ' + self.__imputers[key].to_string() + '\n'
+            imputers_string += '\n'
+
         encoders_string = ''
         if self.__categorical_features_encoders is not None:
-            encoders_string += 'Categorical features encoders (in order):\n'
-            for i in range(len(self.__categorical_features_encoders)):
-                encoders_string += '\t* ' + self.__categorical_features_encoders[i].to_string() + '\n'
+            encoders_string += 'Categorical features\' encoders (feature\'s name or index: encoder\'s name):\n'
+            for key in self.__categorical_features_encoders:
+                encoders_string += '\t* ' + str(key) + ': ' + self.__categorical_features_encoders[key].to_string() + '\n'
             encoders_string += '\n'
 
-        return 'Classifier:\n{classifier}\n\nFeature selection algorithm:\n{fsa}\n\nFeature transform algorithm:\n{fta}\n\nMask of selected features (True if selected, False if not):\n{feat}\n\n{enc}Statistics:\n{stats}'.format(classifier=classifier_string, fsa=feature_selection_algorithm_string, fta=feature_transform_algorithm_string, enc=encoders_string, feat=features_string, stats=stats_string)
+        return 'Classifier:\n{classifier}\n\nFeature selection algorithm:\n{fsa}\n\nFeature transform algorithm:\n{fta}\n\nMask of selected features (True if selected, False if not):\n{feat}\n\n{imp}{enc}Statistics:\n{stats}'.format(classifier=classifier_string, fsa=feature_selection_algorithm_string, fta=feature_transform_algorithm_string, imp=imputers_string, enc=encoders_string, feat=features_string, stats=stats_string)
 
 class _PipelineBenchmark(Benchmark):
     r"""NiaPy Benchmark class implementation.
