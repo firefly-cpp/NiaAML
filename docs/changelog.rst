@@ -1,6 +1,26 @@
 Changelog
 =========
 
+`1.0.0rc2 <https://github.com/lukapecnik/niaaml/tree/1.0.0rc2>`__ (2020-12-08)
+------------------------------------------------------------------------------
+
+`Full
+Changelog <https://github.com/lukapecnik/niaaml/compare/1.0.0rc1...1.0.0rc2>`__
+
+**Merged pull requests:**
+
+-  feature missing values imputation
+   `#30 <https://github.com/lukapecnik/NiaAML/pull/30>`__
+   (`lukapecnik <https://github.com/lukapecnik>`__)
+-  README updated `#29 <https://github.com/lukapecnik/NiaAML/pull/29>`__
+   (`firefly-cpp <https://github.com/firefly-cpp>`__)
+-  Readme update, encoder check for type int64
+   `#28 <https://github.com/lukapecnik/NiaAML/pull/28>`__
+   (`lukapecnik <https://github.com/lukapecnik>`__)
+-  Markdown and docs
+   `#27 <https://github.com/lukapecnik/NiaAML/pull/27>`__
+   (`lukapecnik <https://github.com/lukapecnik>`__)
+
 `1.0.0rc1 <https://github.com/lukapecnik/niaaml/tree/1.0.0rc1>`__ (2020-12-06)
 ------------------------------------------------------------------------------
 
