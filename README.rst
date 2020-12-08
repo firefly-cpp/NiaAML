@@ -30,7 +30,7 @@ which is a popular Python collection of nature-inspired algorithms. The
 NiaAML framework is easy to use and customize or expand to suit your
 needs.
 
-The NiaAML framework allows you not only to run full pipeline optimization, but also separate implemented components such as classifiers, feature selection algorithms, etc. **It supports numerical and categorical features.**
+The NiaAML framework allows you not only to run full pipeline optimization, but also separate implemented components such as classifiers, feature selection algorithms, etc. **It supports numerical and categorical features as well as missing values in datasets.**
 
 - **Documentation:** https://niaaml.readthedocs.io/en/latest/
 
@@ -65,8 +65,8 @@ Components
 In the following sections you can see a list of currently implemented 
 components divided into groups: classifiers, feature selection 
 algorithms and feature transformation algorithms. At the end you can 
-also see a list of currently implemented fitness functions for the optimization process 
-and categorical features' encoders.
+also see a list of currently implemented fitness functions for the optimization process, 
+categorical features' encoders, and missing values' imputers.
 
 Classifiers
 ~~~~~~~~~~~
@@ -112,6 +112,11 @@ Categorical Feature Encoders
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 - One-Hot Encoder (OneHotEncoder).
+
+Feature Imputers
+~~~~~~~~~~~~~~~~
+
+- Simple Imputer (SimpleImputer).
 
 Licence
 -------

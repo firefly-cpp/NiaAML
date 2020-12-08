@@ -36,3 +36,7 @@
 ### Categorical Feature Encoders
 
 * One-Hot Encoder (OneHotEncoder).
+
+### Feature Imputers
+
+* Simple Imputer (SimpleImputer).
