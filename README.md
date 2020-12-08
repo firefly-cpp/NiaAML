@@ -38,7 +38,7 @@ pip install niaaml --pre
 
 ## Graphical User Interface
 
-There is a simple Graphical User Inteface for the NiaAML package available [here](https://github.com/lukapecnik/NiaAML-GUI).
+There is a simple Graphical User Interface for the NiaAML package available [here](https://github.com/lukapecnik/NiaAML-GUI).
 
 ## Components
 
