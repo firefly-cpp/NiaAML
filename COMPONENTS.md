@@ -13,7 +13,7 @@
 * Select Percentile (SelectPercentile),
 * Variance Threshold (VarianceThreshold).
 
-#### Nature-Inspired
+#### Nature-Inspired based
 
 * Bat Algorithm (BatAlgorithm),
 * Differential Evolution (DifferentialEvolution),
@@ -26,7 +26,7 @@
 * Normalizer (Normalizer),
 * Standard Scaler (StandardScaler).
 
-### Fitness Functions
+### Fitness Functions based on
 
 * Accuracy (Accuracy),
 * Cohen's kappa (CohenKappa),
