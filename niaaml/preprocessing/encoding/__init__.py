@@ -7,5 +7,5 @@ __all__ = [
     'FeatureEncoder',
     'OneHotEncoder',
     'EncoderFactory',
-    'get_categorical_features'
+    'encode_categorical_features'
 ]

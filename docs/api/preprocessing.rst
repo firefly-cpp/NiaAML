@@ -21,3 +21,19 @@
     :members:
     :undoc-members:
     :show-inheritance:
+
+:mod:`niaaml.preprocessing.encoding`
+---------------------------------------------
+
+.. automodule:: niaaml.preprocessing.encoding
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+:mod:`niaaml.preprocessing.imputation`
+---------------------------------------------
+
+.. automodule:: niaaml.preprocessing.imputation
+    :members:
+    :undoc-members:
+    :show-inheritance:
