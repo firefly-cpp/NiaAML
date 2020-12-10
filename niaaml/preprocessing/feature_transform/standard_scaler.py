@@ -1,5 +1,5 @@
 from sklearn.preprocessing import StandardScaler as StdScaler
-from niaaml.preprocessing.feature_transform import FeatureTransformAlgorithm
+from niaaml.preprocessing.feature_transform.feature_transform_algorithm import FeatureTransformAlgorithm
 
 __all__ = ['StandardScaler']
 

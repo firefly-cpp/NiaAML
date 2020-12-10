@@ -1,5 +1,6 @@
 from niaaml.utilities import Factory
-import niaaml.preprocessing.feature_transform as ft
+from niaaml.preprocessing.feature_transform.normalizer import Normalizer
+from niaaml.preprocessing.feature_transform.standard_scaler import StandardScaler
 
 __all__ = [
     'FeatureTransformAlgorithmFactory'
@@ -16,6 +17,6 @@ class FeatureTransformAlgorithmFactory(Factory):
         r"""Set the parameters/arguments of the factory.
         """
         self._entities = {
-            'Normalizer': ft.Normalizer,
-            'StandardScaler': ft.StandardScaler
+            'Normalizer': Normalizer,
+            'StandardScaler': StandardScaler
         }

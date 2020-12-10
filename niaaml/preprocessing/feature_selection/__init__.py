@@ -8,6 +8,7 @@ from niaaml.preprocessing.feature_selection.bat_algorithm import BatAlgorithm
 from niaaml.preprocessing.feature_selection.differential_evolution import DifferentialEvolution
 from niaaml.preprocessing.feature_selection.grey_wolf_optimizer import GreyWolfOptimizer
 from niaaml.preprocessing.feature_selection.utility import FeatureSelectionAlgorithmFactory
+from niaaml.preprocessing.feature_selection._feature_selection_threshold_benchmark import _FeatureSelectionThresholdBenchmark
 
 __all__ = [
     'FeatureSelectionAlgorithm',
@@ -19,5 +20,6 @@ __all__ = [
     'DifferentialEvolution',
     'GreyWolfOptimizer',
     'SelectKBest',
-    'FeatureSelectionAlgorithmFactory'
+    'FeatureSelectionAlgorithmFactory',
+    '_FeatureSelectionThresholdBenchmark'
 ]

@@ -1,7 +1,7 @@
-import niaaml.preprocessing.encoding as enc
 from niaaml.utilities import Factory
 import pandas as pd
 import numpy as np
+from niaaml.preprocessing.encoding.one_hot_encoder import OneHotEncoder
 
 __all__ = [
     'encode_categorical_features',
@@ -50,5 +50,5 @@ class EncoderFactory(Factory):
         r"""Set the parameters/arguments of the factory.
         """
         self._entities = {
-            'OneHotEncoder': enc.OneHotEncoder
+            'OneHotEncoder': OneHotEncoder
         }
