@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.0.0rc4](https://github.com/lukapecnik/niaaml/tree/1.0.0rc4) (2020-12-10)
+
+[Full Changelog](https://github.com/lukapecnik/niaaml/compare/1.0.0rc3...1.0.0rc4)
+
+**Merged pull requests:**
+
+- Python 3.6 support [\#33](https://github.com/lukapecnik/NiaAML/pull/33) ([lukapecnik](https://github.com/lukapecnik))
+- First version of paper [\#32](https://github.com/lukapecnik/NiaAML/pull/32) ([firefly-cpp](https://github.com/firefly-cpp))
+
 ## [1.0.0rc3](https://github.com/lukapecnik/niaaml/tree/1.0.0rc3) (2020-12-10)
 
 [Full Changelog](https://github.com/lukapecnik/niaaml/compare/1.0.0rc2...1.0.0rc3)
