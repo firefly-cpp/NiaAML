@@ -1,4 +1,4 @@
-import niaaml.preprocessing.imputation as imp
+from niaaml.preprocessing.imputation.simple_imputer import SimpleImputer
 from niaaml.utilities import Factory
 
 __all__ = [
@@ -43,5 +43,5 @@ class ImputerFactory(Factory):
         r"""Set the parameters/arguments of the factory.
         """
         self._entities = {
-            'SimpleImputer': imp.SimpleImputer
+            'SimpleImputer': SimpleImputer
         }

@@ -1,5 +1,5 @@
 from sklearn.preprocessing import Normalizer as Nrm
-from niaaml.preprocessing.feature_transform import FeatureTransformAlgorithm
+from niaaml.preprocessing.feature_transform.feature_transform_algorithm import FeatureTransformAlgorithm
 from niaaml.utilities import ParameterDefinition
 
 __all__ = ['Normalizer']

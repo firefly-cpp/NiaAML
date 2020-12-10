@@ -1,4 +1,3 @@
-
 from niaaml.pipeline_component import PipelineComponent
 
 __all__ = [

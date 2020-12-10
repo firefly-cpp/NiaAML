@@ -1,5 +1,8 @@
 from niaaml.utilities import Factory
-from niaaml import fitness
+from niaaml.fitness.accuracy import Accuracy
+from niaaml.fitness.cohen_kappa import CohenKappa
+from niaaml.fitness.precision import Precision
+from niaaml.fitness.f1 import F1
 
 __all__ = [
     'FitnessFactory'
@@ -19,8 +22,8 @@ class FitnessFactory(Factory):
         r"""Set the parameters/arguments of the factory.
         """
         self._entities = {
-            'Accuracy': fitness.Accuracy,
-            'Precision': fitness.Precision,
-            'CohenKappa': fitness.CohenKappa,
-            'F1': fitness.F1
+            'Accuracy': Accuracy,
+            'Precision': Precision,
+            'CohenKappa': CohenKappa,
+            'F1': F1
         }

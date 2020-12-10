@@ -4,8 +4,8 @@ from NiaPy.task import StoppingTask
 from sklearn.linear_model import LogisticRegression
 from niaaml.preprocessing.feature_selection.feature_selection_algorithm import FeatureSelectionAlgorithm
 from niaaml.utilities import ParameterDefinition, MinMax
+from niaaml.preprocessing.feature_selection._feature_selection_threshold_benchmark import _FeatureSelectionThresholdBenchmark
 import numpy
-from niaaml.preprocessing.feature_selection.utility import _FeatureSelectionThresholdBenchmark
 
 __all__ = [
     'ParticleSwarmOptimization'

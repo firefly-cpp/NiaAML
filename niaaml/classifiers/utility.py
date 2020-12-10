@@ -1,5 +1,10 @@
 from niaaml.utilities import Factory
-from niaaml import classifiers
+from niaaml.classifiers.ada_boost import AdaBoost
+from niaaml.classifiers.bagging import Bagging
+from niaaml.classifiers.extremely_randomized_trees import ExtremelyRandomizedTrees
+from niaaml.classifiers.linear_svc import LinearSVC
+from niaaml.classifiers.multi_layer_perceptron import MultiLayerPerceptron
+from niaaml.classifiers.random_forest import RandomForest
 
 __all__ = [
     'ClassifierFactory'
@@ -28,10 +33,10 @@ class ClassifierFactory(Factory):
         r"""Set the parameters/arguments of the factory.
         """
         self._entities = {
-            'AdaBoost': classifiers.AdaBoost,
-            'Bagging': classifiers.Bagging,
-            'ExtremelyRandomizedTrees': classifiers.ExtremelyRandomizedTrees,
-            'LinearSVC': classifiers.LinearSVC,
-            'MultiLayerPerceptron': classifiers.MultiLayerPerceptron,
-            'RandomForest': classifiers.RandomForest
+            'AdaBoost': AdaBoost,
+            'Bagging': Bagging,
+            'ExtremelyRandomizedTrees': ExtremelyRandomizedTrees,
+            'LinearSVC': LinearSVC,
+            'MultiLayerPerceptron': MultiLayerPerceptron,
+            'RandomForest': RandomForest
         }
