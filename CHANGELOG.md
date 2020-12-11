@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.0.0rc5](https://github.com/lukapecnik/niaaml/tree/1.0.0rc5) (2020-12-11)
+
+[Full Changelog](https://github.com/lukapecnik/niaaml/compare/1.0.0rc4...1.0.0rc5)
+
+**Closed issues:**
+
+- Installation problems [\#31](https://github.com/lukapecnik/NiaAML/issues/31)
+
+**Merged pull requests:**
+
+- Conda support [\#35](https://github.com/lukapecnik/NiaAML/pull/35) ([lukapecnik](https://github.com/lukapecnik))
+
 ## [1.0.0rc4](https://github.com/lukapecnik/niaaml/tree/1.0.0rc4) (2020-12-10)
 
 [Full Changelog](https://github.com/lukapecnik/niaaml/compare/1.0.0rc3...1.0.0rc4)

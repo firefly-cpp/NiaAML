@@ -1,6 +1,37 @@
 Changelog
 =========
 
+`1.0.0rc5 <https://github.com/lukapecnik/niaaml/tree/1.0.0rc5>`__ (2020-12-11)
+------------------------------------------------------------------------------
+
+`Full
+Changelog <https://github.com/lukapecnik/niaaml/compare/1.0.0rc4...1.0.0rc5>`__
+
+**Closed issues:**
+
+-  Installation problems
+   `#31 <https://github.com/lukapecnik/NiaAML/issues/31>`__
+
+**Merged pull requests:**
+
+-  Conda support `#35 <https://github.com/lukapecnik/NiaAML/pull/35>`__
+   (`lukapecnik <https://github.com/lukapecnik>`__)
+
+`1.0.0rc4 <https://github.com/lukapecnik/niaaml/tree/1.0.0rc4>`__ (2020-12-10)
+------------------------------------------------------------------------------
+
+`Full
+Changelog <https://github.com/lukapecnik/niaaml/compare/1.0.0rc3...1.0.0rc4>`__
+
+**Merged pull requests:**
+
+-  Python 3.6 support
+   `#33 <https://github.com/lukapecnik/NiaAML/pull/33>`__
+   (`lukapecnik <https://github.com/lukapecnik>`__)
+-  First version of paper
+   `#32 <https://github.com/lukapecnik/NiaAML/pull/32>`__
+   (`firefly-cpp <https://github.com/firefly-cpp>`__)
+
 `1.0.0rc3 <https://github.com/lukapecnik/niaaml/tree/1.0.0rc3>`__ (2020-12-10)
 ------------------------------------------------------------------------------
 
