@@ -16,6 +16,15 @@ NiaAML
 .. image:: https://img.shields.io/github/license/lukapecnik/niaaml.svg
     :target: https://github.com/lukapecnik/niaaml/blob/master/LICENSE
 
+.. image:: https://anaconda.org/lukapecnik/niaaml/badges/version.svg
+    :target: https://anaconda.org/lukapecnik/niaaml
+
+.. image:: https://anaconda.org/lukapecnik/niaaml/badges/downloads.svg
+    :target: https://anaconda.org/lukapecnik/niaaml
+
+.. image:: https://anaconda.org/lukapecnik/niaaml/badges/installer/conda.svg
+    :target: https://conda.anaconda.org/lukapecnik
+
 NiaAML is an automated machine learning Python framework based on
 nature-inspired algorithms for optimization. The name comes from the
 automated machine learning method of the same name [1]. Its
