@@ -1,5 +1,5 @@
 ---
-title: 'NiaAML: AutoML framework based on nature-inspired algorithms'
+title: 'NiaAML AutoML framework based on nature-inspired algorithms'
 tags:
   - Python
   - AutoML
@@ -7,17 +7,18 @@ tags:
   - hyperparameter optimization
   - nature-inspired algorithms
 authors:
-  - name: Luka Pečnik
-    orcid:
-    affiliation: "1, 2" # (Multiple affiliations must be quoted)
+  - name: Luka Pečnik^[Corresponding author]
+    orcid: 0000-0002-3897-9774
+    affiliation: "1"
   - name: Iztok Fister Jr.
-	orcid:
-    affiliation: 1
+    orcid: 0000-0002-6418-1272
+    affiliation: "1"
 affiliations:
 - name: University of Maribor, Faculty of Electrical Engineering and Computer Science
-   index: 1
+  index: 1
 date: 20 December 2020
 bibliography: paper.bib
+---
 
 # Summary
 
