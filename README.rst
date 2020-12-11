@@ -37,6 +37,9 @@ The NiaAML framework allows you not only to run full pipeline optimization, but 
 Installation
 ------------
 
+pip
+~~~
+
 Install NiaAML with pip:
 
 .. code:: sh
@@ -48,6 +51,26 @@ In case you would like to try out the latest pre-release version of the framewor
 .. code:: sh
 
     pip install niaaml --pre
+
+conda
+~~~~~
+
+To install NiaAML with conda, use:
+
+.. code:: sh
+
+    conda install -c lukapecnik niaaml
+
+Install From Source
+~~~~~~~~~~~~~~~~~~~
+
+In case you want to install directly from the source code, use:
+
+.. code:: sh
+
+    git clone https://github.com/lukapecnik/NiaAML.git
+    cd NiaAML
+    python setup.py install
 
 Graphical User Interface
 ------------------------
