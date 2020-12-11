@@ -7,7 +7,7 @@ import numpy as np
 __all__ = ['KNeighbors']
 
 class KNeighbors(Classifier):
-    r"""Implementation of decision tree classifier.
+    r"""Implementation of k neighbors classifier.
     
     Date:
         2020
@@ -21,7 +21,7 @@ class KNeighbors(Classifier):
     See Also:
         * :class:`niaaml.classifiers.Classifier`
     """
-    Name = 'Decision Tree Classifier'
+    Name = 'K Neighbors Classifier'
 
     def __init__(self, **kwargs):
         r"""Initialize KNeighbors instance.
