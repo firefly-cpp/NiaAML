@@ -8,12 +8,12 @@ class FeatureEncoderTestCase(TestCase):
         x = numpy.concatenate((numpy.random.uniform(low=0.0, high=15.0, size=(100, 6)), numpy.array([numpy.random.choice(['a', 'b'], size=(100,))]).T), axis=1)
         y = numpy.random.choice(['Class 1', 'Class 2'], size=100)
         self.__data_reader = BasicDataReader(x=x, y=y)
-        self.__encoder = OneHotEncoder()
     
-    def test_encode_works_fine(self):
+    def test_one_hot_encoder_works_fine(self):
+        encoder = OneHotEncoder()
         features = self.__data_reader.get_x()
-        self.__encoder.fit(features[[6]])
-        f = self.__encoder.transform(features[[6]])
+        encoder.fit(features[[6]])
+        f = encoder.transform(features[[6]])
         
         ind = 0
         for i in features[6]:

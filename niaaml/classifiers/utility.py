@@ -5,6 +5,8 @@ from niaaml.classifiers.extremely_randomized_trees import ExtremelyRandomizedTre
 from niaaml.classifiers.linear_svc import LinearSVC
 from niaaml.classifiers.multi_layer_perceptron import MultiLayerPerceptron
 from niaaml.classifiers.random_forest import RandomForest
+from niaaml.classifiers.decision_tree_classifier import DecisionTree
+from niaaml.classifiers.k_neighbors import KNeighbors
 
 __all__ = [
     'ClassifierFactory'
@@ -38,5 +40,7 @@ class ClassifierFactory(Factory):
             'ExtremelyRandomizedTrees': ExtremelyRandomizedTrees,
             'LinearSVC': LinearSVC,
             'MultiLayerPerceptron': MultiLayerPerceptron,
-            'RandomForest': RandomForest
+            'RandomForest': RandomForest,
+            'DecisionTree': DecisionTree,
+            'KNeighbors': KNeighbors
         }

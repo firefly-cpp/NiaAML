@@ -1,11 +1,10 @@
-from sklearn.preprocessing import Normalizer as Nrm
+from sklearn.preprocessing import MaxAbsScaler as MAS
 from niaaml.preprocessing.feature_transform.feature_transform_algorithm import FeatureTransformAlgorithm
-from niaaml.utilities import ParameterDefinition
 
-__all__ = ['Normalizer']
+__all__ = ['MaxAbsScaler']
 
-class Normalizer(FeatureTransformAlgorithm):
-    r"""Implementation of feature normalization algorithm.
+class MaxAbsScaler(FeatureTransformAlgorithm):
+    r"""Implementation of feature scaling by its maximum absolute value.
     
     Date:
         2020
@@ -19,30 +18,21 @@ class Normalizer(FeatureTransformAlgorithm):
     See Also:
         * :class:`niaaml.preprocessing.feature_transform.FeatureTransformAlgorithm`
     """
-    Name = 'Normalizer'
+    Name = 'Maximum Absolute Scaler'
 
     def __init__(self, **kwargs):
-        r"""Initialize Normalizer.
+        r"""Initialize MaxAbsScaler.
         """
-        self._params = dict(
-            norm = ParameterDefinition(['l1', 'l2', 'max'])
-        )
-        self.__params = None
-        self.__normalizer = Nrm()
+        super(MaxAbsScaler, self).__init__()
+        self.__max_abs_scaler = MAS()
 
-    def set_parameters(self, **kwargs):
-        r"""Set the parameters/arguments of the algorithm.
-        """
-        self.__params = kwargs
-        self.__params['axis'] = 0
-    
     def fit(self, x, **kwargs):
         r"""Fit implemented transformation algorithm.
 
         Arguments:
             x (pandas.core.frame.DataFrame): n samples to fit transformation algorithm.
         """
-        self.__normalizer.fit(x)
+        self.__max_abs_scaler.fit(x)
 
     def transform(self, x, **kwargs):
         r"""Transforms the given x data.
@@ -53,7 +43,8 @@ class Normalizer(FeatureTransformAlgorithm):
         Returns:
             pandas.core.frame.DataFrame: Transformed data.
         """
-        return self.__normalizer.transform(x)
+        
+        return self.__max_abs_scaler.transform(x)
 
     def to_string(self):
         r"""User friendly representation of the object.
@@ -61,4 +52,4 @@ class Normalizer(FeatureTransformAlgorithm):
         Returns:
             str: User friendly representation of the object.
         """
-        return FeatureTransformAlgorithm.to_string(self).format(name=self.Name, args=self._parameters_to_string(self.__normalizer.get_params()))
+        return FeatureTransformAlgorithm.to_string(self).format(name=self.Name, args=self._parameters_to_string(self.__max_abs_scaler.get_params()))

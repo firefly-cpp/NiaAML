@@ -12,7 +12,7 @@ class ImputerTestCase(TestCase):
         y = numpy.random.choice(['Class 1', 'Class 2'], size=100)
         self.__data_reader = BasicDataReader(x=x, y=y)
     
-    def test_impute_works_fine(self):
+    def test_simple_imputer_works_fine(self):
         features = self.__data_reader.get_x()
         imputer1 = SimpleImputer()
         imputer1.fit(features[[2]])

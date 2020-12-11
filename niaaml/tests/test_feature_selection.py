@@ -1,18 +1,48 @@
 from unittest import TestCase
-from niaaml.preprocessing.feature_selection import ParticleSwarmOptimization, SelectKBest
+import niaaml.preprocessing.feature_selection as fs
 from niaaml.data import CSVDataReader
 import os
 
 class FeatureSelectionTestCase(TestCase):
     def setUp(self):
-        self.__algo1 = ParticleSwarmOptimization()
-        self.__algo2 = SelectKBest()
+        self.__data = CSVDataReader(src=os.path.dirname(os.path.abspath(__file__)) + '/tests_files/dataset_header_classes.csv', has_header=True, contains_classes=True)
     
-    def test_select_features_works_fine(self):
-        data_reader = CSVDataReader(src=os.path.dirname(os.path.abspath(__file__)) + '/tests_files/dataset_header_classes.csv', has_header=True, contains_classes=True)
+    def test_PSO_works_fine(self):
+        algo = fs.ParticleSwarmOptimization()
+        selected_features_mask = algo.select_features(self.__data.get_x(), self.__data.get_y())
+        self.assertEqual(self.__data.get_x().shape[1], len(selected_features_mask))
 
-        selected_features_mask = self.__algo1.select_features(data_reader.get_x(), data_reader.get_y())
-        self.assertEqual(data_reader.get_x().shape[1], len(selected_features_mask))
+    def test_select_k_best_works_fine(self):
+        algo = fs.SelectKBest()
+        selected_features_mask = algo.select_features(self.__data.get_x(), self.__data.get_y())
+        self.assertEqual(self.__data.get_x().shape[1], len(selected_features_mask))
 
-        selected_features_mask = self.__algo2.select_features(data_reader.get_x(), data_reader.get_y())
-        self.assertEqual(data_reader.get_x().shape[1], len(selected_features_mask))
+    def test_select_percentile_works_fine(self):
+        algo = fs.SelectPercentile()
+        selected_features_mask = algo.select_features(self.__data.get_x(), self.__data.get_y())
+        self.assertEqual(self.__data.get_x().shape[1], len(selected_features_mask))
+
+    def test_bat_algorithm_works_fine(self):
+        algo = fs.BatAlgorithm()
+        selected_features_mask = algo.select_features(self.__data.get_x(), self.__data.get_y())
+        self.assertEqual(self.__data.get_x().shape[1], len(selected_features_mask))
+
+    def test_de_works_fine(self):
+        algo = fs.DifferentialEvolution()
+        selected_features_mask = algo.select_features(self.__data.get_x(), self.__data.get_y())
+        self.assertEqual(self.__data.get_x().shape[1], len(selected_features_mask))
+
+    def test_gwo_works_fine(self):
+        algo = fs.GreyWolfOptimizer()
+        selected_features_mask = algo.select_features(self.__data.get_x(), self.__data.get_y())
+        self.assertEqual(self.__data.get_x().shape[1], len(selected_features_mask))
+
+    def test_jdefsth_works_fine(self):
+        algo = fs.jDEFSTH()
+        selected_features_mask = algo.select_features(self.__data.get_x(), self.__data.get_y())
+        self.assertEqual(self.__data.get_x().shape[1], len(selected_features_mask))
+
+    def test_vt_works_fine(self):
+        algo = fs.VarianceThreshold()
+        selected_features_mask = algo.select_features(self.__data.get_x(), self.__data.get_y())
+        self.assertEqual(self.__data.get_x().shape[1], len(selected_features_mask))

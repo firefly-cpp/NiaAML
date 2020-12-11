@@ -1,6 +1,9 @@
 from niaaml.utilities import Factory
 from niaaml.preprocessing.feature_transform.normalizer import Normalizer
 from niaaml.preprocessing.feature_transform.standard_scaler import StandardScaler
+from niaaml.preprocessing.feature_transform.max_abs_scaler import MaxAbsScaler
+from niaaml.preprocessing.feature_transform.quantile_transformer import QuantileTransformer
+from niaaml.preprocessing.feature_transform.robust_scaler import RobustScaler
 
 __all__ = [
     'FeatureTransformAlgorithmFactory'
@@ -18,5 +21,8 @@ class FeatureTransformAlgorithmFactory(Factory):
         """
         self._entities = {
             'Normalizer': Normalizer,
-            'StandardScaler': StandardScaler
+            'StandardScaler': StandardScaler,
+            'MaxAbsScaler': MaxAbsScaler,
+            'QuantileTransformer': QuantileTransformer,
+            'RobustScaler': RobustScaler
         }

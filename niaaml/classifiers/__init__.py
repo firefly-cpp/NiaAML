@@ -5,6 +5,8 @@ from niaaml.classifiers.linear_svc import LinearSVC
 from niaaml.classifiers.ada_boost import AdaBoost
 from niaaml.classifiers.extremely_randomized_trees import ExtremelyRandomizedTrees
 from niaaml.classifiers.bagging import Bagging
+from niaaml.classifiers.decision_tree_classifier import DecisionTree
+from niaaml.classifiers.k_neighbors import KNeighbors
 from niaaml.classifiers.utility import ClassifierFactory
 
 __all__ = [
@@ -15,5 +17,7 @@ __all__ = [
     'AdaBoost',
     'Bagging',
     'ExtremelyRandomizedTrees',
+    'DecisionTree',
+    'KNeighbors',
     'ClassifierFactory'
 ]
