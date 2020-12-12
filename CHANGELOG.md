@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.0.0rc6](https://github.com/lukapecnik/niaaml/tree/1.0.0rc6) (2020-12-12)
+
+[Full Changelog](https://github.com/lukapecnik/niaaml/compare/1.0.0rc5...1.0.0rc6)
+
+**Closed issues:**
+
+- Conda package [\#34](https://github.com/lukapecnik/NiaAML/issues/34)
+
+**Merged pull requests:**
+
+- Additional features [\#38](https://github.com/lukapecnik/NiaAML/pull/38) ([lukapecnik](https://github.com/lukapecnik))
+- Conda fix \[ci skip\] [\#37](https://github.com/lukapecnik/NiaAML/pull/37) ([lukapecnik](https://github.com/lukapecnik))
+- Orcid identifiers added [\#36](https://github.com/lukapecnik/NiaAML/pull/36) ([firefly-cpp](https://github.com/firefly-cpp))
+
 ## [1.0.0rc5](https://github.com/lukapecnik/niaaml/tree/1.0.0rc5) (2020-12-11)
 
 [Full Changelog](https://github.com/lukapecnik/niaaml/compare/1.0.0rc4...1.0.0rc5)
