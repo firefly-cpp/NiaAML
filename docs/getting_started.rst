@@ -71,7 +71,12 @@ Classifiers
 * Extremely Randomized Trees (ExtremelyRandomizedTrees),
 * Linear SVC (LinearSVC),
 * Multi Layer Perceptron (MultiLayerPerceptron),
-* Random Forest Classifier (RandomForestClassifier).
+* Random Forest Classifier (RandomForest),
+* Decision Tree Classifier (DecisionTree),
+* K-Neighbors Classifier (KNeighbors),
+* Gaussian Process Classifier (GaussianProcess),
+* Gaussian Naive Bayes (GaussianNB),
+* Quadratic Discriminant Analysis (QuadraticDiscriminantAnalysis).
 
 Feature Selection Algorithms
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -93,15 +98,28 @@ Feature Transformation Algorithms
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 * Normalizer (Normalizer),
-* Standard Scaler (StandardScaler).
+* Standard Scaler (StandardScaler),
+* Maximum Absolute Scaler (MaxAbsScaler),
+* Quantile Transformer (QuantileTransformer),
+* Robust Scaler (RobustScaler).
 
-Fitness Functions
-^^^^^^^^^^^^^^^^^
+Fitness Functions based on
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 * Accuracy (Accuracy),
 * Cohen's kappa (CohenKappa),
 * F1-Score (F1),
 * Precision (Precision).
+
+Categorical Feature Encoders
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+* One-Hot Encoder (OneHotEncoder).
+
+Feature Imputers
+^^^^^^^^^^^^^^^^
+
+* Simple Imputer (SimpleImputer).
 
 Optimization Algorithms
 ^^^^^^^^^^^^^^^^^^^^^^^

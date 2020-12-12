@@ -44,3 +44,33 @@ class ClassifierTestCase(TestCase):
         algo.fit(self.__x_train, self.__y_train)
         predictions = algo.predict(self.__x_test)
         self.assertEqual(predictions.shape, self.__y_test.shape)
+
+    def test_dt_works_fine(self):
+        algo = c.DecisionTree()
+        algo.fit(self.__x_train, self.__y_train)
+        predictions = algo.predict(self.__x_test)
+        self.assertEqual(predictions.shape, self.__y_test.shape)
+    
+    def test_kn_works_fine(self):
+        algo = c.KNeighbors()
+        algo.fit(self.__x_train, self.__y_train)
+        predictions = algo.predict(self.__x_test)
+        self.assertEqual(predictions.shape, self.__y_test.shape)
+
+    def test_gp_works_fine(self):
+        algo = c.GaussianProcess()
+        algo.fit(self.__x_train, self.__y_train)
+        predictions = algo.predict(self.__x_test)
+        self.assertEqual(predictions.shape, self.__y_test.shape)
+
+    def test_gnb_works_fine(self):
+        algo = c.GaussianNB()
+        algo.fit(self.__x_train, self.__y_train)
+        predictions = algo.predict(self.__x_test)
+        self.assertEqual(predictions.shape, self.__y_test.shape)
+
+    def test_qda_works_fine(self):
+        algo = c.QuadraticDiscriminantAnalysis()
+        algo.fit(self.__x_train, self.__y_train)
+        predictions = algo.predict(self.__x_test)
+        self.assertEqual(predictions.shape, self.__y_test.shape)

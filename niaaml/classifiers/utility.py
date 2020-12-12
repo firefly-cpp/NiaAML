@@ -7,6 +7,9 @@ from niaaml.classifiers.multi_layer_perceptron import MultiLayerPerceptron
 from niaaml.classifiers.random_forest import RandomForest
 from niaaml.classifiers.decision_tree import DecisionTree
 from niaaml.classifiers.k_neighbors import KNeighbors
+from niaaml.classifiers.gaussian_process import GaussianProcess
+from niaaml.classifiers.gaussian_naive_bayes import GaussianNB
+from niaaml.classifiers.quadratic_driscriminant_analysis import QuadraticDiscriminantAnalysis
 
 __all__ = [
     'ClassifierFactory'
@@ -42,5 +45,8 @@ class ClassifierFactory(Factory):
             'MultiLayerPerceptron': MultiLayerPerceptron,
             'RandomForest': RandomForest,
             'DecisionTree': DecisionTree,
-            'KNeighbors': KNeighbors
+            'KNeighbors': KNeighbors,
+            'GaussianProcess': GaussianProcess,
+            'GaussianNB': GaussianNB,
+            'QuadraticDiscriminantAnalysis': QuadraticDiscriminantAnalysis
         }
