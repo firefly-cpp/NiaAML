@@ -5,6 +5,11 @@ from niaaml.classifiers.extremely_randomized_trees import ExtremelyRandomizedTre
 from niaaml.classifiers.linear_svc import LinearSVC
 from niaaml.classifiers.multi_layer_perceptron import MultiLayerPerceptron
 from niaaml.classifiers.random_forest import RandomForest
+from niaaml.classifiers.decision_tree import DecisionTree
+from niaaml.classifiers.k_neighbors import KNeighbors
+from niaaml.classifiers.gaussian_process import GaussianProcess
+from niaaml.classifiers.gaussian_naive_bayes import GaussianNB
+from niaaml.classifiers.quadratic_driscriminant_analysis import QuadraticDiscriminantAnalysis
 
 __all__ = [
     'ClassifierFactory'
@@ -38,5 +43,10 @@ class ClassifierFactory(Factory):
             'ExtremelyRandomizedTrees': ExtremelyRandomizedTrees,
             'LinearSVC': LinearSVC,
             'MultiLayerPerceptron': MultiLayerPerceptron,
-            'RandomForest': RandomForest
+            'RandomForest': RandomForest,
+            'DecisionTree': DecisionTree,
+            'KNeighbors': KNeighbors,
+            'GaussianProcess': GaussianProcess,
+            'GaussianNB': GaussianNB,
+            'QuadraticDiscriminantAnalysis': QuadraticDiscriminantAnalysis
         }
