@@ -8,7 +8,7 @@ import numpy
 import pandas
 
 """
-In this example, we show how to individually use the Pipeline class. You may use this if you want to test out a specific classification pipeline.
+This example presents how to use the Pipeline class individually. You may use this if you want to test out a specific classification pipeline.
 """
 
 # prepare data reader using csv file

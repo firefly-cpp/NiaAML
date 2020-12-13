@@ -6,8 +6,8 @@ from niaaml.preprocessing.encoding import EncoderFactory
 from niaaml.preprocessing.imputation import ImputerFactory
 
 """
-In this example, we show how to use all of the implemented factories to create new object instances using their class names. You may also
-import and instantiate objects directly, but it more convenient to use factories in some cases.
+This example presents how to use all of the implemented factories to create new object instances using their class names. You may also
+import and instantiate objects directly, but it is more convenient to use factories in some cases.
 """
 
 # instantiate all possible factories

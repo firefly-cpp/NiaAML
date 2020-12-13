@@ -10,8 +10,8 @@ import numpy
 import pandas
 
 """
-In this example, we show how to individually use the Pipeline class. You may use this if you want to test out a specific classification pipeline.
-We will use a dataset that contains categorical and numerical features with missing values.
+This example presents how to use the Pipeline class individually. You may use this if you want to test out a specific classification pipeline.
+We use a dataset that contains categorical and numerical features with missing values.
 """
 
 # prepare data reader using csv file
@@ -44,4 +44,4 @@ pipeline.optimize(data_reader.get_x(), data_reader.get_y(), 10, 50, 'ParticleSwa
 # you could run the pipeline before the optimization process, but get wrong predictions as nothing in the pipeline is fit for the given dataset
 predicted = pipeline.run(pandas.DataFrame([[10.32440339, 3.195964543, 1.215275549, 3.741461311, 11.6736581, 6.435247906, 'a']]))
 
-# pipeline variable contains Pipeline object that can be used for further classification, exported as an object (that can be later loaded and used) or exported as text file
+# pipeline variable contains a Pipeline object that can be used for further classification, exported as an object (that can later be loaded and used) or exported as text file

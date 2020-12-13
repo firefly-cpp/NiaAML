@@ -3,7 +3,7 @@ import os
 from niaaml.data import CSVDataReader
 
 """
-In this example, we show how to individually use an implemented categorical feature encoder and its methods. In this case we use OneHotEncoder for demonstration, but
+This example presents how to use an implemented categorical feature encoder and its methods individually. In this case, we use OneHotEncoder for demonstration, but
 you can use any of the implemented encoders in the same way.
 """
 
@@ -19,5 +19,5 @@ ohe.fit(features[[6]])
 f = ohe.transform(features[[6]])
 print(f)
 
-# if you wish to get array of encoders for all of categorical features in a dataset (and transformed DataFrame of features), you may use the utility method encode_categorical_features
+# if you need to get an array of encoders for all of the categorical features in a dataset (and transformed DataFrame of features), you may use the utility method encode_categorical_features
 transformed_features, encoders = encode_categorical_features(features, 'OneHotEncoder')

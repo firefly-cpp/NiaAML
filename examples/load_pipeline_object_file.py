@@ -2,7 +2,7 @@ import os
 from niaaml import Pipeline
 
 """
-In this example, we show how to load a saved Pipeline object from a file. You can use all of its methods after it's been successfully loaded.
+This example presents how to load a saved Pipeline object from a file. You can use all of its methods after it has been loaded successfully.
 """
 
 # load Pipeline object from a file

@@ -3,7 +3,7 @@ from niaaml import PipelineOptimizer, Pipeline
 from niaaml.data import CSVDataReader
 
 """
-In this example, we show how to use the PipelineOptimizer class. This example is using an instance of CSVDataReader.
+This example presents how to use the PipelineOptimizer class. This example is using an instance of CSVDataReader.
 The instantiated PipelineOptimizer will try and assemble the best pipeline with the components that are specified in its constructor.
 """
 

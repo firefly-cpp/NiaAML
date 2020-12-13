@@ -4,7 +4,7 @@ import os
 import numpy
 
 """
-In this example, we show how to individually use an implemented fitness function and its method. In this case we use Precision for demonstration, but
+This example presents how to use an implemented fitness function and its method individually. In this case, we use Precision for demonstration, but
 you can use any of the implemented fitness functions in the same way.
 """
 
