@@ -16,6 +16,9 @@ class F1(FitnessFunction):
 
     License:
         MIT
+    
+    Documentation:
+        https://scikit-learn.org/stable/modules/generated/sklearn.metrics.f1_score.html
 
     See Also:
         * :class:`niaaml.fitness.FitnessFunction`

@@ -17,6 +17,12 @@ class KNeighbors(Classifier):
 
     License:
         MIT
+    
+    Reference:
+        “Neighbourhood Components Analysis”, J. Goldberger, S. Roweis, G. Hinton, R. Salakhutdinov, Advances in Neural Information Processing Systems, Vol. 17, May 2005, pp. 513-520.
+    
+    Documentation:
+        https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier.html
 
     See Also:
         * :class:`niaaml.classifiers.Classifier`

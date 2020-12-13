@@ -14,6 +14,9 @@ class StandardScaler(FeatureTransformAlgorithm):
 
     License:
         MIT
+    
+    Documentation:
+        https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html
 
     See Also:
         * :class:`niaaml.preprocessing.feature_transform.FeatureTransformAlgorithm`

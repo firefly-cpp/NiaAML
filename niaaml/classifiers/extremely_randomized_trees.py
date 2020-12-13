@@ -17,6 +17,12 @@ class ExtremelyRandomizedTrees(Classifier):
 
     License:
         MIT
+    
+    Reference:
+        P. Geurts, D. Ernst., and L. Wehenkel, “Extremely randomized trees”, Machine Learning, 63(1), 3-42, 2006.
+    
+    Documentation:
+        https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.ExtraTreesClassifier.html
 
     See Also:
         * :class:`niaaml.classifiers.Classifier`

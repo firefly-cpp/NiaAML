@@ -17,6 +17,12 @@ class OneHotEncoder(FeatureEncoder):
 
     License:
         MIT
+    
+    Reference:
+        Seger, Cedric. "An investigation of categorical variable encoding techniques in machine learning: binary versus one-hot and feature hashing." (2018).
+    
+    Documentation:
+        https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.OneHotEncoder.html
 
     See Also:
         * :class:`niaaml.preprocessing.encoding.FeatureEncoder`

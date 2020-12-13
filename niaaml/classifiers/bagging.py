@@ -17,6 +17,12 @@ class Bagging(Classifier):
 
     License:
         MIT
+    
+    Reference:
+        L. Breiman, “Bagging predictors”, Machine Learning, 24(2), 123-140, 1996.
+    
+    Documentation:
+        https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.BaggingClassifier.html
 
     See Also:
         * :class:`niaaml.classifiers.Classifier`

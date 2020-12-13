@@ -17,6 +17,12 @@ class QuadraticDiscriminantAnalysis(Classifier):
 
     License:
         MIT
+    
+    Reference:
+        “The Elements of Statistical Learning”, Hastie T., Tibshirani R., Friedman J., Section 4.3, p.106-119, 2008.
+    
+    Documentation:
+        https://scikit-learn.org/stable/modules/generated/sklearn.discriminant_analysis.QuadraticDiscriminantAnalysis.html#sklearn.discriminant_analysis.QuadraticDiscriminantAnalysis
 
     See Also:
         * :class:`niaaml.classifiers.Classifier`

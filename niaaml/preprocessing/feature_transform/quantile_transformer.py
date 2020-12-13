@@ -15,6 +15,9 @@ class QuantileTransformer(FeatureTransformAlgorithm):
 
     License:
         MIT
+    
+    Documentation:
+        https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.QuantileTransformer.html#sklearn.preprocessing.QuantileTransformer
 
     See Also:
         * :class:`niaaml.preprocessing.feature_transform.FeatureTransformAlgorithm`

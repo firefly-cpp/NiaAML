@@ -17,6 +17,12 @@ class DecisionTree(Classifier):
 
     License:
         MIT
+    
+    Reference:
+        L. Breiman, J. Friedman, R. Olshen, and C. Stone, “Classification and Regression Trees”, Wadsworth, Belmont, CA, 1984.
+    
+    Documentation:
+        https://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeClassifier.html#sklearn.tree.DecisionTreeClassifier
 
     See Also:
         * :class:`niaaml.classifiers.Classifier`

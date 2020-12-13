@@ -17,6 +17,12 @@ class GaussianNB(Classifier):
 
     License:
         MIT
+    
+    Reference:
+        Murphy, Kevin P. "Naive bayes classifiers." University of British Columbia 18 (2006): 60.
+    
+    Documentation:
+        https://scikit-learn.org/stable/modules/generated/sklearn.naive_bayes.GaussianNB.html
 
     See Also:
         * :class:`niaaml.classifiers.Classifier`

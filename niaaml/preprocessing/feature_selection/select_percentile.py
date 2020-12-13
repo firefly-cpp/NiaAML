@@ -18,6 +18,9 @@ class SelectPercentile(FeatureSelectionAlgorithm):
 
     License:
         MIT
+    
+    Documentation:
+        https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.SelectPercentile.html
 
     See Also:
         * :class:`niaaml.preprocessing.feature_selection.feature_selection_algorithm.FeatureSelectionAlgorithm`

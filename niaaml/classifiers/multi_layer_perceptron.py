@@ -17,6 +17,12 @@ class MultiLayerPerceptron(Classifier):
 
     License:
         MIT
+    
+    Reference:
+        Glorot, Xavier, and Yoshua Bengio. “Understanding the difficulty of training deep feedforward neural networks.” International Conference on Artificial Intelligence and Statistics. 2010.
+    
+    Documentation:
+        https://scikit-learn.org/stable/modules/generated/sklearn.neural_network.MLPClassifier.html
 
     See Also:
         * :class:`niaaml.classifiers.Classifier`

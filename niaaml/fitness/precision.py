@@ -16,6 +16,9 @@ class Precision(FitnessFunction):
 
     License:
         MIT
+    
+    Documentation:
+        https://scikit-learn.org/stable/modules/generated/sklearn.metrics.precision_score.html
 
     See Also:
         * :class:`niaaml.fitness.FitnessFunction`

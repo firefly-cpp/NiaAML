@@ -19,6 +19,9 @@ class SelectKBest(FeatureSelectionAlgorithm):
     License:
         MIT
     
+    Documentation:
+        https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.SelectKBest.html
+    
     See Also:
         * :class:`niaaml.preprocessing.feature_selection.feature_selection_algorithm.FeatureSelectionAlgorithm`
     """

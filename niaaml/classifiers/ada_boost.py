@@ -17,6 +17,12 @@ class AdaBoost(Classifier):
 
     License:
         MIT
+    
+    Reference:
+        Y. Freund, R. Schapire, “A Decision-Theoretic Generalization of on-Line Learning and an Application to Boosting”, 1995.
+    
+    Documentation:
+        https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.AdaBoostClassifier.html
 
     See Also:
         * :class:`niaaml.classifiers.Classifier`

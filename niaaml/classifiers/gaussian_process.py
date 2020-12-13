@@ -17,6 +17,12 @@ class GaussianProcess(Classifier):
 
     License:
         MIT
+    
+    Reference:
+        Rasmussen, Carl Edward, and Hannes Nickisch. "Gaussian processes for machine learning (GPML) toolbox." The Journal of Machine Learning Research 11 (2010): 3011-3015.
+    
+    Documentation:
+        https://scikit-learn.org/stable/modules/generated/sklearn.gaussian_process.GaussianProcessClassifier.html
 
     See Also:
         * :class:`niaaml.classifiers.Classifier`

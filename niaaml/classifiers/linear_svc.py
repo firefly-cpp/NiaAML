@@ -17,6 +17,12 @@ class LinearSVC(Classifier):
 
     License:
         MIT
+    
+    Reference:
+        Fan, Rong-En, et al. "LIBLINEAR: A library for large linear classification." Journal of machine learning research 9.Aug (2008): 1871-1874.
+    
+    Documentation:
+        https://scikit-learn.org/stable/modules/generated/sklearn.svm.LinearSVC.html
 
     See Also:
         * :class:`niaaml.classifiers.Classifier`

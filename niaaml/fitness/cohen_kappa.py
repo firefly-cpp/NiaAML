@@ -16,6 +16,9 @@ class CohenKappa(FitnessFunction):
 
     License:
         MIT
+    
+    Documentation:
+        https://scikit-learn.org/stable/modules/generated/sklearn.metrics.cohen_kappa_score.html
 
     See Also:
         * :class:`niaaml.fitness.FitnessFunction`

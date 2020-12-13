@@ -17,6 +17,12 @@ class SimpleImputer(Imputer):
 
     License:
         MIT
+    
+    Documentation:
+        https://scikit-learn.org/stable/modules/generated/sklearn.impute.SimpleImputer.html
+
+    See Also:
+        * :class:`niaaml.preprocessing.imputation.Imputer`
     """
     Name = 'Simple Imputer'
 

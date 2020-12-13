@@ -17,6 +17,12 @@ class RandomForest(Classifier):
 
     License:
         MIT
+    
+    Reference:
+        Breiman, “Random Forests”, Machine Learning, 45(1), 5-32, 2001.
+    
+    Documentation:
+        https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html
 
     See Also:
         * :class:`niaaml.classifiers.Classifier`

@@ -15,6 +15,9 @@ class RobustScaler(FeatureTransformAlgorithm):
 
     License:
         MIT
+    
+    Documentation:
+        https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.RobustScaler.html#sklearn.preprocessing.RobustScaler
 
     See Also:
         * :class:`niaaml.preprocessing.feature_transform.FeatureTransformAlgorithm`

@@ -16,6 +16,9 @@ class Accuracy(FitnessFunction):
 
     License:
         MIT
+    
+    Documentation:
+        https://scikit-learn.org/stable/modules/generated/sklearn.metrics.accuracy_score.html
 
     See Also:
         * :class:`niaaml.fitness.FitnessFunction`
