@@ -3,7 +3,7 @@ import os
 from niaaml.data import CSVDataReader
 
 """
-In this example, we show how to individually use an implemented missing features' imputer and its methods. In this case we use SimpleImputer for demonstration, but
+This example presents how to use an implemented missing features' imputer and its methods individually. In this case, we use SimpleImputer for demonstration, but
 you can use any of the implemented imputers in the same way.
 """
 

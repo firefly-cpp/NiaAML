@@ -4,7 +4,7 @@ from niaaml.data import CSVDataReader
 from sklearn.feature_selection import chi2
 
 """
-In this example, we show how to individually use an implemented feature selection algorithm and its methods. In this case we use SelectKBest for demonstration, but
+This example presents how to use an implemented feature selection algorithm and its methods individually. In this case, we use SelectKBest for demonstration, but
 you can use any of the implemented feature selection algorithms in the same way.
 """
 

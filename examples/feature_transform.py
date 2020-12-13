@@ -3,7 +3,7 @@ import os
 from niaaml.data import CSVDataReader
 
 """
-In this example, we show how to individually use an implemented feature transform algorithm and its methods. In this case we use Normalizer for demonstration, but
+This example presents how to individually use an implemented feature transform algorithm and its methods individually. In this case, we use Normalizer for demonstration, but
 you can use any of the implemented feature transform algorithms in the same way.
 """
 

@@ -2,7 +2,7 @@ from niaaml.data import BasicDataReader
 import numpy
 
 """
-In this example, we show how to instantiate BasicDataReader and use its methods. You can use it to contain data in a single variable
+This example presents how to instantiate BasicDataReader and use its methods. You can use it to contain data in a single variable
 or as an input to an instance of the PipelineOptimizer class.
 """
 
