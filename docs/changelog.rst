@@ -1,6 +1,24 @@
 Changelog
 =========
 
+`1.0.0rc7 <https://github.com/lukapecnik/niaaml/tree/1.0.0rc7>`__ (2020-12-14)
+------------------------------------------------------------------------------
+
+`Full
+Changelog <https://github.com/lukapecnik/niaaml/compare/1.0.0rc6...1.0.0rc7>`__
+
+**Closed issues:**
+
+-  References `#40 <https://github.com/lukapecnik/NiaAML/issues/40>`__
+
+**Merged pull requests:**
+
+-  Paper update `#42 <https://github.com/lukapecnik/NiaAML/pull/42>`__
+   (`firefly-cpp <https://github.com/firefly-cpp>`__)
+-  minor corrections in examples
+   `#39 <https://github.com/lukapecnik/NiaAML/pull/39>`__
+   (`firefly-cpp <https://github.com/firefly-cpp>`__)
+
 `1.0.0rc6 <https://github.com/lukapecnik/niaaml/tree/1.0.0rc6>`__ (2020-12-12)
 ------------------------------------------------------------------------------
 
