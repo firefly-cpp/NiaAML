@@ -26,6 +26,8 @@ The NiaAML framework allows you not only to run full pipeline optimization, but 
 * **Python versions:** 3.6.x, 3.7.x, 3.8.x
 * **Dependencies:** [click](CONTRIBUTING.md#development-dependencies)
 
+![NiaAML Architecture](.github/images/niaaml.png)
+
 ## Installation
 
 ### pip
