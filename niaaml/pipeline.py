@@ -37,6 +37,7 @@ class Pipeline:
         __categorical_features_encoders (Dict[FeatureEncoder]): Instances of FeatureEncoder for all categorical features.
         __imputers (Dict[Imputer]): Dictionary of instances of Imputer for all columns that contained missing values during optimization process.
         __niapy_algorithm_utility (AlgorithmUtility): Class used for getting an optimiziation algorithm using its name.
+        __logger (Logger): Logger instance.
     """
 
     def __init__(self, **kwargs):
@@ -50,9 +51,10 @@ class Pipeline:
         self.__categorical_features_encoders = None
         self.__imputers = None
         self.__niapy_algorithm_utility = AlgorithmUtility()
+        self.__logger = None
         self._set_parameters(**kwargs)
     
-    def _set_parameters(self, classifier, feature_selection_algorithm=None, feature_transform_algorithm=None, categorical_features_encoders = None, imputers = None, **kwargs):
+    def _set_parameters(self, classifier, feature_selection_algorithm=None, feature_transform_algorithm=None, categorical_features_encoders = None, imputers = None, logger = None, **kwargs):
         r"""Set the parameters/arguments of the task.
 
         Arguments:
@@ -61,12 +63,14 @@ class Pipeline:
             classifier (Classifier): Classifier implementation.
             categorical_features_encoders (Dict[FeatureEncoders]): Actual instances of FeatureEncoder for all categorical features.
             imputers (Dict[Imputer]): Instances of Imputer for all features that contained missing values during optimization process.
+            logger (Logger): Instance of the Logger class.
         """
         self.__feature_selection_algorithm = feature_selection_algorithm
         self.__feature_transform_algorithm = feature_transform_algorithm
         self.__classifier = classifier
         self.__categorical_features_encoders = categorical_features_encoders
         self.__imputers = imputers
+        self.__logger = logger
     
     def get_feature_selection_algorithm(self):
         r"""Get deep copy of the feature selection algorithm.
@@ -91,6 +95,14 @@ class Pipeline:
             Classifier: Instance of the Classifier object.
         """
         return copy.deepcopy(self.__classifier)
+    
+    def get_logger(self):
+        r"""Get logger.
+
+        Returns:
+            Logger: Instance of the Logger object.
+        """
+        return self.__logger
     
     def get_stats(self):
         r"""Get optimization statistics.
@@ -294,6 +306,15 @@ class Pipeline:
 
         return 'Classifier:\n{classifier}\n\nFeature selection algorithm:\n{fsa}\n\nFeature transform algorithm:\n{fta}\n\nMask of selected features (True if selected, False if not):\n{feat}\n\n{imp}{enc}Statistics:\n{stats}'.format(classifier=classifier_string, fsa=feature_selection_algorithm_string, fta=feature_transform_algorithm_string, imp=imputers_string, enc=encoders_string, feat=features_string, stats=stats_string)
 
+    def to_string_slim(self):
+        r"""Slim user friendly representation of the object.
+
+        Returns:
+            str: Slim user friendly representation of the object.
+        """
+
+        return 'classifier - {classifier}, feature selection algorithm - {fsa}, feature transform algorithm - {fta}'.format(classifier=self.__classifier.Name, fsa=self.__feature_selection_algorithm.Name if self.__feature_selection_algorithm is not None else None, fta=self.__feature_transform_algorithm.Name if self.__feature_transform_algorithm is not None else None)
+
 class _PipelineBenchmark(Benchmark):
     r"""NiaPy Benchmark class implementation.
     
@@ -313,6 +334,8 @@ class _PipelineBenchmark(Benchmark):
         __population_size (uint): Number of individuals in the hiperparameter optimization process.
         __current_best_fitness (float): Current best fitness of the optimization process.
         __fitness_function (FitnessFunction): Instance of a FitnessFunction object.
+        __logger (Logger): Instance of the Logger class.
+        __evals (int): Number of current evaluation.
     """
 
     def __init__(self, x, y, parent, population_size, fitness_function):
@@ -329,6 +352,8 @@ class _PipelineBenchmark(Benchmark):
         self.__population_size = population_size
         self.__current_best_fitness = float('inf')
         self.__fitness_function = FitnessFactory().get_result(fitness_function)
+        self.__evals = 0
+        self.__logger = self.__parent.get_logger()
         Benchmark.__init__(self, 0.0, 1.0)
     
     def function(self):
@@ -347,6 +372,10 @@ class _PipelineBenchmark(Benchmark):
             Returns:
                 float: Fitness.
             """
+            self.__evals += 1
+            if self.__logger is not None:
+                self.__logger.log_progress('Evaluation {evals}'.format(evals=self.__evals))
+
             try:
                 feature_selection_algorithm = self.__parent.get_feature_selection_algorithm()
                 feature_transform_algorithm = self.__parent.get_feature_transform_algorithm()
@@ -414,6 +443,8 @@ class _PipelineBenchmark(Benchmark):
             except:
                 # infeasible solution as it causes some kind of error
                 # return infinity as we are looking for maximum accuracy in the optimization process (1 - accuracy since it is a minimization problem)
+                if self.__logger is not None:
+                    self.__logger.log_optimization_error('Optimization failed for: {ppln}'.format(ppln=self.__parent.to_string_slim()))
                 return float('inf')
         
         return evaluate

@@ -11,11 +11,17 @@ The instantiated PipelineOptimizer will try and assemble the best pipeline with 
 data_reader = CSVDataReader(src=os.path.dirname(os.path.abspath(__file__)) + '/example_files/dataset.csv', has_header=False, contains_classes=True)
 
 # instantiate PipelineOptimizer that chooses among specified classifiers, feature selection algorithms and feature transform algorithms
+# log is True by default, log_verbose means more information if True, log_output_file is the destination of a log file
+# if log_output_file is not provided there is no file created
+# if log is False, logging is turned off
 pipeline_optimizer = PipelineOptimizer(
     data=data_reader,
     classifiers=['AdaBoost', 'Bagging', 'MultiLayerPerceptron', 'RandomForest', 'ExtremelyRandomizedTrees', 'LinearSVC'],
     feature_selection_algorithms=['SelectKBest', 'SelectPercentile', 'ParticleSwarmOptimization', 'VarianceThreshold'],
-    feature_transform_algorithms=['Normalizer', 'StandardScaler']
+    feature_transform_algorithms=['Normalizer', 'StandardScaler'],
+    log=True,
+    log_verbose=True,
+    log_output_file='output.log'
 )
 
 # runs the optimization process

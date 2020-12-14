@@ -17,7 +17,8 @@ class PipelineOptimizerTestCase(TestCase):
             data=self.__data_reader,
             feature_selection_algorithms=['SelectKBest', 'SelectPercentile'],
             feature_transform_algorithms=['Normalizer', 'StandardScaler'],
-            classifiers=['AdaBoost', 'Bagging']
+            classifiers=['AdaBoost', 'Bagging'],
+            log=False
         )
         pipeline = ppo.run('Accuracy', 10, 10, 20, 20, 'ParticleSwarmAlgorithm')
         self.assertIsInstance(pipeline, Pipeline)
@@ -30,7 +31,8 @@ class PipelineOptimizerTestCase(TestCase):
             data=self.__data_reader,
             feature_selection_algorithms=['SelectKBest', 'SelectPercentile'],
             feature_transform_algorithms=['Normalizer', 'StandardScaler'],
-            classifiers=['AdaBoost', 'Bagging']
+            classifiers=['AdaBoost', 'Bagging'],
+            log=False
         )
 
         fsas = ppo.get_feature_selection_algorithms()
@@ -51,7 +53,8 @@ class PipelineOptimizerTestCase(TestCase):
             feature_transform_algorithms=['Normalizer', 'StandardScaler'],
             classifiers=['AdaBoost', 'Bagging'],
             categorical_features_encoder='OneHotEncoder',
-            imputer='SimpleImputer'
+            imputer='SimpleImputer',
+            log=False
         )
 
         pipeline = ppo.run('Accuracy', 10, 10, 20, 20, 'ParticleSwarmAlgorithm')

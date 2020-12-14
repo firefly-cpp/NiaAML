@@ -13,12 +13,18 @@ data_reader = CSVDataReader(src=os.path.dirname(os.path.abspath(__file__)) + '/e
 
 # instantiate PipelineOptimizer that chooses among specified classifiers, feature selection algorithms and feature transform algorithms
 # OneHotEncoder is used for encoding categorical features in this example
+# log is True by default, log_verbose means more information if True, log_output_file is the destination of a log file
+# if log_output_file is not provided there is no file created
+# if log is False, logging is turned off
 pipeline_optimizer = PipelineOptimizer(
     data=data_reader,
     classifiers=['AdaBoost', 'Bagging', 'MultiLayerPerceptron', 'RandomForest', 'ExtremelyRandomizedTrees', 'LinearSVC'],
     feature_selection_algorithms=['SelectKBest', 'SelectPercentile', 'ParticleSwarmOptimization', 'VarianceThreshold'],
     feature_transform_algorithms=['Normalizer', 'StandardScaler'],
-    categorical_features_encoder='OneHotEncoder'
+    categorical_features_encoder='OneHotEncoder',
+    log=True,
+    log_verbose=True,
+    log_output_file='output.log'
 )
 
 # runs the optimization process

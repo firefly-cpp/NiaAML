@@ -9,6 +9,7 @@ from NiaPy.algorithms.utility import AlgorithmUtility
 from niaaml.utilities import get_bin_index
 from niaaml.preprocessing.encoding.utility import encode_categorical_features
 from niaaml.preprocessing.imputation.utility import impute_features
+from niaaml.logger import Logger
 import pandas as pd
 
 __all__ = [
@@ -36,6 +37,7 @@ class PipelineOptimizer:
         __categorical_features_encoders (Dict[FeatureEncoder]): Actual instances of FeatureEncoder for all categorical features.
         __imputer (str): Name of the imputer used for features that contain missing values.
         __imputers (Dict[Imputer]): Actual instances of Imputer for all features that contain missing values.
+        __logger (Logger): Logger instance.
 
         __niapy_algorithm_utility (AlgorithmUtility): Utility class used to get an optimization algorithm.
     """
@@ -52,10 +54,11 @@ class PipelineOptimizer:
         self.__imputer = None
         self.__imputers = None
         self.__niapy_algorithm_utility = AlgorithmUtility()
+        self.__logger = None
 
         self._set_parameters(**kwargs)
     
-    def _set_parameters(self, data, classifiers, feature_selection_algorithms = None, feature_transform_algorithms = None, categorical_features_encoder = None, imputer = None, **kwargs):
+    def _set_parameters(self, data, classifiers, feature_selection_algorithms = None, feature_transform_algorithms = None, categorical_features_encoder = None, imputer = None, log = True, log_verbose = False, log_output_file = None, **kwargs):
         r"""Set the parameters/arguments of the task.
 
         Arguments:
@@ -65,6 +68,9 @@ class PipelineOptimizer:
             classifiers (Iterable[Classifier]): Array of names of possible classifiers.
             categorical_features_encoder (Optional[str]): Name of the encoder used for categorical features.
             imputer (Optional[str]): Name of the imputer used for features that contain missing values.
+            log (Optional(bool)): Log optimization progress.
+            log_verbose (Optional(bool)): Log optimization progress, current best pipeline and warnings.
+            log_output_file (Optional(str)): Path to the logging output file. Defaults to standard output.
         """
         self.__data = data
 
@@ -79,6 +85,9 @@ class PipelineOptimizer:
         self.__feature_selection_algorithms = feature_selection_algorithms
         self.__categorical_features_encoder = categorical_features_encoder
         self.__imputer = imputer
+
+        if log is True:
+            self.__logger = Logger(verbose=log_verbose, output_file=log_output_file)
     
     def get_data(self):
         r"""Get data.
@@ -111,6 +120,14 @@ class PipelineOptimizer:
             Iterable[str]: Classifier names.
         """
         return self.__classifiers
+    
+    def get_logger(self):
+        r"""Get logger.
+
+        Returns:
+            Logger: Logger instance.
+        """
+        return self.__logger
 
     def run(self, fitness_name, pipeline_population_size, inner_population_size, number_of_pipeline_evaluations, number_of_inner_evaluations, optimization_algorithm, inner_optimization_algorithm = None):
         r"""Run classification pipeline optimization process.
@@ -173,6 +190,8 @@ class _PipelineOptimizerBenchmark(Benchmark):
         __current_best_fitness (float): Current best fitness of the optimization process.
         __current_best_pipeline (Pipeline): Current best pipeline of the optimization process.
         __fitness_name (str): Name of the fitness class to use as a function.
+        __logger (Logger): Instance of the Logger class.
+        __evals (int): Number of current evaluation.
 
         __classifier_factory (ClassifierFactory): Factory for classifiers.
         __feature_transform_algorithm_factory (FeatureTransformAlgorithmFactory): Factory for feature transform algorithms.
@@ -199,6 +218,8 @@ class _PipelineOptimizerBenchmark(Benchmark):
         self.__current_best_fitness = float('inf')
         self.__current_best_pipeline = None
         self.__fitness_name = fitness_name
+        self.__evals = 0
+        self.__logger = self.__parent.get_logger()
         Benchmark.__init__(self, 0.0, 1.0)
 
     def __float_to_instance(self, value, collection, factory):
@@ -241,17 +262,30 @@ class _PipelineOptimizerBenchmark(Benchmark):
             Returns:
                 float: Fitness.
             """
+            self.__evals += 1
+
             data = self.__parent.get_data()
+            fs_algo = self.__float_to_instance(sol[0], self.__parent.get_feature_selection_algorithms(), self.__feature_selection_algorithm_factory) if self.__parent.get_feature_selection_algorithms() is not None and len(self.__parent.get_feature_selection_algorithms()) > 0 else None
+            ft_algo = self.__float_to_instance(sol[1], self.__parent.get_feature_transform_algorithms(), self.__feature_transform_algorithm_factory) if self.__parent.get_feature_transform_algorithms() is not None and len(self.__parent.get_feature_transform_algorithms()) > 0 else None
+            clsf = self.__float_to_instance(sol[2], self.__parent.get_classifiers(), self.__classifier_factory)
+
             pipeline = Pipeline(
-                feature_selection_algorithm=self.__float_to_instance(sol[0], self.__parent.get_feature_selection_algorithms(), self.__feature_selection_algorithm_factory) if self.__parent.get_feature_selection_algorithms() is not None and len(self.__parent.get_feature_selection_algorithms()) > 0 else None,
-                feature_transform_algorithm=self.__float_to_instance(sol[1], self.__parent.get_feature_transform_algorithms(), self.__feature_transform_algorithm_factory) if self.__parent.get_feature_transform_algorithms() is not None and len(self.__parent.get_feature_transform_algorithms()) > 0 else None,
-                classifier=self.__float_to_instance(sol[2], self.__parent.get_classifiers(), self.__classifier_factory)
+                feature_selection_algorithm=fs_algo,
+                feature_transform_algorithm=ft_algo,
+                classifier=clsf,
+                logger=self.__logger
             )
+
+            if self.__logger is not None:
+                self.__logger.log_progress('Currently optimizing {evals}: {ppln}'.format(ppln=pipeline.to_string_slim(), evals=self.__evals))
 
             fitness = pipeline.optimize(data.get_x(), data.get_y(), self.__inner_population_size, self.__number_of_inner_evaluations, self.__optimization_algorithm, self.__fitness_name)
             if fitness < self.__current_best_fitness:
                 self.__current_best_fitness = fitness
                 self.__current_best_pipeline = pipeline
+
+                if self.__logger is not None:
+                    self.__logger.log_pipeline('New current best pipeline with fitness {fit}: {ppln}'.format(fit=-fitness, ppln=pipeline.to_string_slim()))
 
             return fitness
         

@@ -2,7 +2,6 @@ from unittest import TestCase
 from niaaml import ParameterDefinition, MinMax, OptimizationStats, get_bin_index
 import numpy as np
 import tempfile
-import os
 
 class UtilitiesTestCase(TestCase):
     def test_get_bin_index_works_fine(self):

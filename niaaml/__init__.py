@@ -10,6 +10,7 @@ from niaaml.utilities import get_bin_index
 from niaaml.pipeline_optimizer import PipelineOptimizer
 from niaaml.pipeline import Pipeline
 from niaaml.pipeline_component import PipelineComponent
+from niaaml.logger import Logger
 
 __all__ = [
     'classifiers',
@@ -23,8 +24,9 @@ __all__ = [
     'Factory',
     'PipelineOptimizer',
     'Pipeline',
-    'PipelineComponent'
+    'PipelineComponent',
+    'Logger'
 ]
 
 __project__ = 'niaaml'
-__version__ = '1.0.0rc6'
+__version__ = '1.0.0rc7'
