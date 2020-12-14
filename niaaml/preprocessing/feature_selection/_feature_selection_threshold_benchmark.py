@@ -2,6 +2,10 @@ from NiaPy.benchmarks import Benchmark
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 
+__all__ = [
+    '_FeatureSelectionThresholdBenchmark'
+]
+
 class _FeatureSelectionThresholdBenchmark(Benchmark):
     r"""NiaPy Benchmark class implementation.
 
