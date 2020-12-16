@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.1.0](https://github.com/lukapecnik/niaaml/tree/1.1.0) (2020-12-16)
+
+[Full Changelog](https://github.com/lukapecnik/niaaml/compare/1.0.0rc7...1.1.0)
+
 ## [1.0.0rc7](https://github.com/lukapecnik/niaaml/tree/1.0.0rc7) (2020-12-14)
 
 [Full Changelog](https://github.com/lukapecnik/niaaml/compare/1.0.0rc6...1.0.0rc7)
