@@ -32,6 +32,6 @@ pipeline_optimizer = PipelineOptimizer(
 # one of the possible pipelines in this case is: SelectPercentile -> Normalizer -> RandomForest
 # returns the best found pipeline
 # the chosen fitness function and optimization algorithm are Accuracy and Particle Swarm Algorithm
-pipeline = pipeline_optimizer.run('Accuracy', 20, 20, 400, 400, 'ParticleSwarmAlgorithm', 'ParticleSwarmAlgorithm')
+pipeline = pipeline_optimizer.run('Accuracy', 10, 10, 30, 30, 'ParticleSwarmAlgorithm', 'ParticleSwarmAlgorithm')
 
 # pipeline variable contains Pipeline object that can be used for further classification, exported as an object (that can be later loaded and used) or exported as text file
