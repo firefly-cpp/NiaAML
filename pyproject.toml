@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "NiaAML"
-version = "1.1.0"
+version = "1.1.1rc1"
 description = "Python automated machine learning framework."
 license = "MIT"
 authors = ["Luka Pečnik <lukapecnik96@gmail.com>", "Iztok Fister Jr. <iztok.fister1@um.si>"]

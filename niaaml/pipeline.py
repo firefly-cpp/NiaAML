@@ -13,7 +13,8 @@ import pickle
 import os
 
 __all__ = [
-    'Pipeline'
+    'Pipeline',
+    '_PipelineBenchmark'
 ]
 
 class Pipeline:
@@ -355,6 +356,74 @@ class _PipelineBenchmark(Benchmark):
         self.__evals = 0
         self.__logger = self.__parent.get_logger()
         Benchmark.__init__(self, 0.0, 1.0)
+
+    @staticmethod
+    def evaluate_pipeline(solution_vector, feature_selection_algorithm, feature_transform_algorithm, classifier, x, y, fitness_function):
+        """Evaluate pipeline setup.
+
+        Arguments:
+            solution_vector (numpy.ndarray[float]): Individual of population/ possible solution to map hyperparameters from.
+            feature_selection_algorithm (Optional[FeatureSelectionAlgorithm]): Feature selection algorithm instance.
+            feature_transform_algorithm (Optional[FeatureTransformAlgorithm]): Feature transform algorithm instance.
+            classifier (Classifier): Classifier instance.
+            x (pandas.core.frame.DataFrame): n samples to classify.
+            y (pandas.core.series.Series): n classes of the samples in the x array.
+            fitness_function (FitnessFunction): Fitness function instance.
+        
+        Returns:
+            Tuple[float, numpy.array[bool], OptimizationStats]:
+                1. Fitness.
+                2. Feature selection mask.
+                3. Optimization statistics.
+        """
+        feature_selection_algorithm_params = feature_selection_algorithm.get_params_dict() if feature_selection_algorithm else dict()
+        feature_transform_algorithm_params = feature_transform_algorithm.get_params_dict() if feature_transform_algorithm else dict()
+        classifier_params = classifier.get_params_dict()
+
+        params_all = [
+            (feature_selection_algorithm_params, feature_selection_algorithm),
+            (feature_transform_algorithm_params, feature_transform_algorithm),
+            (classifier_params, classifier)
+        ]
+        solution_index = 0
+        
+        for i in params_all:
+            args = dict()
+            for key in i[0]:
+                if i[0][key] is not None:
+                    if isinstance(i[0][key].value, MinMax):
+                        val = solution_vector[solution_index] * i[0][key].value.max + i[0][key].value.min
+                        if i[0][key].param_type is np.intc or i[0][key].param_type is np.int or i[0][key].param_type is np.uintc or i[0][key].param_type is np.uint:
+                            val = i[0][key].param_type(np.floor(val))
+                            if val >= i[0][key].value.max:
+                                val = i[0][key].value.max - 1
+                        args[key] = val
+                    else:
+                        args[key] = i[0][key].value[get_bin_index(solution_vector[solution_index], len(i[0][key].value))]
+                solution_index += 1
+            if i[1] is not None:
+                i[1].set_parameters(**args)
+        
+        selected_features_mask = None
+
+        x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2)
+
+        if feature_selection_algorithm is None:
+            selected_features_mask = np.ones(x.shape[1], dtype=bool)
+        else:
+            selected_features_mask = feature_selection_algorithm.select_features(x_train, y_train)
+
+        x_train = x_train.loc[:, selected_features_mask]
+        x_test = x_test.loc[:, selected_features_mask]
+
+        if feature_transform_algorithm is not None:
+            feature_transform_algorithm.fit(x_train)
+            x_train = feature_transform_algorithm.transform(x_train)
+            x_test = feature_transform_algorithm.transform(x_test)
+        
+        classifier.fit(x_train, y_train)
+        predictions = classifier.predict(x_test)
+        return fitness_function.get_fitness(predictions, y_test) * -1, selected_features_mask, OptimizationStats(predictions, y_test)
     
     def function(self):
         r"""Override Benchmark function.
@@ -380,56 +449,8 @@ class _PipelineBenchmark(Benchmark):
                 feature_selection_algorithm = self.__parent.get_feature_selection_algorithm()
                 feature_transform_algorithm = self.__parent.get_feature_transform_algorithm()
                 classifier = self.__parent.get_classifier()
-                selected_features_mask = None
 
-                feature_selection_algorithm_params = feature_selection_algorithm.get_params_dict() if feature_selection_algorithm else dict()
-                feature_transform_algorithm_params = feature_transform_algorithm.get_params_dict() if feature_transform_algorithm else dict()
-                classifier_params = classifier.get_params_dict()
-
-                params_all = [
-                    (feature_selection_algorithm_params, feature_selection_algorithm),
-                    (feature_transform_algorithm_params, feature_transform_algorithm),
-                    (classifier_params, classifier)
-                ]
-                solution_index = 0
-                
-                for i in params_all:
-                    args = dict()
-                    for key in i[0]:
-                        if i[0][key] is not None:
-                            if isinstance(i[0][key].value, MinMax):
-                                val = sol[solution_index] * i[0][key].value.max + i[0][key].value.min
-                                if i[0][key].param_type is np.intc or i[0][key].param_type is np.int or i[0][key].param_type is np.uintc or i[0][key].param_type is np.uint:
-                                    val = i[0][key].param_type(np.floor(val))
-                                    if val >= i[0][key].value.max:
-                                        val = i[0][key].value.max - 1
-                                args[key] = val
-                            else:
-                                args[key] = i[0][key].value[get_bin_index(sol[solution_index], len(i[0][key].value))]
-                        solution_index += 1
-                    if i[1] is not None:
-                        i[1].set_parameters(**args)
-                
-                selected_features_mask = None
-
-                x_train, x_test, y_train, y_test = train_test_split(self.__x, self.__y, test_size=0.2)
-
-                if feature_selection_algorithm is None:
-                    selected_features_mask = np.ones(x.shape[1], dtype=bool)
-                else:
-                    selected_features_mask = feature_selection_algorithm.select_features(x_train, y_train)
-
-                x_train = x_train.loc[:, selected_features_mask]
-                x_test = x_test.loc[:, selected_features_mask]
-
-                if feature_transform_algorithm is not None:
-                    feature_transform_algorithm.fit(x_train)
-                    x_train = feature_transform_algorithm.transform(x_train)
-                    x_test = feature_transform_algorithm.transform(x_test)
-                
-                classifier.fit(x_train, y_train)
-                predictions = classifier.predict(x_test)
-                fitness = self.__fitness_function.get_fitness(predictions, y_test) * -1
+                fitness, selected_features_mask, stats = _PipelineBenchmark.evaluate_pipeline(sol, feature_selection_algorithm, feature_transform_algorithm, classifier, self.__x, self.__y, self.__fitness_function)
 
                 if fitness < self.__current_best_fitness:
                     self.__current_best_fitness = fitness
@@ -437,7 +458,7 @@ class _PipelineBenchmark(Benchmark):
                     self.__parent.set_feature_transform_algorithm(feature_transform_algorithm)
                     self.__parent.set_classifier(classifier)
                     self.__parent.set_selected_features_mask(selected_features_mask)
-                    self.__parent.set_stats(OptimizationStats(predictions, y_test))
+                    self.__parent.set_stats(stats)
 
                 return fitness
             except:

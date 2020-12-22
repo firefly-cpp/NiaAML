@@ -96,7 +96,7 @@ For a full example see the [Examples section](#examples) or the list of implemen
 
 ## Optimization Process And Parameter Tuning
 
-In NiaAML there are two types of optimization. The goal of the first type is to find an optimal set of components (feature selection algorithm, feature transformation algorithm and classifier). The next step is to find optimal parameters for the selected set of components, and that is the goal of the second type of optimization. Each component has an attribute `_params`, which is a dictionary of parameters and their possible values.
+In the modifier version of NiaAML optimization process there are two types of optimization. The goal of the first type is to find an optimal set of components (feature selection algorithm, feature transformation algorithm and classifier). The next step is to find optimal parameters for the selected set of components, and that is the goal of the second type of optimization. Each component has an attribute `_params`, which is a dictionary of parameters and their possible values.
 
 ```python
 self._params = dict(
@@ -110,6 +110,8 @@ An individual in the first type of optimization is represented as a real-valued 
 Let's say we have a classifier with 3 parameters, a feature selection algorithm with 2 parameters and feature transformation algorithm with 4 parameters. The size of an individual in the second type of optimization is 9. The size of an individual in the first type of optimization is always 3 (1 classifier, 1 feature selection algorithm and 1 feature transformation algorithm).
 
 In some cases we may want to tune a parameter that needs additional information for setting its range of values, so we cannot set the range in the initialization method. In that case, we should set its value in the dictionary to None and define it later in the process. The parameter will be a part of the parameter tuning process as soon as we define its possible values. For example, see [Select K Best Feature Selection](niaaml/preprocessing/feature_selection/select_k_best.py) and its parameter `k`.
+
+**The NiaAML framwork also supports running optimization according to the original method proposed in [[1]](#1) where the components selection and hyperparameter optimization steps are combined into one.**
 
 ## Examples
 
@@ -135,13 +137,18 @@ pipeline_optimizer = PipelineOptimizer(
     feature_selection_algorithms=['SelectKBest', 'SelectPercentile', 'ParticleSwarmOptimization', 'VarianceThreshold'],
     feature_transform_algorithms=['Normalizer', 'StandardScaler']
 )
-pipeline = pipeline_optimizer.run('Accuracy', 20, 20, 400, 400, 'ParticleSwarmAlgorithm', 'ParticleSwarmAlgorithm')
+
+# run the modified version of optimization
+pipeline1 = pipeline_optimizer.run('Accuracy', 15, 15, 300, 300, 'ParticleSwarmAlgorithm', 'ParticleSwarmAlgorithm')
+
+# run the original version
+pipeline2 = pipeline_optimizer.run_v1('Accuracy', 15, 400, 'ParticleSwarmAlgorithm')
 ```
 
 You can save a result of the optimization process as an object to a file for later use.
 
 ```python
-pipeline.export('pipeline.ppln')
+pipeline1.export('pipeline.ppln')
 ```
 
 And also load it from a file and use the pipeline.
@@ -157,7 +164,7 @@ y = loaded_pipeline.run(x)
 You can also save a user-friendly representation of a pipeline to a text file.
 
 ```python
-pipeline.export_text('pipeline.txt')
+pipeline1.export_text('pipeline.txt')
 ```
 
 This is a very simple example with dummy data. It is only intended to give you a basic idea of how to use the framework.
