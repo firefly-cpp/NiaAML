@@ -31,7 +31,7 @@ Create a new file, with name, for example *my_first_pipeline.py* and paste in th
         feature_selection_algorithms=['SelectKBest', 'SelectPercentile', 'ParticleSwarmOptimization', 'VarianceThreshold'],
         feature_transform_algorithms=['Normalizer', 'StandardScaler']
     )
-    pipeline = pipeline_optimizer.run('Accuracy', 20, 20, 400, 400, 'ParticleSwarmAlgorithm', 'ParticleSwarmAlgorithm')
+    pipeline = pipeline_optimizer.run('Accuracy', 15, 15, 300, 300, 'ParticleSwarmAlgorithm', 'ParticleSwarmAlgorithm')
 
 **As you can see, pipeline components, fitness function and optimization algorithms are always passed into pipeline optimization using their class names.** The example below uses the Particle Swarm Algorithm as the optimization algorithm. You can find a list of all available algorithms in the `NiaPy's documentation <https://niapy.readthedocs.io/en/stable/>`_.
 Now you can run it using the command ``python my_first_pipeline.py``. The code currently does not do much, but we can save our pipeline to a file so we can use it later or save a user-friendly representation of it to a text file. You can choose one or both of the scenarios by adding the code below.
@@ -53,6 +53,12 @@ If you want to load and use the saved pipeline later, you can use the following 
     # some features (can be loaded using DataReader object instances)
     x = pandas.DataFrame([[0.35, 0.46, 5.32], [0.16, 0.55, 12.5]])
     y = loaded_pipeline.run(x)
+
+**The framework also supports the original version of optimization process where the components selection and hyperparameter optimization steps are combined into one. You can replace the ``run`` method with the following code.**
+
+.. code:: python
+    
+    pipeline = pipeline_optimizer.run_v1('Accuracy', 15, 400, 'ParticleSwarmAlgorithm')
 
 This is a very simple example with dummy data. It is only intended to give you a basic idea on how to use the framework. **NiaAML supports numerical and categorical features.**
 

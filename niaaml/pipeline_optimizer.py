@@ -240,7 +240,7 @@ class PipelineOptimizer:
         return pipeline
 
 class _PipelineOptimizerBenchmark(Benchmark):
-    r"""NiaPy Benchmark class implementation.
+    r"""NiaPy Benchmark class base implementation.
     
     Date:
         2020

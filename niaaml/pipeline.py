@@ -359,6 +359,23 @@ class _PipelineBenchmark(Benchmark):
 
     @staticmethod
     def evaluate_pipeline(solution_vector, feature_selection_algorithm, feature_transform_algorithm, classifier, x, y, fitness_function):
+        """Evaluate pipeline setup.
+
+        Arguments:
+            solution_vector (numpy.ndarray[float]): Individual of population/ possible solution to map hyperparameters from.
+            feature_selection_algorithm (Optional[FeatureSelectionAlgorithm]): Feature selection algorithm instance.
+            feature_transform_algorithm (Optional[FeatureTransformAlgorithm]): Feature transform algorithm instance.
+            classifier (Classifier): Classifier instance.
+            x (pandas.core.frame.DataFrame): n samples to classify.
+            y (pandas.core.series.Series): n classes of the samples in the x array.
+            fitness_function (FitnessFunction): Fitness function instance.
+        
+        Returns:
+            Tuple[float, numpy.array[bool], OptimizationStats]:
+                1. Fitness.
+                2. Feature selection mask.
+                3. Optimization statistics.
+        """
         feature_selection_algorithm_params = feature_selection_algorithm.get_params_dict() if feature_selection_algorithm else dict()
         feature_transform_algorithm_params = feature_transform_algorithm.get_params_dict() if feature_transform_algorithm else dict()
         classifier_params = classifier.get_params_dict()
