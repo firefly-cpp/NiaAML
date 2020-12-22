@@ -1,6 +1,18 @@
 Changelog
 =========
 
+`1.1.1rc1 <https://github.com/lukapecnik/niaaml/tree/1.1.1rc1>`__ (2020-12-22)
+------------------------------------------------------------------------------
+
+`Full
+Changelog <https://github.com/lukapecnik/niaaml/compare/1.1.0...1.1.1rc1>`__
+
+**Merged pull requests:**
+
+-  Original NiaAML method support [ci skip]
+   `#43 <https://github.com/lukapecnik/NiaAML/pull/43>`__
+   (`lukapecnik <https://github.com/lukapecnik>`__)
+
 `1.1.0 <https://github.com/lukapecnik/niaaml/tree/1.1.0>`__ (2020-12-16)
 ------------------------------------------------------------------------
 
