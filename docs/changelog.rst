@@ -1,6 +1,12 @@
 Changelog
 =========
 
+`1.1.1rc2 <https://github.com/lukapecnik/niaaml/tree/1.1.1rc2>`__ (2020-12-22)
+------------------------------------------------------------------------------
+
+`Full
+Changelog <https://github.com/lukapecnik/niaaml/compare/1.1.1rc1...1.1.1rc2>`__
+
 `1.1.1rc1 <https://github.com/lukapecnik/niaaml/tree/1.1.1rc1>`__ (2020-12-22)
 ------------------------------------------------------------------------------
 
@@ -192,6 +198,9 @@ Changelog <https://github.com/lukapecnik/niaaml/compare/0.1.2a1...0.1.2>`__
 -  badges and readme update
    `#19 <https://github.com/lukapecnik/NiaAML/pull/19>`__
    (`lukapecnik <https://github.com/lukapecnik>`__)
+-  Pipeline optimizer progress
+   `#8 <https://github.com/lukapecnik/NiaAML/pull/8>`__
+   (`lukapecnik <https://github.com/lukapecnik>`__)
 
 `0.1.2a1 <https://github.com/lukapecnik/niaaml/tree/0.1.2a1>`__ (2020-11-29)
 ----------------------------------------------------------------------------
@@ -252,9 +261,6 @@ Changelog <https://github.com/lukapecnik/niaaml/compare/fbf47d71adb6ba72aa9210e4
    (`lukapecnik <https://github.com/lukapecnik>`__)
 -  Pipeline methods implementation
    `#9 <https://github.com/lukapecnik/NiaAML/pull/9>`__
-   (`lukapecnik <https://github.com/lukapecnik>`__)
--  Pipeline optimizer progress
-   `#8 <https://github.com/lukapecnik/NiaAML/pull/8>`__
    (`lukapecnik <https://github.com/lukapecnik>`__)
 -  Implementation of jDEFSTH algorithm for feature selection
    `#7 <https://github.com/lukapecnik/NiaAML/pull/7>`__
