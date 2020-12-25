@@ -1,6 +1,6 @@
 from niaaml.utilities import ParameterDefinition, MinMax
 from niaaml.preprocessing.feature_selection.feature_selection_algorithm import FeatureSelectionAlgorithm
-from sklearn.feature_selection import SelectKBest as SelectKB, chi2
+from sklearn.feature_selection import SelectKBest as SelectKB, chi2, f_classif, mutual_info_classif
 import numpy as np
 
 __all__ = [
@@ -34,7 +34,7 @@ class SelectKBest(FeatureSelectionAlgorithm):
             _params['k'] is initialized to None as it is included in the optimization process later since we cannot determine a proper value range until length of the feature vector becomes known.
         """
         self._params = dict(
-            score_func = ParameterDefinition([chi2]),
+            score_func = ParameterDefinition([chi2, f_classif, mutual_info_classif]),
             k = None
         )
         self.__k = None
