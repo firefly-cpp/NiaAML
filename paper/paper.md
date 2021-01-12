@@ -31,11 +31,16 @@ The framework is developed in a layer style layout architecture, consisting of s
 ![NiaAML flow.\label{fig:NiaAMLflow}](niaamlFlow.png)
 
 NiaAML is different: Compared to similar Python AutoML frameworks, such as TPOT [@tpot] and auto-sklearn [@NIPS2015_11d0e628], NiaAML [@Fister2020Continuous] comes with the following benefits:
-* it is fully modeled as a continuous optimization problem, which means that arbitrary stochastic nature-inspired population-based algorithms [@tzanetos2020comprehensive] can be used for solving this task (without any special modifications of their internal mechanisms),
-* the search for the optimal combination of ML components and proper classifiers` hyperparameters can be conducted concurrently,
-* its layer style architecture allows straightforward adding of new ML components,
-* every pipeline in the output is feasible and functional in cases of the correct specified hyperparameters' domains,
-* the included GUI simplifies the work for regular users.
+
+- it is fully modeled as a continuous optimization problem, which means that arbitrary stochastic nature-inspired population-based algorithms [@tzanetos2020comprehensive] can be used for solving this task (without any special modifications of their internal mechanisms),
+
+- the search for the optimal combination of ML components and proper classifiers` hyperparameters can be conducted concurrently,
+
+- its layer style architecture allows straightforward adding of new ML components,
+
+- every pipeline in the output is feasible and functional in cases of the correct specified hyperparameters' domains,
+
+- the included GUI simplifies the work for regular users.
 
 In conclusion, NiaAML is an AutoML framework based on stochastic population-based nature-inspired algorithms. Thus, the NiaAML framework is able to find the optimal classification pipelines built on preprocessing steps and classifiers, and, simultaneously, assuring a user-friendly experience. Working with ML is also, with the help of the NiaPy framework, more easy, adaptable, expandable and customizable. Last but not least, we can assure that more of the ML components and functionalities to the NiaAML framework are yet to come.
 
