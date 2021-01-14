@@ -42,7 +42,6 @@ NiaAML is different: Compared to similar Python AutoML frameworks, such as TPOT 
 
 - a Graphical User Interface (GUI) simplifies the work for users without expert domain knowledge.
 
-Thus, the NiaAML framework provides a user-friendly method to find optimal classification pipelines built on preprocessing steps and classifiers.
 
 # Statement of need
 
