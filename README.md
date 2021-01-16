@@ -52,6 +52,14 @@ To install NiaAML with conda, use:
 $ conda install -c lukapecnik niaaml
 ```
 
+### Fedora Linux
+
+To install NiaAML on Fedora, use:
+
+```sh
+$ dnf install python-niaaml
+```
+
 ### Install From Source
 
 In case you want to install directly from the source code, use:
