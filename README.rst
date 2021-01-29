@@ -41,7 +41,8 @@ needs.
 
 The NiaAML framework allows you not only to run full pipeline optimization, but also separate implemented components such as classifiers, feature selection algorithms, etc. **It supports numerical and categorical features as well as missing values in datasets.**
 
-- **Documentation:** https://niaaml.readthedocs.io/en/latest/
+- **Documentation:** https://niaaml.readthedocs.io/en/latest/,
+- **Tested OS:** Windows, Ubuntu, Fedora, Linux Mint and CentOS. **However, that does not mean it does not work on others.**
 
 Installation
 ------------

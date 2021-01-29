@@ -21,10 +21,11 @@ NiaAML is a framework for Automated Machine Learning based on nature-inspired al
 
 The NiaAML framework allows you not only to run full pipeline optimization, but also to separate implemented components such as classifiers, feature selection algorithms, etc. **It supports numerical and categorical features as well as missing values in datasets.**
 
-* **Free software:** MIT license
-* **Documentation:** https://niaaml.readthedocs.io/en/latest/
-* **Python versions:** 3.6.x, 3.7.x, 3.8.x
-* **Dependencies:** [click](CONTRIBUTING.md#development-dependencies)
+* **Free software:** MIT license,
+* **Documentation:** https://niaaml.readthedocs.io/en/latest/,
+* **Python versions:** 3.6.x, 3.7.x, 3.8.x,
+* **Dependencies:** [click](CONTRIBUTING.md#development-dependencies),
+* **Tested OS:** Windows, Ubuntu, Fedora, Linux Mint and CentOS. **However, that does not mean it does not work on others.**
 
 ![NiaAML Architecture](.github/images/niaaml.png)
 
