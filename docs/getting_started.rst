@@ -5,7 +5,7 @@ This section is going to show you how to use the NiaAML framework. First install
 
 .. code:: bash
 
-    pip install niaaml
+    pip3 install niaaml
 
 After the successful installation you are ready to run your first example.
 

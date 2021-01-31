@@ -27,18 +27,18 @@ The NiaAML framework allows you not only to run full pipeline optimization, but 
 
 ## Installation
 
-### pip
+### pip3
 
-Install NiaAML with pip:
+Install NiaAML with pip3:
 
 ```sh
-pip install niaaml
+pip3 install niaaml
 ```
 
 In case you would like to try out the latest pre-release version of the framework, install it using:
 
 ```sh
-pip install niaaml --pre
+pip3 install niaaml --pre
 ```
 
 ### Fedora Linux

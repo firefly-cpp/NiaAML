@@ -41,17 +41,17 @@ Installation
 pip
 ~~~
 
-Install NiaAML with pip:
+Install NiaAML with pip3:
 
 .. code:: sh
 
-    pip install niaaml
+    pip3 install niaaml
 
 In case you would like to try out the latest pre-release version of the framework, install it using:
 
 .. code:: sh
 
-    pip install niaaml --pre
+    pip3 install niaaml --pre
 
 Install From Source
 ~~~~~~~~~~~~~~~~~~~
