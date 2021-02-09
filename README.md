@@ -1,4 +1,6 @@
-# NiaAML
+<p align="center"><img src=".github/images/niaaml_logo.png" alt="NiaAML" title="NiaAML"/></p>
+
+---
 
 [![PyPI Version](https://img.shields.io/pypi/v/niaaml.svg)](https://pypi.python.org/pypi/niaaml)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/niaaml.svg)
