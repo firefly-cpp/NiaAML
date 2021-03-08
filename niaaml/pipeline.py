@@ -170,7 +170,7 @@ class Pipeline:
         if self.__categorical_features_encoders is not None:
             to_drop = []
             enc_features = pd.DataFrame()
-            cols = [col for col in x.columns if x[col].dtype != np.dtype('float64') and x[col].dtype != np.dtype('int64')]
+            cols = [col for col in x.columns if not pd.api.types.is_numeric_dtype(x[col])]
             for c in cols:
                 self.__categorical_features_encoders[c].fit(x[[c]])
                 tr = self.__categorical_features_encoders[c].transform(x[[c]])
@@ -214,7 +214,7 @@ class Pipeline:
         if self.__categorical_features_encoders is not None:
             to_drop = []
             enc_features = pd.DataFrame()
-            cols = [col for col in x.columns if x[col].dtype != np.dtype('float64') and x[col].dtype != np.dtype('int64')]
+            cols = [col for col in x.columns if not pd.api.types.is_numeric_dtype(x[col])]
             for c in cols:
                 tr = self.__categorical_features_encoders[c].transform(x[[c]])
                 to_drop.append(c)

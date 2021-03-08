@@ -1,6 +1,7 @@
 from sklearn.impute import SimpleImputer as SI
 from niaaml.preprocessing.imputation.imputer import Imputer
 import numpy as np
+import pandas as pd
 
 __all__ = [
     'SimpleImputer'
@@ -38,7 +39,7 @@ class SimpleImputer(Imputer):
         Arguments:
             feature (pandas.core.frame.DataFrame): A column from DataFrame of features.
         """
-        if feature.dtypes.iloc[0] != np.dtype('int64') or feature.dtypes.iloc[0] != np.dtype('float64'):
+        if not pd.api.types.is_numeric_dtype(feature.iloc[:, 0]):
             replacement_val = feature.mode().iloc[0, 0]
             self.__simple_imputer.set_params(**{'fill_value': replacement_val, 'strategy': 'constant'})
             self.__simple_imputer.fit(feature)

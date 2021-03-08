@@ -25,7 +25,7 @@ def encode_categorical_features(features, encoder):
     encoders = {}
     to_drop = []
     enc_features = pd.DataFrame()
-    cols = [col for col in features.columns if features[col].dtype != np.dtype('float64') and features[col].dtype != np.dtype('int64')]
+    cols = [col for col in features.columns if not pd.api.types.is_numeric_dtype(features[col])]
     for c in cols:
         enc.fit(features[[c]])
         tr = enc.transform(features[[c]])
