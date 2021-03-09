@@ -1,17 +1,37 @@
 Changelog
 =========
 
-`1.1.1rc2 <https://github.com/lukapecnik/niaaml/tree/1.1.1rc2>`__ (2020-12-22)
+`1.1.1 <https://github.com/lukapecnik/NiaAML/tree/1.1.1>`__ (2021-03-09)
+------------------------------------------------------------------------
+
+`Full
+Changelog <https://github.com/lukapecnik/NiaAML/compare/1.1.1rc2...1.1.1>`__
+
+**Merged pull requests:**
+
+-  logo [ci skip] `#48 <https://github.com/lukapecnik/NiaAML/pull/48>`__
+   (`lukapecnik <https://github.com/lukapecnik>`__)
+-  Fedora package pushed to stable
+   `#46 <https://github.com/lukapecnik/NiaAML/pull/46>`__
+   (`firefly-cpp <https://github.com/firefly-cpp>`__)
+-  Restructuring of paper and editorial changes
+   `#45 <https://github.com/lukapecnik/NiaAML/pull/45>`__
+   (`adi3 <https://github.com/adi3>`__)
+-  Corrections of paper
+   `#44 <https://github.com/lukapecnik/NiaAML/pull/44>`__
+   (`firefly-cpp <https://github.com/firefly-cpp>`__)
+
+`1.1.1rc2 <https://github.com/lukapecnik/NiaAML/tree/1.1.1rc2>`__ (2020-12-22)
 ------------------------------------------------------------------------------
 
 `Full
-Changelog <https://github.com/lukapecnik/niaaml/compare/1.1.1rc1...1.1.1rc2>`__
+Changelog <https://github.com/lukapecnik/NiaAML/compare/1.1.1rc1...1.1.1rc2>`__
 
-`1.1.1rc1 <https://github.com/lukapecnik/niaaml/tree/1.1.1rc1>`__ (2020-12-22)
+`1.1.1rc1 <https://github.com/lukapecnik/NiaAML/tree/1.1.1rc1>`__ (2020-12-22)
 ------------------------------------------------------------------------------
 
 `Full
-Changelog <https://github.com/lukapecnik/niaaml/compare/1.1.0...1.1.1rc1>`__
+Changelog <https://github.com/lukapecnik/NiaAML/compare/1.1.0...1.1.1rc1>`__
 
 **Merged pull requests:**
 
@@ -19,17 +39,17 @@ Changelog <https://github.com/lukapecnik/niaaml/compare/1.1.0...1.1.1rc1>`__
    `#43 <https://github.com/lukapecnik/NiaAML/pull/43>`__
    (`lukapecnik <https://github.com/lukapecnik>`__)
 
-`1.1.0 <https://github.com/lukapecnik/niaaml/tree/1.1.0>`__ (2020-12-16)
+`1.1.0 <https://github.com/lukapecnik/NiaAML/tree/1.1.0>`__ (2020-12-16)
 ------------------------------------------------------------------------
 
 `Full
-Changelog <https://github.com/lukapecnik/niaaml/compare/1.0.0rc7...1.1.0>`__
+Changelog <https://github.com/lukapecnik/NiaAML/compare/1.0.0rc7...1.1.0>`__
 
-`1.0.0rc7 <https://github.com/lukapecnik/niaaml/tree/1.0.0rc7>`__ (2020-12-14)
+`1.0.0rc7 <https://github.com/lukapecnik/NiaAML/tree/1.0.0rc7>`__ (2020-12-14)
 ------------------------------------------------------------------------------
 
 `Full
-Changelog <https://github.com/lukapecnik/niaaml/compare/1.0.0rc6...1.0.0rc7>`__
+Changelog <https://github.com/lukapecnik/NiaAML/compare/1.0.0rc6...1.0.0rc7>`__
 
 **Closed issues:**
 
@@ -43,11 +63,11 @@ Changelog <https://github.com/lukapecnik/niaaml/compare/1.0.0rc6...1.0.0rc7>`__
    `#39 <https://github.com/lukapecnik/NiaAML/pull/39>`__
    (`firefly-cpp <https://github.com/firefly-cpp>`__)
 
-`1.0.0rc6 <https://github.com/lukapecnik/niaaml/tree/1.0.0rc6>`__ (2020-12-12)
+`1.0.0rc6 <https://github.com/lukapecnik/NiaAML/tree/1.0.0rc6>`__ (2020-12-12)
 ------------------------------------------------------------------------------
 
 `Full
-Changelog <https://github.com/lukapecnik/niaaml/compare/1.0.0rc5...1.0.0rc6>`__
+Changelog <https://github.com/lukapecnik/NiaAML/compare/1.0.0rc5...1.0.0rc6>`__
 
 **Closed issues:**
 
@@ -66,11 +86,11 @@ Changelog <https://github.com/lukapecnik/niaaml/compare/1.0.0rc5...1.0.0rc6>`__
    `#36 <https://github.com/lukapecnik/NiaAML/pull/36>`__
    (`firefly-cpp <https://github.com/firefly-cpp>`__)
 
-`1.0.0rc5 <https://github.com/lukapecnik/niaaml/tree/1.0.0rc5>`__ (2020-12-11)
+`1.0.0rc5 <https://github.com/lukapecnik/NiaAML/tree/1.0.0rc5>`__ (2020-12-11)
 ------------------------------------------------------------------------------
 
 `Full
-Changelog <https://github.com/lukapecnik/niaaml/compare/1.0.0rc4...1.0.0rc5>`__
+Changelog <https://github.com/lukapecnik/NiaAML/compare/1.0.0rc4...1.0.0rc5>`__
 
 **Closed issues:**
 
@@ -82,11 +102,11 @@ Changelog <https://github.com/lukapecnik/niaaml/compare/1.0.0rc4...1.0.0rc5>`__
 -  Conda support `#35 <https://github.com/lukapecnik/NiaAML/pull/35>`__
    (`lukapecnik <https://github.com/lukapecnik>`__)
 
-`1.0.0rc4 <https://github.com/lukapecnik/niaaml/tree/1.0.0rc4>`__ (2020-12-10)
+`1.0.0rc4 <https://github.com/lukapecnik/NiaAML/tree/1.0.0rc4>`__ (2020-12-10)
 ------------------------------------------------------------------------------
 
 `Full
-Changelog <https://github.com/lukapecnik/niaaml/compare/1.0.0rc3...1.0.0rc4>`__
+Changelog <https://github.com/lukapecnik/NiaAML/compare/1.0.0rc3...1.0.0rc4>`__
 
 **Merged pull requests:**
 
@@ -97,17 +117,17 @@ Changelog <https://github.com/lukapecnik/niaaml/compare/1.0.0rc3...1.0.0rc4>`__
    `#32 <https://github.com/lukapecnik/NiaAML/pull/32>`__
    (`firefly-cpp <https://github.com/firefly-cpp>`__)
 
-`1.0.0rc3 <https://github.com/lukapecnik/niaaml/tree/1.0.0rc3>`__ (2020-12-10)
+`1.0.0rc3 <https://github.com/lukapecnik/NiaAML/tree/1.0.0rc3>`__ (2020-12-10)
 ------------------------------------------------------------------------------
 
 `Full
-Changelog <https://github.com/lukapecnik/niaaml/compare/1.0.0rc2...1.0.0rc3>`__
+Changelog <https://github.com/lukapecnik/NiaAML/compare/1.0.0rc2...1.0.0rc3>`__
 
-`1.0.0rc2 <https://github.com/lukapecnik/niaaml/tree/1.0.0rc2>`__ (2020-12-08)
+`1.0.0rc2 <https://github.com/lukapecnik/NiaAML/tree/1.0.0rc2>`__ (2020-12-08)
 ------------------------------------------------------------------------------
 
 `Full
-Changelog <https://github.com/lukapecnik/niaaml/compare/1.0.0rc1...1.0.0rc2>`__
+Changelog <https://github.com/lukapecnik/NiaAML/compare/1.0.0rc1...1.0.0rc2>`__
 
 **Merged pull requests:**
 
@@ -123,11 +143,11 @@ Changelog <https://github.com/lukapecnik/niaaml/compare/1.0.0rc1...1.0.0rc2>`__
    `#27 <https://github.com/lukapecnik/NiaAML/pull/27>`__
    (`lukapecnik <https://github.com/lukapecnik>`__)
 
-`1.0.0rc1 <https://github.com/lukapecnik/niaaml/tree/1.0.0rc1>`__ (2020-12-06)
+`1.0.0rc1 <https://github.com/lukapecnik/NiaAML/tree/1.0.0rc1>`__ (2020-12-06)
 ------------------------------------------------------------------------------
 
 `Full
-Changelog <https://github.com/lukapecnik/niaaml/compare/0.1.4...1.0.0rc1>`__
+Changelog <https://github.com/lukapecnik/NiaAML/compare/0.1.4...1.0.0rc1>`__
 
 **Merged pull requests:**
 
@@ -135,11 +155,11 @@ Changelog <https://github.com/lukapecnik/niaaml/compare/0.1.4...1.0.0rc1>`__
    `#26 <https://github.com/lukapecnik/NiaAML/pull/26>`__
    (`lukapecnik <https://github.com/lukapecnik>`__)
 
-`0.1.4 <https://github.com/lukapecnik/niaaml/tree/0.1.4>`__ (2020-12-05)
+`0.1.4 <https://github.com/lukapecnik/NiaAML/tree/0.1.4>`__ (2020-12-05)
 ------------------------------------------------------------------------
 
 `Full
-Changelog <https://github.com/lukapecnik/niaaml/compare/0.1.3...0.1.4>`__
+Changelog <https://github.com/lukapecnik/NiaAML/compare/0.1.3...0.1.4>`__
 
 **Merged pull requests:**
 
@@ -150,17 +170,17 @@ Changelog <https://github.com/lukapecnik/niaaml/compare/0.1.3...0.1.4>`__
    `#24 <https://github.com/lukapecnik/NiaAML/pull/24>`__
    (`firefly-cpp <https://github.com/firefly-cpp>`__)
 
-`0.1.3 <https://github.com/lukapecnik/niaaml/tree/0.1.3>`__ (2020-12-04)
+`0.1.3 <https://github.com/lukapecnik/NiaAML/tree/0.1.3>`__ (2020-12-04)
 ------------------------------------------------------------------------
 
 `Full
-Changelog <https://github.com/lukapecnik/niaaml/compare/0.1.3a1...0.1.3>`__
+Changelog <https://github.com/lukapecnik/NiaAML/compare/0.1.3a1...0.1.3>`__
 
-`0.1.3a1 <https://github.com/lukapecnik/niaaml/tree/0.1.3a1>`__ (2020-12-01)
+`0.1.3a1 <https://github.com/lukapecnik/NiaAML/tree/0.1.3a1>`__ (2020-12-01)
 ----------------------------------------------------------------------------
 
 `Full
-Changelog <https://github.com/lukapecnik/niaaml/compare/0.1.2...0.1.3a1>`__
+Changelog <https://github.com/lukapecnik/NiaAML/compare/0.1.2...0.1.3a1>`__
 
 **Merged pull requests:**
 
@@ -171,11 +191,11 @@ Changelog <https://github.com/lukapecnik/niaaml/compare/0.1.2...0.1.3a1>`__
    `#22 <https://github.com/lukapecnik/NiaAML/pull/22>`__
    (`lukapecnik <https://github.com/lukapecnik>`__)
 
-`0.1.2 <https://github.com/lukapecnik/niaaml/tree/0.1.2>`__ (2020-11-30)
+`0.1.2 <https://github.com/lukapecnik/NiaAML/tree/0.1.2>`__ (2020-11-30)
 ------------------------------------------------------------------------
 
 `Full
-Changelog <https://github.com/lukapecnik/niaaml/compare/0.1.2a1...0.1.2>`__
+Changelog <https://github.com/lukapecnik/NiaAML/compare/0.1.2a1...0.1.2>`__
 
 **Implemented enhancements:**
 
@@ -198,15 +218,12 @@ Changelog <https://github.com/lukapecnik/niaaml/compare/0.1.2a1...0.1.2>`__
 -  badges and readme update
    `#19 <https://github.com/lukapecnik/NiaAML/pull/19>`__
    (`lukapecnik <https://github.com/lukapecnik>`__)
--  Pipeline optimizer progress
-   `#8 <https://github.com/lukapecnik/NiaAML/pull/8>`__
-   (`lukapecnik <https://github.com/lukapecnik>`__)
 
-`0.1.2a1 <https://github.com/lukapecnik/niaaml/tree/0.1.2a1>`__ (2020-11-29)
+`0.1.2a1 <https://github.com/lukapecnik/NiaAML/tree/0.1.2a1>`__ (2020-11-29)
 ----------------------------------------------------------------------------
 
 `Full
-Changelog <https://github.com/lukapecnik/niaaml/compare/0.1.1...0.1.2a1>`__
+Changelog <https://github.com/lukapecnik/NiaAML/compare/0.1.1...0.1.2a1>`__
 
 **Closed issues:**
 
@@ -221,11 +238,11 @@ Changelog <https://github.com/lukapecnik/niaaml/compare/0.1.1...0.1.2a1>`__
    `#17 <https://github.com/lukapecnik/NiaAML/pull/17>`__
    (`lukapecnik <https://github.com/lukapecnik>`__)
 
-`0.1.1 <https://github.com/lukapecnik/niaaml/tree/0.1.1>`__ (2020-11-28)
+`0.1.1 <https://github.com/lukapecnik/NiaAML/tree/0.1.1>`__ (2020-11-28)
 ------------------------------------------------------------------------
 
 `Full
-Changelog <https://github.com/lukapecnik/niaaml/compare/0.1.0...0.1.1>`__
+Changelog <https://github.com/lukapecnik/NiaAML/compare/0.1.0...0.1.1>`__
 
 **Closed issues:**
 
@@ -238,11 +255,11 @@ Changelog <https://github.com/lukapecnik/niaaml/compare/0.1.0...0.1.1>`__
    `#12 <https://github.com/lukapecnik/NiaAML/pull/12>`__
    (`lukapecnik <https://github.com/lukapecnik>`__)
 
-`0.1.0 <https://github.com/lukapecnik/niaaml/tree/0.1.0>`__ (2020-11-27)
+`0.1.0 <https://github.com/lukapecnik/NiaAML/tree/0.1.0>`__ (2020-11-27)
 ------------------------------------------------------------------------
 
 `Full
-Changelog <https://github.com/lukapecnik/niaaml/compare/fbf47d71adb6ba72aa9210e4ead316b318253862...0.1.0>`__
+Changelog <https://github.com/lukapecnik/NiaAML/compare/fbf47d71adb6ba72aa9210e4ead316b318253862...0.1.0>`__
 
 **Implemented enhancements:**
 
@@ -261,6 +278,9 @@ Changelog <https://github.com/lukapecnik/niaaml/compare/fbf47d71adb6ba72aa9210e4
    (`lukapecnik <https://github.com/lukapecnik>`__)
 -  Pipeline methods implementation
    `#9 <https://github.com/lukapecnik/NiaAML/pull/9>`__
+   (`lukapecnik <https://github.com/lukapecnik>`__)
+-  Pipeline optimizer progress
+   `#8 <https://github.com/lukapecnik/NiaAML/pull/8>`__
    (`lukapecnik <https://github.com/lukapecnik>`__)
 -  Implementation of jDEFSTH algorithm for feature selection
    `#7 <https://github.com/lukapecnik/NiaAML/pull/7>`__
