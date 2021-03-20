@@ -62,7 +62,7 @@ In case you want to install directly from the source code, use:
 
     git clone https://github.com/lukapecnik/NiaAML.git
     cd NiaAML
-    python setup.py install
+    python3 setup.py install
 
 Graphical User Interface
 ------------------------

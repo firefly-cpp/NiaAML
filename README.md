@@ -58,7 +58,7 @@ In case you want to install directly from the source code, use:
 ```sh
 $ git clone https://github.com/lukapecnik/NiaAML.git
 $ cd NiaAML
-$ python setup.py install
+$ python3 setup.py install
 ```
 
 ## Graphical User Interface
@@ -223,6 +223,22 @@ This project follows the [all-contributors](https://github.com/all-contributors/
 We encourage you to contribute to NiaAML! Please check out the [Contributing to NiaAML guide](CONTRIBUTING.md) for guidelines about how to proceed.
 
 Everyone interacting in NiaAML's codebases, issue trackers, chat rooms and mailing lists is expected to follow the NiaAML [code of conduct](CODE_OF_CONDUCT.md).
+
+## Support
+
+### Usage Questions
+
+If you have questions about how to use NiaAML, or have an issue that isn’t related to a bug, you can place a question on [StackOverflow](https://stackoverflow.com/).
+
+You can also seek support via [email](mailto:lukapecnik96@gmail.com)
+
+NiaAML is a community supported package, nobody is paid to develop package nor to handle NiaAML support.
+
+**All people answering your questions are doing it with their own time, so please be kind and provide as much information as possible.**
+
+## Issues
+
+Before creating bug reports, please check existing issues list as you might find out that you don't need to create one. When you are creating a bug report, please include as many details as possible in the [issue template](.github/templates/ISSUE_TEMPLATE.md).
 
 ## Licence
 

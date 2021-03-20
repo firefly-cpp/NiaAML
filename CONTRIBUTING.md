@@ -67,15 +67,3 @@ Build the documentation:
 ```sh
 $ poetry run sphinx-build ./docs ./docs/_build
 ```
-
-## Support
-
-### Usage Questions
-
-If you have questions about how to use NiaAML, or have an issue that isn’t related to a bug, you can place a question on [StackOverflow](https://stackoverflow.com/).
-
-You can also seek support via [email](mailto:lukapecnik96@gmail.com)
-
-NiaAML is a community supported package, nobody is paid to develop package nor to handle NiaAML support.
-
-**All people answering your questions are doing it with their own time, so please be kind and provide as much information as possible.**
