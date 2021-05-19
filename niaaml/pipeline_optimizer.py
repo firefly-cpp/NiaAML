@@ -1,4 +1,3 @@
-import numpy as np
 from niaaml.pipeline import Pipeline, _PipelineBenchmark
 from niaaml.classifiers import ClassifierFactory
 from niaaml.preprocessing.feature_selection import FeatureSelectionAlgorithmFactory
@@ -11,7 +10,6 @@ from niaaml.preprocessing.encoding.utility import encode_categorical_features
 from niaaml.preprocessing.imputation.utility import impute_features
 from niaaml.fitness import FitnessFactory
 from niaaml.logger import Logger
-import pandas as pd
 
 __all__ = [
     "PipelineOptimizer",

@@ -1,7 +1,5 @@
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score
 from niaaml.utilities import MinMax, get_bin_index, OptimizationStats
-from niaaml.preprocessing.encoding.utility import encode_categorical_features
 from niaaml.fitness import FitnessFactory
 from niapy.benchmarks import Benchmark
 from niapy.util.factory import get_algorithm

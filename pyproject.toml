@@ -17,7 +17,7 @@ include = [
 python = "^3.6.2"
 numpy = "^1.19.1"
 scikit-learn = "^0.23.2"
-NiaPy = "^2.0.0rc15"
+niapy = "^2.0.0rc15"
 pandas = "^1.1.4"
 
 [tool.poetry.dev-dependencies]
