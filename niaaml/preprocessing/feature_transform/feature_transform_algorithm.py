@@ -1,12 +1,11 @@
 from niaaml.preprocessing.preprocessing_algorithm import PreprocessingAlgorithm
 
-__all__ = [
-    'FeatureTransformAlgorithm'
-]
+__all__ = ["FeatureTransformAlgorithm"]
+
 
 class FeatureTransformAlgorithm(PreprocessingAlgorithm):
     r"""Class for implementing feature transform algorithms.
-    
+
     Date:
         2020
 
@@ -27,7 +26,7 @@ class FeatureTransformAlgorithm(PreprocessingAlgorithm):
             x (pandas.core.frame.DataFrame): n samples to fit transformation algorithm.
         """
         return
-    
+
     def transform(self, x, **kwargs):
         r"""Transforms the given x data.
 

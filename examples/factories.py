@@ -19,21 +19,21 @@ e_factory = EncoderFactory()
 i_factory = ImputerFactory()
 
 # get an instance of the MultiLayerPerceptron class
-mlp = classifier_factory.get_result('MultiLayerPerceptron')
+mlp = classifier_factory.get_result("MultiLayerPerceptron")
 
 # get an instance of the ParticleSwarmOptimization class
-pso = fsa_factory.get_result('ParticleSwarmOptimization')
+pso = fsa_factory.get_result("ParticleSwarmOptimization")
 
 # get an instance of the Normalizer class
-normalizer = fta_factory.get_result('Normalizer')
+normalizer = fta_factory.get_result("Normalizer")
 
 # get an instance of the Precision class
-precision = f_factory.get_result('Precision')
+precision = f_factory.get_result("Precision")
 
-#get an instance of the OneHotEncoder class
-ohe = e_factory.get_result('OneHotEncoder')
+# get an instance of the OneHotEncoder class
+ohe = e_factory.get_result("OneHotEncoder")
 
-#get an instance of the SimpleImputer class
-imp = i_factory.get_result('SimpleImputer')
+# get an instance of the SimpleImputer class
+imp = i_factory.get_result("SimpleImputer")
 
 # variables mlp, pso, normalizer, precision, ohe and imp contain instances of the classes with the passed names

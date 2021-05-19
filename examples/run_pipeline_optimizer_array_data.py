@@ -11,7 +11,7 @@ The instantiated PipelineOptimizer try to compose the best pipeline with the com
 # in this case random dummy arrays are generated
 data_reader = BasicDataReader(
     x=numpy.random.uniform(low=0.0, high=15.0, size=(50, 3)),
-    y=numpy.random.choice(['Class 1', 'Class 2'], size=50)
+    y=numpy.random.choice(["Class 1", "Class 2"], size=50),
 )
 
 # instantiate PipelineOptimizer that chooses among specified classifiers, feature selection algorithms and feature transform algorithms
@@ -20,18 +20,32 @@ data_reader = BasicDataReader(
 # if log is False, logging is turned off
 pipeline_optimizer = PipelineOptimizer(
     data=data_reader,
-    classifiers=['AdaBoost', 'Bagging', 'MultiLayerPerceptron', 'RandomForest', 'ExtremelyRandomizedTrees', 'LinearSVC'],
-    feature_selection_algorithms=['SelectKBest', 'SelectPercentile', 'ParticleSwarmOptimization', 'VarianceThreshold'],
-    feature_transform_algorithms=['Normalizer', 'StandardScaler'],
+    classifiers=[
+        "AdaBoost",
+        "Bagging",
+        "MultiLayerPerceptron",
+        "RandomForest",
+        "ExtremelyRandomizedTrees",
+        "LinearSVC",
+    ],
+    feature_selection_algorithms=[
+        "SelectKBest",
+        "SelectPercentile",
+        "ParticleSwarmOptimization",
+        "VarianceThreshold",
+    ],
+    feature_transform_algorithms=["Normalizer", "StandardScaler"],
     log=True,
     log_verbose=True,
-    log_output_file='output.log'
+    log_output_file="output.log",
 )
 
 # runs the optimization process
 # one of the possible pipelines in this case is: SelectPercentile -> Normalizer -> RandomForest
 # returns the best found pipeline
 # the chosen fitness function and optimization algorithm are Accuracy and Particle Swarm Algorithm
-pipeline = pipeline_optimizer.run('Accuracy', 10, 10, 30, 30, 'ParticleSwarmAlgorithm', 'ParticleSwarmAlgorithm')
+pipeline = pipeline_optimizer.run(
+    "Accuracy", 10, 10, 30, 30, "ParticleSwarmAlgorithm", "ParticleSwarmAlgorithm"
+)
 
 # pipeline variable contains Pipeline object that can be used for further classification, exported as an object (that can be later loaded and used) or exported as text file

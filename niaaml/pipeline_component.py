@@ -1,13 +1,12 @@
 import numpy as np
 from niaaml.utilities import MinMax
 
-__all__ = [
-    'PipelineComponent'
-]
+__all__ = ["PipelineComponent"]
+
 
 class PipelineComponent:
     r"""Class for implementing pipeline components.
-    
+
     Date:
         2020
 
@@ -20,7 +19,7 @@ class PipelineComponent:
     Attributes:
         Name (str): Name of the pipeline component.
         _params (Dict[str, ParameterDefinition]): Dictionary of components's parameters with possible values. Possible parameter values are given as an instance of the ParameterDefinition class.
-    
+
     See Also:
         * :class:`niaaml.utilities.ParameterDefinition`
     """
@@ -34,15 +33,13 @@ class PipelineComponent:
         """
         self._params = dict()
         self.set_parameters(**kwargs)
-    
+
     def set_parameters(self, **kwargs):
-        r"""Set the parameters/arguments of the pipeline component.
-        """
+        r"""Set the parameters/arguments of the pipeline component."""
         return
-    
+
     def get_params_dict(self):
-        r"""Return parameters definition dictionary.
-        """
+        r"""Return parameters definition dictionary."""
         return self._params
 
     def to_string(self):
@@ -51,20 +48,20 @@ class PipelineComponent:
         Returns:
             str: User friendly representation of the object.
         """
-        return 'Name: {name}\nArguments:\n{args}'
-    
+        return "Name: {name}\nArguments:\n{args}"
+
     def _parameters_to_string(self, dictionary):
         r"""User friendly representation of component's parameters.
 
         Arguments:
             dictionary (dict): Dictionary of parameters.
-        
+
         Returns:
             str: User friendly representation of component's parameters.
         """
-        args_string = ''
+        args_string = ""
         for key in dictionary:
-            args_string += '\t' + key + ' = ' + str(dictionary[key]) + '\n'
+            args_string += "\t" + key + " = " + str(dictionary[key]) + "\n"
         if len(args_string) == 0:
-            args_string = 'None'
+            args_string = "None"
         return args_string

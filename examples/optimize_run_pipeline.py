@@ -12,20 +12,37 @@ This example presents how to use the Pipeline class individually. You may use th
 """
 
 # prepare data reader using csv file
-data_reader = CSVDataReader(src=os.path.dirname(os.path.abspath(__file__)) + '/example_files/dataset.csv', has_header=False, contains_classes=True)
+data_reader = CSVDataReader(
+    src=os.path.dirname(os.path.abspath(__file__)) + "/example_files/dataset.csv",
+    has_header=False,
+    contains_classes=True,
+)
 
 # instantiate a Pipeline object
 pipeline = Pipeline(
     feature_selection_algorithm=VarianceThreshold(),
     feature_transform_algorithm=Normalizer(),
-    classifier=MultiLayerPerceptron()
+    classifier=MultiLayerPerceptron(),
 )
 
 # run pipeline optimization process (returns fitness value, but sets the best parameters for classifier, feature selection algorithm and feature transform algorithm during the process)
-pipeline.optimize(data_reader.get_x(), data_reader.get_y(), 10, 50, 'ParticleSwarmAlgorithm', 'Accuracy')
+pipeline.optimize(
+    data_reader.get_x(),
+    data_reader.get_y(),
+    10,
+    50,
+    "ParticleSwarmAlgorithm",
+    "Accuracy",
+)
 
 # run the pipeline using dummy data
 # you could run the pipeline before the optimization process, but get wrong predictions as nothing in the pipeline is fit for the given dataset
-predicted = pipeline.run(pandas.DataFrame(numpy.random.uniform(low=0.0, high=15.0, size=(30, data_reader.get_x().shape[1]))))
+predicted = pipeline.run(
+    pandas.DataFrame(
+        numpy.random.uniform(
+            low=0.0, high=15.0, size=(30, data_reader.get_x().shape[1])
+        )
+    )
+)
 
 # pipeline variable contains Pipeline object that can be used for further classification, exported as an object (that can be later loaded and used) or exported as text file

@@ -12,8 +12,8 @@ the form of a Pipeline object.
 pipeline = Pipeline(
     feature_selection_algorithm=SelectKBest(),
     feature_transform_algorithm=Normalizer(),
-    classifier=AdaBoost()
+    classifier=AdaBoost(),
 )
 
 # export the object to a file in a user-friendly form
-pipeline.export_text('exported_pipeline.txt')
+pipeline.export_text("exported_pipeline.txt")

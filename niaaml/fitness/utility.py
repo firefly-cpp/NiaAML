@@ -4,9 +4,8 @@ from niaaml.fitness.cohen_kappa import CohenKappa
 from niaaml.fitness.precision import Precision
 from niaaml.fitness.f1 import F1
 
-__all__ = [
-    'FitnessFactory'
-]
+__all__ = ["FitnessFactory"]
+
 
 class FitnessFactory(Factory):
     r"""Class with string mappings to fitness class.
@@ -19,11 +18,10 @@ class FitnessFactory(Factory):
     """
 
     def _set_parameters(self, **kwargs):
-        r"""Set the parameters/arguments of the factory.
-        """
+        r"""Set the parameters/arguments of the factory."""
         self._entities = {
-            'Accuracy': Accuracy,
-            'Precision': Precision,
-            'CohenKappa': CohenKappa,
-            'F1': F1
+            "Accuracy": Accuracy,
+            "Precision": Precision,
+            "CohenKappa": CohenKappa,
+            "F1": F1,
         }

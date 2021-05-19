@@ -5,13 +5,23 @@ from sklearn.neighbors import KNeighborsClassifier as KNC
 import numpy as np
 
 import warnings
-from sklearn.exceptions import ChangedBehaviorWarning, ConvergenceWarning, DataConversionWarning, DataDimensionalityWarning, EfficiencyWarning, FitFailedWarning, NonBLASDotWarning, UndefinedMetricWarning
+from sklearn.exceptions import (
+    ChangedBehaviorWarning,
+    ConvergenceWarning,
+    DataConversionWarning,
+    DataDimensionalityWarning,
+    EfficiencyWarning,
+    FitFailedWarning,
+    NonBLASDotWarning,
+    UndefinedMetricWarning,
+)
 
-__all__ = ['KNeighbors']
+__all__ = ["KNeighbors"]
+
 
 class KNeighbors(Classifier):
     r"""Implementation of k neighbors classifier.
-    
+
     Date:
         2020
 
@@ -20,39 +30,37 @@ class KNeighbors(Classifier):
 
     License:
         MIT
-    
+
     Reference:
         “Neighbourhood Components Analysis”, J. Goldberger, S. Roweis, G. Hinton, R. Salakhutdinov, Advances in Neural Information Processing Systems, Vol. 17, May 2005, pp. 513-520.
-    
+
     Documentation:
         https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier.html
 
     See Also:
         * :class:`niaaml.classifiers.Classifier`
     """
-    Name = 'K Neighbors Classifier'
+    Name = "K Neighbors Classifier"
 
     def __init__(self, **kwargs):
-        r"""Initialize KNeighbors instance.
-        """
-        warnings.filterwarnings(action='ignore', category=ChangedBehaviorWarning)
-        warnings.filterwarnings(action='ignore', category=ConvergenceWarning)
-        warnings.filterwarnings(action='ignore', category=DataConversionWarning)
-        warnings.filterwarnings(action='ignore', category=DataDimensionalityWarning)
-        warnings.filterwarnings(action='ignore', category=EfficiencyWarning)
-        warnings.filterwarnings(action='ignore', category=FitFailedWarning)
-        warnings.filterwarnings(action='ignore', category=NonBLASDotWarning)
-        warnings.filterwarnings(action='ignore', category=UndefinedMetricWarning)
+        r"""Initialize KNeighbors instance."""
+        warnings.filterwarnings(action="ignore", category=ChangedBehaviorWarning)
+        warnings.filterwarnings(action="ignore", category=ConvergenceWarning)
+        warnings.filterwarnings(action="ignore", category=DataConversionWarning)
+        warnings.filterwarnings(action="ignore", category=DataDimensionalityWarning)
+        warnings.filterwarnings(action="ignore", category=EfficiencyWarning)
+        warnings.filterwarnings(action="ignore", category=FitFailedWarning)
+        warnings.filterwarnings(action="ignore", category=NonBLASDotWarning)
+        warnings.filterwarnings(action="ignore", category=UndefinedMetricWarning)
 
         self._params = dict(
-            weights = ParameterDefinition(['uniform', 'distance']),
-            algorithm = ParameterDefinition(['auto', 'ball_tree', 'kd_tree', 'brute'])
+            weights=ParameterDefinition(["uniform", "distance"]),
+            algorithm=ParameterDefinition(["auto", "ball_tree", "kd_tree", "brute"]),
         )
         self.__kn_classifier = KNC()
 
     def set_parameters(self, **kwargs):
-        r"""Set the parameters/arguments of the algorithm.
-        """
+        r"""Set the parameters/arguments of the algorithm."""
         self.__kn_classifier.set_params(**kwargs)
 
     def fit(self, x, y, **kwargs):
@@ -84,4 +92,7 @@ class KNeighbors(Classifier):
         Returns:
             str: User friendly representation of the object.
         """
-        return Classifier.to_string(self).format(name=self.Name, args=self._parameters_to_string(self.__kn_classifier.get_params()))
+        return Classifier.to_string(self).format(
+            name=self.Name,
+            args=self._parameters_to_string(self.__kn_classifier.get_params()),
+        )

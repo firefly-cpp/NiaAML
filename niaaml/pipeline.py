@@ -3,23 +3,21 @@ from sklearn.metrics import accuracy_score
 from niaaml.utilities import MinMax, get_bin_index, OptimizationStats
 from niaaml.preprocessing.encoding.utility import encode_categorical_features
 from niaaml.fitness import FitnessFactory
-from NiaPy.benchmarks import Benchmark
-from NiaPy.algorithms.utility import AlgorithmUtility
-from NiaPy.task import StoppingTask
+from niapy.benchmarks import Benchmark
+from niapy.util.factory import get_algorithm
+from niapy.task import StoppingTask
 import pandas as pd
 import numpy as np
 import copy
 import pickle
 import os
 
-__all__ = [
-    'Pipeline',
-    '_PipelineBenchmark'
-]
+__all__ = ["Pipeline", "_PipelineBenchmark"]
+
 
 class Pipeline:
     r"""Classification pipeline defined by optional preprocessing steps and classifier.
-    
+
     Date:
         2020
 
@@ -37,13 +35,11 @@ class Pipeline:
         __best_stats (OptimizationStats): Statistics of the most successful setup of parameters.
         __categorical_features_encoders (Dict[FeatureEncoder]): Instances of FeatureEncoder for all categorical features.
         __imputers (Dict[Imputer]): Dictionary of instances of Imputer for all columns that contained missing values during optimization process.
-        __niapy_algorithm_utility (AlgorithmUtility): Class used for getting an optimiziation algorithm using its name.
         __logger (Logger): Logger instance.
     """
 
     def __init__(self, **kwargs):
-        r"""Initialize task.
-        """
+        r"""Initialize task."""
         self.__feature_selection_algorithm = None
         self.__feature_transform_algorithm = None
         self.__classifier = None
@@ -51,11 +47,19 @@ class Pipeline:
         self.__best_stats = None
         self.__categorical_features_encoders = None
         self.__imputers = None
-        self.__niapy_algorithm_utility = AlgorithmUtility()
         self.__logger = None
         self._set_parameters(**kwargs)
-    
-    def _set_parameters(self, classifier, feature_selection_algorithm=None, feature_transform_algorithm=None, categorical_features_encoders = None, imputers = None, logger = None, **kwargs):
+
+    def _set_parameters(
+        self,
+        classifier,
+        feature_selection_algorithm=None,
+        feature_transform_algorithm=None,
+        categorical_features_encoders=None,
+        imputers=None,
+        logger=None,
+        **kwargs
+    ):
         r"""Set the parameters/arguments of the task.
 
         Arguments:
@@ -72,7 +76,7 @@ class Pipeline:
         self.__categorical_features_encoders = categorical_features_encoders
         self.__imputers = imputers
         self.__logger = logger
-    
+
     def get_feature_selection_algorithm(self):
         r"""Get deep copy of the feature selection algorithm.
 
@@ -80,7 +84,7 @@ class Pipeline:
             FeatureSelectionAlgorithm: Instance of the FeatureSelectionAlgorithm object.
         """
         return copy.deepcopy(self.__feature_selection_algorithm)
-    
+
     def get_feature_transform_algorithm(self):
         r"""Get deep copy of the feature transform algorithm.
 
@@ -88,7 +92,7 @@ class Pipeline:
             FeatureTransformAlgorithm: Instance of the FeatureTransformAlgorithm object.
         """
         return copy.deepcopy(self.__feature_transform_algorithm)
-    
+
     def get_classifier(self):
         r"""Get deep copy of the classifier.
 
@@ -96,7 +100,7 @@ class Pipeline:
             Classifier: Instance of the Classifier object.
         """
         return copy.deepcopy(self.__classifier)
-    
+
     def get_logger(self):
         r"""Get logger.
 
@@ -104,7 +108,7 @@ class Pipeline:
             Logger: Instance of the Logger object.
         """
         return self.__logger
-    
+
     def get_stats(self):
         r"""Get optimization statistics.
 
@@ -112,43 +116,44 @@ class Pipeline:
             OptimizationStats: Instance of the OptimizationStats object.
         """
         return self.__best_stats
-    
+
     def set_feature_selection_algorithm(self, value):
-        r"""Set feature selection algorithm.
-        """
+        r"""Set feature selection algorithm."""
         self.__feature_selection_algorithm = value
-    
+
     def set_feature_transform_algorithm(self, value):
-        r"""Set feature transform algorithm.
-        """
+        r"""Set feature transform algorithm."""
         self.__feature_transform_algorithm = value
-    
+
     def set_classifier(self, value):
-        r"""Set classifier.
-        """
+        r"""Set classifier."""
         self.__classifier = value
-    
+
     def set_selected_features_mask(self, value):
-        r"""Set selected features mask.
-        """
+        r"""Set selected features mask."""
         self.__selected_features_mask = value
-    
+
     def set_stats(self, value):
-        r"""Set stats.
-        """
+        r"""Set stats."""
         self.__best_stats = value
-    
+
     def set_categorical_features_encoders(self, value):
-        r"""Set categorical features' encoders.
-        """
+        r"""Set categorical features' encoders."""
         self.__categorical_features_encoders = value
 
     def set_imputers(self, value):
-        r"""Set imputers.
-        """
+        r"""Set imputers."""
         self.__imputers = value
-    
-    def optimize(self, x, y, population_size, number_of_evaluations, optimization_algorithm, fitness_function):
+
+    def optimize(
+        self,
+        x,
+        y,
+        population_size,
+        number_of_evaluations,
+        optimization_algorithm,
+        fitness_function,
+    ):
         r"""Optimize pipeline's hyperparameters.
 
         Arguments:
@@ -158,7 +163,7 @@ class Pipeline:
             number_of_evaluations (uint): Number of maximum evaluations.
             optimization_algorithm (str): Name of the optimization algorithm to use.
             fitness_function (str): Name of the fitness function to use.
-        
+
         Returns:
             float: Best fitness value found in optimization process.
         """
@@ -170,7 +175,9 @@ class Pipeline:
         if self.__categorical_features_encoders is not None:
             to_drop = []
             enc_features = pd.DataFrame()
-            cols = [col for col in x.columns if not pd.api.types.is_numeric_dtype(x[col])]
+            cols = [
+                col for col in x.columns if not pd.api.types.is_numeric_dtype(x[col])
+            ]
             for c in cols:
                 self.__categorical_features_encoders[c].fit(x[[c]])
                 tr = self.__categorical_features_encoders[c].transform(x[[c]])
@@ -187,23 +194,23 @@ class Pipeline:
 
         D += len(self.__classifier.get_params_dict().keys())
 
-        algo = self.__niapy_algorithm_utility.get_algorithm(optimization_algorithm)
+        algo = get_algorithm(optimization_algorithm)
         algo.NP = population_size
 
         task = StoppingTask(
-            D=D,
-            nFES=number_of_evaluations,
-            benchmark=_PipelineBenchmark(x, y, self, population_size, fitness_function)
-            )
+            dimension=D,
+            max_evals=number_of_evaluations,
+            benchmark=_PipelineBenchmark(x, y, self, population_size, fitness_function),
+        )
         best = algo.run(task)
         return best[1]
-    
+
     def run(self, x):
         r"""Runs the pipeline.
 
         Arguments:
             x (pandas.core.frame.DataFrame): n samples to classify.
-        
+
         Returns:
             pandas.core.series.Series: n predicted classes of the samples in the x array.
         """
@@ -214,7 +221,9 @@ class Pipeline:
         if self.__categorical_features_encoders is not None:
             to_drop = []
             enc_features = pd.DataFrame()
-            cols = [col for col in x.columns if not pd.api.types.is_numeric_dtype(x[col])]
+            cols = [
+                col for col in x.columns if not pd.api.types.is_numeric_dtype(x[col])
+            ]
             for c in cols:
                 tr = self.__categorical_features_encoders[c].transform(x[[c]])
                 to_drop.append(c)
@@ -222,13 +231,17 @@ class Pipeline:
             x = x.drop(to_drop, axis=1)
             x = pd.concat([x, enc_features], axis=1)
 
-        x = x.loc[:, self.__selected_features_mask] if self.__selected_features_mask is not None else x
-        
+        x = (
+            x.loc[:, self.__selected_features_mask]
+            if self.__selected_features_mask is not None
+            else x
+        )
+
         if self.__feature_transform_algorithm is not None:
             x = self.__feature_transform_algorithm.transform(x)
 
         return self.__classifier.predict(x)
-    
+
     def export(self, file_name):
         r"""Exports Pipeline object to a file for later use. Extension is added if not present.
 
@@ -239,16 +252,19 @@ class Pipeline:
             feature_selection_algorithm=self.__feature_selection_algorithm,
             feature_transform_algorithm=self.__feature_transform_algorithm,
             classifier=self.__classifier,
-            categorical_features_encoders=self.__categorical_features_encoders
+            categorical_features_encoders=self.__categorical_features_encoders,
         )
         pipeline.set_selected_features_mask(self.__selected_features_mask)
         pipeline.set_stats(self.__best_stats)
-        if len(os.path.splitext(file_name)[1]) == 0 or os.path.splitext(file_name)[1] != '.ppln':
-            file_name = file_name + '.ppln'
+        if (
+            len(os.path.splitext(file_name)[1]) == 0
+            or os.path.splitext(file_name)[1] != ".ppln"
+        ):
+            file_name = file_name + ".ppln"
 
-        with open(file_name, 'wb') as f:
+        with open(file_name, "wb") as f:
             pickle.dump(pipeline, f)
-    
+
     def export_text(self, file_name):
         r"""Exports Pipeline object to a user-friendly text file. Extension is added if not present.
 
@@ -259,16 +275,19 @@ class Pipeline:
             feature_selection_algorithm=self.__feature_selection_algorithm,
             feature_transform_algorithm=self.__feature_transform_algorithm,
             classifier=self.__classifier,
-            categorical_features_encoders=self.__categorical_features_encoders
+            categorical_features_encoders=self.__categorical_features_encoders,
         )
         pipeline.set_selected_features_mask(self.__selected_features_mask)
         pipeline.set_stats(self.__best_stats)
-        if len(os.path.splitext(file_name)[1]) == 0 or os.path.splitext(file_name)[1] != '.txt':
-            file_name = file_name + '.txt'
+        if (
+            len(os.path.splitext(file_name)[1]) == 0
+            or os.path.splitext(file_name)[1] != ".txt"
+        ):
+            file_name = file_name + ".txt"
 
-        with open(file_name, 'w') as f:
+        with open(file_name, "w") as f:
             f.write(pipeline.to_string())
-    
+
     @staticmethod
     def load(file_name):
         r"""Loads Pipeline object from a file.
@@ -276,36 +295,68 @@ class Pipeline:
         Returns:
             Pipeline: Loaded Pipeline instance.
         """
-        with open(file_name, 'rb') as f:
+        with open(file_name, "rb") as f:
             return pickle.load(f)
-    
+
     def to_string(self):
         r"""User friendly representation of the object.
 
         Returns:
             str: User friendly representation of the object.
         """
-        classifier_string = '\t' + self.__classifier.to_string().replace('\n', '\n\t')
-        feature_selection_algorithm_string = '\t' + self.__feature_selection_algorithm.to_string().replace('\n', '\n\t') if self.__feature_selection_algorithm is not None else '\tNone'
-        feature_transform_algorithm_string = '\t' + self.__feature_transform_algorithm.to_string().replace('\n', '\n\t') if self.__feature_transform_algorithm is not None else '\tNone'
-        stats_string = '\t' + self.__best_stats.to_string().replace('\n', '\n\t') if self.__best_stats is not None else '\tStatistics is not available.'
-        features_string = '\t' + str(self.__selected_features_mask) if self.__selected_features_mask is not None else '\tFeature selection result is not available.'
+        classifier_string = "\t" + self.__classifier.to_string().replace("\n", "\n\t")
+        feature_selection_algorithm_string = (
+            "\t" + self.__feature_selection_algorithm.to_string().replace("\n", "\n\t")
+            if self.__feature_selection_algorithm is not None
+            else "\tNone"
+        )
+        feature_transform_algorithm_string = (
+            "\t" + self.__feature_transform_algorithm.to_string().replace("\n", "\n\t")
+            if self.__feature_transform_algorithm is not None
+            else "\tNone"
+        )
+        stats_string = (
+            "\t" + self.__best_stats.to_string().replace("\n", "\n\t")
+            if self.__best_stats is not None
+            else "\tStatistics is not available."
+        )
+        features_string = (
+            "\t" + str(self.__selected_features_mask)
+            if self.__selected_features_mask is not None
+            else "\tFeature selection result is not available."
+        )
 
-        imputers_string = ''
+        imputers_string = ""
         if self.__imputers is not None:
-            imputers_string += 'Missing features\' imputers (feature\'s name or index: imputer\'s name):\n'
+            imputers_string += "Missing features' imputers (feature's name or index: imputer's name):\n"
             for key in self.__imputers:
-                imputers_string += '\t* ' + str(key) + ': ' + self.__imputers[key].to_string() + '\n'
-            imputers_string += '\n'
+                imputers_string += (
+                    "\t* " + str(key) + ": " + self.__imputers[key].to_string() + "\n"
+                )
+            imputers_string += "\n"
 
-        encoders_string = ''
+        encoders_string = ""
         if self.__categorical_features_encoders is not None:
-            encoders_string += 'Categorical features\' encoders (feature\'s name or index: encoder\'s name):\n'
+            encoders_string += "Categorical features' encoders (feature's name or index: encoder's name):\n"
             for key in self.__categorical_features_encoders:
-                encoders_string += '\t* ' + str(key) + ': ' + self.__categorical_features_encoders[key].to_string() + '\n'
-            encoders_string += '\n'
+                encoders_string += (
+                    "\t* "
+                    + str(key)
+                    + ": "
+                    + self.__categorical_features_encoders[key].to_string()
+                    + "\n"
+                )
+            encoders_string += "\n"
 
-        return 'Classifier:\n{classifier}\n\nFeature selection algorithm:\n{fsa}\n\nFeature transform algorithm:\n{fta}\n\nMask of selected features (True if selected, False if not):\n{feat}\n\n{imp}{enc}Statistics:\n{stats}'.format(classifier=classifier_string, fsa=feature_selection_algorithm_string, fta=feature_transform_algorithm_string, imp=imputers_string, enc=encoders_string, feat=features_string, stats=stats_string)
+        return "Classifier:\n{classifier}\n\nFeature selection algorithm:\n{fsa}\n\nFeature transform algorithm:\n{fta}\n\nMask of selected features (True if selected, False if not):\n{feat}\n\n{imp}{enc}Statistics:\n{stats}".format(
+            classifier=classifier_string,
+            fsa=feature_selection_algorithm_string,
+            fta=feature_transform_algorithm_string,
+            imp=imputers_string,
+            enc=encoders_string,
+            feat=features_string,
+            stats=stats_string,
+        )
 
     def to_string_slim(self):
         r"""Slim user friendly representation of the object.
@@ -314,11 +365,20 @@ class Pipeline:
             str: Slim user friendly representation of the object.
         """
 
-        return 'classifier - {classifier}, feature selection algorithm - {fsa}, feature transform algorithm - {fta}'.format(classifier=self.__classifier.Name, fsa=self.__feature_selection_algorithm.Name if self.__feature_selection_algorithm is not None else None, fta=self.__feature_transform_algorithm.Name if self.__feature_transform_algorithm is not None else None)
+        return "classifier - {classifier}, feature selection algorithm - {fsa}, feature transform algorithm - {fta}".format(
+            classifier=self.__classifier.Name,
+            fsa=self.__feature_selection_algorithm.Name
+            if self.__feature_selection_algorithm is not None
+            else None,
+            fta=self.__feature_transform_algorithm.Name
+            if self.__feature_transform_algorithm is not None
+            else None,
+        )
+
 
 class _PipelineBenchmark(Benchmark):
     r"""NiaPy Benchmark class implementation.
-    
+
     Date:
         2020
 
@@ -351,14 +411,22 @@ class _PipelineBenchmark(Benchmark):
         self.__x = x
         self.__y = y
         self.__population_size = population_size
-        self.__current_best_fitness = float('inf')
+        self.__current_best_fitness = float("inf")
         self.__fitness_function = FitnessFactory().get_result(fitness_function)
         self.__evals = 0
         self.__logger = self.__parent.get_logger()
         Benchmark.__init__(self, 0.0, 1.0)
 
     @staticmethod
-    def evaluate_pipeline(solution_vector, feature_selection_algorithm, feature_transform_algorithm, classifier, x, y, fitness_function):
+    def evaluate_pipeline(
+        solution_vector,
+        feature_selection_algorithm,
+        feature_transform_algorithm,
+        classifier,
+        x,
+        y,
+        fitness_function,
+    ):
         """Evaluate pipeline setup.
 
         Arguments:
@@ -369,41 +437,61 @@ class _PipelineBenchmark(Benchmark):
             x (pandas.core.frame.DataFrame): n samples to classify.
             y (pandas.core.series.Series): n classes of the samples in the x array.
             fitness_function (FitnessFunction): Fitness function instance.
-        
+
         Returns:
             Tuple[float, numpy.array[bool], OptimizationStats]:
                 1. Fitness.
                 2. Feature selection mask.
                 3. Optimization statistics.
         """
-        feature_selection_algorithm_params = feature_selection_algorithm.get_params_dict() if feature_selection_algorithm else dict()
-        feature_transform_algorithm_params = feature_transform_algorithm.get_params_dict() if feature_transform_algorithm else dict()
+        feature_selection_algorithm_params = (
+            feature_selection_algorithm.get_params_dict()
+            if feature_selection_algorithm
+            else dict()
+        )
+        feature_transform_algorithm_params = (
+            feature_transform_algorithm.get_params_dict()
+            if feature_transform_algorithm
+            else dict()
+        )
         classifier_params = classifier.get_params_dict()
 
         params_all = [
             (feature_selection_algorithm_params, feature_selection_algorithm),
             (feature_transform_algorithm_params, feature_transform_algorithm),
-            (classifier_params, classifier)
+            (classifier_params, classifier),
         ]
         solution_index = 0
-        
+
         for i in params_all:
             args = dict()
             for key in i[0]:
                 if i[0][key] is not None:
                     if isinstance(i[0][key].value, MinMax):
-                        val = solution_vector[solution_index] * i[0][key].value.max + i[0][key].value.min
-                        if i[0][key].param_type is np.intc or i[0][key].param_type is np.int or i[0][key].param_type is np.uintc or i[0][key].param_type is np.uint:
+                        val = (
+                            solution_vector[solution_index] * i[0][key].value.max
+                            + i[0][key].value.min
+                        )
+                        if (
+                            i[0][key].param_type is np.intc
+                            or i[0][key].param_type is np.int
+                            or i[0][key].param_type is np.uintc
+                            or i[0][key].param_type is np.uint
+                        ):
                             val = i[0][key].param_type(np.floor(val))
                             if val >= i[0][key].value.max:
                                 val = i[0][key].value.max - 1
                         args[key] = val
                     else:
-                        args[key] = i[0][key].value[get_bin_index(solution_vector[solution_index], len(i[0][key].value))]
+                        args[key] = i[0][key].value[
+                            get_bin_index(
+                                solution_vector[solution_index], len(i[0][key].value)
+                            )
+                        ]
                 solution_index += 1
             if i[1] is not None:
                 i[1].set_parameters(**args)
-        
+
         selected_features_mask = None
 
         x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2)
@@ -411,7 +499,9 @@ class _PipelineBenchmark(Benchmark):
         if feature_selection_algorithm is None:
             selected_features_mask = np.ones(x.shape[1], dtype=bool)
         else:
-            selected_features_mask = feature_selection_algorithm.select_features(x_train, y_train)
+            selected_features_mask = feature_selection_algorithm.select_features(
+                x_train, y_train
+            )
 
         x_train = x_train.loc[:, selected_features_mask]
         x_test = x_test.loc[:, selected_features_mask]
@@ -420,17 +510,22 @@ class _PipelineBenchmark(Benchmark):
             feature_transform_algorithm.fit(x_train)
             x_train = feature_transform_algorithm.transform(x_train)
             x_test = feature_transform_algorithm.transform(x_test)
-        
+
         classifier.fit(x_train, y_train)
         predictions = classifier.predict(x_test)
-        return fitness_function.get_fitness(predictions, y_test) * -1, selected_features_mask, OptimizationStats(predictions, y_test)
-    
+        return (
+            fitness_function.get_fitness(predictions, y_test) * -1,
+            selected_features_mask,
+            OptimizationStats(predictions, y_test),
+        )
+
     def function(self):
         r"""Override Benchmark function.
 
         Returns:
             Callable[[int, numpy.ndarray[float]], float]: Fitness evaluation function.
         """
+
         def evaluate(D, sol):
             r"""Evaluate pipeline.
 
@@ -443,19 +538,41 @@ class _PipelineBenchmark(Benchmark):
             """
             self.__evals += 1
             if self.__logger is not None:
-                self.__logger.log_progress('Evaluation {evals}'.format(evals=self.__evals))
+                self.__logger.log_progress(
+                    "Evaluation {evals}".format(evals=self.__evals)
+                )
 
             try:
-                feature_selection_algorithm = self.__parent.get_feature_selection_algorithm()
-                feature_transform_algorithm = self.__parent.get_feature_transform_algorithm()
+                feature_selection_algorithm = (
+                    self.__parent.get_feature_selection_algorithm()
+                )
+                feature_transform_algorithm = (
+                    self.__parent.get_feature_transform_algorithm()
+                )
                 classifier = self.__parent.get_classifier()
 
-                fitness, selected_features_mask, stats = _PipelineBenchmark.evaluate_pipeline(sol, feature_selection_algorithm, feature_transform_algorithm, classifier, self.__x, self.__y, self.__fitness_function)
+                (
+                    fitness,
+                    selected_features_mask,
+                    stats,
+                ) = _PipelineBenchmark.evaluate_pipeline(
+                    sol,
+                    feature_selection_algorithm,
+                    feature_transform_algorithm,
+                    classifier,
+                    self.__x,
+                    self.__y,
+                    self.__fitness_function,
+                )
 
                 if fitness < self.__current_best_fitness:
                     self.__current_best_fitness = fitness
-                    self.__parent.set_feature_selection_algorithm(feature_selection_algorithm)
-                    self.__parent.set_feature_transform_algorithm(feature_transform_algorithm)
+                    self.__parent.set_feature_selection_algorithm(
+                        feature_selection_algorithm
+                    )
+                    self.__parent.set_feature_transform_algorithm(
+                        feature_transform_algorithm
+                    )
                     self.__parent.set_classifier(classifier)
                     self.__parent.set_selected_features_mask(selected_features_mask)
                     self.__parent.set_stats(stats)
@@ -465,7 +582,11 @@ class _PipelineBenchmark(Benchmark):
                 # infeasible solution as it causes some kind of error
                 # return infinity as we are looking for maximum accuracy in the optimization process (1 - accuracy since it is a minimization problem)
                 if self.__logger is not None:
-                    self.__logger.log_optimization_error('Optimization failed for: {ppln}'.format(ppln=self.__parent.to_string_slim()))
-                return float('inf')
-        
+                    self.__logger.log_optimization_error(
+                        "Optimization failed for: {ppln}".format(
+                            ppln=self.__parent.to_string_slim()
+                        )
+                    )
+                return float("inf")
+
         return evaluate

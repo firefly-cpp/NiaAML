@@ -2,12 +2,13 @@ from sklearn.metrics import accuracy_score, precision_score, cohen_kappa_score, 
 import numpy as np
 
 __all__ = [
-    'MinMax',
-    'ParameterDefinition',
-    'OptimizationStats',
-    'Factory',
-    'get_bin_index'
+    "MinMax",
+    "ParameterDefinition",
+    "OptimizationStats",
+    "Factory",
+    "get_bin_index",
 ]
+
 
 def get_bin_index(value, number_of_bins):
     """Gets index of value's bin. Value must be between 0.0 and 1.0.
@@ -15,7 +16,7 @@ def get_bin_index(value, number_of_bins):
     Arguments:
         value (float): Value to put into bin.
         number_of_bins (uint): Number of bins on the interval [0.0, 1.0].
-    
+
     Returns:
         uint: Calculated index.
     """
@@ -24,9 +25,10 @@ def get_bin_index(value, number_of_bins):
         bin_index -= 1
     return bin_index
 
+
 class MinMax:
     r"""Class for ParameterDefinition's value property.
-    
+
     Date:
         2020
 
@@ -54,9 +56,10 @@ class MinMax:
         self.min = min
         self.max = max
 
+
 class ParameterDefinition:
     r"""Class for PipelineComponent parameters definition.
-    
+
     Date:
         2020
 
@@ -75,7 +78,7 @@ class ParameterDefinition:
         * :class:`niaaml.utilities.MinMax`
     """
 
-    def __init__(self, value, param_type = None):
+    def __init__(self, value, param_type=None):
         r"""Initialize instance.
 
         Arguments:
@@ -85,9 +88,10 @@ class ParameterDefinition:
         self.value = value
         self.param_type = param_type
 
+
 class Factory:
     r"""Base class with string mappings to entities.
-    
+
     Date:
         2020
 
@@ -105,12 +109,11 @@ class Factory:
     def __init__(self, **kwargs):
         r"""Initialize the factory."""
         self._set_parameters(**kwargs)
-    
+
     def _set_parameters(self, **kwargs):
-        r"""Set the parameters/arguments of the factory.
-        """
+        r"""Set the parameters/arguments of the factory."""
         return
-    
+
     def get_result(self, name):
         r"""Get the resulting entity.
 
@@ -124,8 +127,8 @@ class Factory:
         if name in self._entities:
             return self._entities[name]()
         else:
-            raise TypeError('Passed entity is not defined! --> %s' % name)
-    
+            raise TypeError("Passed entity is not defined! --> %s" % name)
+
     def get_name_to_classname_mapping(self):
         r"""Get dictionary of user-friendly name to class name mapping.
 
@@ -137,9 +140,10 @@ class Factory:
             d[self._entities[k].Name] = k
         return d
 
+
 class OptimizationStats:
     r"""Class that holds pipeline optimization result's statistics. Includes accuracy, precision, Cohen's kappa and F1-score.
-    
+
     Date:
         2020
 
@@ -164,9 +168,9 @@ class OptimizationStats:
             expected (Iterable[any]): Array of expected classes.
         """
         self._accuracy = accuracy_score(expected, predicted)
-        self._precision = precision_score(expected, predicted, average='weighted')
+        self._precision = precision_score(expected, predicted, average="weighted")
         self._cohen_kappa = cohen_kappa_score(expected, predicted)
-        self._f1_score = f1_score(expected, predicted, average='weighted')
+        self._f1_score = f1_score(expected, predicted, average="weighted")
 
     def to_string(self):
         r"""User friendly representation of the object.
@@ -174,4 +178,9 @@ class OptimizationStats:
         Returns:
             str: User friendly representation of the object.
         """
-        return 'Accuracy: {acc},\nPrecision: {prc},\nCohen\'s kappa: {ck},\nF1-score: {f1}'.format(acc=self._accuracy, prc=self._precision, ck=self._cohen_kappa, f1=self._f1_score)
+        return "Accuracy: {acc},\nPrecision: {prc},\nCohen's kappa: {ck},\nF1-score: {f1}".format(
+            acc=self._accuracy,
+            prc=self._precision,
+            ck=self._cohen_kappa,
+            f1=self._f1_score,
+        )

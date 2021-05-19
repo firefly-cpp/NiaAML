@@ -6,10 +6,10 @@ from niaaml.fitness.precision import Precision
 from niaaml.fitness.utility import FitnessFactory
 
 __all__ = [
-    'FitnessFunction',
-    'Accuracy',
-    'CohenKappa',
-    'F1',
-    'Precision',
-    'FitnessFactory'
+    "FitnessFunction",
+    "Accuracy",
+    "CohenKappa",
+    "F1",
+    "Precision",
+    "FitnessFactory",
 ]

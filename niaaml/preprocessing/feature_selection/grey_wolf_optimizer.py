@@ -1,31 +1,32 @@
-import sys
-from NiaPy.algorithms.basic import GreyWolfOptimizer as GWO
-from NiaPy.task import StoppingTask
-from sklearn.linear_model import LogisticRegression
-from niaaml.preprocessing.feature_selection.feature_selection_algorithm import FeatureSelectionAlgorithm
+from niapy.algorithms.basic import GreyWolfOptimizer as GWO
+from niapy.task import StoppingTask
+from niaaml.preprocessing.feature_selection.feature_selection_algorithm import (
+    FeatureSelectionAlgorithm,
+)
 from niaaml.utilities import ParameterDefinition, MinMax
-from niaaml.preprocessing.feature_selection._feature_selection_threshold_benchmark import _FeatureSelectionThresholdBenchmark
+from niaaml.preprocessing.feature_selection._feature_selection_threshold_benchmark import (
+    _FeatureSelectionThresholdBenchmark,
+)
 import numpy
 
-__all__ = [
-    'GreyWolfOptimizer'
-]
+__all__ = ["GreyWolfOptimizer"]
+
 
 class GreyWolfOptimizer(FeatureSelectionAlgorithm):
     r"""Implementation of feature selection using GWO algorithm.
 
     Date:
         2020
-    
+
     Author:
         Luka Pečnik
 
     Reference:
         The implementation is adapted according to the following article:
         D. Fister, I. Fister, T. Jagrič, I. Fister Jr., J. Brest. A novel self-adaptive differential evolution for feature selection using threshold mechanism . In: Proceedings of the 2018 IEEE Symposium on Computational Intelligence (SSCI 2018), pp. 17-24, 2018.
-    
-    Reference URL: 
-        http://iztok-jr-fister.eu/static/publications/236.pdf   
+
+    Reference URL:
+        http://iztok-jr-fister.eu/static/publications/236.pdf
 
     License:
         MIT
@@ -33,11 +34,10 @@ class GreyWolfOptimizer(FeatureSelectionAlgorithm):
     See Also:
         * :class:`niaaml.preprocessing.feature_selection.feature_selection_algorithm.FeatureSelectionAlgorithm`
     """
-    Name = 'Grey Wolf Optimizer'
+    Name = "Grey Wolf Optimizer"
 
     def __init__(self, **kwargs):
-        r"""Initialize GWO feature selection algorithm.
-        """
+        r"""Initialize GWO feature selection algorithm."""
         super(GreyWolfOptimizer, self).__init__()
         self.__gwo = GWO(NP=10)
 
@@ -56,7 +56,7 @@ class GreyWolfOptimizer(FeatureSelectionAlgorithm):
             if sol[i] < threshold:
                 selected[i] = False
         return selected
-    
+
     def select_features(self, x, y, **kwargs):
         r"""Perform the feature selection process.
 
@@ -69,14 +69,18 @@ class GreyWolfOptimizer(FeatureSelectionAlgorithm):
         """
         num_features = x.shape[1]
         benchmark = _FeatureSelectionThresholdBenchmark(x, y)
-        task = StoppingTask(D=num_features+1, nFES=1000, benchmark=benchmark)
+        task = StoppingTask(
+            dimension=num_features + 1, max_evals=1000, benchmark=benchmark
+        )
         best = self.__gwo.run(task)
         return self.__final_output(benchmark.get_best_solution())
-    
+
     def to_string(self):
         r"""User friendly representation of the object.
 
         Returns:
             str: User friendly representation of the object.
         """
-        return FeatureSelectionAlgorithm.to_string(self).format(name=self.Name, args=self._parameters_to_string(self.__gwo.getParameters()))
+        return FeatureSelectionAlgorithm.to_string(self).format(
+            name=self.Name, args=self._parameters_to_string(self.__gwo.getParameters())
+        )

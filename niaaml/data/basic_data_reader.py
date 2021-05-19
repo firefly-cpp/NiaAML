@@ -1,11 +1,12 @@
 import pandas as pd
 from niaaml.data.data_reader import DataReader
 
-__all__ = ['BasicDataReader']
+__all__ = ["BasicDataReader"]
+
 
 class BasicDataReader(DataReader):
     r"""Implementation of basic data reader.
-    
+
     Date:
         2020
 
@@ -27,6 +28,6 @@ class BasicDataReader(DataReader):
             y (Optional[Iterable[any]]): Array of expected classification results.
         """
         self._x = pd.DataFrame(x)
-        
+
         if y is not None:
             self._y = pd.Series(y)

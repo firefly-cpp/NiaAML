@@ -9,21 +9,23 @@ from niaaml.classifiers.decision_tree import DecisionTree
 from niaaml.classifiers.k_neighbors import KNeighbors
 from niaaml.classifiers.gaussian_process import GaussianProcess
 from niaaml.classifiers.gaussian_naive_bayes import GaussianNB
-from niaaml.classifiers.quadratic_driscriminant_analysis import QuadraticDiscriminantAnalysis
+from niaaml.classifiers.quadratic_driscriminant_analysis import (
+    QuadraticDiscriminantAnalysis,
+)
 from niaaml.classifiers.utility import ClassifierFactory
 
 __all__ = [
-    'Classifier',
-    'RandomForest',
-    'MultiLayerPerceptron',
-    'LinearSVC',
-    'AdaBoost',
-    'Bagging',
-    'ExtremelyRandomizedTrees',
-    'DecisionTree',
-    'KNeighbors',
-    'GaussianProcess',
-    'GaussianNB',
-    'QuadraticDiscriminantAnalysis',
-    'ClassifierFactory'
+    "Classifier",
+    "RandomForest",
+    "MultiLayerPerceptron",
+    "LinearSVC",
+    "AdaBoost",
+    "Bagging",
+    "ExtremelyRandomizedTrees",
+    "DecisionTree",
+    "KNeighbors",
+    "GaussianProcess",
+    "GaussianNB",
+    "QuadraticDiscriminantAnalysis",
+    "ClassifierFactory",
 ]

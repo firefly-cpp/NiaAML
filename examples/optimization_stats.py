@@ -6,16 +6,56 @@ This example presents how the OptimizationStats class can be used. Normally, it 
 """
 
 # dummy array with expected results of the classification process
-y = np.array(['Class 1', 'Class 1', 'Class 1', 'Class 2', 'Class 1', 'Class 2',
-'Class 2', 'Class 2', 'Class 2', 'Class 1', 'Class 1', 'Class 2',
-'Class 1', 'Class 2', 'Class 1', 'Class 1', 'Class 1', 'Class 1',
-'Class 2', 'Class 1'])
+y = np.array(
+    [
+        "Class 1",
+        "Class 1",
+        "Class 1",
+        "Class 2",
+        "Class 1",
+        "Class 2",
+        "Class 2",
+        "Class 2",
+        "Class 2",
+        "Class 1",
+        "Class 1",
+        "Class 2",
+        "Class 1",
+        "Class 2",
+        "Class 1",
+        "Class 1",
+        "Class 1",
+        "Class 1",
+        "Class 2",
+        "Class 1",
+    ]
+)
 
 # dummy array with predicted classes
-predicted = np.array(['Class 1', 'Class 1', 'Class 1', 'Class 2', 'Class 2', 'Class 2',
-'Class 1', 'Class 1', 'Class 1', 'Class 2', 'Class 1', 'Class 1',
-'Class 2', 'Class 2', 'Class 1', 'Class 2', 'Class 1', 'Class 2',
-'Class 2', 'Class 2'])
+predicted = np.array(
+    [
+        "Class 1",
+        "Class 1",
+        "Class 1",
+        "Class 2",
+        "Class 2",
+        "Class 2",
+        "Class 1",
+        "Class 1",
+        "Class 1",
+        "Class 2",
+        "Class 1",
+        "Class 1",
+        "Class 2",
+        "Class 2",
+        "Class 1",
+        "Class 2",
+        "Class 1",
+        "Class 2",
+        "Class 2",
+        "Class 2",
+    ]
+)
 
 # instantiate OptimizationStats
 stats = OptimizationStats(predicted, y)

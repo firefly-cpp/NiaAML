@@ -9,15 +9,16 @@ from niaaml.classifiers.decision_tree import DecisionTree
 from niaaml.classifiers.k_neighbors import KNeighbors
 from niaaml.classifiers.gaussian_process import GaussianProcess
 from niaaml.classifiers.gaussian_naive_bayes import GaussianNB
-from niaaml.classifiers.quadratic_driscriminant_analysis import QuadraticDiscriminantAnalysis
+from niaaml.classifiers.quadratic_driscriminant_analysis import (
+    QuadraticDiscriminantAnalysis,
+)
 
-__all__ = [
-    'ClassifierFactory'
-]
+__all__ = ["ClassifierFactory"]
+
 
 class ClassifierFactory(Factory):
     r"""Class with string mappings to classifiers.
-    
+
     Date:
         2020
 
@@ -35,18 +36,17 @@ class ClassifierFactory(Factory):
     """
 
     def _set_parameters(self, **kwargs):
-        r"""Set the parameters/arguments of the factory.
-        """
+        r"""Set the parameters/arguments of the factory."""
         self._entities = {
-            'AdaBoost': AdaBoost,
-            'Bagging': Bagging,
-            'ExtremelyRandomizedTrees': ExtremelyRandomizedTrees,
-            'LinearSVC': LinearSVC,
-            'MultiLayerPerceptron': MultiLayerPerceptron,
-            'RandomForest': RandomForest,
-            'DecisionTree': DecisionTree,
-            'KNeighbors': KNeighbors,
-            'GaussianProcess': GaussianProcess,
-            'GaussianNB': GaussianNB,
-            'QuadraticDiscriminantAnalysis': QuadraticDiscriminantAnalysis
+            "AdaBoost": AdaBoost,
+            "Bagging": Bagging,
+            "ExtremelyRandomizedTrees": ExtremelyRandomizedTrees,
+            "LinearSVC": LinearSVC,
+            "MultiLayerPerceptron": MultiLayerPerceptron,
+            "RandomForest": RandomForest,
+            "DecisionTree": DecisionTree,
+            "KNeighbors": KNeighbors,
+            "GaussianProcess": GaussianProcess,
+            "GaussianNB": GaussianNB,
+            "QuadraticDiscriminantAnalysis": QuadraticDiscriminantAnalysis,
         }

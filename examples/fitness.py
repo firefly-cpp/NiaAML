@@ -9,10 +9,16 @@ you can use any of the implemented fitness functions in the same way.
 """
 
 # prepare data reader using csv file
-data_reader = CSVDataReader(src=os.path.dirname(os.path.abspath(__file__)) + '/example_files/dataset.csv', has_header=False, contains_classes=True)
+data_reader = CSVDataReader(
+    src=os.path.dirname(os.path.abspath(__file__)) + "/example_files/dataset.csv",
+    has_header=False,
+    contains_classes=True,
+)
 
 # lets say the following array contains predictions after the classification process
-predictions=numpy.random.choice(['Class 1', 'Class 2'], size=data_reader.get_y().shape)
+predictions = numpy.random.choice(
+    ["Class 1", "Class 2"], size=data_reader.get_y().shape
+)
 
 # instantiate instance of a fitness function (Precision in this case)
 fitness_func = Precision()

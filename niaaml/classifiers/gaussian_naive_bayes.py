@@ -5,13 +5,23 @@ from sklearn.naive_bayes import GaussianNB as GNB
 import numpy as np
 
 import warnings
-from sklearn.exceptions import ChangedBehaviorWarning, ConvergenceWarning, DataConversionWarning, DataDimensionalityWarning, EfficiencyWarning, FitFailedWarning, NonBLASDotWarning, UndefinedMetricWarning
+from sklearn.exceptions import (
+    ChangedBehaviorWarning,
+    ConvergenceWarning,
+    DataConversionWarning,
+    DataDimensionalityWarning,
+    EfficiencyWarning,
+    FitFailedWarning,
+    NonBLASDotWarning,
+    UndefinedMetricWarning,
+)
 
-__all__ = ['GaussianNB']
+__all__ = ["GaussianNB"]
+
 
 class GaussianNB(Classifier):
     r"""Implementation of gaussian Naive Bayes classifier.
-    
+
     Date:
         2020
 
@@ -20,36 +30,34 @@ class GaussianNB(Classifier):
 
     License:
         MIT
-    
+
     Reference:
         Murphy, Kevin P. "Naive bayes classifiers." University of British Columbia 18 (2006): 60.
-    
+
     Documentation:
         https://scikit-learn.org/stable/modules/generated/sklearn.naive_bayes.GaussianNB.html
 
     See Also:
         * :class:`niaaml.classifiers.Classifier`
     """
-    Name = 'Gaussian Naive Bayes'
+    Name = "Gaussian Naive Bayes"
 
     def __init__(self, **kwargs):
-        r"""Initialize GaussianNB instance.
-        """
-        warnings.filterwarnings(action='ignore', category=ChangedBehaviorWarning)
-        warnings.filterwarnings(action='ignore', category=ConvergenceWarning)
-        warnings.filterwarnings(action='ignore', category=DataConversionWarning)
-        warnings.filterwarnings(action='ignore', category=DataDimensionalityWarning)
-        warnings.filterwarnings(action='ignore', category=EfficiencyWarning)
-        warnings.filterwarnings(action='ignore', category=FitFailedWarning)
-        warnings.filterwarnings(action='ignore', category=NonBLASDotWarning)
-        warnings.filterwarnings(action='ignore', category=UndefinedMetricWarning)
+        r"""Initialize GaussianNB instance."""
+        warnings.filterwarnings(action="ignore", category=ChangedBehaviorWarning)
+        warnings.filterwarnings(action="ignore", category=ConvergenceWarning)
+        warnings.filterwarnings(action="ignore", category=DataConversionWarning)
+        warnings.filterwarnings(action="ignore", category=DataDimensionalityWarning)
+        warnings.filterwarnings(action="ignore", category=EfficiencyWarning)
+        warnings.filterwarnings(action="ignore", category=FitFailedWarning)
+        warnings.filterwarnings(action="ignore", category=NonBLASDotWarning)
+        warnings.filterwarnings(action="ignore", category=UndefinedMetricWarning)
 
         self.__gaussian_nb = GNB()
         super(GaussianNB, self).__init__()
 
     def set_parameters(self, **kwargs):
-        r"""Set the parameters/arguments of the algorithm.
-        """
+        r"""Set the parameters/arguments of the algorithm."""
         self.__gaussian_nb.set_params(**kwargs)
 
     def fit(self, x, y, **kwargs):
@@ -81,4 +89,7 @@ class GaussianNB(Classifier):
         Returns:
             str: User friendly representation of the object.
         """
-        return Classifier.to_string(self).format(name=self.Name, args=self._parameters_to_string(self.__gaussian_nb.get_params()))
+        return Classifier.to_string(self).format(
+            name=self.Name,
+            args=self._parameters_to_string(self.__gaussian_nb.get_params()),
+        )

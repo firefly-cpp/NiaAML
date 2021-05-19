@@ -1,10 +1,9 @@
-__all__ = [
-    'Imputer'
-]
+__all__ = ["Imputer"]
 
-class Imputer():
+
+class Imputer:
     r"""Class for implementing imputers.
-    
+
     Date:
         2020
 
@@ -20,8 +19,7 @@ class Imputer():
     Name = None
 
     def __init__(self, **kwargs):
-        r"""Initialize imputer.
-        """
+        r"""Initialize imputer."""
         return None
 
     def fit(self, feature):
@@ -31,13 +29,13 @@ class Imputer():
             feature (pandas.core.frame.DataFrame): A column from DataFrame of features.
         """
         return None
-    
+
     def transform(self, feature):
         r"""Transform feature's values.
 
         Arguments:
             feature (pandas.core.frame.DataFrame): A column from DataFrame of features.
-        
+
         Returns:
             pandas.core.frame.DataFrame: A transformed column.
         """
@@ -49,4 +47,4 @@ class Imputer():
         Returns:
             str: User friendly representation of the object.
         """
-        return '{name}'
+        return "{name}"

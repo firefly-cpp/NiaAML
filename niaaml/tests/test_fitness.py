@@ -2,16 +2,57 @@ import numpy as np
 from unittest import TestCase
 import niaaml.fitness as f
 
+
 class FitnessTestCase(TestCase):
     def setUp(self):
-        self.__y = np.array(['Class 1', 'Class 1', 'Class 1', 'Class 2', 'Class 1', 'Class 2',
-       'Class 2', 'Class 2', 'Class 2', 'Class 1', 'Class 1', 'Class 2',
-       'Class 1', 'Class 2', 'Class 1', 'Class 1', 'Class 1', 'Class 1',
-       'Class 2', 'Class 1'])
-        self.__predicted = np.array(['Class 1', 'Class 1', 'Class 1', 'Class 2', 'Class 2', 'Class 2',
-       'Class 1', 'Class 1', 'Class 1', 'Class 2', 'Class 1', 'Class 1',
-       'Class 2', 'Class 2', 'Class 1', 'Class 2', 'Class 1', 'Class 2',
-       'Class 2', 'Class 2'])
+        self.__y = np.array(
+            [
+                "Class 1",
+                "Class 1",
+                "Class 1",
+                "Class 2",
+                "Class 1",
+                "Class 2",
+                "Class 2",
+                "Class 2",
+                "Class 2",
+                "Class 1",
+                "Class 1",
+                "Class 2",
+                "Class 1",
+                "Class 2",
+                "Class 1",
+                "Class 1",
+                "Class 1",
+                "Class 1",
+                "Class 2",
+                "Class 1",
+            ]
+        )
+        self.__predicted = np.array(
+            [
+                "Class 1",
+                "Class 1",
+                "Class 1",
+                "Class 2",
+                "Class 2",
+                "Class 2",
+                "Class 1",
+                "Class 1",
+                "Class 1",
+                "Class 2",
+                "Class 1",
+                "Class 1",
+                "Class 2",
+                "Class 2",
+                "Class 1",
+                "Class 2",
+                "Class 1",
+                "Class 2",
+                "Class 2",
+                "Class 2",
+            ]
+        )
 
     def test_accuracy_works_fine(self):
         ff = f.Accuracy()
