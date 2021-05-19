@@ -1,43 +1,45 @@
-import sys
-from NiaPy.algorithms.modified import SelfAdaptiveDifferentialEvolution
-from NiaPy.task import StoppingTask
-from sklearn.linear_model import LogisticRegression
-from niaaml.preprocessing.feature_selection.feature_selection_algorithm import FeatureSelectionAlgorithm
-from niaaml.preprocessing.feature_selection._feature_selection_threshold_benchmark import _FeatureSelectionThresholdBenchmark
+from niapy.algorithms.modified import SelfAdaptiveDifferentialEvolution
+from niapy.task import StoppingTask
+from niaaml.preprocessing.feature_selection.feature_selection_algorithm import (
+    FeatureSelectionAlgorithm,
+)
+from niaaml.preprocessing.feature_selection._feature_selection_threshold_benchmark import (
+    _FeatureSelectionThresholdBenchmark,
+)
 import numpy
 
-__all__ = [
-    'jDEFSTH'
-]
+__all__ = ["jDEFSTH"]
+
 
 class jDEFSTH(FeatureSelectionAlgorithm):
     r"""Implementation of self-adaptive differential evolution for feature selection using threshold mechanism.
 
     Date:
         2020
-    
+
     Author:
         Iztok Fister Jr.
-    
+
     Reference:
         D. Fister, I. Fister, T. Jagrič, I. Fister Jr., J. Brest. A novel self-adaptive differential evolution for feature selection using threshold mechanism . In: Proceedings of the 2018 IEEE Symposium on Computational Intelligence (SSCI 2018), pp. 17-24, 2018.
-    
-    Reference URL: 
-        http://iztok-jr-fister.eu/static/publications/236.pdf    
+
+    Reference URL:
+        http://iztok-jr-fister.eu/static/publications/236.pdf
 
     License:
         MIT
 
-	See Also:
-		* :class:`niaaml.preprocessing.feature_selection.feature_selection_algorithm.FeatureSelectionAlgorithm`
+        See Also:
+                * :class:`niaaml.preprocessing.feature_selection.feature_selection_algorithm.FeatureSelectionAlgorithm`
     """
-    Name = 'Self-Adaptive Differential Evolution'
+    Name = "Self-Adaptive Differential Evolution"
 
     def __init__(self, **kwargs):
-        r"""Initialize GWO feature selection algorithm.
-        """
+        r"""Initialize GWO feature selection algorithm."""
         super(jDEFSTH, self).__init__()
-        self.__jdefsth = SelfAdaptiveDifferentialEvolution(NP=10, F=0.5, F_l=0.0, F_u=2.0, Tao1=0.9, CR=0.5, Tao2=0.45)
+        self.__jdefsth = SelfAdaptiveDifferentialEvolution(
+            NP=10, F=0.5, F_l=0.0, F_u=2.0, Tao1=0.9, CR=0.5, Tao2=0.45
+        )
 
     def __final_output(self, sol):
         r"""Calculate final array of features.
@@ -54,7 +56,7 @@ class jDEFSTH(FeatureSelectionAlgorithm):
             if sol[i] < threshold:
                 selected[i] = False
         return selected
-    
+
     def select_features(self, x, y, **kwargs):
         r"""Perform the feature selection process.
 
@@ -67,7 +69,9 @@ class jDEFSTH(FeatureSelectionAlgorithm):
         """
         num_features = x.shape[1]
         benchmark = _FeatureSelectionThresholdBenchmark(x, y)
-        task = StoppingTask(D=num_features+1, nFES=1000, benchmark=benchmark)
+        task = StoppingTask(
+            dimension=num_features + 1, max_evals=1000, benchmark=benchmark
+        )
         best = self.__jdefsth.run(task)
         return self.__final_output(benchmark.get_best_solution())
 
@@ -77,4 +81,7 @@ class jDEFSTH(FeatureSelectionAlgorithm):
         Returns:
             str: User friendly representation of the object.
         """
-        return FeatureSelectionAlgorithm.to_string(self).format(name=self.Name, args=self._parameters_to_string(self.__jdefsth.getParameters()))
+        return FeatureSelectionAlgorithm.to_string(self).format(
+            name=self.Name,
+            args=self._parameters_to_string(self.__jdefsth.getParameters()),
+        )

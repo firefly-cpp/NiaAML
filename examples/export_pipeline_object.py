@@ -11,8 +11,8 @@ This example presents how to export a pipeline object into a file that can later
 pipeline = Pipeline(
     feature_selection_algorithm=SelectKBest(),
     feature_transform_algorithm=Normalizer(),
-    classifier=AdaBoost()
+    classifier=AdaBoost(),
 )
 
 # export the object to a file for later use
-pipeline.export('exported_pipeline.ppln')
+pipeline.export("exported_pipeline.ppln")

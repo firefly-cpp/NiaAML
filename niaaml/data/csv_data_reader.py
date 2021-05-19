@@ -2,11 +2,12 @@ import csv
 import pandas as pd
 from niaaml.data.data_reader import DataReader
 
-__all__ = ['CSVDataReader']
+__all__ = ["CSVDataReader"]
+
 
 class CSVDataReader(DataReader):
     r"""Implementation of CSV data reader.
-    
+
     Date:
         2020
 
@@ -25,7 +26,7 @@ class CSVDataReader(DataReader):
         * :class:`niaaml.data.DataReader`
     """
 
-    def _set_parameters(self, src, contains_classes = True, has_header = False, **kwargs):
+    def _set_parameters(self, src, contains_classes=True, has_header=False, **kwargs):
         r"""Set the parameters of the algorithm.
 
         Arguments:
@@ -39,9 +40,10 @@ class CSVDataReader(DataReader):
         self._read_data()
 
     def _read_data(self, **kwargs):
-        r"""Read data from expected source.
-        """
-        data = pd.read_csv(self.__src, header=None if self.__has_header is False else 'infer')
+        r"""Read data from expected source."""
+        data = pd.read_csv(
+            self.__src, header=None if self.__has_header is False else "infer"
+        )
         header = data.columns
 
         if self.__contains_classes:

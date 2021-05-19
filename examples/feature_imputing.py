@@ -8,7 +8,12 @@ you can use any of the implemented imputers in the same way.
 """
 
 # prepare data reader using csv file
-data_reader = CSVDataReader(src=os.path.dirname(os.path.abspath(__file__)) + '/example_files/dataset_categorical_missing.csv', has_header=False, contains_classes=True)
+data_reader = CSVDataReader(
+    src=os.path.dirname(os.path.abspath(__file__))
+    + "/example_files/dataset_categorical_missing.csv",
+    has_header=False,
+    contains_classes=True,
+)
 
 # instantiate SimpleImputer
 si = SimpleImputer()
@@ -20,4 +25,4 @@ f = si.transform(features[[6]])
 print(f)
 
 # if you wish to get array of imputers for all of the features with missing values in a dataset (and transformed DataFrame of features), you may use the utility method impute_features
-transformed_features, imputers = impute_features(features, 'SimpleImputer')
+transformed_features, imputers = impute_features(features, "SimpleImputer")

@@ -1,10 +1,9 @@
-__all__ = [
-    'FeatureEncoder'
-]
+__all__ = ["FeatureEncoder"]
 
-class FeatureEncoder():
+
+class FeatureEncoder:
     r"""Class for implementing feature encoders.
-    
+
     Date:
         2020
 
@@ -20,8 +19,7 @@ class FeatureEncoder():
     Name = None
 
     def __init__(self, **kwargs):
-        r"""Initialize feature encoder.
-        """
+        r"""Initialize feature encoder."""
         return None
 
     def fit(self, feature):
@@ -31,13 +29,13 @@ class FeatureEncoder():
             feature (pandas.core.frame.DataFrame): A column (categorical) from DataFrame of features.
         """
         return None
-    
+
     def transform(self, feature):
         r"""Transform feature's values.
 
         Arguments:
             feature (pandas.core.frame.DataFrame): A column (categorical) from DataFrame of features.
-        
+
         Returns:
             pandas.core.frame.DataFrame: A transformed column.
         """
@@ -49,4 +47,4 @@ class FeatureEncoder():
         Returns:
             str: User friendly representation of the object.
         """
-        return '{name}'
+        return "{name}"

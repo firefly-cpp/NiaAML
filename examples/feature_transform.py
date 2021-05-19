@@ -8,13 +8,17 @@ you can use any of the implemented feature transform algorithms in the same way.
 """
 
 # prepare data reader using csv file
-data_reader = CSVDataReader(src=os.path.dirname(os.path.abspath(__file__)) + '/example_files/dataset.csv', has_header=False, contains_classes=True)
+data_reader = CSVDataReader(
+    src=os.path.dirname(os.path.abspath(__file__)) + "/example_files/dataset.csv",
+    has_header=False,
+    contains_classes=True,
+)
 
 # instantiate Normalizer
 ft = Normalizer()
 
 # set parameters of the Normalizer
-ft.set_parameters(norm='l2')
+ft.set_parameters(norm="l2")
 
 # fit the algorithm to the input data
 ft.fit(data_reader.get_x())

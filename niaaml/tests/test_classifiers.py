@@ -4,10 +4,18 @@ from niaaml.data import CSVDataReader
 import os
 from sklearn.model_selection import train_test_split
 
+
 class ClassifierTestCase(TestCase):
     def setUp(self):
-        self.__data = CSVDataReader(src=os.path.dirname(os.path.abspath(__file__)) + '/tests_files/dataset_header_classes.csv', has_header=True, contains_classes=True)
-        self.__x_train, self.__x_test, self.__y_train, self.__y_test = train_test_split(self.__data.get_x(), self.__data.get_y(), test_size=0.2)
+        self.__data = CSVDataReader(
+            src=os.path.dirname(os.path.abspath(__file__))
+            + "/tests_files/dataset_header_classes.csv",
+            has_header=True,
+            contains_classes=True,
+        )
+        self.__x_train, self.__x_test, self.__y_train, self.__y_test = train_test_split(
+            self.__data.get_x(), self.__data.get_y(), test_size=0.2
+        )
 
     def test_adaboost_works_fine(self):
         algo = c.AdaBoost()
@@ -50,7 +58,7 @@ class ClassifierTestCase(TestCase):
         algo.fit(self.__x_train, self.__y_train)
         predictions = algo.predict(self.__x_test)
         self.assertEqual(predictions.shape, self.__y_test.shape)
-    
+
     def test_kn_works_fine(self):
         algo = c.KNeighbors()
         algo.fit(self.__x_train, self.__y_train)

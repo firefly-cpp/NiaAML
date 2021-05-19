@@ -5,9 +5,9 @@ from niaaml.preprocessing import encoding
 from niaaml.preprocessing import imputation
 
 __all__ = [
-    'feature_selection',
-    'feature_transform',
-    'encoding',
-    'imputation',
-    'PreprocessingAlgorithm'
+    "feature_selection",
+    "feature_transform",
+    "encoding",
+    "imputation",
+    "PreprocessingAlgorithm",
 ]

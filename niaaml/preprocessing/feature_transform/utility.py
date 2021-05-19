@@ -2,12 +2,13 @@ from niaaml.utilities import Factory
 from niaaml.preprocessing.feature_transform.normalizer import Normalizer
 from niaaml.preprocessing.feature_transform.standard_scaler import StandardScaler
 from niaaml.preprocessing.feature_transform.max_abs_scaler import MaxAbsScaler
-from niaaml.preprocessing.feature_transform.quantile_transformer import QuantileTransformer
+from niaaml.preprocessing.feature_transform.quantile_transformer import (
+    QuantileTransformer,
+)
 from niaaml.preprocessing.feature_transform.robust_scaler import RobustScaler
 
-__all__ = [
-    'FeatureTransformAlgorithmFactory'
-]
+__all__ = ["FeatureTransformAlgorithmFactory"]
+
 
 class FeatureTransformAlgorithmFactory(Factory):
     r"""Class with string mappings to feature transform algorithms.
@@ -17,12 +18,11 @@ class FeatureTransformAlgorithmFactory(Factory):
     """
 
     def _set_parameters(self, **kwargs):
-        r"""Set the parameters/arguments of the factory.
-        """
+        r"""Set the parameters/arguments of the factory."""
         self._entities = {
-            'Normalizer': Normalizer,
-            'StandardScaler': StandardScaler,
-            'MaxAbsScaler': MaxAbsScaler,
-            'QuantileTransformer': QuantileTransformer,
-            'RobustScaler': RobustScaler
+            "Normalizer": Normalizer,
+            "StandardScaler": StandardScaler,
+            "MaxAbsScaler": MaxAbsScaler,
+            "QuantileTransformer": QuantileTransformer,
+            "RobustScaler": RobustScaler,
         }

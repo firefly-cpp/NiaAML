@@ -7,7 +7,11 @@ This example presents how to use implemented feature selection algorithms that u
 """
 
 # prepare data reader using csv file
-data_reader = CSVDataReader(src=os.path.dirname(os.path.abspath(__file__)) + '/example_files/dataset.csv', has_header=False, contains_classes=True)
+data_reader = CSVDataReader(
+    src=os.path.dirname(os.path.abspath(__file__)) + "/example_files/dataset.csv",
+    has_header=False,
+    contains_classes=True,
+)
 
 # instantiate feature selection algorithm
 fs = ParticleSwarmOptimization()
