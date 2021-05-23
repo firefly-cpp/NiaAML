@@ -1,8 +1,5 @@
 from niaaml.classifiers.classifier import Classifier
-from niaaml.utilities import MinMax
-from niaaml.utilities import ParameterDefinition
 from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis as QDA
-import numpy as np
 
 import warnings
 from sklearn.exceptions import (

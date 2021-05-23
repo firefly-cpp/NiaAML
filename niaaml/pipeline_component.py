@@ -1,6 +1,3 @@
-import numpy as np
-from niaaml.utilities import MinMax
-
 __all__ = ["PipelineComponent"]
 
 

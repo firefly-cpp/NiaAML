@@ -19,4 +19,5 @@ __all__ = [
     "MaxAbsScaler",
     "RobustScaler",
     "FeatureTransformAlgorithmFactory",
+    "QuantileTransformer",
 ]

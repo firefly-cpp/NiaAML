@@ -3,7 +3,6 @@ from niapy.task import StoppingTask
 from niaaml.preprocessing.feature_selection.feature_selection_algorithm import (
     FeatureSelectionAlgorithm,
 )
-from niaaml.utilities import ParameterDefinition, MinMax
 from niaaml.preprocessing.feature_selection._feature_selection_threshold_benchmark import (
     _FeatureSelectionThresholdBenchmark,
 )

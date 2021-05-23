@@ -1,4 +1,3 @@
-import csv
 import pandas as pd
 from niaaml.data.data_reader import DataReader
 

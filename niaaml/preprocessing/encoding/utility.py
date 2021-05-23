@@ -1,6 +1,5 @@
 from niaaml.utilities import Factory
 import pandas as pd
-import numpy as np
 from niaaml.preprocessing.encoding.one_hot_encoder import OneHotEncoder
 
 __all__ = ["encode_categorical_features", "EncoderFactory"]

@@ -1,8 +1,6 @@
 from niaaml.classifiers.classifier import Classifier
-from niaaml.utilities import MinMax
 from niaaml.utilities import ParameterDefinition
 from sklearn.tree import DecisionTreeClassifier as DTC
-import numpy as np
 
 import warnings
 from sklearn.exceptions import (
