@@ -15,6 +15,9 @@
 [![Percentage of issues still open](http://isitmaintained.com/badge/open/lukapecnik/niaaml.svg)](http://isitmaintained.com/project/lukapecnik/niaaml "Percentage of issues still open")
 ![GitHub contributors](https://img.shields.io/github/contributors/lukapecnik/niaaml.svg)
 
+[![DOI](https://zenodo.org/badge/289322337.svg)](https://zenodo.org/badge/latestdoi/289322337)
+[![DOI](https://joss.theoj.org/papers/10.21105/joss.02949/status.svg)](https://doi.org/)
+
 NiaAML is a framework for Automated Machine Learning based on nature-inspired algorithms for optimization. The framework is written fully in Python. The name NiaAML comes from the Automated Machine Learning method of the same name [[1]](#1). Its goal is to compose the best possible classification pipeline for the given task efficiently using components on the input. The components are divided into three groups: feature selection algorithms, feature transformation algorithms and classifiers. The framework uses nature-inspired algorithms for optimization to choose the best set of components for the classification pipeline, and optimize their hyperparameters. We use the <a href="https://github.com/NiaOrg/NiaPy">NiaPy framework</a> for the optimization process, which is a popular Python collection of nature-inspired algorithms. The NiaAML framework is easy to use and customize or expand to suit your needs.
 
 The NiaAML framework allows you not only to run full pipeline optimization, but also to separate implemented components such as classifiers, feature selection algorithms, etc. **It supports numerical and categorical features as well as missing values in datasets.**
