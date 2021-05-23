@@ -1,6 +1,12 @@
 Changelog
 =========
 
+`1.1.3 <https://github.com/lukapecnik/niaaml/tree/1.1.3>`__ (2021-05-23)
+------------------------------------------------------------------------
+
+`Full
+Changelog <https://github.com/lukapecnik/niaaml/compare/1.1.2...1.1.3>`__
+
 `1.1.2 <https://github.com/lukapecnik/niaaml/tree/1.1.2>`__ (2021-05-19)
 ------------------------------------------------------------------------
 
@@ -227,12 +233,6 @@ Changelog <https://github.com/lukapecnik/niaaml/compare/0.1.2a1...0.1.2>`__
 -  Travis ci integration
    `#20 <https://github.com/lukapecnik/NiaAML/pull/20>`__
    (`lukapecnik <https://github.com/lukapecnik>`__)
--  badges and readme update
-   `#19 <https://github.com/lukapecnik/NiaAML/pull/19>`__
-   (`lukapecnik <https://github.com/lukapecnik>`__)
--  Contributors table added
-   `#12 <https://github.com/lukapecnik/NiaAML/pull/12>`__
-   (`lukapecnik <https://github.com/lukapecnik>`__)
 
 `0.1.2a1 <https://github.com/lukapecnik/niaaml/tree/0.1.2a1>`__ (2020-11-29)
 ----------------------------------------------------------------------------
@@ -263,6 +263,15 @@ Changelog <https://github.com/lukapecnik/niaaml/compare/0.1.0...0.1.1>`__
 
 -  Installation instructions
    `#11 <https://github.com/lukapecnik/NiaAML/issues/11>`__
+
+**Merged pull requests:**
+
+-  badges and readme update
+   `#19 <https://github.com/lukapecnik/NiaAML/pull/19>`__
+   (`lukapecnik <https://github.com/lukapecnik>`__)
+-  Contributors table added
+   `#12 <https://github.com/lukapecnik/NiaAML/pull/12>`__
+   (`lukapecnik <https://github.com/lukapecnik>`__)
 
 `0.1.0 <https://github.com/lukapecnik/niaaml/tree/0.1.0>`__ (2020-11-27)
 ------------------------------------------------------------------------
