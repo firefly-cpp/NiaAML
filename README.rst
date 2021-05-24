@@ -20,7 +20,7 @@ NiaAML
    :target: https://zenodo.org/badge/latestdoi/289322337
 
 .. image:: https://joss.theoj.org/papers/10.21105/joss.02949/status.svg
-   :target: https://doi.org/
+   :target: https://doi.org/10.21105/joss.02949
 
 NiaAML is an automated machine learning Python framework based on
 nature-inspired algorithms for optimization. The name comes from the
