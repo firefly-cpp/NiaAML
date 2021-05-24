@@ -49,7 +49,7 @@ class BatAlgorithm(FeatureSelectionAlgorithm):
     def set_parameters(self, **kwargs):
         r"""Set the parameters/arguments of the algorithm."""
         kwargs["NP"] = self.__ba.NP
-        self.__ba.setParameters(**kwargs)
+        self.__ba.set_parameters(**kwargs)
 
     def __final_output(self, sol):
         r"""Calculate final array of features.

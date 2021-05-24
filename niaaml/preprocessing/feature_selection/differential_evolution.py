@@ -47,7 +47,7 @@ class DifferentialEvolution(FeatureSelectionAlgorithm):
     def set_parameters(self, **kwargs):
         r"""Set the parameters/arguments of the algorithm."""
         kwargs["NP"] = self.__de.NP
-        self.__de.setParameters(**kwargs)
+        self.__de.set_parameters(**kwargs)
 
     def __final_output(self, sol):
         r"""Calculate final array of features.

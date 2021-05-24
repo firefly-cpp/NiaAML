@@ -47,7 +47,7 @@ class ParticleSwarmOptimization(FeatureSelectionAlgorithm):
     def set_parameters(self, **kwargs):
         r"""Set the parameters/arguments of the algorithm."""
         kwargs["NP"] = self.__pso.NP
-        self.__pso.setParameters(**kwargs)
+        self.__pso.set_parameters(**kwargs)
 
     def __final_output(self, sol):
         r"""Calculate final array of features.
