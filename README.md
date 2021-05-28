@@ -254,3 +254,7 @@ This framework is provided as-is, and there are no guarantees that it fits your 
 ## References
 
 <a id="1">[1]</a> Iztok Fister Jr., Milan Zorman, Dušan Fister, Iztok Fister. <a href="https://link.springer.com/chapter/10.1007%2F978-981-15-2133-1_13">Continuous optimizers for automatic design and evaluation of classification pipelines</a>. In: Frontier applications of nature inspired computation. Springer tracts in nature-inspired computing, pp.281-301, 2020.
+
+## Cite us
+
+L. Pečnik, I. Fister Jr. "NiaAML: AutoML framework based on stochastic population-based nature-inspired algorithms." Journal of Open Source Software 6.61 (2021): 2949.
