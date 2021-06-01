@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "NiaAML"
-version = "1.1.4"
+version = "1.1.5"
 description = "Python automated machine learning framework."
 license = "MIT"
 authors = ["Luka Pečnik <lukapecnik96@gmail.com>", "Iztok Fister Jr. <iztok.fister1@um.si>"]
@@ -17,7 +17,7 @@ include = [
 python = "^3.6.2"
 numpy = "^1.19.1"
 scikit-learn = "^0.23.2"
-niapy = "^2.0.0rc15"
+niapy = "^2.0.0rc16"
 pandas = "^1.1.4"
 
 [tool.poetry.dev-dependencies]
