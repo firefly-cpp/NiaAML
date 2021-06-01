@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.1.5](https://github.com/lukapecnik/niaaml/tree/1.1.5) (2021-06-01)
+
+[Full Changelog](https://github.com/lukapecnik/niaaml/compare/1.1.4...1.1.5)
+
+**Merged pull requests:**
+
+- Citation details [\#50](https://github.com/lukapecnik/NiaAML/pull/50) ([firefly-cpp](https://github.com/firefly-cpp))
+
 ## [1.1.4](https://github.com/lukapecnik/niaaml/tree/1.1.4) (2021-05-24)
 
 [Full Changelog](https://github.com/lukapecnik/niaaml/compare/1.1.3...1.1.4)
@@ -117,7 +125,7 @@
 **Merged pull requests:**
 
 - Added support for categorical features [\#26](https://github.com/lukapecnik/NiaAML/pull/26) ([lukapecnik](https://github.com/lukapecnik))
-- Unittests, examples' description, references added to docs [\#17](https://github.com/lukapecnik/NiaAML/pull/17) ([lukapecnik](https://github.com/lukapecnik))
+- badges and readme update [\#19](https://github.com/lukapecnik/NiaAML/pull/19) ([lukapecnik](https://github.com/lukapecnik))
 
 ## [0.1.4](https://github.com/lukapecnik/niaaml/tree/0.1.4) (2020-12-05)
 
@@ -127,7 +135,6 @@
 
 - remove 10-fold cross validation from benchmark, critical bug fix [\#25](https://github.com/lukapecnik/NiaAML/pull/25) ([lukapecnik](https://github.com/lukapecnik))
 - run all experiments at once [\#24](https://github.com/lukapecnik/NiaAML/pull/24) ([firefly-cpp](https://github.com/firefly-cpp))
-- Contributors table added [\#12](https://github.com/lukapecnik/NiaAML/pull/12) ([lukapecnik](https://github.com/lukapecnik))
 
 ## [0.1.3](https://github.com/lukapecnik/niaaml/tree/0.1.3) (2020-12-04)
 
@@ -158,7 +165,6 @@
 
 - readme.rst fix, pipeline fix [\#21](https://github.com/lukapecnik/NiaAML/pull/21) ([lukapecnik](https://github.com/lukapecnik))
 - Travis ci integration [\#20](https://github.com/lukapecnik/NiaAML/pull/20) ([lukapecnik](https://github.com/lukapecnik))
-- badges and readme update [\#19](https://github.com/lukapecnik/NiaAML/pull/19) ([lukapecnik](https://github.com/lukapecnik))
 
 ## [0.1.2a1](https://github.com/lukapecnik/niaaml/tree/0.1.2a1) (2020-11-29)
 
@@ -170,6 +176,10 @@
 - CHANGELOG [\#14](https://github.com/lukapecnik/NiaAML/issues/14)
 - Examples [\#13](https://github.com/lukapecnik/NiaAML/issues/13)
 
+**Merged pull requests:**
+
+- Unittests, examples' description, references added to docs [\#17](https://github.com/lukapecnik/NiaAML/pull/17) ([lukapecnik](https://github.com/lukapecnik))
+
 ## [0.1.1](https://github.com/lukapecnik/niaaml/tree/0.1.1) (2020-11-28)
 
 [Full Changelog](https://github.com/lukapecnik/niaaml/compare/0.1.0...0.1.1)
@@ -177,6 +187,10 @@
 **Closed issues:**
 
 - Installation instructions [\#11](https://github.com/lukapecnik/NiaAML/issues/11)
+
+**Merged pull requests:**
+
+- Contributors table added [\#12](https://github.com/lukapecnik/NiaAML/pull/12) ([lukapecnik](https://github.com/lukapecnik))
 
 ## [0.1.0](https://github.com/lukapecnik/niaaml/tree/0.1.0) (2020-11-27)
 
