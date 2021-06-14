@@ -16,8 +16,8 @@ from niaaml.preprocessing.feature_selection.grey_wolf_optimizer import GreyWolfO
 from niaaml.preprocessing.feature_selection.utility import (
     FeatureSelectionAlgorithmFactory,
 )
-from niaaml.preprocessing.feature_selection._feature_selection_threshold_benchmark import (
-    _FeatureSelectionThresholdBenchmark,
+from niaaml.preprocessing.feature_selection._feature_selection_threshold_problem import (
+    _FeatureSelectionThresholdProblem,
 )
 
 __all__ = [
@@ -31,5 +31,5 @@ __all__ = [
     "GreyWolfOptimizer",
     "SelectKBest",
     "FeatureSelectionAlgorithmFactory",
-    "_FeatureSelectionThresholdBenchmark",
+    "_FeatureSelectionThresholdProblem",
 ]

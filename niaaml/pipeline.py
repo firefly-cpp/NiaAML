@@ -1,16 +1,16 @@
 from sklearn.model_selection import train_test_split
 from niaaml.utilities import MinMax, get_bin_index, OptimizationStats
 from niaaml.fitness import FitnessFactory
-from niapy.benchmarks import Benchmark
+from niapy.problems import Problem
 from niapy.util.factory import get_algorithm
-from niapy.task import StoppingTask
+from niapy.task import Task
 import pandas as pd
 import numpy as np
 import copy
 import pickle
 import os
 
-__all__ = ["Pipeline", "_PipelineBenchmark"]
+__all__ = ["Pipeline", "_PipelineProblem"]
 
 
 class Pipeline:
@@ -56,7 +56,7 @@ class Pipeline:
         categorical_features_encoders=None,
         imputers=None,
         logger=None,
-        **kwargs
+        **_kwargs
     ):
         r"""Set the parameters/arguments of the task.
 
@@ -184,21 +184,20 @@ class Pipeline:
             x = x.drop(to_drop, axis=1)
             x = pd.concat([x, enc_features], axis=1)
 
-        D = 0
+        dimension = 0
         if self.__feature_selection_algorithm is not None:
-            D += len(self.__feature_selection_algorithm.get_params_dict().keys())
+            dimension += len(self.__feature_selection_algorithm.get_params_dict().keys())
         if self.__feature_transform_algorithm is not None:
-            D += len(self.__feature_transform_algorithm.get_params_dict().keys())
+            dimension += len(self.__feature_transform_algorithm.get_params_dict().keys())
 
-        D += len(self.__classifier.get_params_dict().keys())
+        dimension += len(self.__classifier.get_params_dict().keys())
 
         algo = get_algorithm(optimization_algorithm)
         algo.NP = population_size
 
-        task = StoppingTask(
-            dimension=D,
+        task = Task(
+            problem=_PipelineProblem(dimension, x, y, self, population_size, fitness_function),
             max_evals=number_of_evaluations,
-            benchmark=_PipelineBenchmark(x, y, self, population_size, fitness_function),
         )
         best = algo.run(task)
         return best[1]
@@ -374,8 +373,8 @@ class Pipeline:
         )
 
 
-class _PipelineBenchmark(Benchmark):
-    r"""NiaPy Benchmark class implementation.
+class _PipelineProblem(Problem):
+    r"""NiaPy Problem class implementation.
 
     Date:
         2020
@@ -397,10 +396,11 @@ class _PipelineBenchmark(Benchmark):
         __evals (int): Number of current evaluation.
     """
 
-    def __init__(self, x, y, parent, population_size, fitness_function):
-        r"""Initialize pipeline benchmark.
+    def __init__(self, dimension, x, y, parent, population_size, fitness_function):
+        r"""Initialize pipeline problem.
 
         Arguments:
+            dimension (int): Dimension of the problem.
             parent (Pipeline): Parent instance of Pipeline.
             population_size (uint): Number of individuals in the hiperparameter optimization process.
             fitness_function (str): Name of the fitness function to use.
@@ -409,11 +409,11 @@ class _PipelineBenchmark(Benchmark):
         self.__x = x
         self.__y = y
         self.__population_size = population_size
-        self.__current_best_fitness = float("inf")
+        self.__current_best_fitness = np.inf
         self.__fitness_function = FitnessFactory().get_result(fitness_function)
         self.__evals = 0
         self.__logger = self.__parent.get_logger()
-        Benchmark.__init__(self, 0.0, 1.0)
+        super().__init__(dimension, 0.0, 1.0)
 
     @staticmethod
     def evaluate_pipeline(
@@ -490,8 +490,6 @@ class _PipelineBenchmark(Benchmark):
             if i[1] is not None:
                 i[1].set_parameters(**args)
 
-        selected_features_mask = None
-
         x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2)
 
         if feature_selection_algorithm is None:
@@ -517,74 +515,65 @@ class _PipelineBenchmark(Benchmark):
             OptimizationStats(predictions, y_test),
         )
 
-    def function(self):
-        r"""Override Benchmark function.
+    def _evaluate(self, x):
+        r"""Override fitness function.
+
+        Args:
+            x (numpy.ndarray): Solution:
 
         Returns:
-            Callable[[int, numpy.ndarray[float]], float]: Fitness evaluation function.
+            float: Fitness value of `x`.
+
         """
+        self.__evals += 1
+        if self.__logger is not None:
+            self.__logger.log_progress(
+                "Evaluation {evals}".format(evals=self.__evals)
+            )
 
-        def evaluate(D, sol):
-            r"""Evaluate pipeline.
+        try:
+            feature_selection_algorithm = (
+                self.__parent.get_feature_selection_algorithm()
+            )
+            feature_transform_algorithm = (
+                self.__parent.get_feature_transform_algorithm()
+            )
+            classifier = self.__parent.get_classifier()
 
-            Arguments:
-                D (uint): Number of dimensionas.
-                sol (numpy.ndarray[float]): Individual of population/ possible solution.
+            (
+                fitness,
+                selected_features_mask,
+                stats,
+            ) = _PipelineProblem.evaluate_pipeline(
+                x,
+                feature_selection_algorithm,
+                feature_transform_algorithm,
+                classifier,
+                self.__x,
+                self.__y,
+                self.__fitness_function,
+            )
 
-            Returns:
-                float: Fitness.
-            """
-            self.__evals += 1
+            if fitness < self.__current_best_fitness:
+                self.__current_best_fitness = fitness
+                self.__parent.set_feature_selection_algorithm(
+                    feature_selection_algorithm
+                )
+                self.__parent.set_feature_transform_algorithm(
+                    feature_transform_algorithm
+                )
+                self.__parent.set_classifier(classifier)
+                self.__parent.set_selected_features_mask(selected_features_mask)
+                self.__parent.set_stats(stats)
+
+            return fitness
+        except Exception:
+            # infeasible solution as it causes some kind of error
+            # return infinity as we are looking for maximum accuracy in the optimization process (1 - accuracy since it is a minimization problem)
             if self.__logger is not None:
-                self.__logger.log_progress(
-                    "Evaluation {evals}".format(evals=self.__evals)
-                )
-
-            try:
-                feature_selection_algorithm = (
-                    self.__parent.get_feature_selection_algorithm()
-                )
-                feature_transform_algorithm = (
-                    self.__parent.get_feature_transform_algorithm()
-                )
-                classifier = self.__parent.get_classifier()
-
-                (
-                    fitness,
-                    selected_features_mask,
-                    stats,
-                ) = _PipelineBenchmark.evaluate_pipeline(
-                    sol,
-                    feature_selection_algorithm,
-                    feature_transform_algorithm,
-                    classifier,
-                    self.__x,
-                    self.__y,
-                    self.__fitness_function,
-                )
-
-                if fitness < self.__current_best_fitness:
-                    self.__current_best_fitness = fitness
-                    self.__parent.set_feature_selection_algorithm(
-                        feature_selection_algorithm
+                self.__logger.log_optimization_error(
+                    "Optimization failed for: {ppln}".format(
+                        ppln=self.__parent.to_string_slim()
                     )
-                    self.__parent.set_feature_transform_algorithm(
-                        feature_transform_algorithm
-                    )
-                    self.__parent.set_classifier(classifier)
-                    self.__parent.set_selected_features_mask(selected_features_mask)
-                    self.__parent.set_stats(stats)
-
-                return fitness
-            except:
-                # infeasible solution as it causes some kind of error
-                # return infinity as we are looking for maximum accuracy in the optimization process (1 - accuracy since it is a minimization problem)
-                if self.__logger is not None:
-                    self.__logger.log_optimization_error(
-                        "Optimization failed for: {ppln}".format(
-                            ppln=self.__parent.to_string_slim()
-                        )
-                    )
-                return float("inf")
-
-        return evaluate
+                )
+            return np.inf

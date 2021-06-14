@@ -1,10 +1,10 @@
 from niapy.algorithms.modified import SelfAdaptiveDifferentialEvolution
-from niapy.task import StoppingTask
+from niapy.task import Task
 from niaaml.preprocessing.feature_selection.feature_selection_algorithm import (
     FeatureSelectionAlgorithm,
 )
-from niaaml.preprocessing.feature_selection._feature_selection_threshold_benchmark import (
-    _FeatureSelectionThresholdBenchmark,
+from niaaml.preprocessing.feature_selection._feature_selection_threshold_problem import (
+    _FeatureSelectionThresholdProblem,
 )
 import numpy
 
@@ -38,7 +38,8 @@ class jDEFSTH(FeatureSelectionAlgorithm):
         r"""Initialize GWO feature selection algorithm."""
         super(jDEFSTH, self).__init__()
         self.__jdefsth = SelfAdaptiveDifferentialEvolution(
-            NP=10, F=0.5, F_l=0.0, F_u=2.0, Tao1=0.9, CR=0.5, Tao2=0.45
+            population_size=10, differential_weight=0.5, f_lower=0.0, f_upper=2.0, tao1=0.9,
+            crossover_probability=0.5, tao2=0.45
         )
 
     def __final_output(self, sol):
@@ -67,13 +68,10 @@ class jDEFSTH(FeatureSelectionAlgorithm):
         Returns:
             numpy.ndarray[bool]: Mask of selected features.
         """
-        num_features = x.shape[1]
-        benchmark = _FeatureSelectionThresholdBenchmark(x, y)
-        task = StoppingTask(
-            dimension=num_features + 1, max_evals=1000, benchmark=benchmark
-        )
-        best = self.__jdefsth.run(task)
-        return self.__final_output(benchmark.get_best_solution())
+        problem = _FeatureSelectionThresholdProblem(x, y)
+        task = Task(problem=problem, max_evals=1000)
+        self.__jdefsth.run(task)
+        return self.__final_output(problem.get_best_solution())
 
     def to_string(self):
         r"""User friendly representation of the object.
@@ -83,5 +81,5 @@ class jDEFSTH(FeatureSelectionAlgorithm):
         """
         return FeatureSelectionAlgorithm.to_string(self).format(
             name=self.Name,
-            args=self._parameters_to_string(self.__jdefsth.getParameters()),
+            args=self._parameters_to_string(self.__jdefsth.get_parameters()),
         )

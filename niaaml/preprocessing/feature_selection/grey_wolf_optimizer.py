@@ -1,10 +1,10 @@
 from niapy.algorithms.basic import GreyWolfOptimizer as GWO
-from niapy.task import StoppingTask
+from niapy.task import Task
 from niaaml.preprocessing.feature_selection.feature_selection_algorithm import (
     FeatureSelectionAlgorithm,
 )
-from niaaml.preprocessing.feature_selection._feature_selection_threshold_benchmark import (
-    _FeatureSelectionThresholdBenchmark,
+from niaaml.preprocessing.feature_selection._feature_selection_threshold_problem import (
+    _FeatureSelectionThresholdProblem,
 )
 import numpy
 
@@ -38,7 +38,7 @@ class GreyWolfOptimizer(FeatureSelectionAlgorithm):
     def __init__(self, **kwargs):
         r"""Initialize GWO feature selection algorithm."""
         super(GreyWolfOptimizer, self).__init__()
-        self.__gwo = GWO(NP=10)
+        self.__gwo = GWO(population_size=10)
 
     def __final_output(self, sol):
         r"""Calculate final array of features.
@@ -66,13 +66,10 @@ class GreyWolfOptimizer(FeatureSelectionAlgorithm):
         Returns:
             numpy.ndarray[bool]: Mask of selected features.
         """
-        num_features = x.shape[1]
-        benchmark = _FeatureSelectionThresholdBenchmark(x, y)
-        task = StoppingTask(
-            dimension=num_features + 1, max_evals=1000, benchmark=benchmark
-        )
-        best = self.__gwo.run(task)
-        return self.__final_output(benchmark.get_best_solution())
+        problem = _FeatureSelectionThresholdProblem(x, y)
+        task = Task(problem=problem, max_evals=1000)
+        self.__gwo.run(task)
+        return self.__final_output(problem.get_best_solution())
 
     def to_string(self):
         r"""User friendly representation of the object.
@@ -81,5 +78,5 @@ class GreyWolfOptimizer(FeatureSelectionAlgorithm):
             str: User friendly representation of the object.
         """
         return FeatureSelectionAlgorithm.to_string(self).format(
-            name=self.Name, args=self._parameters_to_string(self.__gwo.getParameters())
+            name=self.Name, args=self._parameters_to_string(self.__gwo.get_parameters())
         )
