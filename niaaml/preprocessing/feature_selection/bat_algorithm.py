@@ -1,11 +1,11 @@
 from niapy.algorithms.basic import BatAlgorithm as BA
-from niapy.task import StoppingTask
+from niapy.task import Task
 from niaaml.preprocessing.feature_selection.feature_selection_algorithm import (
     FeatureSelectionAlgorithm,
 )
 from niaaml.utilities import ParameterDefinition, MinMax
-from niaaml.preprocessing.feature_selection._feature_selection_threshold_benchmark import (
-    _FeatureSelectionThresholdBenchmark,
+from niaaml.preprocessing.feature_selection._feature_selection_threshold_problem import (
+    _FeatureSelectionThresholdProblem,
 )
 import numpy
 
@@ -39,16 +39,16 @@ class BatAlgorithm(FeatureSelectionAlgorithm):
     def __init__(self, **kwargs):
         r"""Initialize BA feature selection algorithm."""
         self._params = dict(
-            A=ParameterDefinition(MinMax(0.5, 1.0), param_type=float),
-            r=ParameterDefinition(MinMax(0.0, 0.5), param_type=float),
-            Qmin=ParameterDefinition(MinMax(0.0, 1.0), param_type=float),
-            Qmax=ParameterDefinition(MinMax(1.0, 2.0), param_type=float),
+            loudness=ParameterDefinition(MinMax(0.5, 1.0), param_type=float),
+            pulse_rate=ParameterDefinition(MinMax(0.0, 0.5), param_type=float),
+            min_frequency=ParameterDefinition(MinMax(0.0, 1.0), param_type=float),
+            max_frequency=ParameterDefinition(MinMax(1.0, 2.0), param_type=float),
         )
-        self.__ba = BA(NP=10)
+        self.__ba = BA(population_size=10)
 
     def set_parameters(self, **kwargs):
         r"""Set the parameters/arguments of the algorithm."""
-        kwargs["NP"] = self.__ba.NP
+        kwargs["population_size"] = self.__ba.population_size
         self.__ba.set_parameters(**kwargs)
 
     def __final_output(self, sol):
@@ -77,13 +77,10 @@ class BatAlgorithm(FeatureSelectionAlgorithm):
         Returns:
             pandas.core.frame.DataFrame: Mask of selected features.
         """
-        num_features = x.shape[1]
-        benchmark = _FeatureSelectionThresholdBenchmark(x, y)
-        task = StoppingTask(
-            dimension=num_features + 1, max_evals=1000, benchmark=benchmark
-        )
-        best = self.__ba.run(task)
-        return self.__final_output(benchmark.get_best_solution())
+        problem = _FeatureSelectionThresholdProblem(x, y)
+        task = Task(problem=problem, max_evals=1000)
+        self.__ba.run(task)
+        return self.__final_output(problem.get_best_solution())
 
     def to_string(self):
         r"""User friendly representation of the object.
@@ -92,5 +89,5 @@ class BatAlgorithm(FeatureSelectionAlgorithm):
             str: User friendly representation of the object.
         """
         return FeatureSelectionAlgorithm.to_string(self).format(
-            name=self.Name, args=self._parameters_to_string(self.__ba.getParameters())
+            name=self.Name, args=self._parameters_to_string(self.__ba.get_parameters())
         )

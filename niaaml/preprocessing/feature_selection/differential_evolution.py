@@ -1,11 +1,11 @@
 from niapy.algorithms.basic import DifferentialEvolution as DE
-from niapy.task import StoppingTask
+from niapy.task import Task
 from niaaml.preprocessing.feature_selection.feature_selection_algorithm import (
     FeatureSelectionAlgorithm,
 )
 from niaaml.utilities import ParameterDefinition, MinMax
-from niaaml.preprocessing.feature_selection._feature_selection_threshold_benchmark import (
-    _FeatureSelectionThresholdBenchmark,
+from niaaml.preprocessing.feature_selection._feature_selection_threshold_problem import (
+    _FeatureSelectionThresholdProblem,
 )
 import numpy
 
@@ -39,14 +39,14 @@ class DifferentialEvolution(FeatureSelectionAlgorithm):
     def __init__(self, **kwargs):
         r"""Initialize DE feature selection algorithm."""
         self._params = dict(
-            F=ParameterDefinition(MinMax(0.5, 0.9), param_type=float),
-            CR=ParameterDefinition(MinMax(0.0, 1.0), param_type=float),
+            differential_weight=ParameterDefinition(MinMax(0.5, 0.9), param_type=float),
+            crossover_probability=ParameterDefinition(MinMax(0.0, 1.0), param_type=float),
         )
-        self.__de = DE(NP=10)
+        self.__de = DE(population_size=10)
 
     def set_parameters(self, **kwargs):
         r"""Set the parameters/arguments of the algorithm."""
-        kwargs["NP"] = self.__de.NP
+        kwargs["population_size"] = self.__de.population_size
         self.__de.set_parameters(**kwargs)
 
     def __final_output(self, sol):
@@ -75,13 +75,10 @@ class DifferentialEvolution(FeatureSelectionAlgorithm):
         Returns:
             numpy.ndarray[bool]: Mask of selected features.
         """
-        num_features = x.shape[1]
-        benchmark = _FeatureSelectionThresholdBenchmark(x, y)
-        task = StoppingTask(
-            dimension=num_features + 1, max_evals=1000, benchmark=benchmark
-        )
-        best = self.__de.run(task)
-        return self.__final_output(benchmark.get_best_solution())
+        problem = _FeatureSelectionThresholdProblem(x, y)
+        task = Task(problem=problem, max_evals=1000)
+        self.__de.run(task)
+        return self.__final_output(problem.get_best_solution())
 
     def to_string(self):
         r"""User friendly representation of the object.
@@ -90,5 +87,5 @@ class DifferentialEvolution(FeatureSelectionAlgorithm):
             str: User friendly representation of the object.
         """
         return FeatureSelectionAlgorithm.to_string(self).format(
-            name=self.Name, args=self._parameters_to_string(self.__de.getParameters())
+            name=self.Name, args=self._parameters_to_string(self.__de.get_parameters())
         )

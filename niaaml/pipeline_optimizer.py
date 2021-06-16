@@ -1,9 +1,10 @@
-from niaaml.pipeline import Pipeline, _PipelineBenchmark
+import numpy as np
+from niaaml.pipeline import Pipeline, _PipelineProblem
 from niaaml.classifiers import ClassifierFactory
 from niaaml.preprocessing.feature_selection import FeatureSelectionAlgorithmFactory
 from niaaml.preprocessing.feature_transform import FeatureTransformAlgorithmFactory
-from niapy.task import StoppingTask
-from niapy.benchmarks import Benchmark
+from niapy.task import Task
+from niapy.problems import Problem
 from niapy.util.factory import get_algorithm
 from niaaml.utilities import get_bin_index
 from niaaml.preprocessing.encoding.utility import encode_categorical_features
@@ -13,9 +14,9 @@ from niaaml.logger import Logger
 
 __all__ = [
     "PipelineOptimizer",
-    "_PipelineOptimizerBenchmark",
-    "_PipelineOptimizerBenchmarkV1",
-    "_PipelineOptimizerBenchmarkV2",
+    "_PipelineOptimizerProblem",
+    "_PipelineOptimizerProblemV1",
+    "_PipelineOptimizerProblemV2",
 ]
 
 
@@ -183,7 +184,7 @@ class PipelineOptimizer:
 
         self.__data.set_x(features)
 
-        benchmark = _PipelineOptimizerBenchmarkV2(
+        problem = _PipelineOptimizerProblemV2(
             self,
             fitness_name,
             inner_population_size,
@@ -192,12 +193,10 @@ class PipelineOptimizer:
             if inner_optimization_algorithm is not None
             else optimization_algorithm,
         )
-        task = StoppingTask(
-            dimension=3, max_evals=number_of_pipeline_evaluations, benchmark=benchmark
-        )
+        task = Task(problem=problem, max_evals=number_of_pipeline_evaluations)
         algo.run(task)
 
-        pipeline = benchmark.get_pipeline()
+        pipeline = problem.get_pipeline()
         if pipeline is not None:
             pipeline.set_categorical_features_encoders(
                 self.__categorical_features_encoders
@@ -264,13 +263,11 @@ class PipelineOptimizer:
                             m = len(params)
             D += m
 
-        benchmark = _PipelineOptimizerBenchmarkV1(self, fitness_name)
-        task = StoppingTask(
-            dimension=D, max_evals=number_of_evaluations, benchmark=benchmark
-        )
+        problem = _PipelineOptimizerProblemV1(D, self, fitness_name)
+        task = Task(problem=problem, max_evals=number_of_evaluations)
         algo.run(task)
 
-        pipeline = benchmark.get_pipeline()
+        pipeline = problem.get_pipeline()
         if pipeline is not None:
             pipeline.set_categorical_features_encoders(
                 self.__categorical_features_encoders
@@ -280,8 +277,8 @@ class PipelineOptimizer:
         return pipeline
 
 
-class _PipelineOptimizerBenchmark(Benchmark):
-    r"""NiaPy Benchmark class base implementation.
+class _PipelineOptimizerProblem(Problem):
+    r"""NiaPy Problem class base implementation.
 
     Date:
         2020
@@ -305,10 +302,11 @@ class _PipelineOptimizerBenchmark(Benchmark):
     _feature_transform_algorithm_factory = FeatureTransformAlgorithmFactory()
     _feature_selection_algorithm_factory = FeatureSelectionAlgorithmFactory()
 
-    def __init__(self, parent, fitness_name):
-        r"""Initialize pipeline optimizer benchmark.
+    def __init__(self, dimension, parent, fitness_name):
+        r"""Initialize pipeline optimizer problem.
 
         Arguments:
+            dimension (int): Dimension of the problem.
             parent (PipelineOptimizer): Parent instance of PipelineOptimizer.
             fitness_name (str): Name of the fitness class to use as a function.
         """
@@ -318,7 +316,7 @@ class _PipelineOptimizerBenchmark(Benchmark):
         self._fitness_name = fitness_name
         self._evals = 0
         self._logger = self._parent.get_logger()
-        Benchmark.__init__(self, 0.0, 1.0)
+        super().__init__(dimension, 0.0, 1.0)
 
     def _float_to_instance(self, value, collection, factory):
         r"""Get instance of object from collection using factory.
@@ -344,9 +342,12 @@ class _PipelineOptimizerBenchmark(Benchmark):
         """
         return self._current_best_pipeline
 
+    def _evaluate(self, x):
+        pass
 
-class _PipelineOptimizerBenchmarkV2(_PipelineOptimizerBenchmark):
-    r"""NiaPy Benchmark class implementation.
+
+class _PipelineOptimizerProblemV2(_PipelineOptimizerProblem):
+    r"""NiaPy Problem class implementation.
 
     Date:
         2020
@@ -360,7 +361,7 @@ class _PipelineOptimizerBenchmarkV2(_PipelineOptimizerBenchmark):
         __optimization_algorithm (str): Name of the optimization algorithm to use.
 
     See also:
-        * :class:`niaaml.pipeline_optimizer._PipelineOptimizerBenchmark`
+        * :class:`niaaml.pipeline_optimizer._PipelineOptimizerProblem`
     """
 
     def __init__(
@@ -371,7 +372,7 @@ class _PipelineOptimizerBenchmarkV2(_PipelineOptimizerBenchmark):
         number_of_inner_evaluations,
         inner_optimization_algorithm,
     ):
-        r"""Initialize pipeline optimizer benchmark.
+        r"""Initialize pipeline optimizer problem.
 
         Arguments:
             parent (PipelineOptimizer): Parent instance of PipelineOptimizer.
@@ -380,34 +381,128 @@ class _PipelineOptimizerBenchmarkV2(_PipelineOptimizerBenchmark):
             number_of_inner_evaluations (uint): Number of maximum inner evaluations.
             inner_optimization_algorithm (str): Name of the optimization algorithm to use.
         """
-        super(_PipelineOptimizerBenchmarkV2, self).__init__(parent, fitness_name)
+        super().__init__(3, parent, fitness_name)
         self.__inner_population_size = inner_population_size
         self.__number_of_inner_evaluations = number_of_inner_evaluations
         self.__optimization_algorithm = inner_optimization_algorithm
 
-    def function(self):
-        r"""Override Benchmark function.
+    def _evaluate(self, x):
+        r"""Override fitness function.
+
+        Args:
+            x (numpy.ndarray): Solution vector.
 
         Returns:
-            Callable[[int, numpy.ndarray[float]], float]: Fitness evaluation function.
+            float: Fitness value of `x`.
         """
 
-        def evaluate(D, sol):
-            r"""Evaluate pipeline.
+        self._evals += 1
 
-            Arguments:
-                D (uint): Number of dimensions.
-                sol (numpy.ndarray[float]): Individual of population/ possible solution.
+        data = self._parent.get_data()
+        fs_algo = (
+            self._float_to_instance(
+                x[0],
+                self._parent.get_feature_selection_algorithms(),
+                self._feature_selection_algorithm_factory,
+            )
+            if self._parent.get_feature_selection_algorithms() is not None
+            and len(self._parent.get_feature_selection_algorithms()) > 0
+            else None
+        )
+        ft_algo = (
+            self._float_to_instance(
+                x[1],
+                self._parent.get_feature_transform_algorithms(),
+                self._feature_transform_algorithm_factory,
+            )
+            if self._parent.get_feature_transform_algorithms() is not None
+            and len(self._parent.get_feature_transform_algorithms()) > 0
+            else None
+        )
+        clsf = self._float_to_instance(
+            x[2], self._parent.get_classifiers(), self._classifier_factory
+        )
 
-            Returns:
-                float: Fitness.
-            """
-            self._evals += 1
+        pipeline = Pipeline(
+            feature_selection_algorithm=fs_algo,
+            feature_transform_algorithm=ft_algo,
+            classifier=clsf,
+            logger=self._logger,
+        )
 
+        if self._logger is not None:
+            self._logger.log_progress(
+                "Currently optimizing {evals}: {ppln}".format(
+                    ppln=pipeline.to_string_slim(), evals=self._evals
+                )
+            )
+
+        fitness = pipeline.optimize(
+            data.get_x(),
+            data.get_y(),
+            self.__inner_population_size,
+            self.__number_of_inner_evaluations,
+            self.__optimization_algorithm,
+            self._fitness_name,
+        )
+        if fitness < self._current_best_fitness:
+            self._current_best_fitness = fitness
+            self._current_best_pipeline = pipeline
+
+            if self._logger is not None:
+                self._logger.log_pipeline(
+                    "New current best pipeline with fitness {fit}: {ppln}".format(
+                        fit=-fitness, ppln=pipeline.to_string_slim()
+                    )
+                )
+
+        return fitness
+
+
+class _PipelineOptimizerProblemV1(_PipelineOptimizerProblem):
+    r"""NiaPy Problem class implementation.
+
+    Date:
+        2020
+
+    Author:
+        Luka Pečnik
+
+    See also:
+        * :class:`niaaml.pipeline_optimizer._PipelineOptimizerProblem`
+    """
+
+    def __init__(self, dimension, parent, fitness_name):
+        r"""Initialize pipeline optimizer problem.
+
+        Arguments:
+            dimension (int): Dimension of the problem.
+            parent (PipelineOptimizer): Parent instance of PipelineOptimizer.
+            fitness_name (str): Name of the fitness class to use as a function.
+        """
+        super().__init__(dimension, parent, fitness_name)
+        self.__fitness_function = FitnessFactory().get_result(self._fitness_name)
+
+    def _evaluate(self, x):
+        r"""Override fitness function.
+
+        Args:
+            x (numpy.ndarray): Solution vector.
+
+        Returns:
+            float: Fitness value of `x`.
+        """
+        self._evals += 1
+        if self._logger is not None:
+            self._logger.log_progress(
+                "Evaluation {evals}".format(evals=self._evals)
+            )
+
+        try:
             data = self._parent.get_data()
             fs_algo = (
                 self._float_to_instance(
-                    sol[0],
+                    x[0],
                     self._parent.get_feature_selection_algorithms(),
                     self._feature_selection_algorithm_factory,
                 )
@@ -417,7 +512,7 @@ class _PipelineOptimizerBenchmarkV2(_PipelineOptimizerBenchmark):
             )
             ft_algo = (
                 self._float_to_instance(
-                    sol[1],
+                    x[1],
                     self._parent.get_feature_transform_algorithms(),
                     self._feature_transform_algorithm_factory,
                 )
@@ -426,7 +521,7 @@ class _PipelineOptimizerBenchmarkV2(_PipelineOptimizerBenchmark):
                 else None
             )
             clsf = self._float_to_instance(
-                sol[2], self._parent.get_classifiers(), self._classifier_factory
+                x[2], self._parent.get_classifiers(), self._classifier_factory
             )
 
             pipeline = Pipeline(
@@ -438,21 +533,32 @@ class _PipelineOptimizerBenchmarkV2(_PipelineOptimizerBenchmark):
 
             if self._logger is not None:
                 self._logger.log_progress(
-                    "Currently optimizing {evals}: {ppln}".format(
-                        ppln=pipeline.to_string_slim(), evals=self._evals
+                    "Currently optimizing: {ppln}".format(
+                        ppln=pipeline.to_string_slim()
                     )
                 )
 
-            fitness = pipeline.optimize(
+            (
+                fitness,
+                selected_features_mask,
+                stats,
+            ) = _PipelineProblem.evaluate_pipeline(
+                x[3:],
+                fs_algo,
+                ft_algo,
+                clsf,
                 data.get_x(),
                 data.get_y(),
-                self.__inner_population_size,
-                self.__number_of_inner_evaluations,
-                self.__optimization_algorithm,
-                self._fitness_name,
+                self.__fitness_function,
             )
+
             if fitness < self._current_best_fitness:
                 self._current_best_fitness = fitness
+                pipeline.set_feature_selection_algorithm(fs_algo)
+                pipeline.set_feature_transform_algorithm(ft_algo)
+                pipeline.set_classifier(clsf)
+                pipeline.set_stats(stats)
+                pipeline.set_selected_features_mask(selected_features_mask)
                 self._current_best_pipeline = pipeline
 
                 if self._logger is not None:
@@ -463,136 +569,13 @@ class _PipelineOptimizerBenchmarkV2(_PipelineOptimizerBenchmark):
                     )
 
             return fitness
-
-        return evaluate
-
-
-class _PipelineOptimizerBenchmarkV1(_PipelineOptimizerBenchmark):
-    r"""NiaPy Benchmark class implementation.
-
-    Date:
-        2020
-
-    Author:
-        Luka Pečnik
-
-    See also:
-        * :class:`niaaml.pipeline_optimizer._PipelineOptimizerBenchmark`
-    """
-
-    def __init__(self, parent, fitness_name):
-        r"""Initialize pipeline optimizer benchmark.
-
-        Arguments:
-            parent (PipelineOptimizer): Parent instance of PipelineOptimizer.
-            fitness_name (str): Name of the fitness class to use as a function.
-        """
-        super(_PipelineOptimizerBenchmarkV1, self).__init__(parent, fitness_name)
-        self.__fitness_function = FitnessFactory().get_result(self._fitness_name)
-
-    def function(self):
-        r"""Override Benchmark function.
-
-        Returns:
-            Callable[[int, numpy.ndarray[float]], float]: Fitness evaluation function.
-        """
-
-        def evaluate(D, sol):
-            r"""Evaluate pipeline.
-
-            Arguments:
-                D (uint): Number of dimensions.
-                sol (numpy.ndarray[float]): Individual of population/ possible solution.
-
-            Returns:
-                float: Fitness.
-            """
-            self._evals += 1
+        except:
+            # infeasible solution as it causes some kind of error
+            # return infinity as we are looking for maximum accuracy in the optimization process (1 - accuracy since it is a minimization problem)
             if self._logger is not None:
-                self._logger.log_progress(
-                    "Evaluation {evals}".format(evals=self._evals)
-                )
-
-            try:
-                data = self._parent.get_data()
-                fs_algo = (
-                    self._float_to_instance(
-                        sol[0],
-                        self._parent.get_feature_selection_algorithms(),
-                        self._feature_selection_algorithm_factory,
+                self._logger.log_optimization_error(
+                    "Optimization failed for: {ppln}".format(
+                        ppln=pipeline.to_string_slim()
                     )
-                    if self._parent.get_feature_selection_algorithms() is not None
-                    and len(self._parent.get_feature_selection_algorithms()) > 0
-                    else None
                 )
-                ft_algo = (
-                    self._float_to_instance(
-                        sol[1],
-                        self._parent.get_feature_transform_algorithms(),
-                        self._feature_transform_algorithm_factory,
-                    )
-                    if self._parent.get_feature_transform_algorithms() is not None
-                    and len(self._parent.get_feature_transform_algorithms()) > 0
-                    else None
-                )
-                clsf = self._float_to_instance(
-                    sol[2], self._parent.get_classifiers(), self._classifier_factory
-                )
-
-                pipeline = Pipeline(
-                    feature_selection_algorithm=fs_algo,
-                    feature_transform_algorithm=ft_algo,
-                    classifier=clsf,
-                    logger=self._logger,
-                )
-
-                if self._logger is not None:
-                    self._logger.log_progress(
-                        "Currently optimizing: {ppln}".format(
-                            ppln=pipeline.to_string_slim()
-                        )
-                    )
-
-                (
-                    fitness,
-                    selected_features_mask,
-                    stats,
-                ) = _PipelineBenchmark.evaluate_pipeline(
-                    sol[3:],
-                    fs_algo,
-                    ft_algo,
-                    clsf,
-                    data.get_x(),
-                    data.get_y(),
-                    self.__fitness_function,
-                )
-
-                if fitness < self._current_best_fitness:
-                    self._current_best_fitness = fitness
-                    pipeline.set_feature_selection_algorithm(fs_algo)
-                    pipeline.set_feature_transform_algorithm(ft_algo)
-                    pipeline.set_classifier(clsf)
-                    pipeline.set_stats(stats)
-                    pipeline.set_selected_features_mask(selected_features_mask)
-                    self._current_best_pipeline = pipeline
-
-                    if self._logger is not None:
-                        self._logger.log_pipeline(
-                            "New current best pipeline with fitness {fit}: {ppln}".format(
-                                fit=-fitness, ppln=pipeline.to_string_slim()
-                            )
-                        )
-
-                return fitness
-            except:
-                # infeasible solution as it causes some kind of error
-                # return infinity as we are looking for maximum accuracy in the optimization process (1 - accuracy since it is a minimization problem)
-                if self._logger is not None:
-                    self._logger.log_optimization_error(
-                        "Optimization failed for: {ppln}".format(
-                            ppln=pipeline.to_string_slim()
-                        )
-                    )
-                return float("inf")
-
-        return evaluate
+            return np.inf
