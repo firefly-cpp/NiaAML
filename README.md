@@ -261,4 +261,6 @@ This framework is provided as-is, and there are no guarantees that it fits your 
 
 ## Cite us
 
-L. Pečnik, I. Fister Jr. "NiaAML: AutoML framework based on stochastic population-based nature-inspired algorithms." Journal of Open Source Software 6.61 (2021): 2949.
+L. Pečnik, I. Fister Jr. "[NiaAML: AutoML framework based on stochastic population-based nature-inspired algorithms](https://joss.theoj.org/papers/10.21105/joss.02949)." Journal of Open Source Software 6.61 (2021): 2949.
+
+L. Pečnik, Fister, I., Fister, I. Jr. [NiaAML2: An Improved AutoML Using Nature-Inspired Algorithms](https://doi.org/10.1007/978-3-030-78811-7_23). In International Conference on Swarm Intelligence (pp. 243-252). Springer, Cham, 2021.
