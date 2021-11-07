@@ -59,17 +59,6 @@ In case you would like to try out the latest pre-release version of the framewor
 
     pip3 install niaaml --pre
 
-Install From Source
-~~~~~~~~~~~~~~~~~~~
-
-In case you want to install directly from the source code, use:
-
-.. code:: sh
-
-    git clone https://github.com/lukapecnik/NiaAML.git
-    cd NiaAML
-    python3 setup.py install
-
 Graphical User Interface
 ------------------------
 

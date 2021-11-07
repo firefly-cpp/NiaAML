@@ -54,16 +54,6 @@ To install NiaAML on Fedora, use:
 $ dnf install python-niaaml
 ```
 
-### Install From Source
-
-In case you want to install directly from the source code, use:
-
-```sh
-$ git clone https://github.com/lukapecnik/NiaAML.git
-$ cd NiaAML
-$ python3 setup.py install
-```
-
 ## Graphical User Interface
 
 There is a simple Graphical User Interface for the NiaAML package available [here](https://github.com/lukapecnik/NiaAML-GUI).
