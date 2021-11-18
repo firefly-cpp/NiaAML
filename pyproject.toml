@@ -10,14 +10,15 @@ repository = "https://github.com/lukapecnik/NiaAML"
 readme = "README.rst"
 include = [
     "LICENSE",
-    "CHANGELOG.md"
+    "CHANGELOG.md",
+    "CITATION.md"
 ]
 
 [tool.poetry.dependencies]
 python = "^3.6.2"
 numpy = "^1.19.1"
 scikit-learn = "^0.23.2"
-niapy = "^2.0.0rc16"
+niapy = "^2.0.0rc18"
 pandas = "^1.1.4"
 
 [tool.poetry.dev-dependencies]
