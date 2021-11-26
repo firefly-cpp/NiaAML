@@ -39,7 +39,7 @@ List of NiaAML's dependencies:
 | ------------ |:----------:|:--------:|
 | numpy        | ^1.19.1    | All      |
 | scikit-learn | ^0.23.2    | All      |
-| NiaPy        | ^2.0.0rc11 | All      |
+| niapy        | ^2.0.0rc18 | All      |
 | pandas       | ^1.1.4     | All      |
 
 List of development dependencies:
