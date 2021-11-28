@@ -20,7 +20,7 @@ def get_bin_index(value, number_of_bins):
     Returns:
         uint: Calculated index.
     """
-    bin_index = np.int(np.floor(value / (1.0 / number_of_bins)))
+    bin_index = int(np.floor(value / (1.0 / number_of_bins)))
     if bin_index >= number_of_bins:
         bin_index -= 1
     return bin_index
