@@ -9,9 +9,9 @@ homepage = "https://github.com/lukapecnik/NiaAML"
 repository = "https://github.com/lukapecnik/NiaAML"
 readme = "README.rst"
 include = [
-    "LICENSE",
-    "CHANGELOG.md",
-    "CITATION.md"
+    { path="LICENSE", format="sdist" },
+    { path="CHANGELOG.md", format="sdist" },
+    { path="CITATION.md", format="sdist" }
 ]
 
 [tool.poetry.dependencies]
