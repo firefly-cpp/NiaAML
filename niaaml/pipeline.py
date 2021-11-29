@@ -472,7 +472,7 @@ class _PipelineProblem(Problem):
                         )
                         if (
                             i[0][key].param_type is np.intc
-                            or i[0][key].param_type is np.int
+                            or i[0][key].param_type is int
                             or i[0][key].param_type is np.uintc
                             or i[0][key].param_type is np.uint
                         ):

@@ -62,8 +62,8 @@ class SelectKBest(FeatureSelectionAlgorithm):
         """
         if self.__k is None:
             self.__k = x.shape[1]
-            self._params["k"] = ParameterDefinition(MinMax(1, self.__k), np.int)
-            val = np.int(np.around(np.random.uniform(1, self.__k)))
+            self._params["k"] = ParameterDefinition(MinMax(1, self.__k), int)
+            val = int(np.around(np.random.uniform(1, self.__k)))
             self.__select_k_best.set_params(k=val)
 
         self.__select_k_best.fit(x, y)

@@ -30,7 +30,7 @@ class VarianceThreshold(FeatureSelectionAlgorithm):
 
     def __init__(self, **kwargs):
         r"""Initialize VarianceThreshold feature selection algorithm."""
-        self._params = dict(threshold=ParameterDefinition(MinMax(0, 0.1), np.float))
+        self._params = dict(threshold=ParameterDefinition(MinMax(0, 0.1), float))
         self.__variance_threshold = VarThr()
 
     def set_parameters(self, **kwargs):
