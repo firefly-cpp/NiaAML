@@ -5,6 +5,7 @@
 [![PyPI Version](https://img.shields.io/pypi/v/niaaml.svg)](https://pypi.python.org/pypi/niaaml)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/niaaml.svg)
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/niaaml.svg)
+[![Downloads](https://pepy.tech/badge/niaaml)](https://pepy.tech/project/niaaml)
 [![GitHub license](https://img.shields.io/github/license/lukapecnik/niaaml.svg)](https://github.com/lukapecnik/niaaml/blob/master/LICENSE)
 [![Build Status](https://travis-ci.com/lukapecnik/NiaAML.svg?branch=master)](https://travis-ci.com/lukapecnik/NiaAML)
 [![Coverage Status](https://coveralls.io/repos/github/lukapecnik/NiaAML/badge.svg?branch=master)](https://coveralls.io/github/lukapecnik/NiaAML?branch=master)
