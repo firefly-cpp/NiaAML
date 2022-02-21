@@ -1,5 +1,5 @@
 import os
-from niaaml import PipelineOptimizer, Pipeline
+from niaaml import PipelineOptimizer
 from niaaml.data import CSVDataReader
 
 """
