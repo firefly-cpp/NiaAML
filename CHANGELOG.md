@@ -1,5 +1,39 @@
 # Changelog
 
+## [1.1.7](https://github.com/lukapecnik/niaaml/tree/1.1.7) (2022-02-21)
+
+[Full Changelog](https://github.com/lukapecnik/niaaml/compare/1.1.6...1.1.7)
+
+**Closed issues:**
+
+- Update to the latest niapy stable release [\#62](https://github.com/lukapecnik/NiaAML/issues/62)
+- Example file pipeline.ppln is out of date [\#60](https://github.com/lukapecnik/NiaAML/issues/60)
+- np.int is a deprecated alias [\#56](https://github.com/lukapecnik/NiaAML/issues/56)
+- Remove setup.py file [\#54](https://github.com/lukapecnik/NiaAML/issues/54)
+
+**Merged pull requests:**
+
+- Update niapy [\#64](https://github.com/lukapecnik/NiaAML/pull/64) ([lukapecnik](https://github.com/lukapecnik))
+- Update README.md [\#63](https://github.com/lukapecnik/NiaAML/pull/63) ([firefly-cpp](https://github.com/firefly-cpp))
+- Eschew deprecated numpy aliases for builtins [\#61](https://github.com/lukapecnik/NiaAML/pull/61) ([musicinmybrain](https://github.com/musicinmybrain))
+- Corrected dependencies in CONTRIBUTING [\#59](https://github.com/lukapecnik/NiaAML/pull/59) ([firefly-cpp](https://github.com/firefly-cpp))
+- Do not install text files in site-packages/ [\#58](https://github.com/lukapecnik/NiaAML/pull/58) ([musicinmybrain](https://github.com/musicinmybrain))
+- Use the latest upstream's release for niapy [\#57](https://github.com/lukapecnik/NiaAML/pull/57) ([firefly-cpp](https://github.com/firefly-cpp))
+- Add reference links [\#55](https://github.com/lukapecnik/NiaAML/pull/55) ([firefly-cpp](https://github.com/firefly-cpp))
+- Add link to the API [\#53](https://github.com/lukapecnik/NiaAML/pull/53) ([firefly-cpp](https://github.com/firefly-cpp))
+
+## [1.1.6](https://github.com/lukapecnik/niaaml/tree/1.1.6) (2021-06-27)
+
+[Full Changelog](https://github.com/lukapecnik/niaaml/compare/1.1.5...1.1.6)
+
+**Closed issues:**
+
+- Upgrade to the latest niapy release [\#51](https://github.com/lukapecnik/NiaAML/issues/51)
+
+**Merged pull requests:**
+
+- Update to the latest niapy version and fix docs build warnings [\#52](https://github.com/lukapecnik/NiaAML/pull/52) ([zStupan](https://github.com/zStupan))
+
 ## [1.1.5](https://github.com/lukapecnik/niaaml/tree/1.1.5) (2021-06-01)
 
 [Full Changelog](https://github.com/lukapecnik/niaaml/compare/1.1.4...1.1.5)
@@ -125,7 +159,6 @@
 **Merged pull requests:**
 
 - Added support for categorical features [\#26](https://github.com/lukapecnik/NiaAML/pull/26) ([lukapecnik](https://github.com/lukapecnik))
-- badges and readme update [\#19](https://github.com/lukapecnik/NiaAML/pull/19) ([lukapecnik](https://github.com/lukapecnik))
 
 ## [0.1.4](https://github.com/lukapecnik/niaaml/tree/0.1.4) (2020-12-05)
 
@@ -165,6 +198,7 @@
 
 - readme.rst fix, pipeline fix [\#21](https://github.com/lukapecnik/NiaAML/pull/21) ([lukapecnik](https://github.com/lukapecnik))
 - Travis ci integration [\#20](https://github.com/lukapecnik/NiaAML/pull/20) ([lukapecnik](https://github.com/lukapecnik))
+- badges and readme update [\#19](https://github.com/lukapecnik/NiaAML/pull/19) ([lukapecnik](https://github.com/lukapecnik))
 
 ## [0.1.2a1](https://github.com/lukapecnik/niaaml/tree/0.1.2a1) (2020-11-29)
 
