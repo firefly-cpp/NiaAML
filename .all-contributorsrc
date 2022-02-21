@@ -40,6 +40,15 @@
       "contributions": [
         "ideas"
       ]
+    },
+    {
+      "login": "zStupan",
+      "name": "zStupan",
+      "avatar_url": "https://avatars.githubusercontent.com/u/48752988?v=4",
+      "profile": "https://github.com/zStupan",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "skipCi": true,
