@@ -7,7 +7,7 @@
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/niaaml.svg)
 [![Downloads](https://pepy.tech/badge/niaaml)](https://pepy.tech/project/niaaml)
 [![GitHub license](https://img.shields.io/github/license/lukapecnik/niaaml.svg)](https://github.com/lukapecnik/niaaml/blob/master/LICENSE)
-[![Build Status](https://travis-ci.com/lukapecnik/NiaAML.svg?branch=master)](https://travis-ci.com/lukapecnik/NiaAML)
+![build](https://github.com/lukapecnik/niaaml/actions/workflows/test.yml/badge.svg)
 [![Coverage Status](https://coveralls.io/repos/github/lukapecnik/NiaAML/badge.svg?branch=master)](https://coveralls.io/github/lukapecnik/NiaAML?branch=master)
 [![Documentation Status](https://readthedocs.org/projects/niaaml/badge/?version=latest)](https://niaaml.readthedocs.io/en/latest/?badge=latest)
 
@@ -25,7 +25,7 @@ The NiaAML framework allows you not only to run full pipeline optimization, but 
 
 * **Free software:** MIT license,
 * **Documentation:** https://niaaml.readthedocs.io/en/latest/,
-* **Python versions:** 3.6.x, 3.7.x, 3.8.x,
+* **Python versions:** 3.6.x, 3.7.x, 3.8.x, 3.9.x,
 * **Dependencies:** [click](CONTRIBUTING.md#development-dependencies),
 * **Tested OS:** Windows, Ubuntu, Fedora, Linux Mint and CentOS. **However, that does not mean it does not work on others.**
 
