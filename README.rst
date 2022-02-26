@@ -1,8 +1,8 @@
 NiaAML
 ======
 
-.. image:: https://travis-ci.com/lukapecnik/NiaAML.svg?branch=master
-    :target: https://travis-ci.com/lukapecnik/NiaAML
+.. image:: https://github.com/lukapecnik/niaaml/actions/workflows/test.yml/badge.svg
+    :target: https://github.com/lukapecnik/niaaml
 
 .. image:: https://coveralls.io/repos/github/lukapecnik/NiaAML/badge.svg?branch=travisCI_integration
     :target: https://coveralls.io/github/lukapecnik/NiaAML?branch=travisCI_integration

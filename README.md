@@ -25,7 +25,7 @@ The NiaAML framework allows you not only to run full pipeline optimization, but 
 
 * **Free software:** MIT license,
 * **Documentation:** https://niaaml.readthedocs.io/en/latest/,
-* **Python versions:** 3.6.x, 3.7.x, 3.8.x,
+* **Python versions:** 3.6.x, 3.7.x, 3.8.x, 3.9.x,
 * **Dependencies:** [click](CONTRIBUTING.md#development-dependencies),
 * **Tested OS:** Windows, Ubuntu, Fedora, Linux Mint and CentOS. **However, that does not mean it does not work on others.**
 
