@@ -28,4 +28,7 @@ jobs:
       - name: Run tests
         run: |
           poetry run coverage run --source=niaaml -m unittest discover -b
-          poetry run coveralls
+      - name: Publish coverage
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
