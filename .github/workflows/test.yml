@@ -1,4 +1,4 @@
-name: Build Status
+name: Test
 
 on:
   push:
@@ -29,6 +29,7 @@ jobs:
         run: |
           poetry run coverage run --source=niaaml -m unittest discover -b
       - name: Publish coverage
-        uses: coverallsapp/github-action@master
+        run: |
+          poetry run coveralls
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
