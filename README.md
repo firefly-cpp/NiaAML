@@ -55,6 +55,14 @@ To install NiaAML on Fedora, use:
 $ dnf install python-niaaml
 ```
 
+### Alpine Linux
+
+To install NiaAML on Alpine Linux, please enable Testing repository and use:
+
+```sh
+$ apk add py3-niaaml
+```
+
 ## Graphical User Interface
 
 There is a simple Graphical User Interface for the NiaAML package available [here](https://github.com/lukapecnik/NiaAML-GUI).
