@@ -4,13 +4,11 @@ from sklearn.neural_network import MLPClassifier
 
 import warnings
 from sklearn.exceptions import (
-    ChangedBehaviorWarning,
     ConvergenceWarning,
     DataConversionWarning,
     DataDimensionalityWarning,
     EfficiencyWarning,
     FitFailedWarning,
-    NonBLASDotWarning,
     UndefinedMetricWarning,
 )
 
@@ -42,13 +40,11 @@ class MultiLayerPerceptron(Classifier):
 
     def __init__(self, **kwargs):
         r"""Initialize MultiLayerPerceptron instance."""
-        warnings.filterwarnings(action="ignore", category=ChangedBehaviorWarning)
         warnings.filterwarnings(action="ignore", category=ConvergenceWarning)
         warnings.filterwarnings(action="ignore", category=DataConversionWarning)
         warnings.filterwarnings(action="ignore", category=DataDimensionalityWarning)
         warnings.filterwarnings(action="ignore", category=EfficiencyWarning)
         warnings.filterwarnings(action="ignore", category=FitFailedWarning)
-        warnings.filterwarnings(action="ignore", category=NonBLASDotWarning)
         warnings.filterwarnings(action="ignore", category=UndefinedMetricWarning)
 
         self._params = dict(
