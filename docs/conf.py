@@ -21,11 +21,11 @@ sys.path.insert(0, os.path.abspath("../"))
 # -- Project information -----------------------------------------------------
 
 project = "NiaAML"
-copyright = "2020, Luka Pečnik"
+copyright = "2020-2022, Luka Pečnik"
 author = "Luka Pečnik"
 
 # The full version, including alpha/beta/rc tags
-release = "1.1.10"
+release = "1.1.11"
 
 
 # -- General configuration ---------------------------------------------------
