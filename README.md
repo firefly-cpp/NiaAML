@@ -57,7 +57,7 @@ $ dnf install python-niaaml
 
 ### Alpine Linux
 
-To install NiaAML on Alpine Linux, please enable Testing repository and use:
+To install NiaAML on Alpine Linux, please enable Community repository and use:
 
 ```sh
 $ apk add py3-niaaml
