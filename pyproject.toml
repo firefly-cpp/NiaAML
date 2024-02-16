@@ -29,6 +29,8 @@ coveralls = "^2.2.0"
 autoflake = "^1.4"
 black = "^21.5b1"
 pre-commit = "^2.12.1"
+pytest = "^7.4.2"
+pytest-cov = "^4.1.0"
 
 [build-system]
 requires = ["poetry-core"]
