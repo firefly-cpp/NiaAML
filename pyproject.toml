@@ -20,7 +20,7 @@ python = "^3.9"
 numpy = "^1.19.1"
 scikit-learn = "^1.1.2"
 niapy = "^2.0.5"
-pandas = "^1.1.4"
+pandas = "^2.1.1"
 
 [tool.poetry.dev-dependencies]
 sphinx = "^3.3.1"
