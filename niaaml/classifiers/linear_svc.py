@@ -53,7 +53,7 @@ class LinearSVC(Classifier):
             penalty=ParameterDefinition(["l1", "l2"]),
             max_iter=ParameterDefinition(MinMax(min=300, max=2000), np.uint),
         )
-        self.__linear_SVC = LSVC()
+        self.__linear_SVC = LSVC(dual=True)
 
     def set_parameters(self, **kwargs):
         r"""Set the parameters/arguments of the algorithm."""
