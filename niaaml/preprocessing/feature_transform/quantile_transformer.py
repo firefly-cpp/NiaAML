@@ -27,12 +27,12 @@ class QuantileTransformer(FeatureTransformAlgorithm):
     """
     Name = "Quantile Transformer"
 
-    def __init__(self, **kwargs):
+    def __init__(self, n_quantiles=1000, **kwargs):
         r"""Initialize QuantileTransformer."""
         self._params = dict(
             output_distribution=ParameterDefinition(["uniform", "normal"])
         )
-        self.__quantile_transformer = QT()
+        self.__quantile_transformer = QT(n_quantiles=n_quantiles)
 
     def fit(self, x, **kwargs):
         r"""Fit implemented transformation algorithm.

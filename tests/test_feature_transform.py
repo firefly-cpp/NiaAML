@@ -26,7 +26,7 @@ class FeatureTransformTestCase(TestCase):
         self.assertEqual(transformed.shape, self.__data.get_x().shape)
 
     def test_qt_works_fine(self):
-        algo = ft.QuantileTransformer()
+        algo = ft.QuantileTransformer(n_quantiles=25)
         algo.fit(self.__data.get_x())
         transformed = algo.transform(self.__data.get_x())
         self.assertEqual(transformed.shape, self.__data.get_x().shape)
