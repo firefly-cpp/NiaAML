@@ -5,8 +5,9 @@ description = "Python automated machine learning framework"
 license = "MIT"
 authors = ["Luka Pečnik <lukapecnik96@gmail.com>", "Iztok Fister Jr. <iztok@iztok-jr-fister.eu>"]
 keywords = ['classification', 'NiaPy', 'scikit-learn', 'nature-inspired algorithms', 'feature selection', 'preprocessing']
-homepage = "https://github.com/lukapecnik/NiaAML"
-repository = "https://github.com/lukapecnik/NiaAML"
+homepage = "https://github.com/firefly-cpp/NiaAML"
+repository = "https://github.com/firefly-cpp/NiaAML"
+documentation= "https://niaaml.readthedocs.io/en/latest/"
 readme = "README.rst"
 include = [
     { path="LICENSE", format="sdist" },
