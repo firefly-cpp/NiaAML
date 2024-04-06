@@ -1,23 +1,44 @@
 <p align="center"><img src=".github/images/niaaml_logo.png" alt="NiaAML" title="NiaAML"/></p>
 
----
+<h1 align="center">
+    🌳 NiaAML
+</h1>
 
-[![PyPI Version](https://img.shields.io/pypi/v/niaaml.svg)](https://pypi.python.org/pypi/niaaml)
-![PyPI - Python Version](https://img.shields.io/pypi/pyversions/niaaml.svg)
-![PyPI - Downloads](https://img.shields.io/pypi/dm/niaaml.svg)
-[![Downloads](https://pepy.tech/badge/niaaml)](https://pepy.tech/project/niaaml)
-[![GitHub license](https://img.shields.io/github/license/lukapecnik/niaaml.svg)](https://github.com/lukapecnik/niaaml/blob/master/LICENSE)
-![build](https://github.com/lukapecnik/niaaml/actions/workflows/test.yml/badge.svg)
-[![Coverage Status](https://coveralls.io/repos/github/lukapecnik/NiaAML/badge.svg?branch=master)](https://coveralls.io/github/lukapecnik/NiaAML?branch=master)
-[![Documentation Status](https://readthedocs.org/projects/niaaml/badge/?version=latest)](https://niaaml.readthedocs.io/en/latest/?badge=latest)
+<p align="center">
+    <img alt="PyPI Version" src="https://img.shields.io/pypi/v/niaaml.svg" href="https://pypi.python.org/pypi/niaaml">
+    <img alt="PyPI - Python Version" src="https://img.shields.io/pypi/pyversions/niaaml.svg">
+    <img alt="PyPI - Downloads" src="https://img.shields.io/pypi/dm/niaaml.svg" href="https://pepy.tech/project/niaaml">
+    <img alt="Downloads" src="https://pepy.tech/badge/niaaml">
+    <img alt="GitHub license" src="https://img.shields.io/github/license/lukapecnik/niaaml.svg" href="https://github.com/lukapecnik/niaaml/blob/master/LICENSE">
+    <img alt="build" src="https://github.com/lukapecnik/niaaml/actions/workflows/test.yml/badge.svg">
+    <img alt="Coverage Status" src="https://coveralls.io/repos/github/lukapecnik/NiaAML/badge.svg?branch=master" href="https://coveralls.io/github/lukapecnik/NiaAML?branch=master">
+    <img alt="Documentation Status" src="https://readthedocs.org/projects/niaaml/badge/?version=latest" href="https://niaaml.readthedocs.io/en/latest/?badge=latest">
+</p>
 
-![GitHub commit activity](https://img.shields.io/github/commit-activity/w/lukapecnik/niaaml.svg)
-[![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/lukapecnik/niaaml.svg)](http://isitmaintained.com/project/lukapecnik/niaaml "Average time to resolve an issue")
-[![Percentage of issues still open](http://isitmaintained.com/badge/open/lukapecnik/niaaml.svg)](http://isitmaintained.com/project/lukapecnik/niaaml "Percentage of issues still open")
-![GitHub contributors](https://img.shields.io/github/contributors/lukapecnik/niaaml.svg)
+<p align="center">
+    <img alt="GitHub commit activity" src="https://img.shields.io/github/commit-activity/w/lukapecnik/niaaml.svg">
+    <img alt="Average time to resolve an issue" src="http://isitmaintained.com/badge/resolution/lukapecnik/niaaml.svg" href="http://isitmaintained.com/project/lukapecnik/niaaml">
+    <img alt="Percentage of issues still open" src="http://isitmaintained.com/badge/open/lukapecnik/niaaml.svg" href="http://isitmaintained.com/project/lukapecnik/niaaml">
+    <img alt="GitHub contributors" src="https://img.shields.io/github/contributors/lukapecnik/niaaml.svg">
+</p>
 
-[![DOI](https://zenodo.org/badge/289322337.svg)](https://zenodo.org/badge/latestdoi/289322337)
-[![DOI](https://joss.theoj.org/papers/10.21105/joss.02949/status.svg)](https://doi.org/10.21105/joss.02949)
+<p align="center">
+    <img alt="DOI" src="https://zenodo.org/badge/289322337.svg" href="https://zenodo.org/badge/latestdoi/289322337">
+    <img alt="DOI" src="https://joss.theoj.org/papers/10.21105/joss.02949/status.svg" href="https://doi.org/10.21105/joss.02949">
+</p>
+
+<p align="center">
+  <a href="https://github.com/firefly-cpp/NiaAML/blob/master/README.md#-installation">📦 Installation</a> •
+  <a href="https://github.com/firefly-cpp/NiaAML/blob/master/README.md#-graphical-user-interface">💻 Graphical User Interface</a> •
+  <a href="https://github.com/firefly-cpp/NiaAML/blob/master/README.md#-api">📮 API</a> •
+  <a href="https://github.com/firefly-cpp/NiaAML/blob/master/README.md#-implemented-components">✨ Implemented Components</a> •
+  <a href="https://github.com/firefly-cpp/NiaAML/blob/master/README.md#-optimization-process-and-parameter-tuning">💪 Optimization Process And Parameter Tuning</a> •
+  <a href="https://github.com/firefly-cpp/NiaAML/blob/master/README.md#-examples">📓 Examples</a> •
+  <a href="https://github.com/firefly-cpp/NiaAML/blob/master/README.md#-contributors">🫂 Contributors</a> •
+  <a href="https://github.com/firefly-cpp/NiaAML/blob/master/README.md#-support">🙏 Support</a> •
+  <a href="https://github.com/firefly-cpp/NiaAML/blob/master/README.md#-license">🔑 License</a> •
+  <a href="https://github.com/firefly-cpp/NiaAML/blob/master/README.md#-cite-us">📄 Cite Us</a>
+</p>
 
 NiaAML is a framework for Automated Machine Learning based on nature-inspired algorithms for optimization. The framework is written fully in Python. The name NiaAML comes from the Automated Machine Learning method of the same name [[1]](#1). Its goal is to compose the best possible classification pipeline for the given task efficiently using components on the input. The components are divided into three groups: feature selection algorithms, feature transformation algorithms and classifiers. The framework uses nature-inspired algorithms for optimization to choose the best set of components for the classification pipeline, and optimize their hyperparameters. We use the <a href="https://github.com/NiaOrg/NiaPy">NiaPy framework</a> for the optimization process, which is a popular Python collection of nature-inspired algorithms. The NiaAML framework is easy to use and customize or expand to suit your needs.
 
@@ -25,13 +46,15 @@ The NiaAML framework allows you not only to run full pipeline optimization, but 
 
 * **Free software:** MIT license,
 * **Documentation:** https://niaaml.readthedocs.io/en/latest/,
-* **Python versions:** 3.6.x, 3.7.x, 3.8.x, 3.9.x,
+* **Python versions:** 3.9 | 3.10 | 3.11
 * **Dependencies:** [click](CONTRIBUTING.md#development-dependencies),
 * **Tested OS:** Windows, Ubuntu, Fedora, Linux Mint and CentOS. **However, that does not mean it does not work on others.**
 
 ![NiaAML Architecture](.github/images/niaaml.png)
 
-## Installation
+---
+
+## 📦 Installation
 
 ### pip3
 
@@ -63,15 +86,15 @@ To install NiaAML on Alpine Linux, please enable Community repository and use:
 $ apk add py3-niaaml
 ```
 
-## Graphical User Interface
+## 💻 Graphical User Interface
 
 There is a simple Graphical User Interface for the NiaAML package available [here](https://github.com/lukapecnik/NiaAML-GUI).
 
-## API
+## 📮 API
 
 There is a simple API for remote work with NiaAML package available [here](https://github.com/alenrajsp/NiaAML-API).
 
-## Components
+## ✨ Implemented Components
 
 [Click here](COMPONENTS.md) for a list of currently implemented components divided into groups: classifiers, feature selection algorithms and feature transformation algorithms. At the end you can also see a list of currently implemented fitness functions for the optimization process, categorical features' encoders, and missing values' imputers. All of the components are passed into the optimization process using their class names. Let's say we want to choose between Adaptive Boosting, Bagging and Multi Layer Perceptron classifiers, Select K Best and Select Percentile feature selection algorithms and Normalizer as the feature transformation algorithm (may not be selected during the optimization process).
 
@@ -99,7 +122,7 @@ PipelineOptimizer(
 
 For a full example see the [Examples section](#examples) or the list of implemented examples [here](examples).
 
-## Optimization Process And Parameter Tuning
+## 💪 Optimization Process And Parameter Tuning
 
 In the modifier version of NiaAML optimization process there are two types of optimization. The goal of the first type is to find an optimal set of components (feature selection algorithm, feature transformation algorithm and classifier). The next step is to find optimal parameters for the selected set of components, and that is the goal of the second type of optimization. Each component has an attribute `_params`, which is a dictionary of parameters and their possible values.
 
@@ -118,7 +141,7 @@ In some cases we may want to tune a parameter that needs additional information 
 
 **The NiaAML framwork also supports running optimization according to the original method proposed in [[1]](#1) where the components selection and hyperparameter optimization steps are combined into one.**
 
-## Examples
+## 📓 Examples
 
 ### Example of Usage
 
@@ -202,7 +225,7 @@ Take a look at the [SimpleImputer](niaaml/preprocessing/imputation/simple_impute
 
 You can find more examples [here](examples).
 
-## Contributors ✨
+## 🫂 Contributors
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
 
@@ -216,6 +239,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/sisco0"><img src="https://avatars0.githubusercontent.com/u/25695302?v=4?s=100" width="100px;" alt=""/><br /><sub><b>sisco0</b></sub></a><br /><a href="#ideas-sisco0" title="Ideas, Planning, & Feedback">🤔</a></td>
     <td align="center"><a href="https://github.com/zStupan"><img src="https://avatars.githubusercontent.com/u/48752988?v=4?s=100" width="100px;" alt=""/><br /><sub><b>zStupan</b></sub></a><br /><a href="https://github.com/lukapecnik/NiaAML/commits?author=zStupan" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/musicinmybrain"><img src="https://avatars.githubusercontent.com/u/6898909?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Ben Beasley</b></sub></a><br /><a href="https://github.com/lukapecnik/NiaAML/commits?author=musicinmybrain" title="Code">💻</a> <a href="#infra-musicinmybrain" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
+    <td align="center"><a href="https://github.com/LaurenzBeck"><img src="https://avatars.githubusercontent.com/u/16887213?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Laurenz Farthofer</b></sub></a><br /><a href="https://github.com/lukapecnik/NiaAML/commits?author=laurenzbeck" title="Code">💻</a> <a href="https://github.com/lukapecnik/NiaAML/commits?author=laurenzbeck" title="Documentation">📖</a></td>
   </tr>
 </table>
 
@@ -226,15 +250,15 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind are welcome!
 
-## Contributing
+## 🙇 Contributing
 
 We encourage you to contribute to NiaAML! Please check out the [Contributing to NiaAML guide](CONTRIBUTING.md) for guidelines about how to proceed.
 
 Everyone interacting in NiaAML's codebases, issue trackers, chat rooms and mailing lists is expected to follow the NiaAML [code of conduct](CODE_OF_CONDUCT.md).
 
-## Support
+## 🙏 Support
 
-### Usage Questions
+### ❓ Usage Questions
 
 If you have questions about how to use NiaAML, or have an issue that isn’t related to a bug, you can place a question on [StackOverflow](https://stackoverflow.com/).
 
@@ -244,11 +268,11 @@ NiaAML is a community supported package, nobody is paid to develop package nor t
 
 **All people answering your questions are doing it with their own time, so please be kind and provide as much information as possible.**
 
-## Issues
+## ❗ Issues
 
 Before creating bug reports, please check existing issues list as you might find out that you don't need to create one. When you are creating a bug report, please include as many details as possible in the [issue template](.github/templates/ISSUE_TEMPLATE.md).
 
-## Licence
+## 🔑 Licence
 
 This package is distributed under the MIT License. This license can be found online at <http://www.opensource.org/licenses/MIT>.
 
@@ -256,12 +280,42 @@ This package is distributed under the MIT License. This license can be found onl
 
 This framework is provided as-is, and there are no guarantees that it fits your purposes or that it is bug-free. Use it at your own risk!
 
-## References
+## 📝 References
 
 <a id="1">[1]</a> Iztok Fister Jr., Milan Zorman, Dušan Fister, Iztok Fister. <a href="https://link.springer.com/chapter/10.1007%2F978-981-15-2133-1_13">Continuous optimizers for automatic design and evaluation of classification pipelines</a>. In: Frontier applications of nature inspired computation. Springer tracts in nature-inspired computing, pp.281-301, 2020.
 
-## Cite us
+## 📄 Cite us
+
+```bibtex
+@article{Pečnik2021,
+    doi = {10.21105/joss.02949},
+    url = {https://doi.org/10.21105/joss.02949},
+    year = {2021},
+    publisher = {The Open Journal},
+    volume = {6},
+    number = {61},
+    pages = {2949},
+    author = {Luka Pečnik and Iztok Fister},
+    title = {NiaAML: AutoML framework based on stochastic population-based nature-inspired algorithms},
+    journal = {Journal of Open Source Software} 
+} 
+```
 
 L. Pečnik, I. Fister Jr. "[NiaAML: AutoML framework based on stochastic population-based nature-inspired algorithms](https://joss.theoj.org/papers/10.21105/joss.02949)." Journal of Open Source Software 6.61 (2021): 2949.
+
+```bibtex
+@inproceedings{pecnik_niaaml2_2021,
+	address = {Cham},
+	title = {{NiaAML2}: {An} {Improved} {AutoML} {Using} {Nature}-{Inspired} {Algorithms}},
+	isbn = {978-3-030-78811-7},
+	abstract = {Using machine learning methods in the real-world is far from being easy, especially because of the number of methods on the one hand, and setting the optimal values of their parameters on the other. Therefore, a lot of so-called AutoML methods have emerged nowadays that also enable automatic construction of classification pipelines to users, who are not experts in this domain. In this study, the NiaAML2 method is proposed that is capable of constructing the classification pipelines using nature-inspired algorithms in two phases: pipeline construction, and hyper-parameter optimization. This method improves the original NiaAML capable of this construction in one phase. The algorithm was applied to four UCI ML datasets, while the obtained results encouraged us to continue with the research.},
+	booktitle = {Advances in {Swarm} {Intelligence}},
+	publisher = {Springer International Publishing},
+	author = {Pečnik, Luka and Fister, Iztok and Fister, Iztok},
+	editor = {Tan, Ying and Shi, Yuhui},
+	year = {2021},
+	pages = {243--252},
+}
+```
 
 L. Pečnik, Fister, I., Fister, I. Jr. [NiaAML2: An Improved AutoML Using Nature-Inspired Algorithms](https://doi.org/10.1007/978-3-030-78811-7_23). In International Conference on Swarm Intelligence (pp. 243-252). Springer, Cham, 2021.
