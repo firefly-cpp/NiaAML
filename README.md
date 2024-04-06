@@ -319,3 +319,4 @@ L. Pečnik, I. Fister Jr. "[NiaAML: AutoML framework based on stochastic populat
 ```
 
 L. Pečnik, Fister, I., Fister, I. Jr. [NiaAML2: An Improved AutoML Using Nature-Inspired Algorithms](https://doi.org/10.1007/978-3-030-78811-7_23). In International Conference on Swarm Intelligence (pp. 243-252). Springer, Cham, 2021.
+
