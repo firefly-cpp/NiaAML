@@ -7,11 +7,11 @@ This project and everyone participating in it is governed by the [NiaAML Code of
 ## How Can I Contribute?
 
 ### Reporting Bugs
-Before creating bug reports, please check existing issues list as you might find out that you don't need to create one. When you are creating a bug report, please include as many details as possible in the issue using the ["🐛 bug report" issue template](.github/ISSUE_TEMPLATE/🐛 bug report.md).
+Before creating bug reports, please check existing issues list as you might find out that you don't need to create one. When you are creating a bug report, please include as many details as possible in the issue using the [🐛 bug report issue template](https://github.com/firefly-cpp/NiaAML/blob/master/.github/ISSUE_TEMPLATE/%F0%9F%90%9B%20bug%20report.md).
 
 ### Suggesting Enhancements
 
-Open new issue using the ["🚀 feature request" template](.github/ISSUE_TEMPLATE/🚀 feature request.md).
+Open new issue using the [🚀 feature request template](https://github.com/firefly-cpp/NiaAML/blob/master/.github/ISSUE_TEMPLATE/%F0%9F%9A%80%20feature%20request.md).
 
 ### Pull requests
 
