@@ -120,7 +120,7 @@ PipelineOptimizer(
 )
 ```
 
-For a full example see the [Examples section](#examples) or the list of implemented examples [here](examples).
+For a full example see the [Examples section](#📓-examples).
 
 ## 💪 Optimization Process And Parameter Tuning
 
@@ -239,7 +239,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/sisco0"><img src="https://avatars0.githubusercontent.com/u/25695302?v=4?s=100" width="100px;" alt=""/><br /><sub><b>sisco0</b></sub></a><br /><a href="#ideas-sisco0" title="Ideas, Planning, & Feedback">🤔</a></td>
     <td align="center"><a href="https://github.com/zStupan"><img src="https://avatars.githubusercontent.com/u/48752988?v=4?s=100" width="100px;" alt=""/><br /><sub><b>zStupan</b></sub></a><br /><a href="https://github.com/lukapecnik/NiaAML/commits?author=zStupan" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/musicinmybrain"><img src="https://avatars.githubusercontent.com/u/6898909?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Ben Beasley</b></sub></a><br /><a href="https://github.com/lukapecnik/NiaAML/commits?author=musicinmybrain" title="Code">💻</a> <a href="#infra-musicinmybrain" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
-    <td align="center"><a href="https://github.com/LaurenzBeck"><img src="https://avatars.githubusercontent.com/u/16887213?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Laurenz Farthofer</b></sub></a><br /><a href="https://github.com/lukapecnik/NiaAML/commits?author=laurenzbeck" title="Code">💻</a> <a href="https://github.com/lukapecnik/NiaAML/commits?author=laurenzbeck" title="Documentation">📖</a><a href="https://github.com/lukapecnik/NiaAML/commits?author=laurenzbeck" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
+    <td align="center"><a href="https://github.com/LaurenzBeck"><img src="https://avatars.githubusercontent.com/u/16887213?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Laurenz Farthofer</b></sub></a><br /><a href="https://github.com/lukapecnik/NiaAML/commits?author=laurenzbeck" title="Code">💻</a> <a href="https://github.com/lukapecnik/NiaAML/commits?author=laurenzbeck" title="Documentation">📖</a> <a href="https://github.com/lukapecnik/NiaAML/commits?author=laurenzbeck" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
   </tr>
 </table>
 
