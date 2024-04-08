@@ -28,16 +28,16 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/firefly-cpp/NiaAML/blob/master/README.md#-installation">📦 Installation</a> •
-  <a href="https://github.com/firefly-cpp/NiaAML/blob/master/README.md#-graphical-user-interface">💻 Graphical User Interface</a> •
-  <a href="https://github.com/firefly-cpp/NiaAML/blob/master/README.md#-api">📮 API</a> •
-  <a href="https://github.com/firefly-cpp/NiaAML/blob/master/README.md#-implemented-components">✨ Implemented Components</a> •
-  <a href="https://github.com/firefly-cpp/NiaAML/blob/master/README.md#-optimization-process-and-parameter-tuning">💪 Optimization Process And Parameter Tuning</a> •
-  <a href="https://github.com/firefly-cpp/NiaAML/blob/master/README.md#-examples">📓 Examples</a> •
-  <a href="https://github.com/firefly-cpp/NiaAML/blob/master/README.md#-contributors">🫂 Contributors</a> •
-  <a href="https://github.com/firefly-cpp/NiaAML/blob/master/README.md#-support">🙏 Support</a> •
-  <a href="https://github.com/firefly-cpp/NiaAML/blob/master/README.md#-license">🔑 License</a> •
-  <a href="https://github.com/firefly-cpp/NiaAML/blob/master/README.md#-cite-us">📄 Cite Us</a>
+  <a href="https://github.com/firefly-cpp/NiaAML?tab=readme-ov-file#-installation">📦 Installation</a> •
+  <a href="https://github.com/firefly-cpp/NiaAML?tab=readme-ov-file#-graphical-user-interface">💻 Graphical User Interface</a> •
+  <a href="https://github.com/firefly-cpp/NiaAML?tab=readme-ov-file#-api">📮 API</a> •
+  <a href="https://github.com/firefly-cpp/NiaAML?tab=readme-ov-file#-implemented-components">✨ Implemented Components</a> •
+  <a href="https://github.com/firefly-cpp/NiaAML?tab=readme-ov-file#-optimization-process-and-parameter-tuning">💪 Optimization Process And Parameter Tuning</a> •
+  <a href="https://github.com/firefly-cpp/NiaAML?tab=readme-ov-file#-examples">📓 Examples</a> •
+  <a href="https://github.com/firefly-cpp/NiaAML?tab=readme-ov-file#-contributors">🫂 Contributors</a> •
+  <a href="https://github.com/firefly-cpp/NiaAML?tab=readme-ov-file#-support">🙏 Support</a> •
+  <a href="https://github.com/firefly-cpp/NiaAML?tab=readme-ov-file#-license">🔑 License</a> •
+  <a href="https://github.com/firefly-cpp/NiaAML?tab=readme-ov-file#-cite-us">📄 Cite Us</a>
 </p>
 
 NiaAML is a framework for Automated Machine Learning based on nature-inspired algorithms for optimization. The framework is written fully in Python. The name NiaAML comes from the Automated Machine Learning method of the same name [[1]](#1). Its goal is to compose the best possible classification pipeline for the given task efficiently using components on the input. The components are divided into three groups: feature selection algorithms, feature transformation algorithms and classifiers. The framework uses nature-inspired algorithms for optimization to choose the best set of components for the classification pipeline, and optimize their hyperparameters. We use the <a href="https://github.com/NiaOrg/NiaPy">NiaPy framework</a> for the optimization process, which is a popular Python collection of nature-inspired algorithms. The NiaAML framework is easy to use and customize or expand to suit your needs.
@@ -239,7 +239,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/sisco0"><img src="https://avatars0.githubusercontent.com/u/25695302?v=4?s=100" width="100px;" alt=""/><br /><sub><b>sisco0</b></sub></a><br /><a href="#ideas-sisco0" title="Ideas, Planning, & Feedback">🤔</a></td>
     <td align="center"><a href="https://github.com/zStupan"><img src="https://avatars.githubusercontent.com/u/48752988?v=4?s=100" width="100px;" alt=""/><br /><sub><b>zStupan</b></sub></a><br /><a href="https://github.com/lukapecnik/NiaAML/commits?author=zStupan" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/musicinmybrain"><img src="https://avatars.githubusercontent.com/u/6898909?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Ben Beasley</b></sub></a><br /><a href="https://github.com/lukapecnik/NiaAML/commits?author=musicinmybrain" title="Code">💻</a> <a href="#infra-musicinmybrain" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
-    <td align="center"><a href="https://github.com/LaurenzBeck"><img src="https://avatars.githubusercontent.com/u/16887213?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Laurenz Farthofer</b></sub></a><br /><a href="https://github.com/lukapecnik/NiaAML/commits?author=laurenzbeck" title="Code">💻</a> <a href="https://github.com/lukapecnik/NiaAML/commits?author=laurenzbeck" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://github.com/LaurenzBeck"><img src="https://avatars.githubusercontent.com/u/16887213?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Laurenz Farthofer</b></sub></a><br /><a href="https://github.com/lukapecnik/NiaAML/commits?author=laurenzbeck" title="Code">💻</a> <a href="https://github.com/lukapecnik/NiaAML/commits?author=laurenzbeck" title="Documentation">📖</a><a href="https://github.com/lukapecnik/NiaAML/commits?author=laurenzbeck" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
   </tr>
 </table>
 
