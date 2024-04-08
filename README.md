@@ -120,7 +120,7 @@ PipelineOptimizer(
 )
 ```
 
-For a full example see the [Examples section](#📓-examples).
+For a full example see the [📓 Examples section](https://github.com/firefly-cpp/NiaAML/blob/master/README.md#-examples).
 
 ## 💪 Optimization Process And Parameter Tuning
 
