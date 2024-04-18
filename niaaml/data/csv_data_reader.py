@@ -25,17 +25,19 @@ class CSVDataReader(DataReader):
         * :class:`niaaml.data.DataReader`
     """
 
-    def _set_parameters(self, src, contains_classes=True, has_header=False, **kwargs):
+    def _set_parameters(self, src, contains_classes=True, has_header=False, ignore_columns=[], **kwargs):
         r"""Set the parameters of the algorithm.
 
         Arguments:
             src (string): Path to a CSV dataset file.
             contains_classes (Optional[bool]): Tells if src contains expected classification results or only features.
             has_header (Optional[bool]): Tells if src contains header row.
+            ignore_columns (Optional[List[int]]): Column indices to drop.
         """
         self.__src = src
         self.__contains_classes = contains_classes
         self.__has_header = has_header
+        self.__ignore_columns = ignore_columns
         self._read_data()
 
     def _read_data(self, **kwargs):
@@ -47,5 +49,8 @@ class CSVDataReader(DataReader):
 
         if self.__contains_classes:
             self._y = data.pop(header[len(header) - 1])
+        
+        if len(self.__ignore_columns) > 0:
+            data.drop(header[self.__ignore_columns], axis=1, inplace=True)
 
         self._x = data

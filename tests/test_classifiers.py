@@ -82,3 +82,35 @@ class ClassifierTestCase(TestCase):
         algo.fit(self.__x_train, self.__y_train)
         predictions = algo.predict(self.__x_test)
         self.assertEqual(predictions.shape, self.__y_test.shape)
+
+
+class RegressionTestCase(TestCase):
+    def setUp(self):
+        self.__data = CSVDataReader(
+            src=os.path.dirname(os.path.abspath(__file__))
+            + "/tests_files/dataset_real_estate_regression.csv",
+            has_header=True,
+            contains_classes=True,
+            ignore_columns=[0]
+        )
+        self.__x_train, self.__x_test, self.__y_train, self.__y_test = train_test_split(
+            self.__data.get_x(), self.__data.get_y(), test_size=0.2
+        )
+
+    def test_linear_regression_works_fine(self):
+        algo = c.LinearRegression()
+        algo.fit(self.__x_train, self.__y_train)
+        predictions = algo.predict(self.__x_test)
+        self.assertEqual(predictions.shape, self.__y_test.shape)
+
+    def test_ridge_regression_works_fine(self):
+        algo = c.RidgeRegression()
+        algo.fit(self.__x_train, self.__y_train)
+        predictions = algo.predict(self.__x_test)
+        self.assertEqual(predictions.shape, self.__y_test.shape)
+
+    def test_lasso_regression_works_fine(self):
+        algo = c.LassoRegression()
+        algo.fit(self.__x_train, self.__y_train)
+        predictions = algo.predict(self.__x_test)
+        self.assertEqual(predictions.shape, self.__y_test.shape)

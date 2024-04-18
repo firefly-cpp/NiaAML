@@ -12,6 +12,9 @@ from niaaml.classifiers.gaussian_naive_bayes import GaussianNB
 from niaaml.classifiers.quadratic_driscriminant_analysis import (
     QuadraticDiscriminantAnalysis,
 )
+from niaaml.classifiers.regression_linear_model import LinearRegression
+from niaaml.classifiers.regression_ridge import RidgeRegression
+from niaaml.classifiers.regression_lasso import LassoRegression
 from niaaml.classifiers.utility import ClassifierFactory
 
 __all__ = [
@@ -28,4 +31,7 @@ __all__ = [
     "GaussianNB",
     "QuadraticDiscriminantAnalysis",
     "ClassifierFactory",
+    "LinearRegression",
+    "RidgeRegression",
+    "LassoRegression",
 ]

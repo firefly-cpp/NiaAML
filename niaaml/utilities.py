@@ -1,10 +1,11 @@
-from sklearn.metrics import accuracy_score, precision_score, cohen_kappa_score, f1_score
+from sklearn.metrics import accuracy_score, precision_score, cohen_kappa_score, f1_score, r2_score, mean_absolute_error, mean_squared_error
 import numpy as np
 
 __all__ = [
     "MinMax",
     "ParameterDefinition",
     "OptimizationStats",
+    "RegressionOptimizationStats",
     "Factory",
     "get_bin_index",
 ]
@@ -184,3 +185,41 @@ class OptimizationStats:
             ck=self._cohen_kappa,
             f1=self._f1_score,
         )
+
+
+class RegressionOptimizationStats:
+    r"""Class that holds pipeline optimization result's statistics. Includes R2, MAE and MSE.
+
+    Date:
+        2024
+
+    Author:
+        Laurenz Farthofer
+
+    License:
+        MIT
+
+    Attributes:
+        _r2 (float): Calculated R2.
+        _mae (float): Calculated mean absolute error.
+        _mse (float): Calculated mean squared error.
+    """
+
+    def __init__(self, predicted, expected, **kwargs):
+        r"""Initialize the factory.
+
+        Arguments:
+            predicted (Iterable[any]): Array of predictions.
+            expected (Iterable[any]): Array of targets.
+        """
+        self._r2 = r2_score(expected, predicted)
+        self._mae = mean_absolute_error(expected, predicted)
+        self._mse = mean_squared_error(expected, predicted)
+
+    def to_string(self):
+        r"""User friendly representation of the object.
+
+        Returns:
+            str: User friendly representation of the object.
+        """
+        return f"R2: {self._r2},\nMAE: {self._mae},\nMSE: {self._mse}"

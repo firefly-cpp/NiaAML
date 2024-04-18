@@ -73,3 +73,14 @@ class FitnessTestCase(TestCase):
         ff = f.F1()
         val = ff.get_fitness(self.__predicted, self.__y)
         self.assertEqual(val, 0.505050505050505)
+
+
+class RegressionFitnessTestCase(TestCase):
+    def setUp(self):
+        self.__y = np.array([3, -0.5, 2, 7])
+        self.__predicted = np.array([2.5, 0.0, 2, 8])
+
+    def test_r2_works_fine(self):
+        ff = f.R2()
+        val = ff.get_fitness(self.__predicted, self.__y)
+        self.assertEqual(val, 0.9486081370449679)

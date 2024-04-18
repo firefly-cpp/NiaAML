@@ -1,6 +1,8 @@
 from unittest import TestCase
 from niaaml import Pipeline, OptimizationStats
 from niaaml.classifiers import RandomForest, AdaBoost
+from niaaml.classifiers.regression_linear_model import LinearRegression
+from niaaml.classifiers.regression_ridge import RidgeRegression
 from niaaml.preprocessing.feature_selection import SelectKBest, SelectPercentile
 from niaaml.preprocessing.feature_transform import StandardScaler, Normalizer
 from niaaml.data import CSVDataReader
@@ -45,6 +47,32 @@ class PipelineTestCase(TestCase):
         self.assertIsInstance(pipeline.get_classifier(), RandomForest)
         self.assertIsInstance(pipeline.get_feature_selection_algorithm(), SelectKBest)
         self.assertIsInstance(pipeline.get_feature_transform_algorithm(), Normalizer)
+    
+    def test_regression_pipeline_optimize_works_fine(self):
+        pipeline = Pipeline(
+            feature_selection_algorithm=None,
+            feature_transform_algorithm=Normalizer(),
+            classifier=LinearRegression(),
+        )
+
+        data_reader = CSVDataReader(
+            src=os.path.dirname(os.path.abspath(__file__))
+            + "/tests_files/dataset_real_estate_regression.csv",
+            has_header=True,
+            contains_classes=True,
+            ignore_columns=[0]
+        )
+
+        r2_score = pipeline.optimize(
+            data_reader.get_x(),
+            data_reader.get_y(),
+            20,
+            40,
+            "ParticleSwarmAlgorithm",
+            "R2",
+        )
+
+        self.assertLessEqual(r2_score, 1.0)
 
     def test_pipeline_run_works_fine(self):
         pipeline = Pipeline(

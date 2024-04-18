@@ -1,5 +1,5 @@
 from sklearn.model_selection import train_test_split
-from niaaml.utilities import MinMax, get_bin_index, OptimizationStats
+from niaaml.utilities import MinMax, RegressionOptimizationStats, get_bin_index, OptimizationStats
 from niaaml.fitness import FitnessFactory
 from niapy.problems import Problem
 from niapy.util.factory import get_algorithm
@@ -155,8 +155,8 @@ class Pipeline:
         r"""Optimize pipeline's hyperparameters.
 
         Arguments:
-            x (pandas.core.frame.DataFrame): n samples to classify.
-            y (pandas.core.series.Series): n classes of the samples in the x array.
+            x (pandas.core.frame.DataFrame): n input samples.
+            y (pandas.core.series.Series): n classes/targets of the samples in the x array.
             population_size (uint): Number of individuals in the optimization process.
             number_of_evaluations (uint): Number of maximum evaluations.
             optimization_algorithm (str): Name of the optimization algorithm to use.
@@ -411,9 +411,10 @@ class _PipelineProblem(Problem):
         self.__population_size = population_size
         self.__current_best_fitness = np.inf
         self.__fitness_function = FitnessFactory().get_result(fitness_function)
+        self.__lower_bound, self.__upper_bound = self.__fitness_function.get_bounds()
         self.__evals = 0
         self.__logger = self.__parent.get_logger()
-        super().__init__(dimension, 0.0, 1.0)
+        super().__init__(dimension, lower=self.__lower_bound, upper=self.__upper_bound)
 
     @staticmethod
     def evaluate_pipeline(
@@ -461,34 +462,40 @@ class _PipelineProblem(Problem):
         ]
         solution_index = 0
 
-        for i in params_all:
+        # iterate over parameters and components and pass the prepared parameters to `set_parameters`
+        for params, component in params_all:
             args = dict()
-            for key in i[0]:
-                if i[0][key] is not None:
-                    if isinstance(i[0][key].value, MinMax):
+            for key in params:
+                if params[key] is not None:
+                    if isinstance(params[key].value, MinMax):
                         val = (
-                            solution_vector[solution_index] * i[0][key].value.max
-                            + i[0][key].value.min
+                            solution_vector[solution_index] * params[key].value.max
+                            + params[key].value.min
                         )
                         if (
-                            i[0][key].param_type is np.intc
-                            or i[0][key].param_type is int
-                            or i[0][key].param_type is np.uintc
-                            or i[0][key].param_type is np.uint
+                            params[key].param_type is np.intc
+                            or params[key].param_type is int
+                            or params[key].param_type is np.uintc
+                            or params[key].param_type is np.uint
                         ):
-                            val = i[0][key].param_type(np.floor(val))
-                            if val >= i[0][key].value.max:
-                                val = i[0][key].value.max - 1
+                            val = params[key].param_type(np.floor(val))
+                            if val >= params[key].value.max:
+                                val = params[key].value.max - 1
                         args[key] = val
                     else:
-                        args[key] = i[0][key].value[
+                        # normalize solution vector
+                        # this needs to be done since the binning logic expect them to be in a range between 0 and 1
+                        lower, upper = fitness_function.get_bounds()
+                        solution_vector = (solution_vector - lower) / (upper - lower)
+
+                        args[key] = params[key].value[
                             get_bin_index(
-                                solution_vector[solution_index], len(i[0][key].value)
+                                solution_vector[solution_index], len(params[key].value)
                             )
                         ]
                 solution_index += 1
-            if i[1] is not None:
-                i[1].set_parameters(**args)
+            if component:
+                component.set_parameters(**args)
 
         x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2)
 
@@ -509,10 +516,15 @@ class _PipelineProblem(Problem):
 
         classifier.fit(x_train, y_train)
         predictions = classifier.predict(x_test)
+
+        # infer task for the selection of the OptimizationStats
+        # only regression models have the "Task" attribute
+        classification = not hasattr(classifier, 'Task')
+
         return (
             fitness_function.get_fitness(predictions, y_test) * -1,
             selected_features_mask,
-            OptimizationStats(predictions, y_test),
+            OptimizationStats(predictions, y_test) if classification else RegressionOptimizationStats(predictions, y_test),
         )
 
     def _evaluate(self, x):
