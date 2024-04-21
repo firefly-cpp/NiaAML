@@ -6,8 +6,10 @@ from niaaml.classifiers.ada_boost import AdaBoost
 from niaaml.classifiers.extremely_randomized_trees import ExtremelyRandomizedTrees
 from niaaml.classifiers.bagging import Bagging
 from niaaml.classifiers.decision_tree import DecisionTree
+from niaaml.classifiers.regression_decision_tree import DecisionTreeRegression
 from niaaml.classifiers.k_neighbors import KNeighbors
 from niaaml.classifiers.gaussian_process import GaussianProcess
+from niaaml.classifiers.regression_gaussian_process import GaussianProcessRegression
 from niaaml.classifiers.gaussian_naive_bayes import GaussianNB
 from niaaml.classifiers.quadratic_driscriminant_analysis import (
     QuadraticDiscriminantAnalysis,
@@ -26,8 +28,10 @@ __all__ = [
     "Bagging",
     "ExtremelyRandomizedTrees",
     "DecisionTree",
+    "DecisionTreeRegression",
     "KNeighbors",
     "GaussianProcess",
+    "GaussianProcessRegression",
     "GaussianNB",
     "QuadraticDiscriminantAnalysis",
     "ClassifierFactory",

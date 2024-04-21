@@ -42,6 +42,8 @@
 
 NiaAML is a framework for Automated Machine Learning based on nature-inspired algorithms for optimization. The framework is written fully in Python. The name NiaAML comes from the Automated Machine Learning method of the same name [[1]](#1). Its goal is to compose the best possible classification pipeline for the given task efficiently using components on the input. The components are divided into three groups: feature selection algorithms, feature transformation algorithms and classifiers. The framework uses nature-inspired algorithms for optimization to choose the best set of components for the classification pipeline, and optimize their hyperparameters. We use the <a href="https://github.com/NiaOrg/NiaPy">NiaPy framework</a> for the optimization process, which is a popular Python collection of nature-inspired algorithms. The NiaAML framework is easy to use and customize or expand to suit your needs.
 
+> 🆕📈 NiaAML now also support regression tasks. The package still refers to regressors as "classifiers" to avoid introducing a breaking change to the API.
+
 The NiaAML framework allows you not only to run full pipeline optimization, but also to separate implemented components such as classifiers, feature selection algorithms, etc. **It supports numerical and categorical features as well as missing values in datasets.**
 
 * **Free software:** MIT license,
@@ -124,16 +126,16 @@ For a full example see the [📓 Examples section](https://github.com/firefly-cp
 
 ## 💪 Optimization Process And Parameter Tuning
 
-In the modifier version of NiaAML optimization process there are two types of optimization. The goal of the first type is to find an optimal set of components (feature selection algorithm, feature transformation algorithm and classifier). The next step is to find optimal parameters for the selected set of components, and that is the goal of the second type of optimization. Each component has an attribute `_params`, which is a dictionary of parameters and their possible values.
+In the modifier version of NiaAML optimization process there are two types of optimization. The goal of the first type is to find an optimal set of components (feature selection algorithm, feature transformation algorithm and classifier). The next step is to find optimal parameters for the selected set of components, and that is the goal of the second type of optimization. Each component has an attribute ``_params``, which is a dictionary of parameters and their possible values.
 
 ```python
-self._params = dict(
+self.`_params` = dict(
     n_estimators = ParameterDefinition(MinMax(min=10, max=111), np.uint),
     algorithm = ParameterDefinition(['SAMME', 'SAMME.R'])
 )
 ```
 
-An individual in the first type of optimization is represented as a real-valued vector that has a size equal to the sum of the number of keys in all three dictionaries (classifier's _params, Feature Transformation algorithm's _params and feature selection algorithm's _params) and the value of each dimension is in the range [0.0, 1.0]. The second type of optimization maps real values from the individual's vector to those parameter definitions in the dictionaries. Each parameter's value can be defined as a range or array of values. In the first case, a value from a vector is mapped from one iterval to another, and in the second case, a value from the vector falls into one of the bins that represent an index of the array that holds possible parameters` values.
+An individual in the first type of optimization is represented as a real-valued vector that has a size equal to the sum of the number of keys in all three dictionaries (classifier's `_params`, Feature Transformation algorithm's `_params` and feature selection algorithm's `_params`) and the value of each dimension is in the range [0.0, 1.0]. The second type of optimization maps real values from the individual's vector to those parameter definitions in the dictionaries. Each parameter's value can be defined as a range or array of values. In the first case, a value from a vector is mapped from one iterval to another, and in the second case, a value from the vector falls into one of the bins that represent an index of the array that holds possible parameters` values.
 
 Let's say we have a classifier with 3 parameters, a feature selection algorithm with 2 parameters and feature transformation algorithm with 4 parameters. The size of an individual in the second type of optimization is 9. The size of an individual in the first type of optimization is always 3 (1 classifier, 1 feature selection algorithm and 1 feature transformation algorithm).
 
@@ -196,6 +198,46 @@ pipeline1.export_text('pipeline.txt')
 ```
 
 This is a very simple example with dummy data. It is only intended to give you a basic idea of how to use the framework.
+
+### 📈 Example of a Regression Task
+
+The API for solving regression tasks is not different to the classification use-case. One only has to choose the right components that support regression:
+
+Currently, the following components support regression tasks:
+
+➡️ **Feature Transform Algorithms**:
+
++ "Normalizer"
++ "StandardScaler"
++ "MaxAbsScaler"
++ "QuantileTransformer"
++ "RobustScaler"
+
+🔎 **Feature Selection Algorithms**:
+
++ "SelectKBest"
++ "SelectPercentile"
++ "SelectUnivariateRegression"
+
+🔮 **Models (Classifiers)**:
+
++ "LinearRegression"
++ "RidgeRegression"
++ "LassoRegression"
++ "DecisionTreeRegression"
++ "GaussianProcessRegression"
+
+```python
+pipeline_optimizer = PipelineOptimizer(
+    data=data_reader,
+    feature_selection_algorithms=["SelectKBest", "SelectPercentile", "SelectUnivariateRegression"],
+    feature_transform_algorithms=["Normalizer", "StandardScaler"],
+    classifiers=["LinearRegression", "RidgeRegression", "LassoRegression", "DecisionTreeRegression", "GaussianProcessRegression"],
+)
+
+# run the modified version of optimization
+pipeline1 = pipeline_optimizer.run("MSE", 10, 10, 20, 20, "ParticleSwarmAlgorithm")
+```
 
 ### Example of a Pipeline Component's Implementation
 

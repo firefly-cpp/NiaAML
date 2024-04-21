@@ -143,9 +143,9 @@ class RegressionPipelineOptimizerTestCase(TestCase):
     def test_pipeline_optimizeer_run_works_fine(self):
         ppo = PipelineOptimizer(
             data=self.__data_reader,
-            feature_selection_algorithms=[],
-            feature_transform_algorithms=["Normalizer", "StandardScaler"],
-            classifiers=["LinearRegression", "RidgeRegression", "LassoRegression"],
+            feature_selection_algorithms=["SelectKBest", "SelectPercentile", "SelectUnivariateRegression"],
+            feature_transform_algorithms=["Normalizer", "StandardScaler", "MaxAbsScaler", "QuantileTransformer", "RobustScaler"],
+            classifiers=["LinearRegression", "RidgeRegression", "LassoRegression", "DecisionTreeRegression", "GaussianProcessRegression"],
             log=False,
         )
         pipeline = ppo.run("MSE", 10, 10, 20, 20, "ParticleSwarmAlgorithm")
@@ -156,7 +156,7 @@ class RegressionPipelineOptimizerTestCase(TestCase):
             data=self.__data_reader,
             feature_selection_algorithms=[],
             feature_transform_algorithms=["Normalizer", "StandardScaler"],
-            classifiers=["LinearRegression", "RidgeRegression", "LassoRegression"],
+            classifiers=["LinearRegression", "RidgeRegression", "LassoRegression", "GaussianProcessRegression"],
             log=False,
         )
         pipeline = ppo.run_v1("R2", 10, 20, "ParticleSwarmAlgorithm")

@@ -1,3 +1,5 @@
+from niaaml.classifiers.regression_decision_tree import DecisionTreeRegression
+from niaaml.classifiers.regression_gaussian_process import GaussianProcessRegression
 from niaaml.utilities import Factory
 from niaaml.classifiers.ada_boost import AdaBoost
 from niaaml.classifiers.bagging import Bagging
@@ -48,8 +50,10 @@ class ClassifierFactory(Factory):
             "MultiLayerPerceptron": MultiLayerPerceptron,
             "RandomForest": RandomForest,
             "DecisionTree": DecisionTree,
+            "DecisionTreeRegression": DecisionTreeRegression,
             "KNeighbors": KNeighbors,
             "GaussianProcess": GaussianProcess,
+            "GaussianProcessRegression": GaussianProcessRegression,
             "GaussianNB": GaussianNB,
             "QuadraticDiscriminantAnalysis": QuadraticDiscriminantAnalysis,
             "LinearRegression": LinearRegression,
