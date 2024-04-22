@@ -126,10 +126,10 @@ For a full example see the [📓 Examples section](https://github.com/firefly-cp
 
 ## 💪 Optimization Process And Parameter Tuning
 
-In the modifier version of NiaAML optimization process there are two types of optimization. The goal of the first type is to find an optimal set of components (feature selection algorithm, feature transformation algorithm and classifier). The next step is to find optimal parameters for the selected set of components, and that is the goal of the second type of optimization. Each component has an attribute ``_params``, which is a dictionary of parameters and their possible values.
+In the modifier version of NiaAML optimization process there are two types of optimization. The goal of the first type is to find an optimal set of components (feature selection algorithm, feature transformation algorithm and classifier). The next step is to find optimal parameters for the selected set of components, and that is the goal of the second type of optimization. Each component has an attribute `_params`, which is a dictionary of parameters and their possible values.
 
 ```python
-self.`_params` = dict(
+self._params = dict(
     n_estimators = ParameterDefinition(MinMax(min=10, max=111), np.uint),
     algorithm = ParameterDefinition(['SAMME', 'SAMME.R'])
 )
