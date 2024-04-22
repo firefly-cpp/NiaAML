@@ -1,4 +1,6 @@
 from unittest import TestCase
+
+import numpy as np
 from niaaml.data import CSVDataReader
 import os
 
@@ -51,3 +53,16 @@ class CSVDataReaderTestCase(TestCase):
         y = data_reader.get_y()
         self.assertEqual(x.shape, (100, 6))
         self.assertIsNone(y)
+    
+    def test_ignore_columns_works_fine(self):
+        data_reader = CSVDataReader(
+            src=os.path.dirname(os.path.abspath(__file__))
+            + "/tests_files/dataset_real_estate_regression.csv",
+            has_header=True,
+            contains_classes=True,
+            ignore_columns=[0]
+        )
+        x = data_reader.get_x()
+        y = data_reader.get_y()
+        self.assertEqual(x.shape, (414, 6))
+        self.assertEqual(y.shape, (414,))

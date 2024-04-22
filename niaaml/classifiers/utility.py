@@ -1,3 +1,5 @@
+from niaaml.classifiers.regression_decision_tree import DecisionTreeRegression
+from niaaml.classifiers.regression_gaussian_process import GaussianProcessRegression
 from niaaml.utilities import Factory
 from niaaml.classifiers.ada_boost import AdaBoost
 from niaaml.classifiers.bagging import Bagging
@@ -12,6 +14,9 @@ from niaaml.classifiers.gaussian_naive_bayes import GaussianNB
 from niaaml.classifiers.quadratic_driscriminant_analysis import (
     QuadraticDiscriminantAnalysis,
 )
+from niaaml.classifiers.regression_linear_model import LinearRegression
+from niaaml.classifiers.regression_ridge import RidgeRegression
+from niaaml.classifiers.regression_lasso import LassoRegression
 
 __all__ = ["ClassifierFactory"]
 
@@ -45,8 +50,13 @@ class ClassifierFactory(Factory):
             "MultiLayerPerceptron": MultiLayerPerceptron,
             "RandomForest": RandomForest,
             "DecisionTree": DecisionTree,
+            "DecisionTreeRegression": DecisionTreeRegression,
             "KNeighbors": KNeighbors,
             "GaussianProcess": GaussianProcess,
+            "GaussianProcessRegression": GaussianProcessRegression,
             "GaussianNB": GaussianNB,
             "QuadraticDiscriminantAnalysis": QuadraticDiscriminantAnalysis,
+            "LinearRegression": LinearRegression,
+            "RidgeRegression": RidgeRegression,
+            "LassoRegression": LassoRegression,
         }

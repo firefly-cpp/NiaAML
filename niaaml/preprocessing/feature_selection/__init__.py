@@ -19,6 +19,8 @@ from niaaml.preprocessing.feature_selection.utility import (
 from niaaml.preprocessing.feature_selection._feature_selection_threshold_problem import (
     _FeatureSelectionThresholdProblem,
 )
+from niaaml.preprocessing.feature_selection.select_univariate_regression import SelectUnivariateRegression
+
 
 __all__ = [
     "FeatureSelectionAlgorithm",
@@ -30,6 +32,7 @@ __all__ = [
     "DifferentialEvolution",
     "GreyWolfOptimizer",
     "SelectKBest",
+    "SelectUnivariateRegression",
     "FeatureSelectionAlgorithmFactory",
     "_FeatureSelectionThresholdProblem",
 ]

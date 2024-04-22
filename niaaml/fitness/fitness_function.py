@@ -37,3 +37,12 @@ class FitnessFunction:
             float: Calculated fitness value.
         """
         return None
+    
+    def get_bounds(self):
+        """Returns the optimization bounds for this fitness function.
+        
+        The default is for classification metrics.
+        
+        Retunrs:
+            Tuple[float, float]: lower and upper optimization bounds. Defaults to (0.0, 1.0)"""
+        return (0.0, 1.0)

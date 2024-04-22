@@ -1,3 +1,4 @@
+from niaaml.preprocessing.feature_selection.select_univariate_regression import SelectUnivariateRegression
 from niaaml.utilities import Factory
 from niaaml.preprocessing.feature_selection.bat_algorithm import BatAlgorithm
 from niaaml.preprocessing.feature_selection.differential_evolution import (
@@ -36,4 +37,5 @@ class FeatureSelectionAlgorithmFactory(Factory):
             "DifferentialEvolution": DifferentialEvolution,
             "GreyWolfOptimizer": GreyWolfOptimizer,
             "ParticleSwarmOptimization": ParticleSwarmOptimization,
+            "SelectUnivariateRegression": SelectUnivariateRegression,
         }
