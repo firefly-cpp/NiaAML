@@ -7,7 +7,7 @@ NiaAML is an automated machine learning Python framework based on nature-inspire
 
 * **Free software:** MIT license
 * **Github repository:** https://github.com/lukapecnik/NiaAML
-* **Python versions:** 3.6.x, 3.7.x, 3.8.x
+* **Python versions:** 3.11.x, 3.12.x
 
 The main documentation is organized into a couple of sections:
 

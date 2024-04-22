@@ -64,6 +64,47 @@ This is a very simple example with dummy data. It is only intended to give you a
 
 Find more examples `here <https://github.com/lukapecnik/NiaAML/tree/master/examples>`_
 
+Regression example
+------------------
+
+The API for solving regression tasks is not different to the classification use-case. One only has to choose the right components that support regression:
+
+Currently, the following components support regression tasks:
+
+➡️ **Feature Transform Algorithms**:
+
+* "Normalizer"
+* "StandardScaler"
+* "MaxAbsScaler"
+* "QuantileTransformer"
+* "RobustScaler"
+
+🔎 **Feature Selection Algorithms**:
+
+* "SelectKBest"
+* "SelectPercentile"
+* "SelectUnivariateRegression"
+
+🔮 **Models (Classifiers)**:
+
+* "LinearRegression"
+* "RidgeRegression"
+* "LassoRegression"
+* "DecisionTreeRegression"
+* "GaussianProcessRegression"
+
+.. code:: python
+
+    pipeline_optimizer = PipelineOptimizer(
+        data=data_reader,
+        feature_selection_algorithms=["SelectKBest", "SelectPercentile", "SelectUnivariateRegression"],
+        feature_transform_algorithms=["Normalizer", "StandardScaler"],
+        classifiers=["LinearRegression", "RidgeRegression", "LassoRegression", "DecisionTreeRegression", "GaussianProcessRegression"],
+    )
+
+    # run the modified version of optimization
+    pipeline1 = pipeline_optimizer.run("MSE", 10, 10, 20, 20, "ParticleSwarmAlgorithm")
+
 Components
 ----------
 
