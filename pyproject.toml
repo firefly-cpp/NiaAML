@@ -1,14 +1,14 @@
 [tool.poetry]
 name = "NiaAML"
-version = "1.2.0"
+version = "2.0.0"
 description = "Python automated machine learning framework"
 license = "MIT"
-authors = ["Luka Pečnik <lukapecnik96@gmail.com>", "Iztok Fister Jr. <iztok@iztok-jr-fister.eu>"]
+authors = ["Luka Pečnik <lukapecnik96@gmail.com>", "Iztok Fister Jr. <iztok@iztok-jr-fister.eu>", "Laurenz Farthofer <laurenz@hey.com>"]
 keywords = ['classification', 'NiaPy', 'scikit-learn', 'nature-inspired algorithms', 'feature selection', 'preprocessing']
 homepage = "https://github.com/firefly-cpp/NiaAML"
 repository = "https://github.com/firefly-cpp/NiaAML"
 documentation= "https://niaaml.readthedocs.io/en/latest/"
-readme = "README.rst"
+readme = "README.md"
 include = [
     { path="LICENSE", format="sdist" },
     { path="CHANGELOG.md", format="sdist" },
