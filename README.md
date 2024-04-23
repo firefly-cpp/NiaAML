@@ -8,6 +8,9 @@
     <img alt="PyPI Version" src="https://img.shields.io/pypi/v/niaaml.svg" href="https://pypi.python.org/pypi/niaaml">
     <img alt="PyPI - Python Version" src="https://img.shields.io/pypi/pyversions/niaaml.svg">
     <img alt="PyPI - Downloads" src="https://img.shields.io/pypi/dm/niaaml.svg" href="https://pepy.tech/project/niaaml">
+    <a href="https://repology.org/project/python:niaaml/versions">
+        <img src="https://repology.org/badge/tiny-repos/python:niaaml.svg" alt="Packaging status">
+    </a>
     <img alt="Downloads" src="https://pepy.tech/badge/niaaml">
     <img alt="GitHub license" src="https://img.shields.io/github/license/lukapecnik/niaaml.svg" href="https://github.com/lukapecnik/niaaml/blob/master/LICENSE">
     <img alt="build" src="https://github.com/lukapecnik/niaaml/actions/workflows/test.yml/badge.svg">
