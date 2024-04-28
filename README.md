@@ -91,6 +91,28 @@ To install NiaAML on Alpine Linux, please enable Community repository and use:
 $ apk add py3-niaaml
 ```
 
+### Arch Linux
+
+To install NiaAML on Arch Linux, use:
+
+```sh
+$ pacman -S python-niaaml
+```
+
+### Nix
+
+To install NiaAML with the [Nix package manager](https://search.nixos.org/packages?channel=23.11&show=python311Packages.niaaml), use:
+
+```sh
+$ nix-env -i python311Packages.niaaml
+```
+
+To enter a shell with the package already installed, use:
+
+```sh
+$ nix-shell -p python311Packages.niaaml
+```
+
 ## 💻 Graphical User Interface
 
 There is a simple Graphical User Interface for the NiaAML package available [here](https://github.com/lukapecnik/NiaAML-GUI).
