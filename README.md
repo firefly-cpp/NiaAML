@@ -96,7 +96,7 @@ $ apk add py3-niaaml
 To install NiaAML on Arch Linux, use:
 
 ```sh
-$ pacman -S python-niaaml
+$ yay -Syyu python-niaaml
 ```
 
 ### Nix
