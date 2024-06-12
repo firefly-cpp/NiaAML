@@ -33,6 +33,7 @@
 <p align="center">
   <a href="https://github.com/firefly-cpp/NiaAML?tab=readme-ov-file#-installation">📦 Installation</a> •
   <a href="https://github.com/firefly-cpp/NiaAML?tab=readme-ov-file#-graphical-user-interface">💻 Graphical User Interface</a> •
+  <a href="https://github.com/firefly-cpp/NiaAML?tab=readme-ov-file#-command-line-interface">🧑‍💻 Command Line Interface</a> •
   <a href="https://github.com/firefly-cpp/NiaAML?tab=readme-ov-file#-api">📮 API</a> •
   <a href="https://github.com/firefly-cpp/NiaAML?tab=readme-ov-file#-implemented-components">✨ Implemented Components</a> •
   <a href="https://github.com/firefly-cpp/NiaAML?tab=readme-ov-file#-optimization-process-and-parameter-tuning">💪 Optimization Process And Parameter Tuning</a> •
@@ -116,6 +117,22 @@ $ nix-shell -p python311Packages.niaaml
 ## 💻 Graphical User Interface
 
 There is a simple Graphical User Interface for the NiaAML package available [here](https://github.com/lukapecnik/NiaAML-GUI).
+
+## 🧑‍💻 Command Line Interface
+
+We also provide a CLI for quick pipeline optimizations and inference from the terminal without the need to write custom scripts.
+
+When you install the package as instructed above, you will already have access to the `niaaml` command with sub-commands `optimize` and `infer`
+
+For usage information, add the `--help` flag:
+
+![niaaml help](.github/images/niaaml_cli_help.png)
+
+![niaaml infer help](.github/images/niaaml_cli_infer_help.png)
+
+An example Invocation of `optimize`:
+
+![niaaml optimize example](.github/images/niaaml_cli_optimize_example.png)
 
 ## 📮 API
 

@@ -11,6 +11,7 @@ from niaaml.pipeline_optimizer import PipelineOptimizer
 from niaaml.pipeline import Pipeline
 from niaaml.pipeline_component import PipelineComponent
 from niaaml.logger import Logger
+from niaaml import cli
 
 __all__ = [
     "classifiers",
@@ -26,6 +27,7 @@ __all__ = [
     "Pipeline",
     "PipelineComponent",
     "Logger",
+    "cli",
 ]
 
 __project__ = "niaaml"
