@@ -1,0 +1,68 @@
+cff-version: 1.2.0
+message: 🤚 if you use this software, please cite it using these metadata.
+title: >-
+  NiaAML: AutoML for classification and regression pipelines
+abstract: |
+  In this paper we present NiaAML, an AutoML framework that we have developed for creating machine learning pipelines and hyperparameter tuning. The composition of machine learning pipelines is presented as an optimization problem that can be solved using various stochastic, population-based, nature-inspired algorithms. Nature-inspired algorithms are powerful tools for solving real-world optimization problems, especially those that are highly complex, nonlinear, and involve large search spaces where traditional algorithms may struggle. They are applied widely in various fields, including robotics, operations research, and bioinformatics. This paper provides a comprehensive overview of the software architecture, and describes the main tasks of NiaAML, including the automatic composition of classification and regression pipelines. The overview is supported by an practical illustrative example.
+type: journalArticle
+license: All rights reserved
+copyright: All rights reserved
+database: ScienceDirect
+issn: 2352-7110
+journal: SoftwareX
+pages: 101974
+volume: 29
+url: https://www.sciencedirect.com/science/article/pii/S2352711024003443
+keywords: 
+  - AutoML
+  - Classification
+  - Nature-inspired algorithms
+  - Optimization
+authors: 
+  - family-names: Fister
+    given-names: Iztok
+  - family-names: Farthofer
+    given-names: Laurenz A.
+  - family-names: Pečnik
+    given-names: Luka
+  - family-names: Fister
+    given-names: Iztok
+  - family-names: Holzinger
+    given-names: Andreas
+editors: 
+  - family-names: Fister
+    given-names: Iztok
+  - family-names: Farthofer
+    given-names: Laurenz A.
+  - family-names: Pečnik
+    given-names: Luka
+  - family-names: Fister
+    given-names: Iztok
+  - family-names: Holzinger
+    given-names: Andreas
+recipients: 
+  - family-names: Fister
+    given-names: Iztok
+  - family-names: Farthofer
+    given-names: Laurenz A.
+  - family-names: Pečnik
+    given-names: Luka
+  - family-names: Fister
+    given-names: Iztok
+  - family-names: Holzinger
+    given-names: Andreas
+translators: 
+  - family-names: Fister
+    given-names: Iztok
+  - family-names: Farthofer
+    given-names: Laurenz A.
+  - family-names: Pečnik
+    given-names: Luka
+  - family-names: Fister
+    given-names: Iztok
+  - family-names: Holzinger
+    given-names: Andreas
+date-published: 2025-02-01
+identifiers: 
+  - type: doi
+    value: 10.1016/j.softx.2024.101974
