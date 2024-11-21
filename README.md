@@ -404,3 +404,23 @@ L. Pečnik, I. Fister Jr. "[NiaAML: AutoML framework based on stochastic populat
 
 L. Pečnik, Fister, I., Fister, I. Jr. [NiaAML2: An Improved AutoML Using Nature-Inspired Algorithms](https://doi.org/10.1007/978-3-030-78811-7_23). In International Conference on Swarm Intelligence (pp. 243-252). Springer, Cham, 2021.
 
+```bibtex
+@article{fister2025,
+	title = {{NiaAML}: {AutoML} for classification and regression pipelines},
+	volume = {29},
+	rights = {All rights reserved},
+	issn = {2352-7110},
+	url = {https://www.sciencedirect.com/science/article/pii/S2352711024003443},
+	doi = {10.1016/j.softx.2024.101974},
+	shorttitle = {{NiaAML}},
+	abstract = {In this paper we present {NiaAML}, an {AutoML} framework that we have developed for creating machine learning pipelines and hyperparameter tuning. The composition of machine learning pipelines is presented as an optimization problem that can be solved using various stochastic, population-based, nature-inspired algorithms. Nature-inspired algorithms are powerful tools for solving real-world optimization problems, especially those that are highly complex, nonlinear, and involve large search spaces where traditional algorithms may struggle. They are applied widely in various fields, including robotics, operations research, and bioinformatics. This paper provides a comprehensive overview of the software architecture, and describes the main tasks of {NiaAML}, including the automatic composition of classification and regression pipelines. The overview is supported by an practical illustrative example.},
+	pages = {101974},
+	journaltitle = {{SoftwareX}},
+	author = {Fister, Iztok and Farthofer, Laurenz A. and Pečnik, Luka and Fister, Iztok and Holzinger, Andreas},
+	date = {2025-02-01},
+	keywords = {{AutoML}, Classification, Nature-inspired algorithms, Optimization},
+}
+```
+I. Fister, L. A. Farthofer, L. Pečnik, I. Fister, and A. Holzinger, “NiaAML: AutoML for classification and regression pipelines,” SoftwareX, vol. 29, p. 101974, Feb. 2025, doi: 10.1016/j.softx.2024.101974.
+
+
