@@ -25,7 +25,7 @@ copyright = "2020-2025, Luka Pečnik et al."
 author = "Luka Pečnik et al."
 
 # The full version, including alpha/beta/rc tags
-release = "2.1.1"
+release = "2.1.2"
 
 
 # -- General configuration ---------------------------------------------------
